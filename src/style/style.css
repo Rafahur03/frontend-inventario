@@ -1,0 +1,58 @@
+/* estillo vista formart activo */
+
+#recomendacionMtto {
+    resize: none;
+}
+
+#observacionActivo {
+    resize: none;
+}
+
+.resultado{
+    top: 28%;
+    left: 30%;
+    max-width: 69% ;
+}   
+
+.resultado{
+    top: 28%;
+    left: 30%;
+    max-width: 69% ;
+}    
+
+.reporte {
+    top: 63%;
+    left: 2%;
+    max-width: 69% ;
+}
+
+.solicitud {
+    top: 63%;
+    left: 26.5%;
+    max-width: 69% ;
+}
+
+#descripcionActivo{
+    resize: none;
+}
+#recomendacionActivo{
+    resize: none;
+}
+#observacionActivo{
+    resize: none;
+}
+
+/* imagenes de activos */
+#dragDropImgActivo{
+    height: 17vw;
+    border: 0.2rem dashed #0dcaf0;
+    cursor: pointer
+}
+
+#dragDropImgActivo.active{
+    border: 0.2rem solid #6c757d;
+}
+
+#imgActivo{
+    height: 17vw;
+}
