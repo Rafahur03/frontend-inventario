@@ -1,7 +1,7 @@
 const { app, BrowserWindow, screen, ipcMain } = require('electron')
 const path = require('path')
 
-const { iniciarSesion } = require('./src/controlers/usuario.js')
+const { iniciarSesion } = require('./src/controlers/usuarios/usuario.js')
 
 require('dotenv').config()
 require('electron-reload')(__dirname, {
@@ -37,10 +37,10 @@ ipcMain.on('salir', (e) => {
 
 // Iniciar sesion 
 ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
-    const data = await iniciarSesion(datosInicioSesion)
-    if (data.msg) {
-        win.webContents('error', data)
-    }
+    // const data = await iniciarSesion(datosInicioSesion)
+    // if (data.msg) {
+    //     win.webContents('error', data)
+    // }
     win.loadFile('src/view/index.html')
-    console.log('iniciado', data)
+    console.log('iniciado')
 })
