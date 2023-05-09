@@ -2,61 +2,83 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../style/css/bootstrap.min.css">
-    <title>Inicio de sesion</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Menu Lateral</title>
+    <link rel="stylesheet" type="text/css" href="../style/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
 </head>
+<style>
+    nav,
+    .offcanvas {
+        background-color: #1e293b;
+    }
+
+    .navbar-toggler {
+        border: none;
+    }
+
+    .navbar-toggler:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .modal-backdrop {
+        width: 0;
+    }
+
+    @media (max-width: 768px) {
+        .navbar-nav>li:hover {
+            background-color: #0dcaf0;
+        }
+    }
+</style>
 
 <body>
-
-    <section class="vh-100">
-        <div class=" container container-fluid mb-5">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-md-9 col-lg-6 col-xl-5 p-5">
-                    <img src="../media/COS.png"
-                        class="img-fluid" alt="Sample image">
-                </div>
-                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 form">
-                    <form class="d-flex flex-column justify-content-center">
-                        <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-                            <p class="fw-bold mx-3">INICIO DE SESION</p>
-                        </div>
-                        <!-- Email input -->
-                        <div class="form-outline mb-4">
-                            <input type="text" id="idUsuario" class="form-control form-control-lg"
-                                placeholder="Ingrese su ID o Email" />
-                            <label class="form-label" for="idUsuario">USUARIO</label>
-                        </div>
-                        <!-- Password input -->
-                        <div class="form-outline mb-3">
-                            <input type="password" id="password" class="form-control form-control-lg"
-                                placeholder="Ingrese su contraseña" />
-                            <label class="form-label" for="password">CONTRASEÑA</label>
-                        </div>
-
-                        <div class="align-self-center text-center text-lg-start mt-4 pt-2">
-                            <button type="submit" class="btn btn-primary btn-lg"
-                                style="padding-left: 2.5rem; padding-right: 2.5rem;">Ingresar</button>
-                        </div>
-                        <div class="align-self-center text-center text-lg-start mt-4 pt-2">
-                            <button type="reset" class="btn btn-warning btn-lg"
-                                style="padding-left: 2.5rem; padding-right: 2.5rem;">Salir</button>
-                        </div>
-                    </form>
-                </div>
+    <!-- MENU START  -->
+    <header class="sticky-top d-inline-flex">
+        <nav class="navbar navbar-dark d-inline-flex">
+            <!-- NAV CONTAINER START -->
+            <div class="container m-0 p-0">
+                <!-- NAV BUTTON  -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuLateral">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- OFFCANVAS MAIN CONTAINER START -->
+                <section class="offcanvas offcanvas-start w-25" id="menuLateral" tabindex="-1">
+                    <div class="offcanvas-header" data-bs-theme="dark">
+                        <h5 class="offcanvas-title text-info">MENU</h5>
+                        <button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="offcanvas"></button>
+                    </div>
+                    <!-- OFF CANVAS MENU LINKS  START-->
+                    <div class="offcanvas-body d-flex flex-column justify-content-between px-0">
+                        <ul class="navbar-nav fs-5 justify-content-evenly">
+                            <li class="nav-item p-3 py-md-1">
+                                <a class="nav-link"  href="">USUARIO</a>
+                            </li>
+                            <li class="nav-item p-3 py-md-1">
+                                <a href="" class="nav-link">PROJECTS</a>
+                            </li>
+                            <li class="nav-item p-3 py-md-1">
+                                <a href="" class="nav-link">ABOUT</a>
+                            </li>
+                            <li class="nav-item p-3 py-md-1">
+                                <a href="" class="nav-link">CONTACT</a>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <!-- OFFCANVAS MAIN CONTAINER END  -->
             </div>
-        </div>
-        <div class="d-flex text-center justify-content-center align-items-end">
-            <div class="text-secondary text-center fw-bold mb-3 mb-md-0">
-                Copyright © 2020. All rights reserved.
-                Rafael Jose Huertas Ruiz
-            </div>
-        </div>
+        </nav>
+    </header>
+    <section>
+        hola
     </section>
+    <!-- <script type="module" src="../style/js/bootstrap.bundle.min.js"></script> -->
+    <script type="module" src="../style/js/bootstrap.min.js"></script>
+    <script type="module" src="../style/js/jquery-1.8.3.min.js"></script>
+
 </body>
-<script type="module" src="../controlers/index.js"></script>
-<script type="module" src="../style/js/jquery-1.8.3.min.js"></script>
-<script type="module" src="../style/js/bootstrap.min.js"></script>
+
 </html>
