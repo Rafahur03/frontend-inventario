@@ -1,4 +1,4 @@
-const agregartap = nodo => {
+const agregarTap = nodo => {
 
     // creamos un nombre aleatorio para el tap
     const id = generateRandomId()
@@ -13,21 +13,20 @@ const agregartap = nodo => {
 
     // creamos el contenedor del contenido de la nueva pestaña vacia sera llenado despues al seleccioanr el menu
     const contenidoTAP = document.createElement('div')
-    contenidoTAP.classList.add('tab-pane', 'fade', 'show', 'active', 'h-100')
+    contenidoTAP.classList.add('tab-pane', 'fade', 'show', 'active')
     contenidoTAP.id = id
     contenidoTAP.role = 'tabpanel'
-    contenidoTAP.innerHTML = `
-            <p>creaste una nueva tap</p>    
-    `
     // agregamos la nueva pestaña ya activa
     const tapActiva = nodo.parentNode.querySelector('.active')
-    tapActiva.classList.remove('active')
+    if (tapActiva !== null) tapActiva.classList.remove('active')
     nodo.parentNode.insertBefore(nuevaTap, nodo)
-        //agregamos el contenedor del contenido de la pestaña
-    nodo.parentNode.nextSibling.nextSibling.appendChild(contenidoTAP)
+    //agregamos el contenedor del contenido de la pestaña
     // desactivamos el contenedor actiovo para mostrar el ya creado
-    const nodoactivo= nodo.parentNode.nextSibling.nextSibling.querySelector('.active')
-    nodoactivo.classList.remove('active')
+    const nodoactivo = nodo.parentNode.nextSibling.nextSibling.querySelector('.active')
+    if (nodoactivo !== null) nodoactivo.classList.remove('active')
+    nodo.parentNode.nextSibling.nextSibling.appendChild(contenidoTAP)
+
+    return contenidoTAP
 }
 
 function generateRandomId() {
@@ -43,5 +42,5 @@ function generateRandomId() {
 }
 
 export {
-    agregartap
+    agregarTap
 }

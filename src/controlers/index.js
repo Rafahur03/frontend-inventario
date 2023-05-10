@@ -1,12 +1,12 @@
 const { ipcRenderer } = require("electron");
-import { agregartap } from "./manejoPestañas/crearPestaña.js"
-import { eliminarTap } from "./manejoPestañas/eliminarPestaña.js"
-
+import { agregarTap }  from "./manejoTap/agregarTap.js";
+import {eliminarTap}  from "./manejoTap/eliminarTap.js"
+import { cagarTapContenido } from "./manejoTap/cargarTapContenido.js";
 
 const nuevaTap = document.querySelector('#nueva-tap')
 
 nuevaTap.addEventListener("click", e => {
-    agregartap(nuevaTap)
+    agregarTap(nuevaTap)
 })
 
 document.addEventListener('click', e => {
@@ -18,14 +18,7 @@ document.addEventListener('click', e => {
 
     if (e.target.classList.contains('item-nav-bar')) {
         document.querySelector('#cerrarNavBar').click()
-        const bodyTap = document.querySelector('#bodyTap')
-        // con estos datos podemos cargar la vita que requiera el usuario ademas de crear una nuevaventana verificando si hay o no tap y cual esta activa
-        console.log(e.target.id)
-        console.log(bodyTap.querySelectorAll('.tab-pane').length)
-        console.log(bodyTap.querySelector('#TabContent .active'))
-
-
-        ipcRenderer.send('cargarContenido')
+        cagarTapContenido(e.target.id)
     }
 });
 

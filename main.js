@@ -44,8 +44,3 @@ ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
     win.loadFile('src/view/index.html')
     console.log('iniciado')
 })
-
-ipcMain.on('cargarContenido', async (e, data) => {
-    const bodyTap = await win.webContents.executeJavaScript(`document.getElementById('bodyTap')`);
-    console.log(bodyTap)
-})
