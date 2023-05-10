@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
 </head>
 <style>
-    .nav-link .close {
+    .nav-link .cerrar-tap {
         display: none;
     }
 
-    .nav-link:hover .close {
+    .nav-link:hover .cerrar-tap {
         display: inline;
     }
 
@@ -44,7 +44,7 @@
 
 <body>
     <!-- MENU START  -->
-    <header class="position-absolute d-inline-flex flex-row">
+    <header class="position-absolute d-inline-flex flex-row" id="cargar">
         <nav class="navbar navbar-dark d-inline">
             <!-- NAV CONTAINER START -->
             <div class="container d-flex flex-column m-0 p-0">
@@ -56,7 +56,7 @@
                 <section class="offcanvas offcanvas-start w-25" id="menuLateral" tabindex="-1">
                     <div class="offcanvas-header" data-bs-theme="dark">
                         <h5 class="offcanvas-title text-info">MENU</h5>
-                        <button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="offcanvas"></button>
+                        <button class="btn-close"  id= "cerrarNavBar" type="button" aria-label="Close" data-bs-dismiss="offcanvas"></button>
                     </div>
                     <!-- OFF CANVAS MENU LINKS  START-->
                     <div class="offcanvas-body d-flex flex-column justify-content-between px-0">
@@ -67,8 +67,8 @@
                                     USUARIO
                                 </a>
                                 <div class="collapse" id="collapseUsuario">
-                                    <a href="" class="nav-link ms-3">Nuevo Usuario</a>
-                                    <a href="" class="nav-link ms-3">Editar Usuario</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="nuevoUsuario">Nuevo Usuario</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="editarUsuario">Editar Usuario</a>
                                 </div>
                             </div>
                             <div class="nav-item p-3 py-md-1">
@@ -77,10 +77,10 @@
                                     ACTIVOS
                                 </a>
                                 <div class="collapse" id="collapseActivos">
-                                    <a href="" class="nav-link ms-3">Ver Activos</a>
-                                    <a href="" class="nav-link ms-3">Crear Activo</a>
-                                    <a href="" class="nav-link ms-3">Consultar Activo</a>
-                                    <a href="" class="nav-link ms-3">Cambiar Clasificacion</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="listadoActivo"</a>Ver Activos</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="crearActivo">Crear Activo</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="editarActivo">Consultar Activo</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="cambiarClasificacion">Cambiar Clasificacion</a>
                                 </div>
                             </div>
                             <div class="nav-item p-3 py-md-1">
@@ -89,9 +89,9 @@
                                     SOLICITUDES
                                 </a>
                                 <div class="collapse" id="collapseSolicitud">
-                                    <a href="" class="nav-link ms-3">Ver Solicitudes</a>
-                                    <a href="" class="nav-link ms-3">Crear Solicitud</a>
-                                    <a href="" class="nav-link ms-3">Consultar Solicitud</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="listadoSolicitud">Ver Solicitudes</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="crearSolicitud">Crear Solicitud</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="consultarSolicitud">Consultar Solicitud</a>
                                 </div>
                             </div>
                             <div class="nav-item p-3 py-md-1">
@@ -100,9 +100,9 @@
                                     REPORTES
                                 </a>
                                 <div class="collapse" id="collapseReporte">
-                                    <a href="" class="nav-link ms-3">Ver Reportes</a>
-                                    <a href="" class="nav-link ms-3">Crear Reporte</a>
-                                    <a href="" class="nav-link ms-3">Consultar Reporte</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="verReportes">Ver Reportes</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="crearReporte">Crear Reporte</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="consultarReporte">Consultar Reporte</a>
                                 </div>
                             </div>
                             <div class="nav-item p-3 py-md-1">
@@ -111,7 +111,7 @@
                                     CONFIGURACION
                                 </a>
                                 <div class="collapse" id="collapseConfig">
-                                    <a href="" class="nav-link ms-3">Consultar Configuracion</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="configuracion">Consultar Configuracion</a>
                                 </div>
                             </div>
                             <div class="nav-item  text-white mt-5 p-3 py-md-1">
@@ -131,18 +131,23 @@
     <div class="border border-2 border-dark"></div>
 
     <section class="d-block">
-        <div class="container-fluid my-3">
+        <div class="container-fluid my-3" id="bodyTap">
             <ul class="nav nav-tabs" id="containerTap" role="tablist">
                 <li class="nav-item home" role="presentation">
                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
-                        type="button" role="tab" aria-controls="home" aria-selected="true">home <span class="fw-bold text-danger ms-2 cerrar-tap" id="home-cerrar" data-bs-dismiss="tab" aria-label="Close"> X</span></button>
+                        type="button" role="tab" aria-controls="home" aria-selected="true">home <span
+                            class="fw-bold text-danger ms-2 cerrar-tap" id="home-cerrar" data-bs-dismiss="tab"
+                            aria-label="Close"> X</span></button>
                 </li>
                 <li class="nav-item ms-2" id="nueva-tap" role="presentation">
-                    <button class="nav-link fw-bold fs-4 p-0" data-bs-toggle="tab"
-                        type="button" role="tab" aria-controls="contact" aria-selected="false">+</button>
+                    <button class="nav-link fw-bold fs-4 p-0" data-bs-toggle="tab" type="button" role="tab"
+                        aria-controls="contact" aria-selected="false">+</button>
                 </li>
             </ul>
             <div class="tab-content" id="TabContent">
+                <div class="tab-pane fade show" id="hola" role="tabpanel" aria-labelledby="hola-tab">
+
+                </div>
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <section class="d-block mt-1">
                         <div class="container-fluid ms-5 w-100 d-flex ">
@@ -341,9 +346,6 @@
                             </table>
                         </div>
                     </section>
-                    <script>
-                  // Script specific to Home tab
-                    </script>
                 </div>
             </div>
         </div>
@@ -354,13 +356,10 @@
             <a class="text-white" href="https://github.com/Rafahur03/">Rafael Jose Huertas Ruiz</a>
         </div>
     </footer>
-
-
-
     <script type="module" src="../controlers/index.js"></script>
     <script type="module" src="../style/js/bootstrap.min.js"></script>
     <script type="module" src="../style/js/jquery-1.8.3.min.js"></script>
-
 </body>
 
 </html>
+
