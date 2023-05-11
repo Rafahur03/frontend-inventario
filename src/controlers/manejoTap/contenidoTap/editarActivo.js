@@ -2,7 +2,7 @@ const editarActivo = () => {
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
-        
+        <h3 class="text-center mt-1 fw-bold">CONSULTAR O EDITAR UN ACTIVO</h3>
         <div class="container-fluid me-5 w-100 d-flex ">
             <div class="p-2"><button type="button" class="btn btn-warning actualizar">Actualizar</button></div>
             <div class="p-2"><button type="button" class="btn btn-secondary solicitar">Solictar Mtto</button></div>
@@ -14,30 +14,39 @@ const editarActivo = () => {
             <h2 class="text-center mt-1">Hoja de Vida de Activos</h2>
             <form class="w-100">
                 <div class="row mx-1 align-items-center">
+
                     <div class="form-group col-4">
                         <div id="carruselImgActivo" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-indicators"></div>
                             <div class="carousel-inner"></div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carruselImgActivo" data-bs-slide="prev">
+                            <button class="carousel-control-prev" type="button"
+                                data-bs-target="#carruselImgActivo" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
                             </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carruselImgActivo" data-bs-slide="next">
+                            <button class="carousel-control-next" type="button"
+                                data-bs-target="#carruselImgActivo" data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
                             </button>
                         </div>
+                        <div class="d-flex d-none flex-column align-items-center justify-content-center"
+                            id="contendorImputImagenesActivo">
+                            <div class="contendorInput position-relative">
+                                <button id="buttonImagenesActivo" type="button"
+                                    class="btn btn-secondary fs-6 btn-lg h-25">Selecione Max 6
+                                    Imagenes</button>
+                                <input class="opacity-0 w-100 position-absolute top-0 start-0 "
+                                    type="file" id="inputImagenesActivo"
+                                    accept="image/png, image/jpeg, image/jpg"
+                                    style="box-sizing:content-box">
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group col-3">
-                        <label for="clasificacionActivo" class="clasificacionActivo">Clasificacion
-                                                Activo</label>
-                        <input type="select" class="form-control my-1  fw-bold" id="clasificacionActivo"
-                                                list="listClasificacionActivo">
-                        <datalist id="listClasificacionActivo"></datalist>
 
-                        <label for="codigoInterno" class="d-none codigoInterno">Codigo Interno</label>
-                        <input type="text" class="form-control my-1 fw-bold d-none" id="codigoInterno"
-                                                readonly>
+                        <label for="codigoInterno" class="codigoInterno">Codigo Interno</label>
+                        <input type="text" class="form-control my-1 fw-bold" id="codigoInterno"readonly>
 
                         <label for="modeloActivo">Modelo</label>
                         <input type="text" class="form-control my-1" id="modeloActivo">
@@ -65,12 +74,12 @@ const editarActivo = () => {
 
                         <label for="procesoActivo">Proceso</label>
                         <input type="text" class="form-control my-1" id="procesoActivo"
-                                                list="listProceso">
+                            list="listProceso">
                         <datalist id="listProceso"></datalist>
 
                         <label for="estadoActivo">Estado</label>
                         <input type="text" class="form-control my-1 fw-bold" id="estadoActivo"
-                                                list="listaEstado">
+                            list="listaEstado">
                         <datalist id="listaEstado"></datalist>
                     </div>
                 </div>
@@ -78,7 +87,7 @@ const editarActivo = () => {
                     <div class="form-group col-5">
                         <label for="proveedorActivo">Provedor</label>
                         <input type="text" class="form-control my-1" id="proveedorActivo"
-                                                list="listaProveedores">
+                            list="listaProveedores">
                         <datalist id="listaProveedores"></datalist>
                     </div>
                     <div class="form-group col-2 nitProveedor">
@@ -89,13 +98,13 @@ const editarActivo = () => {
                     <div class="form-group col-3">
                         <label for="responsableActivo">Responsable del Activo</label>
                         <input type="text" class="form-control my-1" id="responsableActivo"
-                                                list="listaUsuario">
+                            list="listaUsuario">
                         <datalist id="listaUsuario"></datalist>
                     </div>
                     <div class="form-group col-2">
                         <label for="tipoActivo">Tipo activo</label>
                         <input type="text" class="form-control my-1" id="tipoActivo"
-                                                list="listaTipoActivo">
+                            list="listaTipoActivo">
                         <datalist id="listaTipoActivo"></datalist>
                     </div>
 
@@ -125,7 +134,7 @@ const editarActivo = () => {
                     <div class="form-group col-2">
                         <label for="frecuenciaMtto">Frecuencia de Mtto</label>
                         <input type="text" class="form-control my-1" id="frecuenciaMtto"
-                                                list="listaFrecuencia">
+                            list="listaFrecuencia">
                         <datalist id="listaFrecuencia"></datalist>
                     </div>
                     <div class="form-group col-2 d-none ultimoMtto ">
@@ -154,7 +163,7 @@ const editarActivo = () => {
                 </div>
             </form>
         </div>
-        <div class="container-fluid w-100 m-0 p-0 my-3 d-none historialMantenimiento">
+        <div class="container-fluid w-100 m-0 p-0 my-3 historialMantenimiento">
             <h2 class="text-center fw-bold">Historial de Mantenimientos</h2>
             <table class="table W-100 table-striped table-hover table-sm table-responsive">
                 <thead>
@@ -172,7 +181,7 @@ const editarActivo = () => {
                 <tbody>
                 </tbody>
             </table>
-        </div>
+        </div>   
     `
 
     return seccion

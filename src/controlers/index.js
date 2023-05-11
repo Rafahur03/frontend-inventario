@@ -9,6 +9,7 @@ nuevaTap.addEventListener("click", e => {
     agregarTap(nuevaTap)
 })
 
+
 document.addEventListener('click', e => {
     if (e.target.classList.contains('cerrar-tap')) {
         const selector = e.target.id.split('-')[0]
@@ -22,3 +23,4 @@ document.addEventListener('click', e => {
     }
 });
 
+ 
