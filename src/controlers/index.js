@@ -1,10 +1,14 @@
-const { ipcRenderer } = require("electron");
+const { remote } = require('electron')
 import { agregarTap }  from "./manejoTap/agregarTap.js";
 import {eliminarTap}  from "./manejoTap/eliminarTap.js"
 import { cagarTapContenido } from "./manejoTap/cargarTapContenido.js";
 
-const nuevaTap = document.querySelector('#nueva-tap')
 
+
+const nuevaTap = document.querySelector('#nueva-tap')
+addEventListener("DOMContentLoaded", (event) => {
+   console.log(remote)
+})
 nuevaTap.addEventListener("click", e => {
     agregarTap(nuevaTap)
 })

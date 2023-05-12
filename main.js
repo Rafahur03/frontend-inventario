@@ -36,11 +36,24 @@ ipcMain.on('salir', (e) => {
 })
 
 // Iniciar sesion 
+let dataUsuarioSesion
 ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
-    // const data = await iniciarSesion(datosInicioSesion)
-    // if (data.msg) {
-    //     win.webContents('error', data)
-    // }
-    win.loadFile('src/view/index.html')
-    console.log('iniciado')
+    try {
+        dataUsuarioSesion = await iniciarSesion(datosInicioSesion)
+        if (dataUsuarioSesion.msg) {
+            win.webContents('error', dataUsuarioSesion)
+        }
+        win.loadFile('src/view/index.html')
+ 
+        win.dataUsuarioSesion = {
+            nombre:dataUsuarioSesion.nombre,
+            permisos:dataUsuarioSesion.permisos
+
+            }
+        
+    } catch (error) {
+        console.log(error)
+
+    }
+
 })

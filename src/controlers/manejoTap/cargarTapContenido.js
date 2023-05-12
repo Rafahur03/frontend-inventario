@@ -11,6 +11,8 @@ import { editarReporte } from "./contenidoTap/editarReporte.js"
 import { crearUsuario } from "./contenidoTap/crearUsuario.js"
 import { editarUsuario } from "./contenidoTap/editarUsuario.js"
 import { cambiarClave } from "./contenidoTap/cambiarClave.js"
+import { configuracionVista } from "./contenidoTap/configuracionVista.js"
+import { cambiarClasificacion } from "./contenidoTap/cambiarClasificacion.js"
 
 const cagarTapContenido = id => {
 
@@ -21,14 +23,14 @@ const cagarTapContenido = id => {
         'listadoActivo': listadoActivos(),
         'crearActivo': crearActivo(),
         'editarActivo': editarActivo(),
-        'cambiarClasificacion': 1,
+        'cambiarClasificacion': cambiarClasificacion(),
         'listadoSolicitud': listadoSolicitudes(),
         'crearSolicitud': crearSolicitud(),
         'consultarSolicitud': editarSolicitud(),
         'verReportes': listadoReportes(),
         'crearReporte': crearReporte(),
         'consultarReporte':editarReporte(),
-        'configuracion': 1
+        'configuracion': configuracionVista()
 
     }
     const bodyTap = document.querySelector('#bodyTap')

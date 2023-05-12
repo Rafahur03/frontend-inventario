@@ -11,7 +11,7 @@ const iniciarSesion = async data => {
     try {
         const response = await fetch(url, options);
         const json = await response.json();
-        return json
+        return (json)
     } catch (error) {
         console.error(error);
     }
