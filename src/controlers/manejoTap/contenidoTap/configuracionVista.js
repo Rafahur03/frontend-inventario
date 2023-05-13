@@ -41,7 +41,7 @@ const configuracionVista = () => {
                         Activos</button>
                 </li>
                 <li class="nav-item  mx-2 proveedores" role="presentation">
-                    <button class="nav-link active" id="proveedores-tab" data-bs-toggle="tab"
+                    <button class="nav-link" id="proveedores-tab" data-bs-toggle="tab"
                         data-bs-target="#proveedores" type="button" role="tab"
                         aria-controls="proveedores" aria-selected="true">Proveedores</button>
                 </li>
@@ -692,7 +692,7 @@ const configuracionVista = () => {
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade show mt-4 active" id="proveedores" role="tabpanel"
+                <div class="tab-pane fade show mt-4" id="proveedores" role="tabpanel"
                     aria-labelledby="proveedores-tab">
                     <h3 class="fw-bold text-center my-2">PROVEEDORES</h3>
                     <div class="container-fluid m-0 p-0 mb-4 ">
@@ -726,7 +726,7 @@ const configuracionVista = () => {
                                 <label for="estadoProveedor" class="fw-bold">Estado</label>
                             </div>
                         </div>
-                        <div class="row" id:"">
+                        <div class="row bg-light" id:"">
                             <div class="col-1">
                                 <input type="text" class="form-control my-1" id="idProveedor">
                             </div>

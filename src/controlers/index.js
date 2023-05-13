@@ -1,14 +1,17 @@
-const { remote } = require('electron')
-import { agregarTap }  from "./manejoTap/agregarTap.js";
-import {eliminarTap}  from "./manejoTap/eliminarTap.js"
+const { ipcRenderer } = require('electron')
+import { agregarTap } from "./manejoTap/agregarTap.js";
+import { eliminarTap } from "./manejoTap/eliminarTap.js";
+import { insertarMenu } from "./manejoTap/insertarMenu/insertarMenu.js";
 import { cagarTapContenido } from "./manejoTap/cargarTapContenido.js";
 
 
 
 const nuevaTap = document.querySelector('#nueva-tap')
-addEventListener("DOMContentLoaded", (event) => {
-   console.log(remote)
+
+ipcRenderer.on('sesion', (e, sesion) => {
+    insertarMenu(sesion)
 })
+
 nuevaTap.addEventListener("click", e => {
     agregarTap(nuevaTap)
 })
@@ -27,4 +30,3 @@ document.addEventListener('click', e => {
     }
 });
 
- 

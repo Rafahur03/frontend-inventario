@@ -2,7 +2,7 @@ const crearUsuario = () => {
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
-        <h3 class="text-center mt-1 fw-bold">CREAR USUARIOO</h3>
+        <h3 class="text-center mt-1 fw-bold">CREAR USUARIO</h3>
         <div class="container-fluid w-100 d-flex mx-1">
             <div class="p-1"><button type="button" class="btn btn-success crear">Crear</button></div>
         </div>
