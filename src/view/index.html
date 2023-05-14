@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
 </head>
 <style>
+    .cardFrase {
+        width: 64%;
+    }
+
     .nav-link .cerrar-tap {
         display: none;
     }
@@ -40,6 +44,7 @@
             background-color: #0dcaf0;
         }
     }
+
 </style>
 
 <body>
@@ -79,11 +84,13 @@
                                 </a>
                                 <div class="collapse" id="collapseActivos">
                                     <a href="#" class="nav-link ms-3 item-nav-bar" id="listadoActivo">Ver Activos</a>
-                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="editarActivo">Consultar Activo</a>                                
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="editarActivo">Consultar
+                                        Activo</a>
                                 </div>
                             </div>
                             <div class="nav-item p-3 py-md-1">
-                                <a class="nav-link" data-bs-toggle="collapse" href="#collapseSolicitud" role="button" aria-expanded="false" aria-controls="collapseSolicitud">
+                                <a class="nav-link" data-bs-toggle="collapse" href="#collapseSolicitud" role="button"
+                                    aria-expanded="false" aria-controls="collapseSolicitud">
                                     SOLICITUDES
                                 </a>
                                 <div class="collapse" id="collapseSolicitud">
@@ -91,7 +98,8 @@
                                         Solicitudes</a>
                                     <a href="#" class="nav-link ms-3 item-nav-bar" id="crearSolicitud">Crear
                                         Solicitud</a>
-                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="consultarSolicitud">Consultar Solicitud</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="consultarSolicitud">Consultar
+                                        Solicitud</a>
                                 </div>
                             </div>
                             <div class="nav-item p-3 py-md-1">
@@ -100,8 +108,9 @@
                                     REPORTES
                                 </a>
                                 <div class="collapse" id="collapseReporte">
-                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="verReportes">Ver Reportes</a>                                    
-                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="consultarReporte">Consultar Reporte</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="verReportes">Ver Reportes</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="consultarReporte">Consultar
+                                        Reporte</a>
                                 </div>
                             </div>
                             <div class="nav-item p-3 py-md-1">
@@ -110,11 +119,12 @@
                                     CONFIGURACION
                                 </a>
                                 <div class="collapse" id="collapseConfig">
-                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="configuracion">Ver Configuracion</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="configuracion">Ver
+                                        Configuracion</a>
                                 </div>
                             </div>
                             <div class="nav-item  text-white mt-5 p-3 py-md-1 nombreUsuarioMenu">
-                               
+
                             </div>
                         </div>
                     </div>
@@ -145,8 +155,23 @@
             </ul>
             <div class="tab-content" id="TabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <section class="d-block  my-3">
-                        
+                    <section class="d-flex W-75 my-3 justify-content-center">
+                        <div class="card bg-ligth text-white cardFrase">
+                            <img src="../media/lake-g166727f1a_1280.jpg " class="card-img" alt="card-faro">
+                            <div class="card-img-overlay">
+                                <h4 class="card-title fw-bold mt-5">
+                                    <em id="usuarioFrase"></em>
+                                </h4>
+                                <blockquote class="blockquote fs-3 fw-bold m-5">
+                                    <p class="card-text mt-5">
+                                        <em id="fraseText"></em>
+                                    </p>
+                                </blockquote>
+                                <p class="card-text position-absolute fw-bold bottom-0 end-0 m-5">
+                                    <em id="author"></em>
+                                </p>
+                            </div>
+                        </div>
                     </section>
                 </div>
             </div>

@@ -46,15 +46,18 @@ ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
         win.loadFile('src/view/index.html')
 
         const sesion = {
-            nombre:dataUsuarioSesion.data.nombre,
-            permisos:dataUsuarioSesion.data.permisos
+            data: {
+                nombre: dataUsuarioSesion.data.nombre,
+                permisos: dataUsuarioSesion.data.permisos
+            },
+            motivacion:dataUsuarioSesion.frase
+
         }
-        win.webContents.on('dom-ready',()=>{
-            console.log(dataUsuarioSesion)
+        win.webContents.on('dom-ready', () => {
             win.webContents.send('sesion', sesion)
         })
-        
-        
+
+
     } catch (error) {
         console.log(error)
 

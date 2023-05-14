@@ -6,7 +6,6 @@ const menu = (vector) => {
         const divReporte = document.querySelectorAll('#collapseReporte a')
         switch (element) {
             case 1:
-                console.log('aqui')
                 const uCrear = document.createElement('a')
                 uCrear.setAttribute('href', '#')
                 uCrear.classList.add('nav-link', 'ms-3', 'item-nav-bar')

@@ -3,13 +3,15 @@ import { agregarTap } from "./manejoTap/agregarTap.js";
 import { eliminarTap } from "./manejoTap/eliminarTap.js";
 import { insertarMenu } from "./manejoTap/insertarMenu/insertarMenu.js";
 import { cagarTapContenido } from "./manejoTap/cargarTapContenido.js";
+import { mostrarFrase } from "./manejoTap/mostrarFrases.js";
 
 
 
 const nuevaTap = document.querySelector('#nueva-tap')
 
 ipcRenderer.on('sesion', (e, sesion) => {
-    insertarMenu(sesion)
+    insertarMenu(sesion.data)
+    mostrarFrase(sesion.motivacion)
 })
 
 nuevaTap.addEventListener("click", e => {
