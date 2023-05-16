@@ -17,20 +17,20 @@ import { cambiarClasificacion } from "./contenidoTap/cambiarClasificacion.js"
 const cagarTapContenido = id => {
 
     const contenido = {
-        'nuevoUsuario': crearUsuario(),
-        'editarUsuario': editarUsuario(),
-        'editarclave': cambiarClave(),
-        'listadoActivo': listadoActivos(),
-        'crearActivo': crearActivo(),
-        'editarActivo': editarActivo(),
-        'cambiarClasificacion': cambiarClasificacion(),
-        'listadoSolicitud': listadoSolicitudes(),
-        'crearSolicitud': crearSolicitud(),
-        'consultarSolicitud': editarSolicitud(),
-        'verReportes': listadoReportes(),
-        'crearReporte': crearReporte(),
-        'consultarReporte':editarReporte(),
-        'configuracion': configuracionVista()
+        'nuevoUsuario': crearUsuario,
+        'editarUsuario': editarUsuario,
+        'editarclave': cambiarClave,
+        'listadoActivo': listadoActivos,
+        'crearActivo': crearActivo,
+        'editarActivo': editarActivo,
+        'cambiarClasificacion': cambiarClasificacion,
+        'listadoSolicitud': listadoSolicitudes,
+        'crearSolicitud': crearSolicitud,
+        'consultarSolicitud': editarSolicitud,
+        'verReportes': listadoReportes,
+        'crearReporte': crearReporte,
+        'consultarReporte':editarReporte,
+        'configuracion': configuracionVista
 
     }
     const bodyTap = document.querySelector('#bodyTap')
@@ -39,9 +39,9 @@ const cagarTapContenido = id => {
         const atribute = document.createAttribute('tipoVista')
         atribute.value= id
         contenidoTap.setAttributeNode(atribute)
-        contenidoTap.appendChild(contenido[id]);
+        contenidoTap.appendChild(contenido[id]());
         return
-    } contenido[id]
+    } 
 
     const contenActivo = bodyTap.querySelector('#TabContent .active')
     if (contenActivo.firstChild !== null) {
@@ -49,12 +49,13 @@ const cagarTapContenido = id => {
             contenActivo.removeChild(contenActivo.firstChild);
         }
     }
+
     if(!contenActivo.tipoVista){
         const atribute = document.createAttribute('tipoVista')
         atribute.value= id
         contenActivo.setAttributeNode(atribute)
     }
-    contenActivo.appendChild(contenido[id]);
+    contenActivo.appendChild(contenido[id]());
     
 
 }

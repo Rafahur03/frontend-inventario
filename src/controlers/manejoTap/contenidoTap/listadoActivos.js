@@ -1,16 +1,21 @@
+const { ipcRenderer } = require('electron')
+import { filtroBusqueda } from "../../helpers/filtroBusqueda.js";
+
 const listadoActivos = () => {
+    const listado = ipcRenderer.sendSync('listadoActivo');
+    console.log(listado);
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
         <h2 class="text-center mt-1">Listado Activos</h2>
-        <div class="w-100 bg-light my-2 p-2">
-            <form class="w-50 mb-4">
+        <div class="w-100 bg-light p-2">
+            <form class="w-50 mb-1">
                 <h2>Filtrar por:</h2>
                 <p>Escriba cuaquiera de estos datos: id equipo, marca, modelo, serie, ubicacion, responsable</p>
                 <input class="form-control" id="inputFiltro" type="text" placeholder="Buscar...">
             </form>
         </div>
-        <div class="w-100 p-3">
+        <div class="w-100 p-1">
             <table class="table W-100 table-striped table-hover table-responsive">
                 <thead>
                     <tr class="text-uppercase text-center">
@@ -24,13 +29,44 @@ const listadoActivos = () => {
                         <th scope="col">estado</th>
                     </tr>
                 </thead>
-                <tbody id="listado">
+                <tbody id="listadoActivo">
                 </tbody>
             </table>
         </div>
-        
     `
+    const tbody = seccion.querySelector('#listadoActivo')
+    listado.forEach(element => {
+        const tr = document.createElement('tr')
+        const tdcodigo = document.createElement('td')
+        const tdnombreActivo = document.createElement('td')
+        const tdmarca = document.createElement('td')
+        const tdmodelo = document.createElement('td')
+        const tdserie = document.createElement('td')
+        const tdubicacion = document.createElement('td')
+        const tdnombreResponsable = document.createElement('td')
+        const tdestado = document.createElement('td')
+        tr.id = element.id
+        tdcodigo.textContent = element.codigoInterno
+        tdnombreActivo.textContent = element.nombreActivo
+        tdmarca.textContent = element.marca
+        tdmodelo.textContent = element.modelo
+        tdserie.textContent = element.serie
+        tdubicacion.textContent = element.ubicacion
+        tdnombreResponsable.textContent = element.nombreResponsable
+        tdestado.textContent = element.estado
+        tr.appendChild(tdcodigo)
+        tr.appendChild(tdnombreActivo)
+        tr.appendChild(tdmarca)
+        tr.appendChild(tdmodelo)
+        tr.appendChild(tdserie)
+        tr.appendChild(tdubicacion)
+        tr.appendChild(tdnombreResponsable)
+        tr.appendChild(tdestado)
+        tbody.appendChild(tr)
+    });
 
+    const filtro = seccion.querySelector('#inputFiltro')
+    filtro.oninput = e => { filtroBusqueda(e) }
     return seccion
 }
 

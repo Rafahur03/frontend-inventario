@@ -2,6 +2,7 @@ const { app, BrowserWindow, screen, ipcMain } = require('electron')
 const path = require('path')
 
 const { iniciarSesion } = require('./src/controlers/usuarios/usuario.js')
+const { consultarListadoActivos } = require('./src/controlers/activos/activos.js')
 
 require('dotenv').config()
 require('electron-reload')(__dirname, {
@@ -64,3 +65,10 @@ ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
     }
 
 })
+
+// consultar el listado de activos
+ipcMain.on('listadoActivo', async (e) => {
+    const token = dataUsuarioSesion.token
+    const listado =  await consultarListadoActivos(token)
+    e.returnValue = listado;
+  })
