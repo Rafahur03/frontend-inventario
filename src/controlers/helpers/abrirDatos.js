@@ -1,5 +1,6 @@
 ﻿
 import { cagarNuevaVista } from "../manejoTap/cargarTapContenido.js"
+import { cargarDatosActivo } from "../activos/cargarDatosActivo.js"
 const abrirDatos = (e) => {
     const vista={
         Act:'editarActivo',
@@ -17,7 +18,9 @@ const abrirDatos = (e) => {
     const contenido = tr.id.split('-')[0]
     const id = tr.id.split('-')[1]
     cagarNuevaVista( vista[contenido])
-    console.log(id)
+    cargarDatosActivo(id)
+    
+  
 }
 
 export { abrirDatos } 

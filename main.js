@@ -2,7 +2,7 @@ const { app, BrowserWindow, screen, ipcMain } = require('electron')
 const path = require('path')
 
 const { iniciarSesion } = require('./src/controlers/usuarios/usuario.js')
-const { consultarListadoActivos } = require('./src/controlers/activos/activos.js')
+const { consultarListadoActivos, consultarActivo } = require('./src/controlers/activos/activos.js')
 const { consultarListadoSolicitudes }= require('./src/controlers/solicitudes/solicitudes.js')
 const { consultarListadoReportes }= require('./src/controlers/reportes/reporte.js')
 
@@ -73,6 +73,18 @@ ipcMain.on('listadoActivo', async (e) => {
     const token = dataUsuarioSesion.token
     const listado = await consultarListadoActivos(token)
     e.returnValue = listado;
+})
+
+ipcMain.on('consultarActivo', async (e, id) => {
+    const token = dataUsuarioSesion.token
+    const activo = await consultarActivo(id, token)
+    if(!activo.msg){
+        activo.editar=false
+    }
+    if(dataUsuarioSesion.data.permisos.indexOf(3) !== -1) {
+        activo.editar=true
+    }      
+    e.returnValue = activo;
 })
 
 

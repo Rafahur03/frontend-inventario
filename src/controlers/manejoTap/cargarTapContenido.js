@@ -17,20 +17,20 @@ import { cambiarClasificacion } from "./contenidoTap/cambiarClasificacion.js"
 const cagarTapContenido = id => {
 
     const contenido = {
-        'nuevoUsuario': crearUsuario,
-        'editarUsuario': editarUsuario,
-        'editarclave': cambiarClave,
-        'listadoActivo': listadoActivos,
-        'crearActivo': crearActivo,
-        'editarActivo': editarActivo,
-        'cambiarClasificacion': cambiarClasificacion,
-        'listadoSolicitud': listadoSolicitudes,
-        'crearSolicitud': crearSolicitud,
-        'consultarSolicitud': editarSolicitud,
-        'verReportes': listadoReportes,
-        'crearReporte': crearReporte,
-        'consultarReporte': editarReporte,
-        'configuracion': configuracionVista
+        'nuevoUsuario': crearUsuario,// abre la ventana para crear un nuevo Usuario
+        'editarUsuario': editarUsuario, // abre la ventana para editar un usuario
+        'editarclave': cambiarClave, // abre la ventana de cambiar clave
+        'listadoActivo': listadoActivos, // habre la ventana de listado activos
+        'crearActivo': crearActivo, // abre la ventanan de crear un activo
+        'editarActivo': editarActivo, // abre la ventana de editar o conultar u activo es la misma
+        'cambiarClasificacion': cambiarClasificacion, // abre la ventana de cambiar clasificacion
+        'listadoSolicitud': listadoSolicitudes, // abre la ventana de listado de solcitud 
+        'crearSolicitud': crearSolicitud, // abre ventana crear solicitud
+        'consultarSolicitud': editarSolicitud, // abre ventana editar o consultar solicitud
+        'verReportes': listadoReportes, // abre ventana de listado de reportes
+        'crearReporte': crearReporte, // abrre ventana de crearReporte
+        'consultarReporte': editarReporte, //abre ventana de consultar o editar un reporte
+        'configuracion': configuracionVista //abre ventana de configuracion
 
     }
     const bodyTap = document.querySelector('#bodyTap')
@@ -70,13 +70,13 @@ const cagarNuevaVista = id => {
         'crearReporte': crearReporte,
         'consultarReporte': editarReporte,
     }
-    const bodyTap = document.querySelector('#bodyTap')
-
+    
     const contenidoTap = agregarTap(document.querySelector('#nueva-tap'))
     const atribute = document.createAttribute('tipoVista')
     atribute.value = id
     contenidoTap.setAttributeNode(atribute)
     contenidoTap.appendChild(contenido[id]());
+
 }
 
 export {
