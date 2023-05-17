@@ -1,9 +1,10 @@
 const { ipcRenderer } = require('electron')
 import { filtroBusqueda } from "../../helpers/filtroBusqueda.js";
+import { abrirDatos } from "../../helpers/abrirDatos.js"
 
 const listadoActivos = () => {
+    
     const listado = ipcRenderer.sendSync('listadoActivo');
-    console.log(listado);
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
@@ -12,7 +13,7 @@ const listadoActivos = () => {
             <form class="w-50 mb-1">
                 <h2>Filtrar por:</h2>
                 <p>Escriba cuaquiera de estos datos: id equipo, marca, modelo, serie, ubicacion, responsable</p>
-                <input class="form-control" id="inputFiltro" type="text" placeholder="Buscar...">
+                <input class="form-control inputFiltro" type="text" placeholder="Buscar...">
             </form>
         </div>
         <div class="w-100 p-1">
@@ -29,12 +30,12 @@ const listadoActivos = () => {
                         <th scope="col">estado</th>
                     </tr>
                 </thead>
-                <tbody id="listadoActivo">
+                <tbody>
                 </tbody>
             </table>
         </div>
     `
-    const tbody = seccion.querySelector('#listadoActivo')
+    const tbody = seccion.querySelector('tbody')
     listado.forEach(element => {
         const tr = document.createElement('tr')
         const tdcodigo = document.createElement('td')
@@ -45,7 +46,7 @@ const listadoActivos = () => {
         const tdubicacion = document.createElement('td')
         const tdnombreResponsable = document.createElement('td')
         const tdestado = document.createElement('td')
-        tr.id = element.id
+        tr.id = `Act-${element.id}`
         tdcodigo.textContent = element.codigoInterno
         tdnombreActivo.textContent = element.nombreActivo
         tdmarca.textContent = element.marca
@@ -63,10 +64,12 @@ const listadoActivos = () => {
         tr.appendChild(tdnombreResponsable)
         tr.appendChild(tdestado)
         tbody.appendChild(tr)
+        tr.ondblclick = e => {abrirDatos(e)}
     });
 
-    const filtro = seccion.querySelector('#inputFiltro')
+    const filtro = seccion.querySelector('.inputFiltro')
     filtro.oninput = e => { filtroBusqueda(e) }
+
     return seccion
 }
 

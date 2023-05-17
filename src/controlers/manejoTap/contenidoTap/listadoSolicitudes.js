@@ -1,4 +1,10 @@
+const { ipcRenderer } = require('electron')
+import { filtroBusqueda } from "../../helpers/filtroBusqueda.js";
+import { abrirDatos } from "../../helpers/abrirDatos.js"
+
 const listadoSolicitudes = () => {
+
+    const listado = ipcRenderer.sendSync('listadoSolicitud');
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
@@ -7,29 +13,63 @@ const listadoSolicitudes = () => {
             <form class="w-50 mb-4">
                 <h2>Filtrar por:</h2>
                 <p>Escriba cuaquiera de estos datos: id equipo, Id solicitud, Nombre del activo marca, modelo, serie, ubicacion, responsable</p>
-                <input class="form-control" id="inputFiltro" type="text" placeholder="Buscar...">
+                <input class="form-control inputFiltro" type="text" placeholder="Buscar...">
             </form>
         </div>
         <div class="w-100 p-3">
             <table class="table W-100 table-striped table-hover table-responsive">
                 <thead>
                     <tr class="text-uppercase text-center">
-                        <th scope="col">id Solicitud</th>
-                        <th scope="col">id activo</th>
-                        <th scope="col">nombre</th>
-                        <th scope="col">marca</th>
-                        <th scope="col">modelo</th>
-                        <th scope="col">ubicacion</th>
-                        <th scope="col">Solicitante</th>
-                        <th scope="col">estado</th>
+                        <th scope="col">Id Solicitud</th>
+                        <th scope="col">Codigo Activo</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Marca</th>
+                        <th scope="col">Modelo</th>
+                        <th scope="col">Solicitud</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Estado</th>
                     </tr>
                 </thead>
-                <tbody id="listado">
+                <tbody>
                 </tbody>
             </table>
         </div>
-        
     `
+    const tbody = seccion.querySelector('tbody')
+    listado.forEach(element => {
+        const tr = document.createElement('tr')
+
+        const tdId= document.createElement('td')
+        const tdcodigo = document.createElement('td')
+        const tdnombreActivo = document.createElement('td')
+        const tdmarca = document.createElement('td')
+        const tdmodelo = document.createElement('td')
+        const tdSolicitud = document.createElement('td')
+        const tdFecha = document.createElement('td')
+        const tdestado = document.createElement('td')
+        tr.id = `Sol-${element.id}`
+        tdId.textContent= element.id
+        tdcodigo.textContent = element.codigoInterno
+        tdnombreActivo.textContent = element.nombreActivo
+        tdmarca.textContent = element.marca
+        tdmodelo.textContent = element.modelo
+        tdSolicitud.textContent = element.solicitud
+        tdFecha.textContent = element.fecha_solicitud
+        tdestado.textContent = element.estado
+        tr.appendChild(tdId)
+        tr.appendChild(tdcodigo)
+        tr.appendChild(tdnombreActivo)
+        tr.appendChild(tdmarca)
+        tr.appendChild(tdmodelo)
+        tr.appendChild(tdSolicitud)
+        tr.appendChild(tdFecha)
+        tr.appendChild(tdestado)
+        tbody.appendChild(tr)
+        tr.ondblclick = e => {abrirDatos(e)}
+    });
+
+    const filtro = seccion.querySelector('.inputFiltro')
+    filtro.oninput = e => { filtroBusqueda(e) }
 
     return seccion
 }

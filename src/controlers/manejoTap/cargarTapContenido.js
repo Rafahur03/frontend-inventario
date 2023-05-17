@@ -29,7 +29,7 @@ const cagarTapContenido = id => {
         'consultarSolicitud': editarSolicitud,
         'verReportes': listadoReportes,
         'crearReporte': crearReporte,
-        'consultarReporte':editarReporte,
+        'consultarReporte': editarReporte,
         'configuracion': configuracionVista
 
     }
@@ -37,11 +37,11 @@ const cagarTapContenido = id => {
     if (bodyTap.querySelectorAll('.tab-pane').length == 0) {
         const contenidoTap = agregarTap(document.querySelector('#nueva-tap'))
         const atribute = document.createAttribute('tipoVista')
-        atribute.value= id
+        atribute.value = id
         contenidoTap.setAttributeNode(atribute)
         contenidoTap.appendChild(contenido[id]());
         return
-    } 
+    }
 
     const contenActivo = bodyTap.querySelector('#TabContent .active')
     if (contenActivo.firstChild !== null) {
@@ -50,16 +50,36 @@ const cagarTapContenido = id => {
         }
     }
 
-    if(!contenActivo.tipoVista){
+    if (!contenActivo.tipoVista) {
         const atribute = document.createAttribute('tipoVista')
-        atribute.value= id
+        atribute.value = id
         contenActivo.setAttributeNode(atribute)
     }
     contenActivo.appendChild(contenido[id]());
-    
+
 
 }
 
+const cagarNuevaVista = id => {
+
+    const contenido = {
+
+        'editarActivo': editarActivo,
+        'crearSolicitud': crearSolicitud,
+        'consultarSolicitud': editarSolicitud,
+        'crearReporte': crearReporte,
+        'consultarReporte': editarReporte,
+    }
+    const bodyTap = document.querySelector('#bodyTap')
+
+    const contenidoTap = agregarTap(document.querySelector('#nueva-tap'))
+    const atribute = document.createAttribute('tipoVista')
+    atribute.value = id
+    contenidoTap.setAttributeNode(atribute)
+    contenidoTap.appendChild(contenido[id]());
+}
+
 export {
-    cagarTapContenido
+    cagarTapContenido,
+    cagarNuevaVista
 }

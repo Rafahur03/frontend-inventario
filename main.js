@@ -3,6 +3,8 @@ const path = require('path')
 
 const { iniciarSesion } = require('./src/controlers/usuarios/usuario.js')
 const { consultarListadoActivos } = require('./src/controlers/activos/activos.js')
+const { consultarListadoSolicitudes }= require('./src/controlers/solicitudes/solicitudes.js')
+const { consultarListadoReportes }= require('./src/controlers/reportes/reporte.js')
 
 require('dotenv').config()
 require('electron-reload')(__dirname, {
@@ -51,7 +53,7 @@ ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
                 nombre: dataUsuarioSesion.data.nombre,
                 permisos: dataUsuarioSesion.data.permisos
             },
-            motivacion:dataUsuarioSesion.frase
+            motivacion: dataUsuarioSesion.frase
 
         }
         win.webContents.on('dom-ready', () => {
@@ -69,6 +71,20 @@ ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
 // consultar el listado de activos
 ipcMain.on('listadoActivo', async (e) => {
     const token = dataUsuarioSesion.token
-    const listado =  await consultarListadoActivos(token)
+    const listado = await consultarListadoActivos(token)
+    e.returnValue = listado;
+})
+
+
+// consultar el listado de activos
+ipcMain.on('listadoSolicitud', async (e) => {
+    const token = dataUsuarioSesion.token
+    const listado =  await consultarListadoSolicitudes(token)
+    e.returnValue = listado;
+  })
+
+  ipcMain.on('listadoReportes', async (e) => {
+    const token = dataUsuarioSesion.token
+    const listado =  await consultarListadoReportes(token)
     e.returnValue = listado;
   })

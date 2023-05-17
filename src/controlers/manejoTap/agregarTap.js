@@ -7,7 +7,7 @@ const agregarTap = nodo => {
     nuevaTap.classList.add('nav-item', id)
     nuevaTap.role = 'presentation'
     nuevaTap.innerHTML = `         
-                <button class="nav-link active" id="${id}contact-tab" data-bs-toggle="tab" data-bs-target="#${id}"
+                <button class="nav-link active" id="${id}-tab" data-bs-toggle="tab" data-bs-target="#${id}"
                 type="button" role="tab" aria-controls="${id}" aria-selected="false">newTap <span class="fw-bold text-danger ms-2 cerrar-tap" id="${id}-cerrar" data-bs-dismiss="tab" aria-label="Close"> X</span></button>
     `
 
