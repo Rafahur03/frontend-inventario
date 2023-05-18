@@ -42,5 +42,7 @@ function generateRandomId() {
 }
 
 export {
-    agregarTap
+    agregarTap,
+    generateRandomId
+
 }

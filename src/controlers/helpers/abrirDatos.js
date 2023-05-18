@@ -17,8 +17,8 @@ const abrirDatos = (e) => {
 
     const contenido = tr.id.split('-')[0]
     const id = tr.id.split('-')[1]
-    cagarNuevaVista( vista[contenido])
-    cargarDatosActivo(id)
+    const contenedor = cagarNuevaVista( vista[contenido], contenido)
+    cargarDatosActivo(id, contenedor)
     
   
 }

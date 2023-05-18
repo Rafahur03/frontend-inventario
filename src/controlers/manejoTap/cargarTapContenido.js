@@ -60,7 +60,7 @@ const cagarTapContenido = id => {
 
 }
 
-const cagarNuevaVista = id => {
+const cagarNuevaVista = (id) => {
 
     const contenido = {
 
@@ -76,6 +76,7 @@ const cagarNuevaVista = id => {
     atribute.value = id
     contenidoTap.setAttributeNode(atribute)
     contenidoTap.appendChild(contenido[id]());
+    return contenidoTap
 
 }
 
