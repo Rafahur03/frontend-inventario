@@ -2,9 +2,20 @@ const { ipcRenderer } = require('electron')
 import { generateRandomId } from '../manejoTap/agregarTap.js'
 import { rotarImg } from '../helpers/rotarImg.js'
 import { eliminarImg } from '../helpers/eliminarImg.js'
+import { imprimirActivo } from './ImprimirActivo.js'
+import { solicitarMttoActivo } from './solicitarMttoActivo.js'
+import { editarActivo } from './editarActivo.js'
+import { imprimirListadoMtoActivo } from './ImprimirListadoMtto.js'
+import { agregarComponente } from '../componentes/agregarLineaComponente.js'
+import { eliminarActivo } from './eliminarActivo.js'
+import { eliminarComponente } from '../componentes/eliminarComponente.js'
+
 const cargarDatosActivo = (id, nodo) => {
     const data = ipcRenderer.sendSync('consultarActivo', id)
     const activo = data.activo
+    console.log(data)
+
+    const form = nodo.querySelector('form')
     const codigoInterno = nodo.querySelector('.codigoInterno')
     const modeloActivo = nodo.querySelector('.modeloActivo')
     const areaActivo = nodo.querySelector('.areaActivo')
@@ -36,11 +47,14 @@ const cargarDatosActivo = (id, nodo) => {
     const carruselBotonAnterior = carruseldiv.querySelector('.carousel-control-prev')
     const solicitarMantenimiento = nodo.querySelector('.solicitar')
     const imprimirHojadevida = nodo.querySelector('.print')
-    const gregarcomponentes = nodo.querySelector('.componentes').querySelector('.agregarComponente')
+    const imprimirlistadomtto = nodo.querySelector('.imprimirlistadomtto')
+    const agregarcomponentes = nodo.querySelector('.componentes').querySelector('.nuevoComponente')
 
 
     // cargamos los datos del activo
     codigoInterno.value = activo.codigo
+    codigoInterno.setAttribute('codigo-activo',  `Act-${activo.id}`)
+    form.setAttribute('form-activo',  `Act-${activo.id}`)
     modeloActivo.value = activo.modelo
     areaActivo.value = activo.area
     nombreActivo.value = activo.nombre
@@ -63,6 +77,19 @@ const cargarDatosActivo = (id, nodo) => {
     descripcionActivo.value = activo.descripcion
     recomendacionActivo.value = activo.recomendaciones_Mtto
     observacionActivo.value = activo.obervacion
+
+    solicitarMantenimiento.setAttribute('activo',  `Act-${activo.id}`)
+    solicitarMantenimiento.onclick = e => solicitarMttoActivo(e)
+    imprimirHojadevida.setAttribute('activo',  `Act-${activo.id}`)
+    imprimirHojadevida.onclick = e => imprimirActivo(e)
+
+    const actualizarActivo = nodo.querySelector('.guardarEdicion')
+    const eliminarActivob = nodo.querySelector('.eliminar')
+    actualizarActivo.setAttribute('activo',  `Act-${activo.id}`)
+    actualizarActivo.onclick = e => editarActivo(e)
+    eliminarActivob.setAttribute('activo',  `Act-${activo.id}`)
+    eliminarActivob.onclick = e => eliminarActivo(e)
+
     // configuramos el carrusel de imagenes
     const idCarrusel = generateRandomId()
     carruseldiv.id = idCarrusel
@@ -75,33 +102,39 @@ const cargarDatosActivo = (id, nodo) => {
         itemCarrusel.id = activo.url_img[index]
         itemCarrusel.classList.add('carousel-item')
         if (index == 0) itemCarrusel.classList.add('active')
-        const divContainer= document.createElement('div')
+        const divContainer = document.createElement('div')
         divContainer.classList.add('d-flex', 'justify-content-center', 'align-items-center')
         const imagen = document.createElement('img')
         imagen.classList.add('d-block', 'w-100')
         imagen.src = element
         const iEliminar = document.createElement('i')
-        iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-1', 'fw-bold', 'position-absolute', 'bottom-0', 'start-50', 'text-danger')
-        iEliminar.id =  `Act-${activo.id}- ${activo.url_img[index]}`
+        iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-1', 'fw-bold', 'text-danger')
+        const btnEliminar = document.createElement('button')
+        btnEliminar.id = `Act-${activo.id}- ${activo.url_img[index]}`
+        btnEliminar.classList.add('btn', 'position-absolute', 'bottom-0', 'start-50')
+        btnEliminar.type = 'button'
+        btnEliminar.appendChild(iEliminar)
         divContainer.appendChild(imagen)
-        divContainer.appendChild(iEliminar)
+        divContainer.appendChild(btnEliminar)
         itemCarrusel.appendChild(divContainer)
         carruselimagenes.appendChild(itemCarrusel)
         imagen.onload = e => rotarImg(e)
-        iEliminar.onclick = e => eliminarImg(e)
+        btnEliminar.onclick = e => eliminarImg(e)
     })
 
     // cargamos los componentes en la tabla componentes
     const componentes = data.componentes
     componentes.forEach(element => {
         const tr = document.createElement('tr')
-
         const tdId = document.createElement('td')
         const tdcomponente = document.createElement('td')
         const tdmarca = document.createElement('td')
         const tdmodelo = document.createElement('td')
         const tdSerie = document.createElement('td')
         const tdcapacidad = document.createElement('td')
+        const tdAcciones = document.createElement('td')
+        const btnEliminar = document.createElement('button')
+        const iEliminar = document.createElement('i')
         tr.id = `Com-${element.id}`
         tdId.textContent = element.id
         tdcomponente.textContent = element.nombre
@@ -115,8 +148,23 @@ const cargarDatosActivo = (id, nodo) => {
         tr.appendChild(tdmodelo)
         tr.appendChild(tdSerie)
         tr.appendChild(tdcapacidad)
+        // botones de edicion de compnentes
+        iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-5', 'eliminarcomponente')
+        btnEliminar.classList.add('btn')
+        btnEliminar.type = 'button'
+        btnEliminar.setAttribute('componente',  `Com-${element.id}`)
+        btnEliminar.onclick = e => eliminarComponente(e)
+        btnEliminar.appendChild(iEliminar)
+        tdAcciones.appendChild(btnEliminar)
+        tr.appendChild(tdAcciones)
+            // creamos la fila en la tabla
         componentesbody.appendChild(tr)
     });
+
+    // agregar un componente
+    agregarcomponentes.setAttribute('activo',  `Act-${activo.id}`)
+    agregarcomponentes.onclick =  e => agregarComponente(e)
+
 
     // cargamos los reportes en la tabla reportes
     const reportes = data.reportes
@@ -150,6 +198,8 @@ const cargarDatosActivo = (id, nodo) => {
         tr.appendChild(tdtipoMantenimeinto)
         historialMantenimiento.appendChild(tr)
     });
+    imprimirlistadomtto.setAttribute('activo',  `Act-${activo.id}`)
+    imprimirlistadomtto.onclick = e=> imprimirListadoMtoActivo(e)
 
 }
 

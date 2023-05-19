@@ -383,7 +383,7 @@ const configuracionVista = () => {
 
                                         <button type="button" id="eliminar" class="btn">
                                             <i class="bi bi-trash-fill fs-5"></i>
-                                        </button>
+                                        </button>                                        
                                     </td>
                                 </tr>
                             </tbody>

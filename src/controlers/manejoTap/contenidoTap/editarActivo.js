@@ -2,22 +2,32 @@ const editarActivo = () => {
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
-        <h3 class="text-center mt-1 fw-bold">CONSULTAR O EDITAR UN ACTIVO</h3>
-        <div class="container-fluid me-5 w-100 d-flex ">
-            <div class="p-2">
-                <button type="button" class="btn btn-warning actualizar">Actualizar</button></div>
-            <div class="p-2">
-                <button type="button" class="btn btn-secondary solicitar">Solictar Mtto</button></div>
-            <div class="p-2"> 
-                <button type="button" class="btn btn-primary print">Print</button>
-            </div>
-            <div class="p-2 ms-auto">
-                <button type="button" class="btn btn-danger eliminar">Eliminar</button>
-            </div>
-        </div>
-
+        <h2 class="text-center my-2 fw-bold border-bottom">CONSULTAR O EDITAR UN ACTIVO</h2>
+        <h3 class="text-center my-1">Hoja de Vida de Activos</h3>
         <div class="container-fluid w-100 border border-1 border-dark m-2 dataActivo">
-            <h2 class="text-center mt-1">Hoja de Vida de Activos</h2>
+            <div class="container-fluid me-5 w-100 d-flex ">
+                <div class=" ms-2">
+                    <button type="button" class="btn mt-0 pt-0 guardarEdicion">
+                        <i class="bi bi-save2-fill fs-1 text-warning"></i>
+                    </button>
+                </div>
+                <div class="ms-2">
+                    <button type="button" class="btn  mt-0 pt-0 solicitar">
+                        <i class="bi bi-wrench-adjustable-circle-fill fs-1 text-secondary"></i>
+                    </button>
+                </div>
+                <div class="ms-2r"> 
+                    <button type="button" class="btn  mt-0 pt-0 print">
+                        <i class="bi bi-printer-fill fs-1 text-primary"></i>
+                    </button>
+                </div>
+                <div class="ms-auto">
+                    <button type="button" class="btn  mt-0 pt-0 eliminar">
+                        <i class="bi bi-trash-fill fs-1 text-danger"></i>                    
+                    </button>
+                </div>
+            </div>
+            
             <form class="w-100">
                 <div class="row mx-1 align-items-center">
                     <div class="form-group col-4">
@@ -187,15 +197,20 @@ const editarActivo = () => {
                     <tbody>
                     </tbody>
                 </table>
-                <div class="p-1 agregarComponente ">
-                    <button type="button" class="btn" id="nuevaComponente">
+                <div class="p-1 d-flex flex-row-reverse">
+                    <button type="button" class="btn nuevoComponente">
                         <i class="bi bi-plus-square-fill fs-2"></i>
                     </button>
-                </div>
+                </div>  
             </div>
         </div>
         <div class="container-fluid w-100 m-0 p-0 my-3 historialMantenimiento">
             <h2 class="text-center fw-bold">Historial de Mantenimientos</h2>
+            <div class="p-1 d-flex flex-row-reverse">
+                    <button type="button" class="btn imprimirlistadomtto">
+                        <i class="bi bi-printer-fill fs-2 text-primary"></i>
+                    </button>
+            </div>
             <table class="table W-100 table-striped table-hover table-sm table-responsive">
                 <thead>
                     <tr class="text-uppercase text-center">
