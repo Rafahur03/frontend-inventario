@@ -3,8 +3,9 @@ const path = require('path')
 
 const { iniciarSesion } = require('./src/controlers/usuarios/usuario.js')
 const { consultarListadoActivos, consultarActivo } = require('./src/controlers/activos/activos.js')
-const { consultarListadoSolicitudes }= require('./src/controlers/solicitudes/solicitudes.js')
-const { consultarListadoReportes }= require('./src/controlers/reportes/reporte.js')
+const { consultarListadoSolicitudes } = require('./src/controlers/solicitudes/solicitudes.js')
+const { consultarListadoReportes } = require('./src/controlers/reportes/reporte.js')
+const { eliminarComponente } = require('./src/controlers/componentes/componentes.js')
 
 require('dotenv').config()
 require('electron-reload')(__dirname, {
@@ -68,6 +69,8 @@ ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
 
 })
 
+/////////////////activos ///////////////////////////////
+
 // consultar el listado de activos
 ipcMain.on('listadoActivo', async (e) => {
     const token = dataUsuarioSesion.token
@@ -78,25 +81,39 @@ ipcMain.on('listadoActivo', async (e) => {
 ipcMain.on('consultarActivo', async (e, id) => {
     const token = dataUsuarioSesion.token
     const activo = await consultarActivo(id, token)
-    if(!activo.msg){
-        activo.editar=false
+    if (!activo.msg) {
+        activo.editar = false
     }
-    if(dataUsuarioSesion.data.permisos.indexOf(3) !== -1) {
-        activo.editar=true
-    }      
+    if (dataUsuarioSesion.data.permisos.indexOf(3) !== -1) {
+        activo.editar = true
+    }
     e.returnValue = activo;
 })
 
+/////////////////////////////////solicitudes////////////////////////////
 
-// consultar el listado de activos
+// consultar el listado de solicitud
 ipcMain.on('listadoSolicitud', async (e) => {
     const token = dataUsuarioSesion.token
-    const listado =  await consultarListadoSolicitudes(token)
+    const listado = await consultarListadoSolicitudes(token)
     e.returnValue = listado;
-  })
+})
 
-  ipcMain.on('listadoReportes', async (e) => {
+//////////////////////////////// reportes////////////////////////////////
+
+// litado reportes
+
+ipcMain.on('listadoReportes', async (e) => {
     const token = dataUsuarioSesion.token
-    const listado =  await consultarListadoReportes(token)
+    const listado = await consultarListadoReportes(token)
     e.returnValue = listado;
-  })
+})
+
+
+///////////////////////////componentes//////////////////////////////////////////
+
+ipcMain.on('eliminarComponente', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const resultado = await eliminarComponente(data, token)
+    e.returnValue = resultado;
+})

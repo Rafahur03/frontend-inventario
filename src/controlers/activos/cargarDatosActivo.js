@@ -153,6 +153,7 @@ const cargarDatosActivo = (id, nodo) => {
         btnEliminar.classList.add('btn')
         btnEliminar.type = 'button'
         btnEliminar.setAttribute('componente',  `Com-${element.id}`)
+        btnEliminar.setAttribute('activo',  `Act-${activo.id}`)
         btnEliminar.onclick = e => eliminarComponente(e)
         btnEliminar.appendChild(iEliminar)
         tdAcciones.appendChild(btnEliminar)
