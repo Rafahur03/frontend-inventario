@@ -1,58 +1,40 @@
-/* estillo vista formart activo */
-
-#recomendacionMtto {
-    resize: none;
+.cardFrase {
+    width: 64%;
 }
 
-#observacionActivo {
-    resize: none;
+.nav-link .cerrar-tap {
+    display: none;
 }
 
-.resultado{
-    top: 28%;
-    left: 30%;
-    max-width: 69% ;
-}   
-
-.resultado{
-    top: 28%;
-    left: 30%;
-    max-width: 69% ;
-}    
-
-.reporte {
-    top: 63%;
-    left: 2%;
-    max-width: 69% ;
+.nav-link:hover .cerrar-tap {
+    display: inline;
 }
 
-.solicitud {
-    top: 63%;
-    left: 26.5%;
-    max-width: 69% ;
+nav,
+.offcanvas {
+    background-color: #1e293b;
 }
 
-#descripcionActivo{
-    resize: none;
-}
-#recomendacionActivo{
-    resize: none;
-}
-#observacionActivo{
-    resize: none;
+.navbar-toggler {
+    border: none;
 }
 
-/* imagenes de activos */
-#dragDropImgActivo{
-    height: 17vw;
-    border: 0.2rem dashed #0dcaf0;
-    cursor: pointer
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: none;
 }
 
-#dragDropImgActivo.active{
-    border: 0.2rem solid #6c757d;
+.modal-backdrop {
+    width: 0;
 }
 
-#imgActivo{
-    height: 17vw;
+#spinner div {
+    width: 5rem;
+    height: 5rem
+}
+
+@media (max-width: 768px) {
+    .navbar-nav>li:hover {
+        background-color: #0dcaf0;
+    }
 }

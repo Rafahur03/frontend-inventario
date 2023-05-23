@@ -1,9 +1,15 @@
 const { ipcRenderer } = require('electron')
 import { eliminarLineaComponente } from "./eliminarLineaComponente.js"
+import {
+    modalEleccion,
+    modalMensaje,
+    mostrarModalSpinner,
+    cerrarrModalSpinner
+} from "../helpers/modalEleccion.js"
 
-const eliminarComponente = e => {
+const eliminarComponente = async e => {
     const tagName = e.target.tagName.toLowerCase()
-    let tr 
+    let tr
     let componente
     let activo
     if (tagName === 'i') {
@@ -14,25 +20,40 @@ const eliminarComponente = e => {
     } else {
         tr = e.target.parentNode.parentNode
         componente = e.target.getAttribute('componente')
-        activo =  e.target.getAttribute('activo')
+        activo = e.target.getAttribute('activo')
     }
-  
+
     // realizar la peticion de eliminar de la bd
 
     const idComponente = componente.split('-')[1]
     const idActivo = activo.split('-')[1]
 
-    // eliminar la fila del render
-    const eliminando = ipcRenderer.sendSync('eliminarComponente', {idActivo, idComponente});
-    if(eliminando.msg) {
-        //mostra mensaje en el render
-        console.log(eliminando.msg)
-        return 
+    const mensaje = {
+        titulo: "ELIMINAR COMPONENTE",
+        mensaje: "Esta seguro(a) de eliminar el componente. Por favor confirme la accion"
     }
-    eliminarLineaComponente(e)
+
+    const eleccion = await modalEleccion(mensaje)
+    if (!eleccion) return
+    mostrarModalSpinner()
+    const eliminando = ipcRenderer.sendSync('eliminarComponente', { idActivo, idComponente });
+    
+    setTimeout(() => {
+        if (eliminando.msg) {
+            mensaje.titulo = "ERROR",
+                mensaje.mensaje = eliminando.msg
+            cerrarrModalSpinner()
+            modalMensaje(mensaje)
+            return
+        }
+        eliminarLineaComponente(e)
+        mensaje.titulo = "EXITO"
+        mensaje.mensaje = eliminando
+        cerrarrModalSpinner()
+        modalMensaje(mensaje)
+    }, 500)
+
 }
-
-
 
 export {
     eliminarComponente

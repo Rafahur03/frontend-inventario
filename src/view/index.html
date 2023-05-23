@@ -6,63 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Menu Lateral</title>
     <link rel="stylesheet" type="text/css" href="../style/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../style/style.css" />
     <link rel="stylesheet" href="../../node_modules/bootstrap-icons/font/bootstrap-icons.css">
 </head>
-<style>
-    .cardFrase {
-        width: 64%;
-    }
-
-    .nav-link .cerrar-tap {
-        display: none;
-    }
-
-    .nav-link:hover .cerrar-tap {
-        display: inline;
-    }
-
-    nav,
-    .offcanvas {
-        background-color: #1e293b;
-    }
-
-    .navbar-toggler {
-        border: none;
-    }
-
-    .navbar-toggler:focus {
-        outline: none;
-        box-shadow: none;
-    }
-
-    .modal-backdrop {
-        width: 0;
-    }
-
-    @media (max-width: 768px) {
-        .navbar-nav>li:hover {
-            background-color: #0dcaf0;
-        }
-    }
-</style>
 
 <body>
     <!-- Button trigger modal -->
-    <button type="button" id ="abrirModal" class="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">xxx</button>
+    <button type="button" id="abrirModal" class="d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">xxx</button>
     <!-- Modal -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
+            <div class="modal-content border border-2" id="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                    <h5 class="modal-title fs-2" id="staticBackdropLabel"></h5>
+                    <button type="button" class="btn-close d-none" id="cerrarModal" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                   mi primer modal
+                    <p class="fs-3" id="modalBodyText"></p>
+                    <div class="d-flex d-none justify-content-center" id="spinner">
+                        <div class="spinner-border spinner-border-lg text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" id="modalAceptar"
+                        data-bs-dismiss="modal">Aceptar</button>
+                    <button type="button" class="btn btn-danger" id="modalCancelar"
+                        data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </div>
         </div>
