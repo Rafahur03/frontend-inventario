@@ -1,11 +1,7 @@
 const { ipcRenderer } = require('electron')
 import { eliminarLineaComponente } from "./eliminarLineaComponente.js"
-import {
-    modalEleccion,
-    modalMensaje,
-    mostrarModalSpinner,
-    cerrarrModalSpinner
-} from "../helpers/modalEleccion.js"
+import { modalEleccion, modalMensaje } from "../helpers/modalEleccion.js"
+import { mostarSnipper, cerrarSnipper } from "../helpers/modalSnipper.js"
 
 const eliminarComponente = async e => {
     const tagName = e.target.tagName.toLowerCase()
@@ -35,23 +31,23 @@ const eliminarComponente = async e => {
 
     const eleccion = await modalEleccion(mensaje)
     if (!eleccion) return
-    mostrarModalSpinner()
+    mostarSnipper()
     const eliminando = ipcRenderer.sendSync('eliminarComponente', { idActivo, idComponente });
-    
-    setTimeout(() => {
-        if (eliminando.msg) {
-            mensaje.titulo = "ERROR",
-                mensaje.mensaje = eliminando.msg
-            cerrarrModalSpinner()
-            modalMensaje(mensaje)
-            return
-        }
-        eliminarLineaComponente(e)
-        mensaje.titulo = "EXITO"
-        mensaje.mensaje = eliminando
-        cerrarrModalSpinner()
+
+
+    if (eliminando.msg) {
+        mensaje.titulo = "ERROR"
+        mensaje.mensaje = eliminando.msg
+        cerrarSnipper()
         modalMensaje(mensaje)
-    }, 500)
+        return
+    }
+
+    eliminarLineaComponente(e)
+    mensaje.titulo = "EXITO"
+    mensaje.mensaje = eliminando
+    cerrarSnipper()
+    modalMensaje(mensaje)
 
 }
 

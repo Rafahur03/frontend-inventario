@@ -6,6 +6,7 @@ const { consultarListadoActivos, consultarActivo } = require('./src/controlers/a
 const { consultarListadoSolicitudes } = require('./src/controlers/solicitudes/solicitudes.js')
 const { consultarListadoReportes } = require('./src/controlers/reportes/reporte.js')
 const { eliminarComponente } = require('./src/controlers/componentes/componentes.js')
+const { consultarTablasConfig} = require('./src/controlers/tablasConfig/tablasConfig.js')
 
 require('dotenv').config()
 require('electron-reload')(__dirname, {
@@ -117,3 +118,22 @@ ipcMain.on('eliminarComponente', async (e, data) => {
     const resultado = await eliminarComponente(data, token)
     e.returnValue = resultado;
 })
+
+/////////////////////////////// tablas datalist ///////////////////////////////////
+ipcMain.on('datalist', async (e, id) => {
+
+    const tablasConfig = {
+        'areas': 1,
+        'marca': 2,
+        'tipoActivo': 3,
+        'listaComponentes': 4,
+        'frecuenciaMtto': 5,
+        'procesos': 6,
+        'clasificacionActivos': 7,
+        'proveedores': 8
+    }
+    const token = dataUsuarioSesion.token
+    const resultado = await consultarTablasConfig(tablasConfig[id], token)
+    e.returnValue = resultado;
+})
+

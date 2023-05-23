@@ -1,3 +1,4 @@
+import { generateRandomId } from "../helpers/nombreRandon.js"
 const agregarTap = nodo => {
 
     // creamos un nombre aleatorio para el tap
@@ -29,20 +30,6 @@ const agregarTap = nodo => {
     return contenidoTAP
 }
 
-function generateRandomId() {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-    const charactersLength = characters.length;
-
-    for (let i = 0; i < 6; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-
-    return result;
-}
-
 export {
-    agregarTap,
-    generateRandomId
-
+    agregarTap
 }

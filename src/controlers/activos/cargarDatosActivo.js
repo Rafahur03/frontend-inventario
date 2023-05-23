@@ -1,5 +1,5 @@
 const { ipcRenderer } = require('electron')
-import { generateRandomId } from '../manejoTap/agregarTap.js'
+import { generateRandomId } from '../helpers/nombreRandon.js'
 import { rotarImg } from '../helpers/rotarImg.js'
 import { eliminarImg } from '../helpers/eliminarImg.js'
 import { imprimirActivo } from './ImprimirActivo.js'
@@ -9,7 +9,7 @@ import { imprimirListadoMtoActivo } from './ImprimirListadoMtto.js'
 import { agregarComponente } from '../componentes/agregarLineaComponente.js'
 import { eliminarActivo } from './eliminarActivo.js'
 import { eliminarComponente } from '../componentes/eliminarComponente.js'
-
+ 
 const cargarDatosActivo = (id, nodo) => {
     const data = ipcRenderer.sendSync('consultarActivo', id)
     const activo = data.activo

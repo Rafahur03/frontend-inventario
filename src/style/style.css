@@ -28,7 +28,7 @@ nav,
     width: 0;
 }
 
-#spinner div {
+#spinnerContenedor div {
     width: 5rem;
     height: 5rem
 }

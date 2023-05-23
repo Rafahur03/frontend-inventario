@@ -11,25 +11,22 @@
 </head>
 
 <body>
+
     <!-- Button trigger modal -->
-    <button type="button" id="abrirModal" class="d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop">xxx</button>
+    <button type="button" id="abrirModal" class="d-none" data-bs-toggle="modal"
+        data-bs-target="#modalMensaje">xxx</button>
     <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="modalMensaje" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="modalMensajeLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content border border-2" id="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title fs-2" id="staticBackdropLabel"></h5>
+                    <h5 class="modal-title fs-2" id="modalMensajeLabel"></h5>
                     <button type="button" class="btn-close d-none" id="cerrarModal" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body">    
                     <p class="fs-3" id="modalBodyText"></p>
-                    <div class="d-flex d-none justify-content-center" id="spinner">
-                        <div class="spinner-border spinner-border-lg text-primary" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" id="modalAceptar"
@@ -40,9 +37,21 @@
             </div>
         </div>
     </div>
+
+    <div class="d-none position-absolute position-fixed w-100 bg-light top-50 start-50 translate-middle translate-middle-x border rounded p-5"
+        id="spinner">
+        <h5 class="fs-2 text-primary border-bottom">PROCESANDO SOLICITUD</h5>
+        <p class="fs-3 text-primary  border-bottom">Espere...</h5>
+        <div class="text-center" id="spinnerContenedor">
+            <div class="spinner-border fs-3 text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+
     <!-- MENU START  -->
     <header class="position-absolute d-inline-flex flex-row" id="cargar">
-        <nav class="navbar navbar-dark d-inline">
+        <nav class="navbar navbar-dark d-inline rounded">
             <!-- NAV CONTAINER START -->
             <div class="container d-flex flex-column m-0 p-0">
                 <!-- NAV BUTTON  -->
@@ -75,7 +84,8 @@
                                     ACTIVOS
                                 </a>
                                 <div class="collapse" id="collapseActivos">
-                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="listadoActivo">Ver Activos</a>
+                                    <a href="#" class="nav-link ms-3 item-nav-bar" id="listadoActivo">Ver
+                                        Activos</a>
                                     <a href="#" class="nav-link ms-3 item-nav-bar" id="editarActivo">Consultar
                                         Activo</a>
                                 </div>
