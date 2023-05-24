@@ -1,7 +1,7 @@
 const { ipcRenderer } = require('electron')
 import { generateRandomId } from '../helpers/nombreRandon.js'
 import { rotarImg } from '../helpers/rotarImg.js'
-import { eliminarImg } from '../helpers/eliminarImg.js'
+import { eliminarImgActivo } from '../helpers/eliminarImg.js'
 import { imprimirActivo } from './ImprimirActivo.js'
 import { solicitarMttoActivo } from './solicitarMttoActivo.js'
 import { editarActivo } from './editarActivo.js'
@@ -9,7 +9,8 @@ import { imprimirListadoMtoActivo } from './ImprimirListadoMtto.js'
 import { agregarComponente } from '../componentes/agregarLineaComponente.js'
 import { eliminarActivo } from './eliminarActivo.js'
 import { eliminarComponente } from '../componentes/eliminarComponente.js'
- 
+import { nuevaImagen } from '../helpers/cargarNuevaImagenCarrusel.js'
+
 const cargarDatosActivo = (id, nodo) => {
     const data = ipcRenderer.sendSync('consultarActivo', id)
     const activo = data.activo
@@ -53,8 +54,8 @@ const cargarDatosActivo = (id, nodo) => {
 
     // cargamos los datos del activo
     codigoInterno.value = activo.codigo
-    codigoInterno.setAttribute('codigo-activo',  `Act-${activo.id}`)
-    form.setAttribute('form-activo',  `Act-${activo.id}`)
+    codigoInterno.setAttribute('codigo-activo', `Act-${activo.id}`)
+    form.setAttribute('form-activo', `Act-${activo.id}`)
     modeloActivo.value = activo.modelo
     areaActivo.value = activo.area
     nombreActivo.value = activo.nombre
@@ -78,16 +79,16 @@ const cargarDatosActivo = (id, nodo) => {
     recomendacionActivo.value = activo.recomendaciones_Mtto
     observacionActivo.value = activo.obervacion
 
-    solicitarMantenimiento.setAttribute('activo',  `Act-${activo.id}`)
+    solicitarMantenimiento.setAttribute('activo', `Act-${activo.id}`)
     solicitarMantenimiento.onclick = e => solicitarMttoActivo(e)
-    imprimirHojadevida.setAttribute('activo',  `Act-${activo.id}`)
+    imprimirHojadevida.setAttribute('activo', `Act-${activo.id}`)
     imprimirHojadevida.onclick = e => imprimirActivo(e)
 
     const actualizarActivo = nodo.querySelector('.guardarEdicion')
     const eliminarActivob = nodo.querySelector('.eliminar')
-    actualizarActivo.setAttribute('activo',  `Act-${activo.id}`)
+    actualizarActivo.setAttribute('activo', `Act-${activo.id}`)
     actualizarActivo.onclick = e => editarActivo(e)
-    eliminarActivob.setAttribute('activo',  `Act-${activo.id}`)
+    eliminarActivob.setAttribute('activo', `Act-${activo.id}`)
     eliminarActivob.onclick = e => eliminarActivo(e)
 
     // configuramos el carrusel de imagenes
@@ -99,7 +100,7 @@ const cargarDatosActivo = (id, nodo) => {
     // cargamos las imagnes en el carrusel
     activo.BufferImagenes.forEach((element, index) => {
         const itemCarrusel = document.createElement('div')
-        itemCarrusel.id = activo.url_img[index]
+        itemCarrusel.setAttribute('nombre', `Img-${activo.url_img[index]}`)
         itemCarrusel.classList.add('carousel-item')
         if (index == 0) itemCarrusel.classList.add('active')
         const divContainer = document.createElement('div')
@@ -110,7 +111,8 @@ const cargarDatosActivo = (id, nodo) => {
         const iEliminar = document.createElement('i')
         iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-1', 'fw-bold', 'text-danger')
         const btnEliminar = document.createElement('button')
-        btnEliminar.id = `Act-${activo.id}- ${activo.url_img[index]}`
+        btnEliminar.setAttribute('activo', `Act-${activo.id}`)
+        btnEliminar.setAttribute('nombre', `Img-${activo.url_img[index]}`)
         btnEliminar.classList.add('btn', 'position-absolute', 'bottom-0', 'start-50')
         btnEliminar.type = 'button'
         btnEliminar.appendChild(iEliminar)
@@ -118,9 +120,28 @@ const cargarDatosActivo = (id, nodo) => {
         divContainer.appendChild(btnEliminar)
         itemCarrusel.appendChild(divContainer)
         carruselimagenes.appendChild(itemCarrusel)
+        carruselimagenes.setAttribute('activo', `Act-${activo.id}`)
         imagen.onload = e => rotarImg(e)
-        btnEliminar.onclick = e => eliminarImg(e)
+        btnEliminar.onclick = e => eliminarImgActivo(e)
     })
+
+
+    // mostrar input de cargar imagenes en el activo
+    if (activo.url_img.length >= 6) {
+        const contendorImputImagenesActivo = nodo.querySelector('.contendorImputImagenesActivo')
+        contendorImputImagenesActivo.classList.add('d-none')
+    } else {
+        const bottontImagenActivo = nodo.querySelector('.buttonImagenesActivo')
+        const faltantes = 6 - activo.url_img.length
+        bottontImagenActivo.textContent = `Selecione Max ${faltantes} Imagenes`
+        const inputImagenActivo = nodo.querySelector('.inputImagenesActivo')
+        inputImagenActivo.onchange = e => nuevaImagen(e)
+    }
+
+    
+
+
+
 
     // cargamos los componentes en la tabla componentes
     const componentes = data.componentes
@@ -152,19 +173,19 @@ const cargarDatosActivo = (id, nodo) => {
         iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-5', 'eliminarcomponente')
         btnEliminar.classList.add('btn')
         btnEliminar.type = 'button'
-        btnEliminar.setAttribute('componente',  `Com-${element.id}`)
-        btnEliminar.setAttribute('activo',  `Act-${activo.id}`)
+        btnEliminar.setAttribute('componente', `Com-${element.id}`)
+        btnEliminar.setAttribute('activo', `Act-${activo.id}`)
         btnEliminar.onclick = e => eliminarComponente(e)
         btnEliminar.appendChild(iEliminar)
         tdAcciones.appendChild(btnEliminar)
         tr.appendChild(tdAcciones)
-            // creamos la fila en la tabla
+        // creamos la fila en la tabla
         componentesbody.appendChild(tr)
     });
 
     // agregar un componente
-    agregarcomponentes.setAttribute('activo',  `Act-${activo.id}`)
-    agregarcomponentes.onclick =  e => agregarComponente(e)
+    agregarcomponentes.setAttribute('activo', `Act-${activo.id}`)
+    agregarcomponentes.onclick = e => agregarComponente(e)
 
 
     // cargamos los reportes en la tabla reportes
@@ -199,8 +220,8 @@ const cargarDatosActivo = (id, nodo) => {
         tr.appendChild(tdtipoMantenimeinto)
         historialMantenimiento.appendChild(tr)
     });
-    imprimirlistadomtto.setAttribute('activo',  `Act-${activo.id}`)
-    imprimirlistadomtto.onclick = e=> imprimirListadoMtoActivo(e)
+    imprimirlistadomtto.setAttribute('activo', `Act-${activo.id}`)
+    imprimirlistadomtto.onclick = e => imprimirListadoMtoActivo(e)
 
 }
 

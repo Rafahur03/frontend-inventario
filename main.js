@@ -5,8 +5,9 @@ const { iniciarSesion } = require('./src/controlers/usuarios/usuario.js')
 const { consultarListadoActivos, consultarActivo } = require('./src/controlers/activos/activos.js')
 const { consultarListadoSolicitudes } = require('./src/controlers/solicitudes/solicitudes.js')
 const { consultarListadoReportes } = require('./src/controlers/reportes/reporte.js')
-const { eliminarComponente } = require('./src/controlers/componentes/componentes.js')
+const { eliminarComponente, guardarComponente } = require('./src/controlers/componentes/componentes.js')
 const { consultarTablasConfig} = require('./src/controlers/tablasConfig/tablasConfig.js')
+const { validarDatosComponente } = require('./src/controlers/componentes/validarComponentes.js')
 
 require('dotenv').config()
 require('electron-reload')(__dirname, {
@@ -109,13 +110,23 @@ ipcMain.on('listadoReportes', async (e) => {
     const listado = await consultarListadoReportes(token)
     e.returnValue = listado;
 })
-
-
 ///////////////////////////componentes//////////////////////////////////////////
 
 ipcMain.on('eliminarComponente', async (e, data) => {
     const token = dataUsuarioSesion.token
     const resultado = await eliminarComponente(data, token)
+    e.returnValue = resultado;
+})
+
+ipcMain.on('guardarComponente', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const validacion = validarDatosComponente(data)
+
+    if(validacion.msg){
+        e.returnValue = validacion
+        return
+    }
+    const resultado = await guardarComponente(data, token)
     e.returnValue = resultado;
 })
 

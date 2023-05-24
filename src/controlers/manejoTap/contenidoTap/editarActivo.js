@@ -45,16 +45,16 @@ const editarActivo = () => {
                                 <span class="visually-hidden">Next</span>
                             </button>
                         </div>
-                        <div class="d-flex flex-column align-items-center justify-content-center mt-3"
-                            id="contendorImputImagenesActivo">
+                        <div class="d-flex flex-column align-items-center justify-content-center mt-3 contendorImputImagenesActivo">
                             <div class="contendorInput position-relative">
-                                <button id="buttonImagenesActivo" type="button"
-                                    class="btn btn-secondary fs-6 btn-lg h-25">Selecione Max 6
+                                <button type="button"
+                                    class="btn btn-secondary fs-6 btn-lg h-25 buttonImagenesActivo">Selecione Max 6
                                     Imagenes</button>
-                                <input class="opacity-0 w-100 position-absolute top-0 start-0 "
-                                    type="file" id="inputImagenesActivo"
+                                <input class="opacity-0 w-100 position-absolute top-0 start-0 inputImagenesActivo"
+                                    type="file"
                                     accept="image/png, image/jpeg, image/jpg"
-                                    style="box-sizing:content-box">
+                                    style="box-sizing:content-box"
+                                    multiple >
                             </div>
                         </div>
                     </div>
