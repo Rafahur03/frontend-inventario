@@ -2,10 +2,18 @@ const { app, BrowserWindow, screen, ipcMain } = require('electron')
 const path = require('path')
 
 const { iniciarSesion } = require('./src/controlers/usuarios/usuario.js')
-const { consultarListadoActivos, consultarActivo } = require('./src/controlers/activos/activos.js')
+const {
+    consultarListadoActivos,
+    consultarActivo,
+    guardarImagenActivo
+} = require('./src/controlers/activos/activos.js')
 const { consultarListadoSolicitudes } = require('./src/controlers/solicitudes/solicitudes.js')
 const { consultarListadoReportes } = require('./src/controlers/reportes/reporte.js')
-const { eliminarComponente, guardarComponente } = require('./src/controlers/componentes/componentes.js')
+const {
+    eliminarComponente,
+    guardarComponente,
+} = require('./src/controlers/componentes/componentes.js')
+
 const { consultarTablasConfig} = require('./src/controlers/tablasConfig/tablasConfig.js')
 const { validarDatosComponente } = require('./src/controlers/componentes/validarComponentes.js')
 
@@ -57,12 +65,10 @@ ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
                 permisos: dataUsuarioSesion.data.permisos
             },
             motivacion: dataUsuarioSesion.frase
-
         }
         win.webContents.on('dom-ready', () => {
             win.webContents.send('sesion', sesion)
         })
-
 
     } catch (error) {
         console.log(error)
@@ -80,6 +86,7 @@ ipcMain.on('listadoActivo', async (e) => {
     e.returnValue = listado;
 })
 
+
 ipcMain.on('consultarActivo', async (e, id) => {
     const token = dataUsuarioSesion.token
     const activo = await consultarActivo(id, token)
@@ -90,6 +97,12 @@ ipcMain.on('consultarActivo', async (e, id) => {
         activo.editar = true
     }
     e.returnValue = activo;
+})
+
+ipcMain.on('imagenActivo', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const imagen = await guardarImagenActivo(data, token)
+    e.returnValue = imagen;
 })
 
 /////////////////////////////////solicitudes////////////////////////////

@@ -33,9 +33,7 @@ const nuevaImagen = e => {
 
     if (cantidadImagenes === 1) {
         const nombre = imagenesExistente[0].getAttribute('nombre').split('-')[1];
-        console.log(nombre, '1')
         if (nombre === 'undefined') {
-            console.log(nombre, '2');
             carruselimagenes.removeChild(imagenesExistente[0])
             cantidadImagenes--
         }
@@ -51,8 +49,6 @@ const nuevaImagen = e => {
 
     const activo = carruselimagenes.getAttribute('activo')
 
-    console.log(imagenes, activo)
-
     let cantidad
     if ((6 - cantidadImagenes) >= imagenes.length) {
         cantidad = imagenes.length
@@ -62,7 +58,7 @@ const nuevaImagen = e => {
 
     for (var i = 0; i < cantidad; i++) {
         const nombreImgen = generateRandomId()
-
+        const reader = new FileReader()
         const itemCarrusel = document.createElement('div')
         itemCarrusel.setAttribute('nombre', `Img-${nombreImgen}`)
         itemCarrusel.classList.add('carousel-item')
@@ -73,7 +69,12 @@ const nuevaImagen = e => {
         divContainerBotones.classList.add('d-block')
         const imagen = document.createElement('img')
         imagen.classList.add('d-block', 'w-100', nombreImgen)
-        imagen.src = URL.createObjectURL(imagenes[i])
+        
+        reader.onload = function (e) {
+            imagen.src= e.target.result  
+        }
+        reader.readAsDataURL(imagenes[i])
+
         const iGuardar = document.createElement('i')
         iGuardar.classList.add('bi', 'bi-save2-fill', 'fs-3', 'fw-bold', 'text-primary', 'p-0')
         const iEliminar = document.createElement('i')
@@ -102,10 +103,13 @@ const nuevaImagen = e => {
         btnGuardar.onclick = e => guardarImgActivo(e)
         cantidadImagenes++
     }
-    
-    if (cantidadImagenes === 6) {
-        const contenedorimput = contenedorCarruserl.nextSibling.nextSibling
-        contenedorimput.classList.add('d-none')
+
+    const contenedorinput = contenedorCarruserl.nextSibling.nextSibling
+    if (cantidadImagenes >= 6) {
+        contenedorinput.classList.add('d-none')
+    }else{
+        const botonInput = contenedorinput.querySelector('.buttonImagenesActivo')
+        botonInput.textContent = `Selecione Max ${ 6 - cantidadImagenes} Imagenes`
     }
 
 }
