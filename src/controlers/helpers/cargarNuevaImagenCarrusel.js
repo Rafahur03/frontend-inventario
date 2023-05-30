@@ -7,6 +7,7 @@ import { generateRandomId } from './nombreRandon.js'
 
 const nuevaImagen = e => {
     const files = e.target.files
+    console.log(files)
     const contenerdorInput = e.target.parentNode
     const contenedorSeleccionar = contenerdorInput.parentNode
     const contenedorCarruserl = contenedorSeleccionar.previousSibling.previousSibling
@@ -14,7 +15,7 @@ const nuevaImagen = e => {
     const imagenes = []
     const extensiones = ['png', 'jpg', 'jpeg']
     for (const file of files) {
-        if (extensiones.indexOf(mime.extension(file.type)) !== -1 && file.size <= 2097152) {
+        if (extensiones.indexOf(mime.extension(file.type)) !== -1 && file.size <= 3145728) {
             imagenes.push(file)
         }
     }
@@ -23,7 +24,7 @@ const nuevaImagen = e => {
     if (imagenes.length === 0) {
         const mensaje = {
             titulo: 'ERROR',
-            mensaje: 'Solo se aceptan imagenes en formato png, jpg o jpeg y con tamaños de hasta 2Mb'
+            mensaje: 'Solo se aceptan imagenes en formato png, jpg o jpeg y con tamaños de hasta 3Mb'
         }
         modalMensaje(mensaje)
         return

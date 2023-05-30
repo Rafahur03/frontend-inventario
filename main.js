@@ -5,8 +5,10 @@ const { iniciarSesion } = require('./src/controlers/usuarios/usuario.js')
 const {
     consultarListadoActivos,
     consultarActivo,
-    guardarImagenActivo
+    guardarImagenActivo,
+    eliminarImagenActivo
 } = require('./src/controlers/activos/activos.js')
+
 const { consultarListadoSolicitudes } = require('./src/controlers/solicitudes/solicitudes.js')
 const { consultarListadoReportes } = require('./src/controlers/reportes/reporte.js')
 const {
@@ -99,9 +101,17 @@ ipcMain.on('consultarActivo', async (e, id) => {
     e.returnValue = activo;
 })
 
+// guardar una imagen del activo
 ipcMain.on('imagenActivo', async (e, data) => {
     const token = dataUsuarioSesion.token
     const imagen = await guardarImagenActivo(data, token)
+    e.returnValue = imagen;
+})
+
+//eliminar una imagen del acticvo
+ipcMain.on('elimnarImagenActivo', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const imagen = await eliminarImagenActivo(data, token)
     e.returnValue = imagen;
 })
 

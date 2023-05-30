@@ -11,7 +11,7 @@ const guardarImgActivo = e => {
     }
 
     const activo = boton.getAttribute('activo')
-    const id = activo.split('-')
+    const id = activo.split('-')[1]
     const nombre = boton.getAttribute('nombre').split('-')[1]
     const form = document.querySelector(`[form-activo="${activo}"]`)
     const codigo = form.querySelector('.codigoInterno').value
@@ -21,8 +21,10 @@ const guardarImgActivo = e => {
     const data = {
         id,
         codigo,
+        nombre,
         dataImagen
     }
+
     const imagenActivo = ipcRenderer.sendSync('imagenActivo', data);
     if (imagenActivo.msg) {
         const mensaje = {
@@ -33,13 +35,24 @@ const guardarImgActivo = e => {
         return
     }
     
+    const mensaje = {
+        titulo: 'EXITO',
+        mensaje: imagenActivo.exito
+    }
+    modalMensaje(mensaje)
+    console.log(imagenActivo)
+
     const botonEliminar = contenedorBotones.firstChild
     const carruselItem = imagen.parentNode.parentNode
     carruselItem.setAttribute('nombre', imagenActivo.nombre)
+    itemCarrusel.classList.add( `Img-${imagenActivo.nombre}`)
     botonEliminar.setAttribute('nombre', imagenActivo.nombre)
+    botonEliminar.classList.add('m-0')
+    botonEliminar.classList.remove('m-3')
     botonEliminar.onclick = e => eliminarImgActivo(e)
     imagen.classList.remove(nombre)
     imagen.classList.add(imagenActivo.nombre)
+    imagen.src = imagenActivo.imagen
     contenedorBotones.removeChild(boton)
 }
 

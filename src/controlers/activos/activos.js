@@ -8,9 +8,7 @@ const consultarListadoActivos = async token => {
         headers: {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
-        },
-        
-
+        }
     }
     try {
         const url = urlbase + '/consultarActivosTodos'
@@ -30,9 +28,11 @@ const consultarActivo = async (id, token) => {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({id})
+        body: JSON.stringify({ id })
 
     }
+
+
     try {
         const url = urlbase + '/consultarActivo'
         const response = await fetch(url, options);
@@ -43,21 +43,23 @@ const consultarActivo = async (id, token) => {
     }
 
 }
-
 const guardarImagenActivo = async (datos, token) => {
 
-    console.log(datos)
-    const formData = new FormData()
-    const mimeType = datos.file.split(',')[0].split(';')[0].split(':')[1]
-    const Image = new File([Buffer.from(datos.file, 'base64')], nombre + '.' + mime.extension(mimeType), { type: mimeType })
-    formData.append('Image', datos.file)
 
+    const mimeType = datos.dataImagen.split(',')[0].split(';')[0].split(':')[1]
+    const extensiones = ['png', 'jpg', 'jpeg']
+    if (!extensiones.includes(mime.extension(mimeType))) return { msg: 'Solo se aceptan imagenes en formato png, jpg o jpeg' }
+
+    const imgBase64 = datos.dataImagen.split(',')[1]
+    const decodedData = Buffer.from(imgBase64, 'base64');
+    const sizeInBytes = decodedData.length
+    if (sizeInBytes > 3145728) return { msg: 'Solo se aceptan imagenes de tamaño hasta 3 Mb' }
+    
     const data = {
-        id : datos.id,
-        codigo : datos.codigo
+        id: datos.id,
+        codigo: datos.codigo,
+        Imagen: datos.dataImagen
     }
-
-    formData.append('data',JSON.stringify(data))
 
     const options = {
         method: 'POST',
@@ -65,24 +67,52 @@ const guardarImagenActivo = async (datos, token) => {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-        body: formData
+        body: JSON.stringify({ data })
     }
 
-    console.log(options)
-    return {msg:'ya casi perro desde activos'}
-    // try {
-    //     const url = urlbase + '/consultarActivo'
-    //     const response = await fetch(url, options);
-    //     const json = await response.json();
-    //     return (json)
-    // } catch (error) {
-    //     console.error(error);
-    // }
+    try {
+        const url = urlbase + '/guardarImagenActivo'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
 
 }
+
+const eliminarImagenActivo = async (datos, token) => {
+
+    const data = {
+        id: datos.activo.split('-')[1],
+        codigo: datos.codigo,
+        imagen: datos.nombre.split('-')[1]
+    }
+    
+    const options = {   
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ data })
+    }
+
+    try {
+        const url = urlbase + '/eliminarImagenActivo'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
 
 module.exports = {
     consultarListadoActivos,
     consultarActivo,
-    guardarImagenActivo
+    guardarImagenActivo,
+    eliminarImagenActivo
 }
