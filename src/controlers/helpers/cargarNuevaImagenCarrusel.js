@@ -7,7 +7,6 @@ import { generateRandomId } from './nombreRandon.js'
 
 const nuevaImagen = e => {
     const files = e.target.files
-    console.log(files)
     const contenerdorInput = e.target.parentNode
     const contenedorSeleccionar = contenerdorInput.parentNode
     const contenedorCarruserl = contenedorSeleccionar.previousSibling.previousSibling
@@ -19,7 +18,6 @@ const nuevaImagen = e => {
             imagenes.push(file)
         }
     }
-
 
     if (imagenes.length === 0) {
         const mensaje = {

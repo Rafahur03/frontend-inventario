@@ -18,6 +18,7 @@ const guardarImgActivo = e => {
     const contenedorBotones = boton.parentNode
     const imagen = contenedorBotones.previousSibling
     const dataImagen = imagen.src
+
     const data = {
         id,
         codigo,
@@ -40,13 +41,12 @@ const guardarImgActivo = e => {
         mensaje: imagenActivo.exito
     }
     modalMensaje(mensaje)
-    console.log(imagenActivo)
 
     const botonEliminar = contenedorBotones.firstChild
     const carruselItem = imagen.parentNode.parentNode
-    carruselItem.setAttribute('nombre', imagenActivo.nombre)
-    itemCarrusel.classList.add( `Img-${imagenActivo.nombre}`)
-    botonEliminar.setAttribute('nombre', imagenActivo.nombre)
+    carruselItem.setAttribute('nombre', `Img-${imagenActivo.nombre}`)
+    carruselItem.classList.add( `Img-${imagenActivo.nombre}`)
+    botonEliminar.setAttribute('nombre', `Img-${imagenActivo.nombre}`)
     botonEliminar.classList.add('m-0')
     botonEliminar.classList.remove('m-3')
     botonEliminar.onclick = e => eliminarImgActivo(e)
@@ -57,5 +57,5 @@ const guardarImgActivo = e => {
 }
 
 export {
-    guardarImgActivo
+    guardarImgActivo    
 }
