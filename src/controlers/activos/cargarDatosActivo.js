@@ -10,6 +10,7 @@ import { agregarComponente } from '../componentes/agregarLineaComponente.js'
 import { eliminarActivo } from './eliminarActivo.js'
 import { eliminarComponente } from '../componentes/eliminarComponente.js'
 import { nuevaImagen } from '../helpers/cargarNuevaImagenCarrusel.js'
+import { eliminarDocumento } from '../helpers/documentacion/eliminardocumento.js'
 
 const cargarDatosActivo = (id, nodo) => {
     const data = ipcRenderer.sendSync('consultarActivo', id)
@@ -128,7 +129,6 @@ const cargarDatosActivo = (id, nodo) => {
         btnEliminar.onclick = e => eliminarImgActivo(e)
     })
 
-
     // mostrar input de cargar imagenes en el activo
     if (activo.url_img.length >= 6) {
         const contendorImputImagenesActivo = nodo.querySelector('.contendorImputImagenesActivo')
@@ -141,10 +141,26 @@ const cargarDatosActivo = (id, nodo) => {
         inputImagenActivo.onchange = e => nuevaImagen(e)
     }
 
-    
+    if (activo.Buffersoportes) {
+        const docuemntos = Object.keys(activo.Buffersoportes)
+        if (docuemntos.length > 0) {
+            docuemntos.forEach(documento =>{
+                const containerDocumento = nodo.querySelector(`.${docuemntos}`)
+                if (containerDocumento !== undefined) {
+                    const embedpdf =  containerDocumento.querySelector('.embed')
+                    embedpdf.src = activo.Buffersoportes[`${docuemntos}`]
+                    embedpdf.setAttribute('activo', `Act-${activo.id}`)
+                    embedpdf.setAttribute('tipo', `${docuemntos}`)
 
 
+                }
 
+            })
+        
+           
+        }
+
+    }
 
     // cargamos los componentes en la tabla componentes
     const componentes = data.componentes

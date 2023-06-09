@@ -1,7 +1,7 @@
 const editarActivo = () => {
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
-    seccion.innerHTML = `
+    seccion.innerHTML = ` 
         <h2 class="text-center my-2 fw-bold border-bottom">CONSULTAR O EDITAR UN ACTIVO</h2>
         <h3 class="text-center my-1">Hoja de Vida de Activos</h3>
         <div class="container-fluid w-100 border border-1 border-dark m-2 dataActivo">
@@ -179,6 +179,192 @@ const editarActivo = () => {
                     </div>
                 </div>
             </form>
+        </div>
+        <div class="container-fluid w-100 m-0 p-0 my-3 documentacion">
+            <h3 class="fw-bold text-center my-2">DOCUMENTACION</h3>
+            <div class="container-fluid d-flex flex-wrap d-flex d-flex align-items-start w-100 m-0 p-0 my-3 documentacion">
+                <div class="m-2 border border-2 factura">
+                    <h5 class="fw-bold text-center">Factura</h5>
+                    <div class="containerFactura">
+                        <embed src="data:application/pdf;base64,Base64Data" type="application/pdf" />
+                        <div class="d-block text-center containerBotonesFactura">
+                            <button  class="btn p-0 eliminar" type="button">
+                               <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
+                            </button>
+                            <button class="btn p-0 guardar" type="button">
+                                <i class="bi bi-save2-fill fs-4 fw-bold text-success"></i>
+                            </button>
+                            <button  class="btn p-0 descargar" type="button">
+                                <i class="bi bi-file-earmark-arrow-down-fill fs-4 fw-bold text-primary"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column align-items-center justify-content-center m-3 containerSelecionar">
+                        <div class="contendorInputFactura position-relative">
+                            <button type="button" class="btn btn-secondary fs-6 btn-lg h-25 buttonfactura">Selecione
+                                la Factura</button>
+                            <input class="opacity-0 w-100 position-absolute top-0 start-0 inputFactura"
+                                type="file" accept="application/pdf" style="box-sizing:content-box">
+                        </div>
+                    </div>
+                </div>
+                <div class="m-2 border border-2 importacion">
+                    <h5 class="fw-bold text-center">Registro de importacion</h5>
+                    <div class="containerImportacion">
+                        <embed src="data:application/pdf;base64,Base64Data" type="application/pdf" />
+                        <div class="d-block text-center containerBotonesImportacion">
+                            <button class="btn p-0 eliminar" type="button">
+                                <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
+                            </button>
+                            <button class="btn p-0 guardar" type="button">
+                                <i class="bi bi-save2-fill fs-4 fw-bold text-success"></i>
+                            </button>
+                            <button  class="btn p-0 descargar" type="button">
+                                <i class="bi bi-file-earmark-arrow-down-fill fs-4 fw-bold text-primary"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div
+                        class="d-flex flex-column align-items-center justify-content-center m-3 containerSelecionar">
+                        <div class="contendorInputImportacion position-relative">
+                            <button type="button" class="btn btn-secondary fs-6 btn-lg h-25 buttonImportacion">Selecione
+                                el registro de Importacion</button>
+                            <input class="opacity-0 w-100 position-absolute top-0 start-0 inputImportacion"
+                                type="file" accept="application/pdf" style="box-sizing:content-box">
+                        </div>
+                    </div>
+                </div>
+                <div class="m-2 border border-2 invima">
+                    <h5 class="fw-bold text-center">Registro INVIMA</h5>
+                    <div class="containerInvima">
+                        <embed src="data:application/pdf;base64,Base64Data" type="application/pdf" />
+                        <div class="d-block text-center containerBotonesInvima">
+                            <button  class="btn p-0 eliminar" type="button">
+                                <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
+                            </button>
+                            <buttonclass="btn p-0 guardar" type="button">
+                                <i class="bi bi-save2-fill fs-4 fw-bold text-success"></i>
+                            </button>
+                            <button  class="btn p-0 descargar" type="button">
+                                <i class="bi bi-file-earmark-arrow-down-fill fs-4 fw-bold text-primary"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div
+                        class="d-flex flex-column align-items-center justify-content-center m-3 containerSelecionar">
+                        <div class="contendorInputInvima position-relative">
+                            <button type="button" class="btn btn-secondary fs-6 btn-lg h-25 buttonInvima">Selecione
+                                el Registro INVIMA</button>
+                            <input class="opacity-0 w-100 position-absolute top-0 start-0 inputInvima"
+                                type="file" accept="application/pdf" style="box-sizing:content-box">
+                        </div>
+                    </div>
+                </div>
+                <div class="m-2 border border-2 actaEntrega">
+                    <h5 class="fw-bold text-center">Acta de Entrega</h5>
+                    <div class="containerEntrega">
+                        <embed src="data:application/pdf;base64,Base64Data" type="application/pdf" />
+                        <div class="d-block text-center containerBotonesEntrega">
+                            <button class="btn p-0 eliminar" type="button">
+                                <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
+                            </button>
+                            <button class="btn p-0 guardar" type="button">
+                                <i class="bi bi-save2-fill fs-4 fw-bold text-success"></i>
+                            </button>
+                            <button  class="btn p-0 descargar" type="button">
+                                <i class="bi bi-file-earmark-arrow-down-fill fs-4 fw-bold text-primary"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div
+                        class="d-flex flex-column align-items-center justify-content-center m-3 containerSelecionar">
+                        <div class="contendorInputEntrega position-relative">
+                            <button type="button" class="btn btn-secondary fs-6 btn-lg h-25 buttonEntrega">Selecione
+                                el Acta de Entrega</button>
+                            <input class="opacity-0 w-100 position-absolute top-0 start-0 inputEntrega"
+                                type="file" accept="application/pdf" style="box-sizing:content-box">
+                        </div>
+                    </div>
+                </div>
+                <div class="m-2 border border-2 manual">
+                    <h5 class="fw-bold text-center">Manuales</h5>
+                    <div class="containerManual">
+                        <embed src="data:application/pdf;base64,Base64Data" type="application/pdf" />
+                        <div class="d-block text-center containerBotonesManual">
+                            <button class="btn p-0 eliminar" type="button">
+                                <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
+                            </button>
+                            <button  class="btn p-0 guardar" type="button">
+                                <i class="bi bi-save2-fill fs-4 fw-bold text-success"></i>
+                            </button>
+                            <button  class="btn p-0 descargar" type="button">
+                                <i class="bi bi-file-earmark-arrow-down-fill fs-4 fw-bold text-primary"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div
+                        class="d-flex flex-column align-items-center justify-content-center m-3 containerSelecionar">
+                        <div class="contendorInputManual position-relative">
+                            <button type="button" class="btn btn-secondary fs-6 btn-lg h-25 buttonManual">Selecione
+                                el Manual</button>
+                            <input class="opacity-0 w-100 position-absolute top-0 start-0 inputManual"
+                                type="file" accept="application/pdf" style="box-sizing:content-box">
+                        </div>
+                    </div>
+                </div>
+                <div class="m-2 border border-2 garantia">
+                    <h5 class="fw-bold text-center">Garantia</h5>
+                    <div class="containerGarantia">
+                        <embed src="data:application/pdf;base64,Base64Data" type="application/pdf" />
+                        <div class="d-block text-center containerBotonesGarantia">
+                            <button  class="btn p-0 eliminar" type="button">
+                                <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
+                            </button>
+                            <button  class="btn p-0 guardar" type="button">
+                                <i class="bi bi-save2-fill fs-4 fw-bold text-success"></i>
+                            </button>
+                            <button  class="btn p-0 descargar" type="button">
+                                <i class="bi bi-file-earmark-arrow-down-fill fs-4 fw-bold text-primary"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div
+                        class="d-flex flex-column align-items-center justify-content-center m-3 containerSelecionar">
+                        <div class="contendorInputGarantia position-relative">
+                            <button type="button" class="btn btn-secondary fs-6 btn-lg h-25 buttonGarantia">Selecione
+                                la Garantia</button>
+                            <input class="opacity-0 w-100 position-absolute top-0 start-0 inputGarantia"
+                                type="file" accept="application/pdf" style="box-sizing:content-box">
+                        </div>
+                    </div>
+                </div>
+                <div class="m-2 border border-2 otro">
+                    <h5 class="fw-bold text-center">Otros</h5>
+                    <div class="containerOtros">
+                        <embed src="data:application/pdf;base64,Base64Data" type="application/pdf" />
+                        <div class="d-block text-center containerBotonesOtros">
+                            <button class="btn p-0 eliminar" type="button">
+                                <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
+                            </button>
+                            <button class="btn p-0 guardar" type="button">
+                                <i class="bi bi-save2-fill fs-4 fw-bold text-success"></i>
+                            </button>
+                            <button class="btn p-0 descargar" type="button">
+                                <i class="bi bi-file-earmark-arrow-down-fill fs-4 fw-bold text-primary"></i>
+                           </button>
+                        </div>
+                    </div>
+                    <div
+                        class="d-flex flex-column align-items-center justify-content-center m-3 containerSelecionar">
+                        <div class="contendorInputOtros position-relative">
+                            <button type="button" class="btn btn-secondary fs-6 btn-lg h-25 buttonOtros">Selecione
+                                cualquer otro documento</button>
+                            <input class="opacity-0 w-100 position-absolute top-0 start-0 inputOtros"
+                                type="file" accept="application/pdf" style="box-sizing:content-box">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="container-fluid w-100 m-0 p-0 my-3 componentes">
             <h3 class="fw-bold text-center my-2">COMPONENTES</h3>
