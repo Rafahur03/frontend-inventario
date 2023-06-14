@@ -109,10 +109,68 @@ const eliminarImagenActivo = async (datos, token) => {
 
 }
 
+const eliminarDocumento = async (datos, token) => {
+
+    const data = {
+        id: datos.activo.split('-')[1],
+        documento: datos.documento, 
+    }
+    
+    const options = {   
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ data })
+    }
+
+    try {
+        const url = urlbase + '/eliminarDocumento'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+        return ({msg:'ocurrio un error durante la solicitud verifique mas tarde o intente mas tarde'})
+    }
+
+}
+
+const descargarDocumento = async (datos, token) => {
+
+    const data = {
+        id: datos.activo.split('-')[1],
+        documento: datos.documento, 
+    }
+    
+    const options = {   
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ data })
+    }
+
+    try {
+        const url = urlbase + '/descargarDocumento'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+        return ({msg:'ocurrio un error durante la solicitud intente mas tarde'})
+    }
+
+}
+
 
 module.exports = {
     consultarListadoActivos,
     consultarActivo,
     guardarImagenActivo,
-    eliminarImagenActivo
+    eliminarImagenActivo,
+    eliminarDocumento,
+    descargarDocumento
 }

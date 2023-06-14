@@ -11,6 +11,8 @@ import { eliminarActivo } from './eliminarActivo.js'
 import { eliminarComponente } from '../componentes/eliminarComponente.js'
 import { nuevaImagen } from '../helpers/cargarNuevaImagenCarrusel.js'
 import { eliminarDocumento } from '../helpers/documentacion/eliminardocumento.js'
+import { descargarDocumento } from '../helpers/documentacion/descargardocumento.js'
+import { cargarDocumento } from '../helpers/documentacion/cargarDocumento.js'
 
 const cargarDatosActivo = (id, nodo) => {
     const data = ipcRenderer.sendSync('consultarActivo', id)
@@ -141,26 +143,43 @@ const cargarDatosActivo = (id, nodo) => {
         inputImagenActivo.onchange = e => nuevaImagen(e)
     }
 
+    // cargar y mostrar los documentos soportes
     if (activo.Buffersoportes) {
-        const docuemntos = Object.keys(activo.Buffersoportes)
-        if (docuemntos.length > 0) {
-            docuemntos.forEach(documento =>{
-                const containerDocumento = nodo.querySelector(`.${docuemntos}`)
+        const documentos = Object.keys(activo.Buffersoportes)
+        if (documentos.length > 0) {
+            documentos.forEach(documento => {
+                const containerDocumento = nodo.querySelector(`.${documento}`)
                 if (containerDocumento !== undefined) {
-                    const embedpdf =  containerDocumento.querySelector('.embed')
-                    embedpdf.src = activo.Buffersoportes[`${docuemntos}`]
+                    const embedpdf = containerDocumento.querySelector('embed')
+                    embedpdf.src = activo.Buffersoportes[`${documento}`]
                     embedpdf.setAttribute('activo', `Act-${activo.id}`)
-                    embedpdf.setAttribute('tipo', `${docuemntos}`)
-
-
+                    embedpdf.setAttribute('tipo', `${documento}`)
+                    const containerpdf = containerDocumento.querySelector('.pdfDocumentacion')
+                    containerpdf.classList.remove('d-none')
+                    const botonEliminar = containerDocumento.querySelector('.eliminar')
+                    botonEliminar.setAttribute('activo', `Act-${activo.id}`)
+                    botonEliminar.setAttribute('tipo', `${documento}`)
+                    botonEliminar.onclick = e => eliminarDocumento(e)
+                    const botonDescargar = containerDocumento.querySelector('.descargar')
+                    botonDescargar.setAttribute('activo', `Act-${activo.id}`)
+                    botonDescargar.setAttribute('tipo', `${documento}`)
+                    botonDescargar.onclick = e => descargarDocumento(e)
                 }
-
             })
-        
-           
         }
-
     }
+
+    //cargar los input de los que no tiene documentos
+    const containersDocumentos = nodo.querySelectorAll('.d-none.pdfDocumentacion')
+    for (const element of containersDocumentos) {
+        const contenedorImput = element.nextSibling.nextSibling
+        const inputdocumento = contenedorImput.querySelector('input')
+        inputdocumento.onchange = (e) => cargarDocumento(e)
+        inputdocumento.setAttribute('activo', `Act-${activo.id}`)
+        contenedorImput.classList.remove('d-none')
+    }
+
+
 
     // cargamos los componentes en la tabla componentes
     const componentes = data.componentes

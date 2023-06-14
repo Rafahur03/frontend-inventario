@@ -12,7 +12,11 @@ const gudardarDocumento =  async e => {
         boton = e.target
     }
 
-    console.log(boton)
+    const contenedorPdf = boton.parentNode.parentNode
+    const contendorInput = contenedorPdf.nextSibling.nextSibling
+    const input = contendorInput.querySelector('input')
+    const file = input.files[0] 
+    console.log(file)
 
 }
 

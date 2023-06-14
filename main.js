@@ -6,7 +6,9 @@ const {
     consultarListadoActivos,
     consultarActivo,
     guardarImagenActivo,
-    eliminarImagenActivo
+    eliminarImagenActivo,
+    eliminarDocumento,
+    descargarDocumento
 } = require('./src/controlers/activos/activos.js')
 
 const { consultarListadoSolicitudes } = require('./src/controlers/solicitudes/solicitudes.js')
@@ -88,7 +90,7 @@ ipcMain.on('listadoActivo', async (e) => {
     e.returnValue = listado;
 })
 
-
+// consultar un activo
 ipcMain.on('consultarActivo', async (e, id) => {
     const token = dataUsuarioSesion.token
     const activo = await consultarActivo(id, token)
@@ -108,11 +110,24 @@ ipcMain.on('imagenActivo', async (e, data) => {
     e.returnValue = imagen;
 })
 
-//eliminar una imagen del acticvo
+//eliminar una imagen del activo
 ipcMain.on('elimnarImagenActivo', async (e, data) => {
     const token = dataUsuarioSesion.token
     const imagen = await eliminarImagenActivo(data, token)
     e.returnValue = imagen;
+})
+//descargar un documento del activo
+ipcMain.on('descargaDocumento', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const documento = await descargarDocumento(data, token)
+    e.returnValue = documento;
+})
+
+//eliminar un docuemnto del activo
+ipcMain.on('eliminarDocumento', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const documentoEliminado = await eliminarDocumento(data, token)
+    e.returnValue = documentoEliminado;
 })
 
 /////////////////////////////////solicitudes////////////////////////////
