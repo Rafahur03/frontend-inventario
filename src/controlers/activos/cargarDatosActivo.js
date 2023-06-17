@@ -1,6 +1,6 @@
 const { ipcRenderer } = require('electron')
 import { generateRandomId } from '../helpers/nombreRandon.js'
-import { rotarImg } from '../helpers/rotarImg.js'
+import { rotarImg } from '../helpers/activos/rotarImg.js'
 import { eliminarImgActivo } from '../helpers/eliminarImg.js'
 import { imprimirActivo } from './ImprimirActivo.js'
 import { solicitarMttoActivo } from './solicitarMttoActivo.js'
@@ -9,10 +9,11 @@ import { imprimirListadoMtoActivo } from './ImprimirListadoMtto.js'
 import { agregarComponente } from '../componentes/agregarLineaComponente.js'
 import { eliminarActivo } from './eliminarActivo.js'
 import { eliminarComponente } from '../componentes/eliminarComponente.js'
-import { nuevaImagen } from '../helpers/cargarNuevaImagenCarrusel.js'
+import { nuevaImagen } from '../helpers/activos/cargarNuevaImagenCarrusel.js'
 import { eliminarDocumento } from '../helpers/documentacion/eliminardocumento.js'
 import { descargarDocumento } from '../helpers/documentacion/descargardocumento.js'
 import { cargarDocumento } from '../helpers/documentacion/cargarDocumento.js'
+import { opcionId } from '../helpers/activos/listasId.js'
 
 const cargarDatosActivo = (id, nodo) => {
     const data = ipcRenderer.sendSync('consultarActivo', id)
@@ -61,26 +62,148 @@ const cargarDatosActivo = (id, nodo) => {
     form.setAttribute('form-activo', `Act-${activo.id}`)
     modeloActivo.value = activo.modelo
     areaActivo.value = activo.area
+    areaActivo.setAttribute('area', `Ar-${activo.area_id}`)
     nombreActivo.value = activo.nombre
     serieActivo.value = activo.serie
     ubicacionActivo.value = activo.ubicacion
     marcaActivo.value = activo.marca
+    marcaActivo.setAttribute('marca', `Ma-${activo.marca_id}`)
     procesoActivo.value = activo.proceso
+    procesoActivo.setAttribute('proceso', `Pr-${activo.proceso_id}`)
     estadoActivo.value = activo.estado
+    estadoActivo.setAttribute('estado', `Es-${activo.estado_id}`)
     proveedorActivo.value = activo.provedor
+    proveedorActivo.setAttribute('provedor', `Pro-${activo.proveedor_id}`)
     nitProveedor.value = activo.nit
     responsableActivo.value = activo.responsable
+    responsableActivo.setAttribute('responsable', `Re-${activo.responsableId}`)
     tipoActivo.value = activo.tipoActivo
+    tipoActivo.setAttribute('tipoActivo', `Ta-${activo.tipo_activo_id}`)
     facturaActivo.value = activo.numero_factura
     valorActivo.value = activo.valor
     ingresoActivo.value = activo.fecha_creacion
     fechaCompra.value = activo.fecha_compra
     garantiaActivo.value = activo.vencimiento_garantia
     frecuenciaMtto.value = activo.frecuencia
+    frecuenciaMtto.setAttribute('frecuencia', `Fr-${activo.frecuencia_id}`)
     proximoMtto.value = activo.fecha_proximo_mtto
     descripcionActivo.value = activo.descripcion
     recomendacionActivo.value = activo.recomendaciones_Mtto
     observacionActivo.value = activo.obervacion
+
+    if (data.editar) {
+
+        const listados = ipcRenderer.sendSync('consultarListasCofigActivos')
+        const idlista = generateRandomId()
+
+        modeloActivo.removeAttribute('readonly')
+
+        areaActivo.removeAttribute('readonly')
+        const listaAreas = nodo.querySelector('#listaAreas')
+        listaAreas.id = `${listaAreas.id}${idlista}`
+        areaActivo.setAttribute('list', listaAreas.id)
+        areaActivo.onblur = e => opcionId(e)
+        listados[3].forEach(element => {
+            const option = document.createElement('option')
+            option.value = element.area
+            option.textContent = element.id
+            listaAreas.appendChild(option)
+        })
+
+        nombreActivo.removeAttribute('readonly')
+        serieActivo.removeAttribute('readonly')
+        ubicacionActivo.removeAttribute('readonly')
+
+        marcaActivo.removeAttribute('readonly')
+        const listaMarca = nodo.querySelector('#listMarcas')
+        listaMarca.id = `${listaMarca.id}${idlista}`
+        marcaActivo.setAttribute('list', listaMarca.id)
+        listados[1].forEach(element => {
+            const option = document.createElement('option')
+            option.value = element.marca
+            option.textContent = element.id
+            listaMarca.appendChild(option)
+        })
+
+        procesoActivo.removeAttribute('readonly')
+        const listProceso = nodo.querySelector('#listProceso')
+        listProceso.id = `${listProceso.id}${idlista}`
+        procesoActivo.setAttribute('list', listProceso.id)
+        listados[2].forEach(element => {
+            const option = document.createElement('option')
+            option.value = `${element.sigla} - ${element.proceso}`
+            option.textContent = element.id
+            listProceso.appendChild(option)
+        })
+
+        estadoActivo.removeAttribute('readonly')
+        const listaEstado = nodo.querySelector('#listaEstado')
+        listaEstado.id = `${listaEstado.id}${idlista}`
+        estadoActivo.setAttribute('list', listaEstado.id)
+        listados[6].forEach(element => {
+            const option = document.createElement('option')
+            option.value = element.estado
+            option.textContent = element.id
+            listaEstado.appendChild(option)
+        })
+
+        proveedorActivo.removeAttribute('readonly')
+        const listaProveedores = nodo.querySelector('#listaProveedores')
+        listaProveedores.id = `${listaProveedores.id}${idlista}`
+        proveedorActivo.setAttribute('list', listaProveedores.id)
+        listados[4].forEach(element => {
+            const option = document.createElement('option')
+            option.value = `${element.nombre_comercial} - ${element.razon_social} - ${element.nit}`
+            option.textContent = element.id
+            listaProveedores.appendChild(option)
+        })
+
+        nitProveedor.removeAttribute('readonly')
+
+        responsableActivo.removeAttribute('readonly')
+        const listaUsuario = nodo.querySelector('#listaUsuario')
+        listaUsuario.id = `${listaUsuario.id}${idlista}`
+        responsableActivo.setAttribute('list', listaUsuario.id)
+        listados[7].forEach(element => {
+            const option = document.createElement('option')
+            option.value = element.nombre
+            option.textContent = element.id
+            listaUsuario.appendChild(option)
+        })
+
+        tipoActivo.removeAttribute('readonly')
+        const listaTipoActivo = nodo.querySelector('#listaTipoActivo')
+        listaTipoActivo.id = `${listaTipoActivo.id}${idlista}`
+        tipoActivo.setAttribute('list', listaTipoActivo.id)
+        listados[5].forEach(element => {
+            const option = document.createElement('option')
+            option.value = element.tipoActivo
+            option.textContent = element.id
+            listaTipoActivo.appendChild(option)
+        })
+
+        facturaActivo.removeAttribute('readonly')
+        valorActivo.removeAttribute('readonly')
+        ingresoActivo.removeAttribute('readonly')
+        fechaCompra.removeAttribute('readonly')
+        garantiaActivo.removeAttribute('readonly')
+
+        frecuenciaMtto.removeAttribute('readonly')
+        const listaFrecuencia = nodo.querySelector('#listaFrecuencia')
+        listaFrecuencia.id = `${listaFrecuencia.id}${idlista}`
+        frecuenciaMtto.setAttribute('list', listaFrecuencia.id)
+        listados[8].forEach(element =>{
+            const option = document.createElement('option')
+            option.value =`${element.frecuencia} - ${element.dias}`
+            option.textContent = element.id
+            listaFrecuencia.appendChild(option)
+        })
+
+        proximoMtto.removeAttribute('readonly')
+        descripcionActivo.removeAttribute('readonly')
+        recomendacionActivo.removeAttribute('readonly')
+        observacionActivo.removeAttribute('readonly')
+    }
 
     solicitarMantenimiento.setAttribute('activo', `Act-${activo.id}`)
     solicitarMantenimiento.onclick = e => solicitarMttoActivo(e)

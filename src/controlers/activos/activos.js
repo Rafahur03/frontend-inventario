@@ -21,6 +21,25 @@ const consultarListadoActivos = async token => {
 
 }
 
+const consultarListasCofigActivos = async token => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const url = urlbase + '/consultarListasConfActivos'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
 const consultarActivo = async (id, token) => {
     const options = {
         method: 'POST',
@@ -86,7 +105,7 @@ const eliminarImagenActivo = async (datos, token) => {
     const data = {
         id: datos.activo.split('-')[1],
         codigo: datos.codigo,
-        imagen: datos.nombre.split('-')[1]
+        imagen: `${datos.nombre.split('-')[1]}-${datos.nombre.split('-')[2]}`
     }
     
     const options = {   
@@ -165,12 +184,50 @@ const descargarDocumento = async (datos, token) => {
 
 }
 
+const gudardarDocumento = async (datos, token) => {
+    const mimeType = datos.file.split(',')[0].split(';')[0].split(':')[1]
+    if (mime.extension(mimeType) !== 'pdf' ) return { msg: 'Solo se aceptan documentos en formato pdf' }
+
+    const imgBase64 = datos.file.split(',')[1]
+    const decodedData = Buffer.from(imgBase64, 'base64');
+    const sizeInBytes = decodedData.length
+    if (sizeInBytes > 3145728) return { msg: 'Solo se aceptan documentos de tamaño menor de 3 Mb' }
+    
+    const data = {
+        id: datos.activo.split('-')[1],
+        documento: datos.documento,
+        file: datos.file
+    }
+   
+    const options = {   
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ data })
+    }
+
+    try {
+        const url = urlbase + '/guardarDocumento'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+        return ({msg:'ocurrio un error durante la solicitud verifique mas tarde o intente mas tarde'})
+    }
+
+}
+
 
 module.exports = {
     consultarListadoActivos,
+    consultarListasCofigActivos,
     consultarActivo,
     guardarImagenActivo,
     eliminarImagenActivo,
     eliminarDocumento,
-    descargarDocumento
+    descargarDocumento,
+    gudardarDocumento
 }

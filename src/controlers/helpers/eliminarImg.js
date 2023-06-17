@@ -19,7 +19,6 @@ const eliminarImgActivo = async e => {
     const formGorup1 = carruseInner.parentNode.parentNode
     const formGorup2 = formGorup1.nextSibling.nextSibling
     const codigo = formGorup2.querySelector('.codigoInterno').value
-
     const data = {
         activo,
         codigo,

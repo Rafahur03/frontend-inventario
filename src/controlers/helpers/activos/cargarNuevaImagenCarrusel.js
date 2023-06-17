@@ -1,9 +1,9 @@
 const mime = require('mime-types')
-import { eliminarImgCarrusel } from './eliminarImg.js'
-import { modalMensaje } from './modalEleccion.js'
+import { eliminarImgCarrusel } from '../eliminarImg.js'
+import { modalMensaje } from '../modalEleccion.js'
 import { rotarImg } from './rotarImg.js'
-import { guardarImgActivo } from './guardarImagen.js'
-import { generateRandomId } from './nombreRandon.js'
+import { guardarImgActivo } from '../guardarImagen.js'
+import { generateRandomId } from '../nombreRandon.js'
 
 const nuevaImagen = e => {
     const files = e.target.files
