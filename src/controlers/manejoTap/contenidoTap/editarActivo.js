@@ -7,22 +7,22 @@ const editarActivo = () => {
         <div class="container-fluid w-100 border border-1 border-dark m-2 dataActivo">
             <div class="container-fluid me-5 w-100 d-flex ">
                 <div class=" ms-2">
-                    <button type="button" class="btn mt-0 pt-0 guardarEdicion">
+                    <button type="button" class="btn mt-0 pt-0 guardarEdicion" title="Guardar Datos">
                         <i class="bi bi-save2-fill fs-1 text-warning"></i>
                     </button>
                 </div>
                 <div class="ms-2">
-                    <button type="button" class="btn  mt-0 pt-0 solicitar">
+                    <button type="button" class="btn  mt-0 pt-0 solicitar" title="Solicitar Mantenimiento">
                         <i class="bi bi-wrench-adjustable-circle-fill fs-1 text-secondary"></i>
                     </button>
                 </div>
                 <div class="ms-2r"> 
-                    <button type="button" class="btn  mt-0 pt-0 print">
+                    <button type="button" class="btn  mt-0 pt-0 print" title="Imprimir Hoja de vida">
                         <i class="bi bi-printer-fill fs-1 text-primary"></i>
                     </button>
                 </div>
                 <div class="ms-auto">
-                    <button type="button" class="btn  mt-0 pt-0 eliminar">
+                    <button type="button" class="btn  mt-0 pt-0 eliminar" title="Eliminar Activo">
                         <i class="bi bi-trash-fill fs-1 text-danger"></i>                    
                     </button>
                 </div>
@@ -34,12 +34,12 @@ const editarActivo = () => {
                         <div id="carouselExampleControls" class="carousel slide"
                             data-bs-ride="carousel">
                             <div class="carousel-inner"></div>
-                            <button class="carousel-control-prev" type="button"
+                            <button class="carousel-control-prev" type="button" title="Previo"
                                 data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
                             </button>
-                            <button class="carousel-control-next" type="button"
+                            <button class="carousel-control-next" type="button" title="Siguiente"
                                 data-bs-target="#carouselExampleControls" data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
@@ -47,7 +47,7 @@ const editarActivo = () => {
                         </div>
                         <div class="d-flex flex-column align-items-center justify-content-center mt-3 contendorImputImagenesActivo">
                             <div class="contendorInput position-relative">
-                                <button type="button"
+                                <button type="button title="Seleccionar Imagenes"
                                     class="btn btn-secondary fs-6 btn-lg h-25 buttonImagenesActivo">Selecione Max 6
                                     Imagenes</button>
                                 <input class="opacity-0 w-100 position-absolute top-0 start-0 inputImagenesActivo"
@@ -188,13 +188,13 @@ const editarActivo = () => {
                     <div class="d-none containerFactura pdfDocumentacion">
                         <embed src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesFactura">
-                            <button  class="btn p-0 eliminar" type="button" tipo="Factura">
+                            <button  class="btn p-0 eliminar" type="button" tipo="Factura" title="Eliminar">
                                <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
                             </button>
-                            <button class="d-none btn p-0 guardar" type="button" tipo="Factura">
+                            <button class="d-none btn p-0 guardar" type="button" tipo="Factura" title="Guardar">
                                 <i class="bi bi-save2-fill fs-4 fw-bold text-success"></i>
                             </button>
-                            <button  class="btn p-0 descargar" type="button" tipo="Factura">
+                            <button  class="btn p-0 descargar" type="button" tipo="Factura" title="Descargar">
                                 <i class="bi bi-file-earmark-arrow-down-fill fs-4 fw-bold text-primary"></i>
                             </button>
                         </div>
@@ -213,13 +213,13 @@ const editarActivo = () => {
                     <div class="d-none containerImportacion pdfDocumentacion">
                         <embed src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesImportacion">
-                            <button class="btn p-0 eliminar" type="button" tipo="Importacion">
+                            <button class="btn p-0 eliminar" type="button" tipo="Importacion" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
                             </button>
-                            <button class="d-none btn p-0 guardar" type="button" tipo="Importacion">
+                            <button class="d-none btn p-0 guardar" type="button" tipo="Importacion" title="Guardar">
                                 <i class="bi bi-save2-fill fs-4 fw-bold text-success"></i>
                             </button>
-                            <button  class="btn p-0 descargar" type="button" tipo="Importacion">
+                            <button  class="btn p-0 descargar" type="button" tipo="Importacion"  title="Descargar">
                                 <i class="bi bi-file-earmark-arrow-down-fill fs-4 fw-bold text-primary"></i>
                             </button>
                         </div>
@@ -239,13 +239,13 @@ const editarActivo = () => {
                     <div class="d-none containerInvima pdfDocumentacion">
                         <embed src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesInvima">
-                            <button  class="btn p-0 eliminar" type="button" tipo="Invima">
+                            <button  class="btn p-0 eliminar" type="button" tipo="Invima" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
                             </button>
-                            <button class="d-none btn p-0 guardar" type="button" tipo="Invima">
+                            <button class="d-none btn p-0 guardar" type="button" tipo="Invima" title="Guardar">
                                 <i class="bi bi-save2-fill fs-4 fw-bold text-success"></i>
                             </button>
-                            <button  class="btn p-0 descargar" type="button" tipo="Invima">
+                            <button  class="btn p-0 descargar" type="button" tipo="Invima"  title="Descargar">
                                 <i class="bi bi-file-earmark-arrow-down-fill fs-4 fw-bold text-primary"></i>
                             </button>
                         </div>
@@ -264,13 +264,13 @@ const editarActivo = () => {
                     <div class="d-none containerEntrega pdfDocumentacion">
                         <embed src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesEntrega">
-                            <button class="btn p-0 eliminar" type="button" tipo="ActaEntrega">
+                            <button class="btn p-0 eliminar" type="button" tipo="ActaEntrega" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
                             </button>
-                            <button class="d-none btn p-0 guardar" type="button" tipo="ActaEntrega">
+                            <button class="d-none btn p-0 guardar" type="button" tipo="ActaEntrega" title="Guardar">
                                 <i class="bi bi-save2-fill fs-4 fw-bold text-success"></i>
                             </button>
-                            <button  class="btn p-0 descargar" type="button" tipo="ActaEntrega">
+                            <button  class="btn p-0 descargar" type="button" tipo="ActaEntrega"  title="Descargar">
                                 <i class="bi bi-file-earmark-arrow-down-fill fs-4 fw-bold text-primary"></i>
                             </button>
                         </div>
@@ -290,13 +290,13 @@ const editarActivo = () => {
                     <div class="d-none containerManual pdfDocumentacion">
                         <embed src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesManual">
-                            <button class="btn p-0 eliminar" type="button" tipo="Manual">
+                            <button class="btn p-0 eliminar" type="button" tipo="Manual" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
                             </button>
-                            <button  class="d-none btn p-0 guardar" type="button" tipo="Manual">
+                            <button  class="d-none btn p-0 guardar" type="button" tipo="Manual" title="Guardar">
                                 <i class="bi bi-save2-fill fs-4 fw-bold text-success"></i>
                             </button>
-                            <button  class="btn p-0 descargar" type="button" tipo="Manual">
+                            <button  class="btn p-0 descargar" type="button" tipo="Manual"  title="Descargar">
                                 <i class="bi bi-file-earmark-arrow-down-fill fs-4 fw-bold text-primary"></i>
                             </button>
                         </div>
@@ -315,13 +315,13 @@ const editarActivo = () => {
                     <div class="d-none containerGarantia pdfDocumentacion">
                         <embed src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesGarantia">
-                            <button  class="btn p-0 eliminar" type="button" tipo="Garantia">
+                            <button  class="btn p-0 eliminar" type="button" tipo="Garantia" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
                             </button>
-                            <button  class="d-none btn p-0 guardar" type="button" tipo="Garantia">
+                            <button  class="d-none btn p-0 guardar" type="button" tipo="Garantia" title="Guardar">
                                 <i class="bi bi-save2-fill fs-4 fw-bold text-success"></i>
                             </button>
-                            <button  class="btn p-0 descargar" type="button" tipo="Garantia">
+                            <button  class="btn p-0 descargar" type="button" tipo="Garantia"  title="Descargar">
                                 <i class="bi bi-file-earmark-arrow-down-fill fs-4 fw-bold text-primary"></i>
                             </button>
                         </div>
@@ -340,13 +340,13 @@ const editarActivo = () => {
                     <div class="d-none containerOtros pdfDocumentacion">
                         <embed src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesOtros">
-                            <button class="btn p-0 eliminar" type="button" tipo="Otro">
+                            <button class="btn p-0 eliminar" type="button" tipo="Otro" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
                             </button>
-                            <button class="d-none btn p-0 guardar" type="button" tipo="Otro">
+                            <button class="d-none btn p-0 guardar" type="button" tipo="Otro" title="Guardar">
                                 <i class="bi bi-save2-fill fs-4 fw-bold text-success"></i>
                             </button>
-                            <button class="btn p-0 descargar" type="button" tipo="Otro">
+                            <button class="btn p-0 descargar" type="button" tipo="Otro" title="Descargar">
                                 <i class="bi bi-file-earmark-arrow-down-fill fs-4 fw-bold text-primary"></i>
                            </button>
                         </div>
@@ -380,7 +380,7 @@ const editarActivo = () => {
                     </tbody>
                 </table>
                 <div class="p-1 d-flex flex-row-reverse">
-                    <button type="button" class="btn nuevoComponente">
+                    <button type="button" class="btn nuevoComponente" title="Agregar Componente">
                         <i class="bi bi-plus-square-fill fs-2"></i>
                     </button>
                 </div>  
@@ -389,7 +389,7 @@ const editarActivo = () => {
         <div class="container-fluid w-100 m-0 p-0 my-3 historialMantenimiento">
             <h2 class="text-center fw-bold">Historial de Mantenimientos</h2>
             <div class="p-1 d-flex flex-row-reverse">
-                    <button type="button" class="btn imprimirlistadomtto">
+                    <button type="button" class="btn imprimirlistadomtto" title="Imprimir Mantenimientos">
                         <i class="bi bi-printer-fill fs-2 text-primary"></i>
                     </button>
             </div>

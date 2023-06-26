@@ -62,30 +62,30 @@ const cargarDatosActivo = (id, nodo) => {
     form.setAttribute('form-activo', `Act-${activo.id}`)
     modeloActivo.value = activo.modelo
     areaActivo.value = activo.area
-    areaActivo.setAttribute('area', `Ar-${activo.area_id}`)
+    areaActivo.setAttribute('opcionId', `Ar-${activo.area_id}`)
     nombreActivo.value = activo.nombre
     serieActivo.value = activo.serie
     ubicacionActivo.value = activo.ubicacion
     marcaActivo.value = activo.marca
-    marcaActivo.setAttribute('marca', `Ma-${activo.marca_id}`)
+    marcaActivo.setAttribute('opcionId', `Ma-${activo.marca_id}`)
     procesoActivo.value = activo.proceso
-    procesoActivo.setAttribute('proceso', `Pr-${activo.proceso_id}`)
+    procesoActivo.setAttribute('opcionId', `Pr-${activo.proceso_id}`)
     estadoActivo.value = activo.estado
-    estadoActivo.setAttribute('estado', `Es-${activo.estado_id}`)
+    estadoActivo.setAttribute('opcionId', `Es-${activo.estado_id}`)
     proveedorActivo.value = activo.provedor
-    proveedorActivo.setAttribute('provedor', `Pro-${activo.proveedor_id}`)
+    proveedorActivo.setAttribute('opcionId', `Pro-${activo.proveedor_id}`)
     nitProveedor.value = activo.nit
     responsableActivo.value = activo.responsable
-    responsableActivo.setAttribute('responsable', `Re-${activo.responsableId}`)
+    responsableActivo.setAttribute('opcionId', `Re-${activo.responsableId}`)
     tipoActivo.value = activo.tipoActivo
-    tipoActivo.setAttribute('tipoActivo', `Ta-${activo.tipo_activo_id}`)
+    tipoActivo.setAttribute('opcionId', `Ta-${activo.tipo_activo_id}`)
     facturaActivo.value = activo.numero_factura
     valorActivo.value = activo.valor
     ingresoActivo.value = activo.fecha_creacion
     fechaCompra.value = activo.fecha_compra
     garantiaActivo.value = activo.vencimiento_garantia
     frecuenciaMtto.value = activo.frecuencia
-    frecuenciaMtto.setAttribute('frecuencia', `Fr-${activo.frecuencia_id}`)
+    frecuenciaMtto.setAttribute('opcionId', `Fr-${activo.frecuencia_id}`)
     proximoMtto.value = activo.fecha_proximo_mtto
     descripcionActivo.value = activo.descripcion
     recomendacionActivo.value = activo.recomendaciones_Mtto
@@ -118,6 +118,7 @@ const cargarDatosActivo = (id, nodo) => {
         const listaMarca = nodo.querySelector('#listMarcas')
         listaMarca.id = `${listaMarca.id}${idlista}`
         marcaActivo.setAttribute('list', listaMarca.id)
+        marcaActivo.onblur = e => opcionId(e)
         listados[1].forEach(element => {
             const option = document.createElement('option')
             option.value = element.marca
@@ -129,9 +130,10 @@ const cargarDatosActivo = (id, nodo) => {
         const listProceso = nodo.querySelector('#listProceso')
         listProceso.id = `${listProceso.id}${idlista}`
         procesoActivo.setAttribute('list', listProceso.id)
+        procesoActivo.onblur = e => opcionId(e)
         listados[2].forEach(element => {
             const option = document.createElement('option')
-            option.value = `${element.sigla} - ${element.proceso}`
+            option.value = `${element.sigla} -- ${element.proceso}`
             option.textContent = element.id
             listProceso.appendChild(option)
         })
@@ -140,6 +142,7 @@ const cargarDatosActivo = (id, nodo) => {
         const listaEstado = nodo.querySelector('#listaEstado')
         listaEstado.id = `${listaEstado.id}${idlista}`
         estadoActivo.setAttribute('list', listaEstado.id)
+        estadoActivo.onblur = e => opcionId(e)
         listados[6].forEach(element => {
             const option = document.createElement('option')
             option.value = element.estado
@@ -151,19 +154,19 @@ const cargarDatosActivo = (id, nodo) => {
         const listaProveedores = nodo.querySelector('#listaProveedores')
         listaProveedores.id = `${listaProveedores.id}${idlista}`
         proveedorActivo.setAttribute('list', listaProveedores.id)
+        proveedorActivo.onblur = e => opcionId(e)
         listados[4].forEach(element => {
             const option = document.createElement('option')
-            option.value = `${element.nombre_comercial} - ${element.razon_social} - ${element.nit}`
+            option.value = `${element.nombre_comercial} -- ${element.razon_social} -- ${element.nit}`
             option.textContent = element.id
             listaProveedores.appendChild(option)
         })
-
-        nitProveedor.removeAttribute('readonly')
 
         responsableActivo.removeAttribute('readonly')
         const listaUsuario = nodo.querySelector('#listaUsuario')
         listaUsuario.id = `${listaUsuario.id}${idlista}`
         responsableActivo.setAttribute('list', listaUsuario.id)
+        responsableActivo.onblur = e => opcionId(e)
         listados[7].forEach(element => {
             const option = document.createElement('option')
             option.value = element.nombre
@@ -175,6 +178,7 @@ const cargarDatosActivo = (id, nodo) => {
         const listaTipoActivo = nodo.querySelector('#listaTipoActivo')
         listaTipoActivo.id = `${listaTipoActivo.id}${idlista}`
         tipoActivo.setAttribute('list', listaTipoActivo.id)
+        tipoActivo.onblur = e => opcionId(e)
         listados[5].forEach(element => {
             const option = document.createElement('option')
             option.value = element.tipoActivo
@@ -192,9 +196,10 @@ const cargarDatosActivo = (id, nodo) => {
         const listaFrecuencia = nodo.querySelector('#listaFrecuencia')
         listaFrecuencia.id = `${listaFrecuencia.id}${idlista}`
         frecuenciaMtto.setAttribute('list', listaFrecuencia.id)
+        frecuenciaMtto.onblur = e => opcionId(e)
         listados[8].forEach(element =>{
             const option = document.createElement('option')
-            option.value =`${element.frecuencia} - ${element.dias}`
+            option.value =`${element.dias} -- ${element.frecuencia}`
             option.textContent = element.id
             listaFrecuencia.appendChild(option)
         })
@@ -240,6 +245,7 @@ const cargarDatosActivo = (id, nodo) => {
         iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-1', 'fw-bold', 'text-danger')
         const btnEliminar = document.createElement('button')
         btnEliminar.setAttribute('activo', `Act-${activo.id}`)
+        btnEliminar.title = 'Eliminar'
         btnEliminar.setAttribute('nombre', `Img-${activo.url_img[index]}`)
         btnEliminar.classList.add('btn', 'p-0')
         btnEliminar.type = 'button'
@@ -316,6 +322,7 @@ const cargarDatosActivo = (id, nodo) => {
         const tdcapacidad = document.createElement('td')
         const tdAcciones = document.createElement('td')
         const btnEliminar = document.createElement('button')
+        btnEliminar.title = 'Eliminar'
         const iEliminar = document.createElement('i')
         tr.id = `Com-${element.id}`
         tdId.textContent = element.id
@@ -341,6 +348,7 @@ const cargarDatosActivo = (id, nodo) => {
         tdAcciones.appendChild(btnEliminar)
         tr.appendChild(tdAcciones)
         // creamos la fila en la tabla
+        
         componentesbody.appendChild(tr)
     });
 

@@ -50,8 +50,10 @@ const agregarComponente = e => {
     const tdAcciones = document.createElement('td')
 
     const btnGuardar = document.createElement('button')
+    btnGuardar.title = 'Guardar'
     const iGuardar = document.createElement('i')
     const btnEliminar = document.createElement('button')
+    btnEliminar.title = 'Eliminar'
     const iEliminar = document.createElement('i')
 
     const inputComponente = document.createElement('input')
