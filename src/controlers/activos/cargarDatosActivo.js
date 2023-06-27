@@ -94,6 +94,7 @@ const cargarDatosActivo = (id, nodo) => {
     if (data.editar) {
 
         const listados = ipcRenderer.sendSync('consultarListasCofigActivos')
+        console.log(listados)   
         const idlista = generateRandomId()
 
         modeloActivo.removeAttribute('readonly')

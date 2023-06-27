@@ -4,13 +4,13 @@ const path = require('path')
 const { iniciarSesion } = require('./src/controlers/usuarios/usuario.js')
 const {
     consultarListadoActivos,
+    actualizarDatosActivos,
     consultarActivo,
     guardarImagenActivo,
     eliminarImagenActivo,
     eliminarDocumento,
     descargarDocumento,
     gudardarDocumento,
-    consultarListasCofigActivos
 } = require('./src/controlers/activos/activos.js')
 
 const { consultarListadoSolicitudes } = require('./src/controlers/solicitudes/solicitudes.js')
@@ -20,7 +20,7 @@ const {
     guardarComponente,
 } = require('./src/controlers/componentes/componentes.js')
 
-const { consultarTablasConfig} = require('./src/controlers/tablasConfig/tablasConfig.js')
+const { consultarTablasConfig, consultarListasCofigActivos} = require('./src/controlers/tablasConfig/tablasConfig.js')
 const { validarDatosComponente } = require('./src/controlers/componentes/validarComponentes.js')
 
 require('dotenv').config()
@@ -90,6 +90,12 @@ ipcMain.on('listadoActivo', async (e) => {
     const token = dataUsuarioSesion.token
     const listado = await consultarListadoActivos(token)
     e.returnValue = listado;
+})
+
+ipcMain.on('actualizarDatosActivos', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const actualizar = await actualizarDatosActivos(data, token)
+    e.returnValue = actualizar;
 })
 
 // consultar un activo

@@ -1,6 +1,9 @@
 require('dotenv').config()
 const mime = require('mime-types')
+const  { validarDatosActivo } = require('./validarDatosActivo.js')
 const urlbase = process.env.API_URL
+
+
 
 const consultarListadoActivos = async token => {
     const options = {
@@ -21,16 +24,22 @@ const consultarListadoActivos = async token => {
 
 }
 
-const consultarListasCofigActivos = async token => {
+const actualizarDatosActivos = async (datos, token) => {
+
+    const validacion = validarDatosActivo(datos, token)
+    return validacion
+
     const options = {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
-        }
+        },
+        body: JSON.stringify({ data })
     }
+
     try {
-        const url = urlbase + '/consultarListasConfActivos'
+        const url = urlbase + '/guardarImagenActivo'
         const response = await fetch(url, options);
         const json = await response.json();
         return (json)
@@ -223,7 +232,7 @@ const gudardarDocumento = async (datos, token) => {
 
 module.exports = {
     consultarListadoActivos,
-    consultarListasCofigActivos,
+    actualizarDatosActivos,
     consultarActivo,
     guardarImagenActivo,
     eliminarImagenActivo,

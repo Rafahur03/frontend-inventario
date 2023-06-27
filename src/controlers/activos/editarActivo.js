@@ -1,4 +1,7 @@
-const editarActivo = e => {
+const { ipcRenderer } = require('electron')
+import { modalEleccion, modalMensaje } from '../helpers/modalEleccion.js'
+import { mostarSpinner, cerrarSpinner } from '../helpers/modalSpinner.js'
+const editarActivo = async e => {
     const tagName = e.target.tagName.toLowerCase()
     let boton
     if (tagName === 'i') {
@@ -33,7 +36,7 @@ const editarActivo = e => {
     const recomendacionActivo = form.querySelector('.recomendacionActivo')
     const observacionActivo = form.querySelector('.observacionActivo')
 
-    const datos = {
+    const data = {
         activo,
         codigoInterno: codigoInterno.value,
         modeloActivo: modeloActivo.value,
@@ -66,8 +69,27 @@ const editarActivo = e => {
         recomendacionActivo: recomendacionActivo.value,
         observacionActivo: observacionActivo.value,
     }
+
+    const mensaje = {
+        titulo: "ACTUALIZAR COMPONENTE",
+        mensaje: "Esta seguro(a) de actualizar los datos del activo, favor Confirme la accion"
+    }
+
+    const eleccion = await modalEleccion(mensaje)
+    if (!eleccion) return
+    mostarSpinner()
+    const actualizar = ipcRenderer.sendSync('actualizarDatosActivos', data);
     
-    console.log(datos)
+    if (actualizar.msg) {
+        mensaje.titulo = "ERROR"
+        mensaje.mensaje = actualizar.msg
+        cerrarSpinner()
+        modalMensaje(mensaje)
+        return
+    }
+
+
+   
 }
 
 
