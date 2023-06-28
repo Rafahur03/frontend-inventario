@@ -17,7 +17,7 @@ const validarDatosActivo = async (datos, token) => {
 
             if (key !== 'descripcionActivo' && key !== 'recomendacionActivo' && key !== 'observacionActivo') {
 
-                if (validarVacios(datos[key])) return { msg: 'El campo ' + key.replace('Activo', '') + ' no puede estar vacio escoja un elemento de la lista' }
+                if (validarVacios(datos[key])) return { msg: 'El campo ' + key.replace('Activo', '') + ' no puede estar vacio' }
 
                 if (validarCaracteres(datos[key])) return { msg: 'El campo ' + key.replace('Activo', '') + ' no puede contener caracteres como <>, {} o []' }
 
@@ -32,6 +32,7 @@ const validarDatosActivo = async (datos, token) => {
 
         }
     }
+
     const config = await consultarListasCofigActivos(token)
     if (config.msg) return { msg: 'no se pudieron validar correctamente los datos intentalo más tarde' }
 
@@ -44,36 +45,115 @@ const validarDatosActivo = async (datos, token) => {
     const tipoId = datos.tipoId.split('-')[1]
     const frecuecniaId = datos.frecuecniaId.split('-')[1]
 
-    config[1].forEach(element => {
-        if (element.id == marcaId) if (element.marca !== datos.marcaActivo) return { msg: 'Debe escoger una marca del listado' }
-    });
+    for (key in config[1]) {
+        let encontrado = null
+        if (config[1][key].id == marcaId) if (config[1][key].marca !== datos.marcaActivo) {
+            encontrado = 1
+            return { msg: 'Debe escoger una marca del listado' }
+        }
+        if (encontrado !== null) break
+        if (config[1].length === key + 1) return { msg: 'Debe escoger una marca del listado' }
+    }
 
-    config[2].forEach(element => {
-        if (element.id == procesoId) if (element.proceso !== datos.procesoActivo) return { msg: 'Debe escoger un proceso del listado' }
-    });
+    for (key in config[2]) {
+        let encontrado = null
+        if (config[2][key].id == procesoId) if (config[2][key].proceso !== datos.procesoActivo) {
+            encontrado = 1
+            return { msg: 'Debe escoger un proceso del listado' }
+        }
+        if (encontrado !== null) break
+        if (config[2].length === key + 1) return { msg: ' Debe escoger un proceso del listado' }
+    }
 
-    config[3].forEach(element => {
-        if (element.id == areaId) if (element.area !== datos.areaActivo) return { msg: 'Debe escoger un area del listado' }
-    });
+    for (key in config[3]) {
+        let encontrado = null
+        if (config[3][key].id == areaId) if (config[3][key].area !== datos.areaActivo) {
+            encontrado = 1
+            return { msg: 'Debe escoger un area del listado' }
 
-    config[4].forEach(element => {
-        if (element.id == proveedorId) {
+        }
+        if (encontrado !== null) break
+        if (config[3].length === key + 1) return { msg: 'Debe escoger un area del listado' }
+    }
 
+    for (key in config[4]) {
+        let encontrado = null
+        if (config[4][key].id == proveedorId) {
             if (datos.proveedorActivo.includes('--')) {
                 const razonSocial = datos.proveedorActivo.split('--')[1].trim()
-                if (element.razon_social !== razonSocial) return { msg: 'Debe escoger un proveedor del listado' }
+                if (config[4][key].razon_social !== razonSocial) {
+                    encontrado = 1
+                    return { msg: 'Debe escoger un proveedor del listado' }
+
+                }
             } else {
-                if (element.razon_social !== datos.proveedorActivo) return { msg: 'Debe escoger un proveedor del listado' }
-            }   
+                if (config[4][key].razon_social !== datos.proveedorActivo) {
+                    encontrado = 1
+                    return { msg: 'Debe escoger un proveedor del listado' }
+
+                }
+            }
         }
+        if (encontrado !== null) break
+        if (config[4].length === key + 1) return { msg: 'Debe escoger un proveedor del listado' }
+    }
 
-    });
+    for (key in config[5]) {
+        let encontrado = null
+        if (config[5][key].id == tipoId) if (config[5][key].tipoActivo !== datos.tipoActivo) {
+            encontrado = 1
+            return { msg: 'Debe escoger un tipo de activo del listado' }
 
-    config[4][proveedorId] = datos.proveedorActivo
-    config[5][tipoId] = datos.tipoActivo
-    config[6][estadoId] = datos.estadoActivo
-    config[7][responsableId] = datos.responsableActivo
-    config[8][frecuecniaId] = datos.frecuenciaMtto
+        }
+        if (encontrado !== null) break
+        if (config[5].length === key + 1) return { msg: 'Debe escoger un tipo de activo del listado' }
+    }
+
+    for (key in config[6]) {
+        let encontrado = null
+        if (config[6][key].id == estadoId) if (config[6][key].estado !== datos.estadoActivo) {
+            encontrado = 1
+            return { msg: 'Debe escoger un estado del listado' }
+
+        }
+        if (encontrado !== null) break
+        if (config[6].length === key + 1) return { msg: 'Debe escoger un estado del listado' }
+    }
+
+    for (key in config[7]) {
+        let encontrado = null
+        if (config[7][key].id == responsableId) if (config[7][key].nombre !== datos.responsableActivo) {
+            encontrado = 1
+            return { msg: 'Debe escoger un responsable del listado' }
+
+        }
+        if (encontrado !== null) break
+        if (config[7].length === key + 1) return { msg: 'Debe escoger un responsable del listado' }
+    }
+
+    for (key in config[8]) {
+        let encontrado = null
+        if (config[8][key].id == frecuecniaId) {
+            if (datos.proveedorActivo.includes('--')) {
+                const frecuencia = datos.frecuenciaMtto.split('--')[1].trim()
+                if (config[8][key].frecuencia !== frecuencia) {
+                    encontrado = 1
+                    return { msg: 'Debe escoger una frecuencia del listado' }
+
+                }
+            } else {
+                if (config[8][key].frecuencia !== datos.frecuenciaMtto) {
+                    encontrado = 1
+                    return { msg: 'Debe escoger un frecuencia del listado' }
+
+                }
+            }
+        }
+        if (encontrado !== null) break
+        if (config[8].length === key + 1) return { msg: 'Debe escoger un frecuencia del listado' }
+    }
+
+    return true
 
 }
 

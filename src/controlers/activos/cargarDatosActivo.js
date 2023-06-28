@@ -189,7 +189,6 @@ const cargarDatosActivo = (id, nodo) => {
 
         facturaActivo.removeAttribute('readonly')
         valorActivo.removeAttribute('readonly')
-        ingresoActivo.removeAttribute('readonly')
         fechaCompra.removeAttribute('readonly')
         garantiaActivo.removeAttribute('readonly')
 
@@ -206,6 +205,9 @@ const cargarDatosActivo = (id, nodo) => {
         })
 
         proximoMtto.removeAttribute('readonly')
+        const date =  Date.now()
+        const hoy = new Date(date)
+        proximoMtto.min = hoy.toISOString().substring(0, 10)
         descripcionActivo.removeAttribute('readonly')
         recomendacionActivo.removeAttribute('readonly')
         observacionActivo.removeAttribute('readonly')

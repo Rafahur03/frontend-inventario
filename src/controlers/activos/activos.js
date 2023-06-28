@@ -3,8 +3,6 @@ const mime = require('mime-types')
 const  { validarDatosActivo } = require('./validarDatosActivo.js')
 const urlbase = process.env.API_URL
 
-
-
 const consultarListadoActivos = async token => {
     const options = {
         method: 'GET',
@@ -25,21 +23,20 @@ const consultarListadoActivos = async token => {
 }
 
 const actualizarDatosActivos = async (datos, token) => {
-
-    const validacion = validarDatosActivo(datos, token)
-    return validacion
-
+       
+    const validacion =  await validarDatosActivo(datos, token)  
+    if(validacion.msg) return validacion      
+    
     const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ data })
+        body: JSON.stringify({datos})
     }
-
-    try {
-        const url = urlbase + '/guardarImagenActivo'
+      try {
+        const url = urlbase + '/actualizarActivo'
         const response = await fetch(url, options);
         const json = await response.json();
         return (json)

@@ -1,6 +1,7 @@
 const { ipcRenderer } = require('electron')
 import { modalEleccion, modalMensaje } from '../helpers/modalEleccion.js'
 import { mostarSpinner, cerrarSpinner } from '../helpers/modalSpinner.js'
+
 const editarActivo = async e => {
     const tagName = e.target.tagName.toLowerCase()
     let boton
@@ -77,9 +78,11 @@ const editarActivo = async e => {
 
     const eleccion = await modalEleccion(mensaje)
     if (!eleccion) return
+
     mostarSpinner()
     const actualizar = ipcRenderer.sendSync('actualizarDatosActivos', data);
-    
+
+
     if (actualizar.msg) {
         mensaje.titulo = "ERROR"
         mensaje.mensaje = actualizar.msg
@@ -88,8 +91,45 @@ const editarActivo = async e => {
         return
     }
 
-
-   
+    cerrarSpinner()
+    console.log(actualizar)
+    console.log(actualizar.exito)
+    modalMensaje({titulo: 'EXITO', mensaje: actualizar.exito})
+    const activoActualizado = actualizar.activo
+    
+    codigoInterno.value = activoActualizado.codigo
+    codigoInterno.setAttribute('codigo-activo', `Act-${activoActualizado.id}`)
+    form.setAttribute('form-activo', `Act-${activoActualizado.id}`)
+    modeloActivo.value = activoActualizado.modelo
+    areaActivo.value = activoActualizado.area
+    areaActivo.setAttribute('opcionId', `Ar-${activoActualizado.area_id}`)
+    nombreActivo.value = activoActualizado.nombre
+    serieActivo.value = activoActualizado.serie
+    ubicacionActivo.value = activoActualizado.ubicacion
+    marcaActivo.value = activoActualizado.marca
+    marcaActivo.setAttribute('opcionId', `Ma-${activoActualizado.marca_id}`)
+    procesoActivo.value = activoActualizado.proceso
+    procesoActivo.setAttribute('opcionId', `Pr-${activoActualizado.proceso_id}`)
+    estadoActivo.value = activoActualizado.estado
+    estadoActivo.setAttribute('opcionId', `Es-${activoActualizado.estado_id}`)
+    proveedorActivo.value = activoActualizado.provedor
+    proveedorActivo.setAttribute('opcionId', `Pro-${activoActualizado.proveedor_id}`)
+    nitProveedor.value = activoActualizado.nit
+    responsableActivo.value = activoActualizado.responsable
+    responsableActivo.setAttribute('opcionId', `Re-${activoActualizado.responsableId}`)
+    tipoActivo.value = activoActualizado.tipoActivo
+    tipoActivo.setAttribute('opcionId', `Ta-${activoActualizado.tipo_activo_id}`)
+    facturaActivo.value = activoActualizado.numero_factura
+    valorActivo.value = activoActualizado.valor
+    ingresoActivo.value = activoActualizado.fecha_creacion
+    fechaCompra.value = activoActualizado.fecha_compra
+    garantiaActivo.value = activoActualizado.vencimiento_garantia
+    frecuenciaMtto.value = activoActualizado.frecuencia
+    frecuenciaMtto.setAttribute('opcionId', `Fr-${activoActualizado.frecuencia_id}`)
+    proximoMtto.value = activoActualizado.fecha_proximo_mtto
+    descripcionActivo.value = activoActualizado.descripcion
+    recomendacionActivo.value = activoActualizado.recomendaciones_Mtto
+    observacionActivo.value = activoActualizado.obervacion
 }
 
 
