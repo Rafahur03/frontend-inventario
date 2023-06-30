@@ -70,7 +70,7 @@ const editarActivo = async e => {
         recomendacionActivo: recomendacionActivo.value,
         observacionActivo: observacionActivo.value,
     }
-
+    
     const mensaje = {
         titulo: "ACTUALIZAR COMPONENTE",
         mensaje: "Esta seguro(a) de actualizar los datos del activo, favor Confirme la accion"
@@ -92,8 +92,6 @@ const editarActivo = async e => {
     }
 
     cerrarSpinner()
-    console.log(actualizar)
-    console.log(actualizar.exito)
     modalMensaje({titulo: 'EXITO', mensaje: actualizar.exito})
     const activoActualizado = actualizar.activo
     

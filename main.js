@@ -11,6 +11,7 @@ const {
     eliminarDocumento,
     descargarDocumento,
     gudardarDocumento,
+    descargarHojaDeVida
 } = require('./src/controlers/activos/activos.js')
 
 const { consultarListadoSolicitudes } = require('./src/controlers/solicitudes/solicitudes.js')
@@ -128,6 +129,12 @@ ipcMain.on('elimnarImagenActivo', async (e, data) => {
 ipcMain.on('descargaDocumento', async (e, data) => {
     const token = dataUsuarioSesion.token
     const documento = await descargarDocumento(data, token)
+    e.returnValue = documento;
+})
+
+ipcMain.on('descargarHojaDeVida', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const documento = await descargarHojaDeVida(data, token)
     e.returnValue = documento;
 })
 

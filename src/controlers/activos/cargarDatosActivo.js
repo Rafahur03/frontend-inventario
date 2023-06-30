@@ -205,9 +205,6 @@ const cargarDatosActivo = (id, nodo) => {
         })
 
         proximoMtto.removeAttribute('readonly')
-        const date =  Date.now()
-        const hoy = new Date(date)
-        proximoMtto.min = hoy.toISOString().substring(0, 10)
         descripcionActivo.removeAttribute('readonly')
         recomendacionActivo.removeAttribute('readonly')
         observacionActivo.removeAttribute('readonly')
