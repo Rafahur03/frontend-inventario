@@ -1,4 +1,6 @@
 import { generateRandomId } from "../helpers/nombreRandon.js"
+
+// crea una nueva ventana con un contenedor diferente devuelve el nodo del contendo para cargar el contenido deseado. 
 const agregarTap = nodo => {
 
     // creamos un nombre aleatorio para el tap

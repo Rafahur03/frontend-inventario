@@ -14,7 +14,9 @@ import { cambiarClave } from "./contenidoTap/cambiarClave.js"
 import { configuracionVista } from "./contenidoTap/configuracionVista.js"
 import { cambiarClasificacion } from "./contenidoTap/cambiarClasificacion.js"
 
-const cagarTapContenido = id => {
+
+// carga las vistas en un nodo de contenido existente.
+const cargarTapContenido = id => {
 
     const contenido = {
         'nuevoUsuario': crearUsuario,// abre la ventana para crear un nuevo Usuario
@@ -60,27 +62,26 @@ const cagarTapContenido = id => {
 
 }
 
-const cagarNuevaVista = (id) => {
+// carga el contenido de una vista pero agregando una nueva pestaña y con un nueco content.
 
+const cargarNuevaVista = (id, dato) => {
     const contenido = {
-
         'editarActivo': editarActivo,
         'crearSolicitud': crearSolicitud,
         'consultarSolicitud': editarSolicitud,
         'crearReporte': crearReporte,
         'consultarReporte': editarReporte,
     }
-    
+
     const contenidoTap = agregarTap(document.querySelector('#nueva-tap'))
     const atribute = document.createAttribute('tipoVista')
     atribute.value = id
     contenidoTap.setAttributeNode(atribute)
-    contenidoTap.appendChild(contenido[id]());
+    contenidoTap.appendChild(contenido[id](dato));
     return contenidoTap
-
 }
 
 export {
-    cagarTapContenido,
-    cagarNuevaVista
+    cargarTapContenido,
+    cargarNuevaVista
 }

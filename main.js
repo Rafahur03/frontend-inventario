@@ -11,11 +11,12 @@ const {
     eliminarDocumento,
     descargarDocumento,
     gudardarDocumento,
-    descargarHojaDeVida
+    descargarHojaDeVida,
+    eliminarActivo,
 } = require('./src/controlers/activos/activos.js')
 
 const { consultarListadoSolicitudes } = require('./src/controlers/solicitudes/solicitudes.js')
-const { consultarListadoReportes } = require('./src/controlers/reportes/reporte.js')
+const { consultarListadoReportes, descargarListaMtto } = require('./src/controlers/reportes/reporte.js')
 const {
     eliminarComponente,
     guardarComponente,
@@ -138,6 +139,12 @@ ipcMain.on('descargarHojaDeVida', async (e, data) => {
     e.returnValue = documento;
 })
 
+ipcMain.on('eliminarActivo', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const eliminar = await eliminarActivo(data, token)
+    e.returnValue = eliminar;
+})
+
 //eliminar un docuemnto del activo
 ipcMain.on('eliminarDocumento', async (e, data) => {
     const token = dataUsuarioSesion.token
@@ -175,6 +182,14 @@ ipcMain.on('listadoReportes', async (e) => {
     const listado = await consultarListadoReportes(token)
     e.returnValue = listado;
 })
+
+ipcMain.on('descargarListaMtto', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const documento = await descargarListaMtto(data, token)
+    e.returnValue = documento;
+})
+
+
 ///////////////////////////componentes//////////////////////////////////////////
 
 ipcMain.on('eliminarComponente', async (e, data) => {

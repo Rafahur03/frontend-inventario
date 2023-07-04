@@ -2,7 +2,7 @@ const { ipcRenderer } = require('electron')
 import { agregarTap } from "./manejoTap/agregarTap.js";
 import { eliminarTap } from "./manejoTap/eliminarTap.js";
 import { insertarMenu } from "./manejoTap/insertarMenu/insertarMenu.js";
-import { cagarTapContenido } from "./manejoTap/cargarTapContenido.js";
+import { cargarTapContenido } from "./manejoTap/cargarTapContenido.js";
 import { mostrarFrase } from "./manejoTap/mostrarFrases.js";
 
 
@@ -28,7 +28,7 @@ document.addEventListener('click', e => {
 
     if (e.target.classList.contains('item-nav-bar')) {
         document.querySelector('#cerrarNavBar').click()
-        cagarTapContenido(e.target.id)
+        cargarTapContenido(e.target.id)
     }
 });
 

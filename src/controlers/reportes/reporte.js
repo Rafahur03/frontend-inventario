@@ -11,8 +11,6 @@ const consultarListadoReportes = async token => {
 
     }
 
-
-
     try {
         const url = urlbase + '/consultarReportesTodos'
         const response = await fetch(url, options);
@@ -24,6 +22,34 @@ const consultarListadoReportes = async token => {
 
 }
 
+const descargarListaMtto = async (datos, token) => {
+    const data = {
+        id: datos.activo.split('-')[1],
+    }
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify( data )
+    }
+
+    try {
+        const url = urlbase + '/descargarListaMtto'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+        return ({ msg: 'ocurrio un error durante la solicitud intente mas tarde' })
+    }
+
+}
+
+
 module.exports = {
-    consultarListadoReportes
+    consultarListadoReportes,
+    descargarListaMtto
 }

@@ -1,4 +1,5 @@
-const crearSolicitud = () => {
+const crearSolicitud = (id) => {
+    console.log(id);
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `

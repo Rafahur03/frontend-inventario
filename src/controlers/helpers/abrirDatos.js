@@ -1,5 +1,5 @@
 ﻿
-import { cagarNuevaVista } from "../manejoTap/cargarTapContenido.js"
+import { cargarNuevaVista } from "../manejoTap/cargarTapContenido.js"
 import { cargarDatosActivo } from "../activos/cargarDatosActivo.js"
 const abrirDatos = (e) => {
     const vista={
@@ -17,7 +17,7 @@ const abrirDatos = (e) => {
 
     const contenido = tr.id.split('-')[0]
     const id = tr.id.split('-')[1]
-    const contenedor = cagarNuevaVista( vista[contenido], contenido)
+    const contenedor = cargarNuevaVista( vista[contenido], contenido)
     cargarDatosActivo(id, contenedor)
     
   

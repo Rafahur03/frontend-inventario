@@ -18,7 +18,6 @@ import { opcionId } from '../helpers/activos/listasId.js'
 const cargarDatosActivo = (id, nodo) => {
     const data = ipcRenderer.sendSync('consultarActivo', id)
     const activo = data.activo
-    console.log(data)
 
     const form = nodo.querySelector('form')
     const codigoInterno = nodo.querySelector('.codigoInterno')
@@ -93,8 +92,7 @@ const cargarDatosActivo = (id, nodo) => {
 
     if (data.editar) {
 
-        const listados = ipcRenderer.sendSync('consultarListasCofigActivos')
-        console.log(listados)   
+        const listados = ipcRenderer.sendSync('consultarListasCofigActivos')  
         const idlista = generateRandomId()
 
         modeloActivo.removeAttribute('readonly')

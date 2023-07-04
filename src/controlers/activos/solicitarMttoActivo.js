@@ -1,12 +1,17 @@
+import { cargarNuevaVista } from "../manejoTap/cargarTapContenido.js"
+
 const solicitarMttoActivo = e =>{
     const tagName = e.target.tagName.toLowerCase()
-    if(tagName === 'i'){
-        const padre = e.target.parentNode
-        console.log('solicitar', padre.getAttribute('activo'))
-        return
+    let boton
+    if (tagName === 'i') {
+        boton = e.target.parentNode
+    } else {
+        boton = e.target
     }
+    const activo = boton.getAttribute('activo')
+    
+    cargarNuevaVista('crearSolicitud', activo)
 
-    console.log(' buttonsolicitar', e.target.getAttribute('activo'))
 
 }
 

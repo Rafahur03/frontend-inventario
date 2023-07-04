@@ -147,7 +147,7 @@ const eliminarDocumento = async (datos, token) => {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ data })
+        body: JSON.stringify(data)
     }
 
     try {
@@ -175,7 +175,7 @@ const descargarDocumento = async (datos, token) => {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ data })
+        body: JSON.stringify( data )
     }
 
     try {
@@ -237,7 +237,7 @@ const descargarHojaDeVida = async (datos, token) => {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ data })
+        body: JSON.stringify( data )
     }
 
     try {
@@ -252,6 +252,34 @@ const descargarHojaDeVida = async (datos, token) => {
 
 }
 
+const eliminarActivo = async (datos, token) => {
+
+    const data = {
+        id: datos.activo.split('-')[1],
+        codigo: datos.codigo,
+    }
+
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(data)
+    }
+
+    try {
+        const url = urlbase + '/eliminarActivo'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+        return ({ msg: 'ocurrio un error durante la solicitud verifique mas tarde o intente mas tarde' })
+    }
+
+}
+
 
 module.exports = {
     consultarListadoActivos,
@@ -262,5 +290,6 @@ module.exports = {
     eliminarDocumento,
     descargarDocumento,
     gudardarDocumento,
-    descargarHojaDeVida
+    descargarHojaDeVida,
+    eliminarActivo
 }
