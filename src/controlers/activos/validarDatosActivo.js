@@ -1,6 +1,6 @@
 const { consultarListasCofigActivos } = require('../tablasConfig/tablasConfig.js');
 
-const validarDatosActivo = async (datos, token) => {
+const validarDatosActivo = async (datos, token, crear = null) => {
 
     for (const key in datos) {
 
@@ -29,7 +29,6 @@ const validarDatosActivo = async (datos, token) => {
                 if (validarPalabras(datos[key])) return { msg: 'El campo ' + key.replace('Activo', '') + ' no puede contener palabras reservadas como Select, from, insert ect.' }
             }
 
-
         }
     }
 
@@ -39,13 +38,39 @@ const validarDatosActivo = async (datos, token) => {
     const areaId = datos.areaId.split('-')[1]
     const marcaId = datos.marcaId.split('-')[1]
     const procesoId = datos.procesoId.split('-')[1]
-    const estadoId = datos.estadoId.split('-')[1]
     const proveedorId = datos.proveedorId.split('-')[1]
     const responsableId = datos.responsableId.split('-')[1]
     const tipoId = datos.tipoId.split('-')[1]
     const frecuecniaId = datos.frecuecniaId.split('-')[1]
 
-    for (key in config[1]) {
+
+
+    if (crear !== null){
+       const clasificacionId = datos.clasificacionId.split('-')[1]
+        for (let key in config[0]) {
+            let encontrado = null
+            if (config[0][key].id == clasificacionId) {
+                if (datos.clasificacionActivo.includes('--')) {
+                    const clasificacionActivo = datos.clasificacionActivo.split('--')[1].trim()
+                    if (config[0][key].nombre !== clasificacionActivo) {
+                        encontrado = 1
+                        return { msg: ' Debe escoger una clasificacion del listado' }
+
+                    }
+                } else {
+                    if (config[0][key].nombre !== datos.clasificacionActivo) {
+                        encontrado = 1
+                        return { msg: ' Debe escoger una clasificacion del listado' }
+
+                    }
+                }
+            }
+            if (encontrado !== null) break
+            if (config[0].length === key + 1) return { msg: 'Debe escoger una clasificacion del listado' }
+        }
+    }
+
+    for (let key in config[1]) {
         let encontrado = null
         if (config[1][key].id == marcaId) if (config[1][key].marca !== datos.marcaActivo) {
             encontrado = 1
@@ -55,17 +80,29 @@ const validarDatosActivo = async (datos, token) => {
         if (config[1].length === key + 1) return { msg: 'Debe escoger una marca del listado' }
     }
 
-    for (key in config[2]) {
+    for (let key in config[2]) {
         let encontrado = null
-        if (config[2][key].id == procesoId) if (config[2][key].proceso !== datos.procesoActivo) {
-            encontrado = 1
-            return { msg: 'Debe escoger un proceso del listado' }
+        if (config[2][key].id == procesoId) {
+            if (datos.procesoActivo.includes('--')) {
+                const procesoActivo = datos.procesoActivo.split('--')[1].trim()
+                if (config[2][key].proceso !== procesoActivo) {
+                    encontrado = 1
+                    return { msg: ' Debe escoger un proceso del listado' }
+
+                }
+            } else {
+                if (config[2][key].proceso !== datos.procesoActivo) {
+                    encontrado = 1
+                    return { msg: ' Debe escoger un proceso del listado' }
+
+                }
+            }
         }
         if (encontrado !== null) break
         if (config[2].length === key + 1) return { msg: ' Debe escoger un proceso del listado' }
     }
 
-    for (key in config[3]) {
+    for (let key in config[3]) {
         let encontrado = null
         if (config[3][key].id == areaId) if (config[3][key].area !== datos.areaActivo) {
             encontrado = 1
@@ -76,7 +113,7 @@ const validarDatosActivo = async (datos, token) => {
         if (config[3].length === key + 1) return { msg: 'Debe escoger un area del listado' }
     }
 
-    for (key in config[4]) {
+    for (let key in config[4]) {
         let encontrado = null
         if (config[4][key].id == proveedorId) {
             if (datos.proveedorActivo.includes('--')) {
@@ -98,7 +135,7 @@ const validarDatosActivo = async (datos, token) => {
         if (config[4].length === key + 1) return { msg: 'Debe escoger un proveedor del listado' }
     }
 
-    for (key in config[5]) {
+    for (let key in config[5]) {
         let encontrado = null
         if (config[5][key].id == tipoId) if (config[5][key].tipoActivo !== datos.tipoActivo) {
             encontrado = 1
@@ -109,18 +146,21 @@ const validarDatosActivo = async (datos, token) => {
         if (config[5].length === key + 1) return { msg: 'Debe escoger un tipo de activo del listado' }
     }
 
-    for (key in config[6]) {
-        let encontrado = null
-        if (config[6][key].id == estadoId) if (config[6][key].estado !== datos.estadoActivo) {
-            encontrado = 1
-            return { msg: 'Debe escoger un estado del listado' }
+    if (crear == null) {
+        const estadoId = datos.estadoId.split('-')[1]
+        for (key in config[6]) {
+            let encontrado = null
+            if (config[6][key].id == estadoId) if (config[6][key].estado !== datos.estadoActivo) {
+                encontrado = 1
+                return { msg: 'Debe escoger un estado del listado' }
 
+            }
+            if (encontrado !== null) break
+            if (config[6].length === key + 1) return { msg: 'Debe escoger un estado del listado' }
         }
-        if (encontrado !== null) break
-        if (config[6].length === key + 1) return { msg: 'Debe escoger un estado del listado' }
     }
 
-    for (key in config[7]) {
+    for (let key in config[7]) {
         let encontrado = null
         if (config[7][key].id == responsableId) if (config[7][key].nombre !== datos.responsableActivo) {
             encontrado = 1
@@ -131,7 +171,7 @@ const validarDatosActivo = async (datos, token) => {
         if (config[7].length === key + 1) return { msg: 'Debe escoger un responsable del listado' }
     }
 
-    for (key in config[8]) {
+    for (let key in config[8]) {
         let encontrado = null
         if (config[8][key].id == frecuecniaId) {
             if (datos.proveedorActivo.includes('--')) {
@@ -153,12 +193,20 @@ const validarDatosActivo = async (datos, token) => {
         if (config[8].length === key + 1) return { msg: 'Debe escoger un frecuencia del listado' }
     }
 
-    const date = Date.now()
-    const hoy = new Date(date).toISOString().substring(0, 10)
+    const timestamp = Date.now();
+    const fechaActual = new Date(timestamp).toISOString().substring(0, 10)
 
-    const proximo = new Date(datos.proximoMtto).toISOString().substring(0, 10)
-    if(proximo <= hoy) return { msg: 'La fecha del proximo de mantenimiento no puede ser menor al dia de hoy' }
-    
+    if (datos.ingresoActivo == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de ingreso es obligatorio' })
+    if (datos.fechaCompra == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de compra es obligatorio' })
+    if (datos.garantiaActivo == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de vencimiento de la garantia es obligatorio' })
+    if (datos.proximoMtto == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de proximo mantenimiento es obligatorio' })
+
+    if (datos.ingresoActivo !== fechaActual) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha de ingreso no puede ser diferente del dia de hoy' })
+    if (datos.fechaCompra > fechaActual) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha de compra no puede ser superior al dia de hoy' })
+    if (datos.garantiaActivo < datos.fechaCompra) return modalMensaje({ titulo: 'ERROR', mensaje: 'la fecha de vencimiento de la garantia no puede ser menor a la fecha de compra' })
+    if (datos.proximoMtto < fechaActual) return modalMensaje({ titulo: 'ERROR', mensaje: 'la fecha del proximo mantenimeinto no puede ser inferior a el dia de hoy' })
+
+
     return true
 
 }

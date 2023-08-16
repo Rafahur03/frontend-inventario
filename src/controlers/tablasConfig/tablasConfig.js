@@ -11,10 +11,11 @@ const consultarTablasConfig = async (config, token) => {
         body: JSON.stringify({config})
 
     }
+
     try {
         const url = urlbase + '/consultarconfig'
         const response = await fetch(url, options);
-        const json = await response.json();
+        const json = await response.json();    
         return (json)
     } catch (error) {
         console.error(error);

@@ -16,8 +16,7 @@ import { cambiarClasificacion } from "./contenidoTap/cambiarClasificacion.js"
 
 
 // carga las vistas en un nodo de contenido existente.
-const cargarTapContenido = id => {
-
+const cargarTapContenido = async id => {
     const contenido = {
         'nuevoUsuario': crearUsuario,// abre la ventana para crear un nuevo Usuario
         'editarUsuario': editarUsuario, // abre la ventana para editar un usuario
@@ -35,6 +34,7 @@ const cargarTapContenido = id => {
         'configuracion': configuracionVista //abre ventana de configuracion
 
     }
+    
     const bodyTap = document.querySelector('#bodyTap')
     if (bodyTap.querySelectorAll('.tab-pane').length == 0) {
         const contenidoTap = agregarTap(document.querySelector('#nueva-tap'))
@@ -57,7 +57,8 @@ const cargarTapContenido = id => {
         atribute.value = id
         contenActivo.setAttributeNode(atribute)
     }
-    contenActivo.appendChild(contenido[id]());
+
+    contenActivo.appendChild(await contenido[id]());
 
 
 }
@@ -65,6 +66,7 @@ const cargarTapContenido = id => {
 // carga el contenido de una vista pero agregando una nueva pestaña y con un nueco content.
 
 const cargarNuevaVista = (id, dato) => {
+
     const contenido = {
         'editarActivo': editarActivo,
         'crearSolicitud': crearSolicitud,

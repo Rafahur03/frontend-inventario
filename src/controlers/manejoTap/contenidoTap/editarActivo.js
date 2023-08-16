@@ -18,7 +18,7 @@ const editarActivo = () => {
                 </div>
                 <div class="ms-2r"> 
                     <button type="button" class="btn  mt-0 pt-0 print" title="Imprimir Hoja de vida">
-                        <i class="bi bi-printer-fill fs-1 text-primary"></i>
+                        <i class="bi bi-file-earmark-pdf-fill fs-1 text-primary"></i>
                     </button>
                 </div>
                 <div class="ms-auto">

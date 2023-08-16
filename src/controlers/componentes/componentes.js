@@ -1,6 +1,6 @@
 require('dotenv').config()
 const urlbase = process.env.API_URL
-
+const {validarDatosComponente} = require('./validarComponentes.js')
 const eliminarComponente = async (data, token) => {
 
     const options = {
@@ -25,11 +25,20 @@ const eliminarComponente = async (data, token) => {
 
 const guardarComponente = async (datos, token) => {  
 
-    const data = {}
+    datos.idActivo = datos.idActivo.split('-')[1]
+    datos.idNombre = datos.idNombre.split('-')[1]      
+    datos.idmarca = datos.idmarca.split('-')[1] 
+    const validacion = await validarDatosComponente(datos, token)
 
-    data.idActivo=  datos.activo
-    delete datos.activo
-    data.componente = datos      
+    if(validacion.msg) return validacion
+    const idActivo = datos.idActivo
+    delete datos.idActivo
+
+    data = {
+        idActivo,
+        componente: datos
+    }
+
     const options = {
         method: 'POST',
         headers: {

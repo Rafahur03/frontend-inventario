@@ -1,6 +1,6 @@
 import { modalEleccion, modalMensaje } from "../modalEleccion.js"
 import { cargarDocumento } from "./cargarDocumento.js"
-const quitarDocumento =  async e => {
+const quitarDocumento =  async (e, crear=null) => {
     const eleccion = await modalEleccion({ titulo: 'QUITAR DOCUMENTO DE ACTIVO', mensaje: 'Esta seguro de quitar el documento seleccionado, esta accion no se puede deshacer' })
     if (!eleccion) return
     
@@ -20,7 +20,12 @@ const quitarDocumento =  async e => {
     contenedorInput.classList.remove('d-none')
     const input = contenedorInput.querySelector('input')
     input.value = ''
-    input.onchange = (e) => cargarDocumento(e)
+
+    if(crear === null){
+        input.onchange = (e) => cargarDocumento(e)
+    }else{
+        input.onchange = (e) => cargarDocumento(e, 'crear')
+    }
     modalMensaje({ titulo: 'EXITO', mensaje: 'Documento Quitado Correctamente'})
 }
 

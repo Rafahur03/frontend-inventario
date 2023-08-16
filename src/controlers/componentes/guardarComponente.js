@@ -1,20 +1,21 @@
 const { ipcRenderer } = require('electron')
 import { eliminarComponente } from "./eliminarComponente.js"
 import { modalMensaje } from "../helpers/modalEleccion.js"
+
 const guardarComponente = e => {
     const tagName = e.target.tagName.toLowerCase()
     let tr
-    let activo = null
+    let idActivo = null
     if (tagName === 'i') {
         const button = e.target.parentNode
         tr = button.parentNode.parentNode
-        activo = button.getAttribute('activo').split('-')[1]
+        idActivo = button.getAttribute('activo')
     } else {
         tr = e.target.parentNode.parentNode
-        activo = button.getAttribute('activo').split('-')[1]
+        idActivo = button.getAttribute('activo')
     }
 
-    if (activo === null) {
+    if (idActivo === null) {
         const mensaje = {
             titulo: 'ERROR',
             mensaje: 'El componente debe estas asociado a un activo'
@@ -26,55 +27,21 @@ const guardarComponente = e => {
 
     // cargar los datos en el tr
     const nombre = tr.querySelector('.nombrecomponente')
-    const dataListcomponente = nombre.nextElementSibling.querySelectorAll('option')
-    let idNombre = null
-
-    for (const opcion of dataListcomponente) {
-        if (opcion.value === nombre.value) {
-            idNombre = opcion.textContent;
-            break; // Si se encuentra la coincidencia, salir del bucle
-        }
-    }
-
-    if (idNombre === null) {
-        const mensaje = {
-            titulo: 'ERROR',
-            mensaje: 'Debe Seleccionar Un componente de la lista'
-        }
-
-        modalMensaje(mensaje)
-        return
-    }
-
+    const idNombre = nombre.getAttribute('opcionId')
     const marca = tr.querySelector('.marcaComponente')
-    const dataListMarca = marca.nextElementSibling.querySelectorAll('option')
-    let idmarca = null
+    const idmarca = marca.getAttribute('opcionId')
 
-    for (const opcion of dataListMarca) {
-        if (opcion.value === marca.value) {
-            idmarca = opcion.textContent;
-            break; // Si se encuentra la coincidencia, salir del bucle
-        }
-    }
-
-    if (idmarca === null) {
-        const mensaje = {
-            titulo: 'ERROR',
-            mensaje: 'Debe Seleccionar una marca de la lista'
-        }
-
-        modalMensaje(mensaje)
-        return
-    }
     const nuevoComponente = {
-        activo,
+        idActivo,
+        nombre: nombre.value,
         idNombre,
+        marca: marca.value,
         idmarca,
         modelo: tr.querySelector('.modeloComponente').value,
         serie: tr.querySelector('.serieComponente').value,
         capacidad: tr.querySelector('.capacidadComponente').value
     }
-
+    console.log(nuevoComponente)
     const componente = ipcRenderer.sendSync('guardarComponente', nuevoComponente);
 
     if(componente.msg){
@@ -111,7 +78,7 @@ const guardarComponente = e => {
         } else {
             element.removeChild(element.firstChild)
             const bottonEliminar = element.querySelector('.eliminarFilaComponente')
-
+            
             bottonEliminar.setAttribute('componente',  `Com-${componente[orden[0]]}`)
             bottonEliminar.setAttribute('activo',  `Act-${componente.idactivo}`)
             bottonEliminar.onclick = e => eliminarComponente(e)

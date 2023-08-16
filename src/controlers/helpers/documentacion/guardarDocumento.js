@@ -23,7 +23,7 @@ const gudardarDocumento = async e => {
         documento,
         file
     }
-    const guardarFile = ipcRenderer.sendSync('gudardarDocumento', data);
+    const guardarFile = ipcRenderer.sendSync('guardarDocumento', data);
     if (guardarFile.msg) modalMensaje({ titulo: 'ERROR', mensaje: guardarFile.msg });
 
     embed.src = guardarFile.data

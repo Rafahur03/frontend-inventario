@@ -10,7 +10,7 @@ const eliminarActivo = async e => {
         boton = e.target.parentNode
     } else {
         boton = e.target
-    }
+    } 
 
     const contendorbotones = boton.parentNode.parentNode
     const form = contendorbotones.nextSibling.nextSibling

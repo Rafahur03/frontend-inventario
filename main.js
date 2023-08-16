@@ -10,12 +10,23 @@ const {
     eliminarImagenActivo,
     eliminarDocumento,
     descargarDocumento,
-    gudardarDocumento,
+    guardarDocumento,
     descargarHojaDeVida,
     eliminarActivo,
+    crearActivo,
+    consultarDatosActivoSolicitud
 } = require('./src/controlers/activos/activos.js')
 
-const { consultarListadoSolicitudes } = require('./src/controlers/solicitudes/solicitudes.js')
+const { consultarListadoSolicitudes,
+    crearSolictud,
+    consultarSolicitud,
+    editarSolicitud,
+    eliminarSolicitud,
+    descargarSolicitud,
+    guardarImagenSolicitud,
+    eliminarImagenSolicitud
+
+} = require('./src/controlers/solicitudes/solicitudes.js')
 const { consultarListadoReportes, descargarListaMtto } = require('./src/controlers/reportes/reporte.js')
 const {
     eliminarComponente,
@@ -23,7 +34,6 @@ const {
 } = require('./src/controlers/componentes/componentes.js')
 
 const { consultarTablasConfig, consultarListasCofigActivos} = require('./src/controlers/tablasConfig/tablasConfig.js')
-const { validarDatosComponente } = require('./src/controlers/componentes/validarComponentes.js')
 
 require('dotenv').config()
 require('electron-reload')(__dirname, {
@@ -152,9 +162,9 @@ ipcMain.on('eliminarDocumento', async (e, data) => {
     e.returnValue = documentoEliminado;
 })
 
-ipcMain.on('gudardarDocumento', async (e, data) => {
+ipcMain.on('guardarDocumento', async (e, data) => {
     const token = dataUsuarioSesion.token
-    const documentoGuardado = await gudardarDocumento(data, token)
+    const documentoGuardado = await guardarDocumento(data, token)
     e.returnValue = documentoGuardado;
 })
 
@@ -162,6 +172,18 @@ ipcMain.on('consultarListasCofigActivos', async (e) => {
     const token = dataUsuarioSesion.token
     const listados = await consultarListasCofigActivos(token)
     e.returnValue = listados;
+})
+
+ipcMain.on('crearActivo', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const guardar = await crearActivo(data, token)
+    e.returnValue = guardar;
+})
+
+ipcMain.on('consultarDatosActivoSolicitud', async (e, id) => {
+    const token = dataUsuarioSesion.token
+    const activo = await consultarDatosActivoSolicitud(id, token)
+    e.returnValue = activo;
 })
 
 /////////////////////////////////solicitudes////////////////////////////
@@ -172,6 +194,53 @@ ipcMain.on('listadoSolicitud', async (e) => {
     const listado = await consultarListadoSolicitudes(token)
     e.returnValue = listado;
 })
+
+// crear solicitud
+ipcMain.on('crearSolictud', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const solicitud = await crearSolictud(data, token)
+    e.returnValue = solicitud;
+})
+
+ipcMain.on('consultarSolicitud', async (e, id) => {
+    const token = dataUsuarioSesion.token
+    const solicitud = await consultarSolicitud(id, token)
+    e.returnValue = solicitud;
+})
+
+ipcMain.on('editarSolicitud', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const respuesta = await editarSolicitud(data, token)
+    e.returnValue = respuesta;
+})
+
+
+ipcMain.on('eliminarSolicitud', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const respuesta = await eliminarSolicitud(data, token)
+    e.returnValue = respuesta;
+})
+
+ipcMain.on('descargarSolicitud', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const respuesta = await descargarSolicitud(data, token)
+    e.returnValue = respuesta;
+})
+
+ipcMain.on('guardarImagenSolicitud', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const respuesta = await guardarImagenSolicitud(data, token)
+    e.returnValue = respuesta;
+})
+
+ipcMain.on('eliminarImagenSolicitud', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const respuesta = await eliminarImagenSolicitud(data, token)
+    e.returnValue = respuesta;
+})
+
+
+
 
 //////////////////////////////// reportes////////////////////////////////
 
@@ -190,6 +259,9 @@ ipcMain.on('descargarListaMtto', async (e, data) => {
 })
 
 
+
+
+
 ///////////////////////////componentes//////////////////////////////////////////
 
 ipcMain.on('eliminarComponente', async (e, data) => {
@@ -200,12 +272,7 @@ ipcMain.on('eliminarComponente', async (e, data) => {
 
 ipcMain.on('guardarComponente', async (e, data) => {
     const token = dataUsuarioSesion.token
-    const validacion = validarDatosComponente(data)
-
-    if(validacion.msg){
-        e.returnValue = validacion
-        return
-    }
+    
     const resultado = await guardarComponente(data, token)
     e.returnValue = resultado;
 })

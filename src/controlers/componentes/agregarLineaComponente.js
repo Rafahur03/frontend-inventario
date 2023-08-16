@@ -3,14 +3,15 @@ import { generateRandomId } from "../helpers/nombreRandon.js"
 import { eliminarLineaComponente } from "./eliminarLineaComponente.js"
 import { guardarComponente } from "./guardarComponente.js"
 import { modalMensaje } from "../helpers/modalEleccion.js"
+import { opcionId } from "../helpers/activos/listasId.js"
 
 
-const agregarComponente = e => {
+const agregarComponente = (e, crear = null) => {
     const componentes = ipcRenderer.sendSync('datalist', 'listaComponentes');
     if (componentes.msg) {
         const mensaje = {
             titulo: 'ERROR',
-            mensaje:'No se pudo cargar el listado de componentes, Intente crear el componente mas tarde'
+            mensaje: 'No se pudo cargar el listado de componentes, Intente crear el componente mas tarde'
         }
         modalMensaje(mensaje)
         return
@@ -20,7 +21,7 @@ const agregarComponente = e => {
     if (marcas.msg) {
         const mensaje = {
             titulo: 'ERROR',
-            mensaje:'No se pudo cargar las marcas, Intente crear el componente mas tarde'
+            mensaje: 'No se pudo cargar las marcas, Intente crear el componente mas tarde'
         }
         modalMensaje(mensaje)
         return
@@ -49,13 +50,6 @@ const agregarComponente = e => {
     const tdcapacidad = document.createElement('td')
     const tdAcciones = document.createElement('td')
 
-    const btnGuardar = document.createElement('button')
-    btnGuardar.title = 'Guardar'
-    const iGuardar = document.createElement('i')
-    const btnEliminar = document.createElement('button')
-    btnEliminar.title = 'Eliminar'
-    const iEliminar = document.createElement('i')
-
     const inputComponente = document.createElement('input')
     const listComponente = document.createElement('datalist')
     const inputMarca = document.createElement('input')
@@ -67,7 +61,11 @@ const agregarComponente = e => {
     const datalistMarcaid = generateRandomId()
 
     inputComponente.type = 'text'
-    inputMarca.type = 'text'
+    inputComponente.setAttribute('opcionId', 'Con--1')
+    inputComponente.onblur = e=> opcionId(e)
+    inputMarca.type = 'text' 
+    inputMarca.setAttribute('opcionId', 'Mac--1')
+    inputMarca.onblur = e => opcionId(e)
     inputModelo.type = 'text'
     inputSerie.type = 'text'
     inputCapacidad.type = 'text'
@@ -81,7 +79,7 @@ const agregarComponente = e => {
     inputSerie.classList.add('form-control', 'my-1', 'fw-bold', 'serieComponente')
     inputCapacidad.classList.add('form-control', 'my-1', 'fw-bold', 'capacidadComponente')
 
-
+    tdAcciones.classList.add('d-flex', 'flex-row')
     tdcomponente.appendChild(inputComponente)
     tdcomponente.appendChild(listComponente)
     tdmarca.appendChild(inputMarca)
@@ -99,16 +97,25 @@ const agregarComponente = e => {
     tr.appendChild(tdcapacidad)
 
 
+
     // botones de guardar de compnentes
-    tdAcciones.classList.add('d-flex', 'flex-row')
-    iGuardar.classList.add('bi', 'bi-save2-fill', 'fs-5')
-    btnGuardar.setAttribute('activo', activo)
-    btnGuardar.classList.add('btn', 'guardarComponente')
-    btnGuardar.type = 'button'
-    btnGuardar.appendChild(iGuardar)
-    btnGuardar.onclick = e => guardarComponente(e)
-    tdAcciones.appendChild(btnGuardar)
+    if (crear === null) {
+        const btnGuardar = document.createElement('button')
+        btnGuardar.title = 'Guardar'
+        const iGuardar = document.createElement('i')
+        iGuardar.classList.add('bi', 'bi-save2-fill', 'fs-5')
+        btnGuardar.setAttribute('activo', activo)
+        btnGuardar.classList.add('btn', 'guardarComponente')
+        btnGuardar.type = 'button'
+        btnGuardar.appendChild(iGuardar)
+        btnGuardar.onclick = e => guardarComponente(e)
+        tdAcciones.appendChild(btnGuardar)
+    }
+
     // btn eliminar linea agregada
+    const btnEliminar = document.createElement('button')
+    btnEliminar.title = 'Eliminar'
+    const iEliminar = document.createElement('i')
     iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-5')
     btnEliminar.classList.add('btn', 'eliminarFilaComponente')
     btnEliminar.type = 'button'
@@ -124,7 +131,7 @@ const agregarComponente = e => {
         item.textContent = componente.id
         listComponente.appendChild(item)
     });
-    
+
     marcas.forEach(marca => {
         const item = document.createElement('option')
         item.classList.add('bd-highlight', 'd-block', 'm-1')
@@ -133,7 +140,7 @@ const agregarComponente = e => {
         listMarca.appendChild(item)
     });
 
-    // creamos la fila en la tabla
+     // creamos la fila en la tabla
     tbodyComponente.appendChild(tr)
 }
 

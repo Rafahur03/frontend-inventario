@@ -1,6 +1,7 @@
 const { ipcRenderer } = require('electron')
 import { modalMensaje } from "./modalEleccion.js"
 import { eliminarImgActivo } from "./eliminarImg.js"
+
 const guardarImgActivo = e => {
     const tagName = e.target.tagName.toLowerCase()
     let boton

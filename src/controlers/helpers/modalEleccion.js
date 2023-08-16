@@ -76,5 +76,5 @@ const modalMensaje = data => {
 
 export {
     modalEleccion,
-    modalMensaje,
+    modalMensaje
 }

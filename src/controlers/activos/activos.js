@@ -1,6 +1,10 @@
 require('dotenv').config()
 const mime = require('mime-types')
 const { validarDatosActivo } = require('./validarDatosActivo.js')
+const { validarDatosComponente } = require('../componentes/validarComponentes.js')
+const {validarImagenes} = require('../helpers/validarImagenes.js')
+const {validarDocumentos} = require('../helpers/validarDocumentos.js')
+
 const urlbase = process.env.API_URL
 
 const consultarListadoActivos = async token => {
@@ -37,6 +41,69 @@ const actualizarDatosActivos = async (datos, token) => {
     }
     try {
         const url = urlbase + '/actualizarActivo'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
+const crearActivo = async (data, token) => {
+
+    const imagenes = data.imagenes
+    const componentes = data.componentes
+    const documentos = data.documentos
+    const campos = data
+    delete campos.imagenes
+    delete campos.componentes
+    delete campos.documentos
+
+    const validacionCampos = await validarDatosActivo(campos, token, 'crear')
+    if (validacionCampos.msg) return validacionCampos
+
+    if (imagenes.length > 0) {
+        for(let imagen of imagenes){
+            const validacionImagen = validarImagenes(imagen)
+            if(validacionImagen.msg) return validacionImagen
+        }
+    } else {
+        return { msg: 'El activo debe tener almenos una Imagen' }
+    }
+
+    if (documentos.length > 0) {
+        for(let documento of documentos){
+            const validacionDocumento = validarDocumentos(documento)
+            if(validacionDocumento.msg) return validacionDocumento
+        }
+    }
+
+    if (componentes.length > 0) {
+        for(let componente of componentes){
+            componente.idNombre = componente.idNombre.split('-')[1]      
+            componente.idmarca = componente.idmarca.split('-')[1] 
+            const validacionComponente = await validarDatosComponente(componente, token, 'crear')
+            if(validacionComponente.msg) return validacionComponente
+        }
+    }   
+
+    const datos= campos 
+    datos.imagenes = imagenes
+    datos.documentos = documentos
+    datos.componentes = componentes
+
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ datos })
+    }
+    try {
+        const url = urlbase + '/crearActivos'
         const response = await fetch(url, options);
         const json = await response.json();
         return (json)
@@ -175,7 +242,7 @@ const descargarDocumento = async (datos, token) => {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-        body: JSON.stringify( data )
+        body: JSON.stringify(data)
     }
 
     try {
@@ -190,7 +257,7 @@ const descargarDocumento = async (datos, token) => {
 
 }
 
-const gudardarDocumento = async (datos, token) => {
+const guardarDocumento = async (datos, token) => {
     const mimeType = datos.file.split(',')[0].split(';')[0].split(':')[1]
     if (mime.extension(mimeType) !== 'pdf') return { msg: 'Solo se aceptan documentos en formato pdf' }
 
@@ -237,7 +304,7 @@ const descargarHojaDeVida = async (datos, token) => {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-        body: JSON.stringify( data )
+        body: JSON.stringify(data)
     }
 
     try {
@@ -280,6 +347,30 @@ const eliminarActivo = async (datos, token) => {
 
 }
 
+const consultarDatosActivoSolicitud = async (id, token) => {
+    const idActivo = id.split('-')[1]
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ id:idActivo })
+
+    }
+
+
+    try {
+        const url = urlbase + '/consultarDatosActivoSolicitud'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
 
 module.exports = {
     consultarListadoActivos,
@@ -289,7 +380,9 @@ module.exports = {
     eliminarImagenActivo,
     eliminarDocumento,
     descargarDocumento,
-    gudardarDocumento,
+    guardarDocumento,
     descargarHojaDeVida,
-    eliminarActivo
+    eliminarActivo,
+    crearActivo,
+    consultarDatosActivoSolicitud
 }

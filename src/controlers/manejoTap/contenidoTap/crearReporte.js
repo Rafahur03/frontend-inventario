@@ -28,18 +28,18 @@ const crearReporte = () => {
                         </div>
                         <div class="form-group col-2">
 
-                            <label for="codigoInterno">Codigo interno</label>
-                            <input type="text" class="form-control my-1" id="codigoInterno"  list="listActivos">
+                            <label for="idActivo"> Id Activo</label>
+                            <input type="text" class="form-control my-1 idActivo" list="listActivos" opcionId="Act--0">
                             <datalist id="listActivos"></datalist>
+
+                            <label for="codigoInterno">Codigo interno</label>
+                            <input type="text" class="form-control my-1" id="codigoInterno"                           
 
                             <label for=" modeloActivo">Modelo</label>
                             <input type="text" class="form-control my-1" id="modeloActivo" readonly>
 
                             <label for="areaActivo">Area</label>
                             <input type="text" class="form-control my-1" id="areaActivo" readonly>
-
-                            <label for="tipoActivo">Tipo activo</label>
-                            <input type="text" class="form-control my-1" id="tipoActivo" readonly>
 
                         </div>
                         <div class="form-group col-3">
@@ -65,6 +65,9 @@ const crearReporte = () => {
 
                             <label for="procesoActivo">Proceso</label>
                             <input type="text" class="form-control my-1" id="procesoActivo" readonly>
+
+                            <label for="tipoActivo">Tipo activo</label>
+                            <input type="text" class="form-control my-1" id="tipoActivo" readonly>
 
                             <label for="imagenesSoporte">Soporte Fotografico del Reporte</label>
                             <div class="contendorInput position-relative">
