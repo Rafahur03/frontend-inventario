@@ -1,7 +1,8 @@
 const { ipcRenderer } = require('electron')
 import { eliminarImagenSolicitud } from "./eliminarImagenSolicitud.js"
+import { modalMensaje } from "../helpers/modalEleccion.js"
 const guardarImagenSolicitud = (e, nodo) =>{
-    console.log(e)
+    e.preventDefault()
     const tagName = e.target.tagName.toLowerCase()
     let boton
     if (tagName === 'i') {
@@ -9,23 +10,31 @@ const guardarImagenSolicitud = (e, nodo) =>{
     } else {
         boton = e.target
     }
-    const solicitud = nodo.querySelector('.idSolicitud')
-    const codigo = nodo.querySelector('.idActivo')
-    const imagen = boton.parentNode.previousSibling.src
+    const solicitud = boton.getAttribute('solicitud')
+    const codigo = nodo.querySelector('.idActivo').value
+    const idSolicitud = nodo.querySelector('.idSolicitud').value.split('-')[1]
+    const img = boton.parentNode.previousSibling
+    const imagen =img.src
+ 
     const data = {
         solicitud,
         imagen,
-        codigo        
+        codigo,
+        idSolicitud        
     }
+ 
     const respuesta = ipcRenderer.sendSync('guardarImagenSolicitud', data);
     if(respuesta.msg)  return modalMensaje({titulo:'ERROR', mensaje:respuesta.msg})
-
-    if(respuesta.msg)  return modalMensaje({titulo:'EXITO', mensaje:'Imagen guardada correctamente'})    
+ 
     const contenedorBoton = boton.parentNode
-    contenedorBoton.removechild(boton)
-    botonEliminar = contenedorBoton.querySelector('button')
+    contenedorBoton.removeChild(boton)
+    const botonEliminar = contenedorBoton.querySelector('button')
+    botonEliminar.setAttribute('imagen', respuesta.nombre)  
+    botonEliminar.setAttribute('solicitud', solicitud)
     botonEliminar.onclick = e=> eliminarImagenSolicitud(e, nodo)
-
+    const contenedorImagen = img.parentNode
+    contenedorImagen.setAttribute('nombre', 'Img-'+ respuesta.nombre)  
+    modalMensaje({titulo:'EXITO', mensaje:'Image guardada correctamente' })
     
 }
 

@@ -1,4 +1,6 @@
-import { modalEleccion } from "../helpers/modalEleccion.js"
+
+const { ipcRenderer } = require('electron')
+import { modalEleccion, modalMensaje } from "../helpers/modalEleccion.js"
 import { cargarTapContenido } from "../manejoTap/cargarTapContenido.js"
 const eliminarSolicitud = async (e, seccion) => {
 
@@ -12,30 +14,22 @@ const eliminarSolicitud = async (e, seccion) => {
 
     const solicitud = boton.getAttribute('solicitud')
     const codigo = seccion.querySelector('.idActivo').value
-    const idSolicitud = seccion.querySelector('.idSolicitud')
+    const idSolicitud = seccion.querySelector('.idSolicitud').value.split('-')[1]
 
     const eleccion = await modalEleccion({ titulo: 'ELIMINAR SOLICITUD', mensaje: `Esta seguro(a) de eliminar la solicitud numero ${solicitud} esta accion es irreversible` })
 
     if (!eleccion) return
-    mostarSpinner()
 
     const data = {
         solicitud,
         codigo,
         idSolicitud
     }
+
     const eliminar = ipcRenderer.sendSync('eliminarSolicitud', data);
 
+    if (eliminar.msg) return modalMensaje({titulo: 'ERROR', mensaje: eliminar.msg})
 
-    if (eliminar.msg) {
-        mensaje.titulo = "ERROR"
-        mensaje.mensaje = eliminar.msg
-        cerrarSpinner()
-        modalMensaje(mensaje)
-        return
-    }
-
-    cerrarSpinner()
     modalMensaje({ titulo: 'EXITO', mensaje: eliminar.exito })
 
     cargarTapContenido('listadoSolicitud')

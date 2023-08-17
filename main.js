@@ -18,7 +18,7 @@ const {
 } = require('./src/controlers/activos/activos.js')
 
 const { consultarListadoSolicitudes,
-    crearSolictud,
+    crearSolicitud,
     consultarSolicitud,
     editarSolicitud,
     eliminarSolicitud,
@@ -196,9 +196,9 @@ ipcMain.on('listadoSolicitud', async (e) => {
 })
 
 // crear solicitud
-ipcMain.on('crearSolictud', async (e, data) => {
+ipcMain.on('crearSolicitud', async (e, data) => {
     const token = dataUsuarioSesion.token
-    const solicitud = await crearSolictud(data, token)
+    const solicitud = await crearSolicitud(data, token)
     e.returnValue = solicitud;
 })
 

@@ -1,8 +1,9 @@
 const { ipcRenderer } = require('electron')
 import { eliminarImagen } from "../helpers/eliminarImagenGrid.js"
+import { modalEleccion, modalMensaje } from "../helpers/modalEleccion.js"
 const eliminarImagenSolicitud = async (e, nodo) => {
+    e.preventDefault()
 
-    console.log(e)
     const tagName = e.target.tagName.toLowerCase()
     let boton
     if (tagName === 'i') {
@@ -11,46 +12,30 @@ const eliminarImagenSolicitud = async (e, nodo) => {
         boton = e.target
     }
 
-    const solicitud = nodo.querySelector('.idSolicitud')
-    const codigo = nodo.querySelector('.idActivo')
-    const imagen = boton.getAttribute('imagen')
-
+    
     const eleccion = await modalEleccion({ titulo: 'ELIMINAR IMAGEN SOLICITUD', mensaje: `Esta seguro(a) de eliminar la imagen, esta accion es irreversible` })
 
+    const solicitud = boton.getAttribute('solicitud')
+    const codigo = nodo.querySelector('.idActivo').value
+    const imagen = boton.getAttribute('imagen')
+    const idSolicitud = nodo.querySelector('.idSolicitud').value.split('-')[1]
+
     if (!eleccion) return
-    mostarSpinner()
 
     const data = {
         solicitud,
         codigo,
-        imagen
+        imagen,
+        idSolicitud
     }
+
     const eliminar = ipcRenderer.sendSync('eliminarImagenSolicitud', data);
 
-
-    if (eliminar.msg) {
-        mensaje.titulo = "ERROR"
-        mensaje.mensaje = eliminar.msg
-        cerrarSpinner()
-        modalMensaje(mensaje)
-        return
-    }
+    if (eliminar.msg) return  modalMensaje({titulo:'ERROR', mensaje:eliminar.msg})
 
     eliminarImagen(e, nodo)
-    
-    const botonImagenes = nodo.querySelector('.imagenesSoporte')
-    const contendorImput = nodo.querySelector('.contendorInput')
-    const labelImput = nodo.querySelector('.labelSeleccionarImagen')
 
-    const imagenes = nodo.querySelectorAll('.imagenesSolicitud img')
-    if (imagenes.length < 4) {
-        if (contendorImput.classList.contains('d-none')) {
-            contendorImput.classList.remove('d-none')
-            labelImput.classList.remove('d-none')
-        }
-        console.log(imagenes)
-        botonImagenes.textContent = `Selecione ${4 - imagenes.length} imagenes`
-    }
+    modalMensaje({titulo:'EXITO', mensaje:eliminar.exito})
 }
 
 export {

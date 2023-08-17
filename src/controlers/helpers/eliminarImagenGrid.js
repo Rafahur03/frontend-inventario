@@ -1,6 +1,6 @@
 
-
 const eliminarImagen = (e, nodo) => {
+
     const tagName = e.target.tagName.toLowerCase()
     let boton
     if (tagName === 'i') {
@@ -11,11 +11,9 @@ const eliminarImagen = (e, nodo) => {
 
     const imagen = boton.getAttribute('imagen')
 
-    const divImagen = nodo.querySelector('div[nombre=Img-' + imagen + ']')
+    const divImagen = nodo.querySelector("div[nombre='Img-" + imagen + "']")
     const contendorImagenes = divImagen.parentNode
-
     contendorImagenes.removeChild(divImagen)
-
 
     const botonImagenes = nodo.querySelector('.imagenesSoporte')
     const contendorImput = nodo.querySelector('.contendorInput')
@@ -27,11 +25,8 @@ const eliminarImagen = (e, nodo) => {
             contendorImput.classList.remove('d-none')
             labelImput.classList.remove('d-none')
         }
-        console.log(imagenes)
         botonImagenes.textContent = `Selecione ${4 - imagenes.length} imagenes`
     }
-
-
 
 }
 

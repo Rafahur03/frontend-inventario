@@ -1,7 +1,7 @@
 const { ipcRenderer } = require('electron')
-const imprimirSolicitud = (e, id) =>{
+import { modalMensaje } from '../helpers/modalEleccion.js'
+const imprimirSolicitud = (e, idSolicitud) =>{
 
-    console.log(e, id)
     const tagName = e.target.tagName.toLowerCase()
     let boton
     if (tagName === 'i') {
@@ -13,7 +13,7 @@ const imprimirSolicitud = (e, id) =>{
 
     const data = {
         solicitud,
-        id
+        idSolicitud
     }
     const descarga = ipcRenderer.sendSync('descargarSolicitud', data);
     if(descarga.msg) return modalMensaje({titulo:'error', mensaje:descarga.msg});

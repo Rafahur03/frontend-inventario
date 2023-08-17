@@ -88,6 +88,7 @@ const cargarImagenGrid = (e, nodo) => {
             iGuardar.classList.add('bi', 'bi-save2-fill', 'fs-3', 'fw-bold', 'text-primary', 'p-0')
             const btnGuardar = document.createElement('button')
             btnGuardar.setAttribute('imagen', nombre)
+            btnGuardar.setAttribute('solicitud', `${idSolicitud.value}`)
             btnGuardar.classList.add('btn', 'text-center', 'm-1', 'p-0')
             btnGuardar.appendChild(iGuardar)
             btnGuardar.onclick = e => {

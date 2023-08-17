@@ -29,7 +29,7 @@ const guardarSolicitud = (e, nodo) =>{
         imagenes,
         descripcion        
     }
-    const respuesta = ipcRenderer.sendSync('crearSolictud', solicitud);
+    const respuesta = ipcRenderer.sendSync('crearSolicitud', solicitud);
     if(respuesta.msg)  return modalMensaje({titulo:'ERROR', mensaje:respuesta.msg})
 
     const tapcontent = nodo.parentNode

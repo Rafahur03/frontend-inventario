@@ -134,7 +134,6 @@ const editarSolicitud = (id) => {
     `
     const solicitud = ipcRenderer.sendSync('consultarSolicitud', id)
     if (solicitud.msg) return modalMensaje({ titulo: 'ERROR', mensaje: 'No se pudo consultar la solicitud' })
-    console.log(solicitud)
 
     const idActivo = seccion.querySelector('.idActivo')
     const codigoInterno = seccion.querySelector('.codigoInterno')
@@ -166,7 +165,7 @@ const editarSolicitud = (id) => {
     estadoActivo.value = solicitud.estado
     estadoSolicitud.value = solicitud.estadoSolicitud
     descripcionSolicitud.value = solicitud.solicitud
-    imprimir.getAttribute('solicitud', `Sol-${solicitud.id}`)
+    imprimir.setAttribute('solicitud', `Sol-${solicitud.id}`)
     imprimir.onclick = e => imprimirSolicitud(e, solicitud.id)
 
     const carruselimagenes = seccion.querySelector('.carousel-inner')
@@ -210,6 +209,7 @@ const editarSolicitud = (id) => {
             iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-3', 'fw-bold', 'text-danger', 'p-0')
             const btnEliminar = document.createElement('button')
             btnEliminar.setAttribute('imagen', solicitud.img_solicitud[index])
+            btnEliminar.setAttribute('solicitud', `Sol-${solicitud.id}`)
             btnEliminar.classList.add('btn', 'text-center', 'm-1', 'p-0')
             btnEliminar.appendChild(iEliminar)
             btnEliminar.onclick = e => eliminarImagenSolicitud(e, seccion)
@@ -228,19 +228,19 @@ const editarSolicitud = (id) => {
             const inputImagen = contenedorImput.querySelector('input')
 
             guardarEdicion.classList.remove('d-none')
-            guardarEdicion.getAttribute('solicitud', `Sol-${solicitud.id}`)
-            guardarEdicion.onclick = e => guardarEditarSolicitud(e, solicitud.id)
+            guardarEdicion.setAttribute('solicitud', `Sol-${solicitud.id}`)
+            guardarEdicion.onclick = e => guardarEditarSolicitud(e, seccion)
 
             crearReporte.classList.remove('d-none')
-            crearReporte.getAttribute('solicitud', `Sol-${solicitud.id}`)
+            crearReporte.setAttribute('solicitud', `Sol-${solicitud.id}`)
             crearReporte.onclick = e => cargarNuevaVista('crearReporte', {solicitud:solicitud.id, tipo:'Sol'})
 
             btneliminarSolicitud.classList.remove('d-none')
-            btneliminarSolicitud.getAttribute('solicitud', `Sol-${solicitud.id}`)
-            btneliminarSolicitud.onclick = e => eliminarSolicitud(e, solicitud.id)
+            btneliminarSolicitud.setAttribute('solicitud', `Sol-${solicitud.id}`)
+            btneliminarSolicitud.onclick = e => eliminarSolicitud(e, seccion)
 
-            descripcionSolicitud.classList.remove('d-none')
-            console.log(4-solicitud.imagenesSolicitud.length)
+            descripcionSolicitud.readOnly= false
+
             if(solicitud.imagenesSolicitud.length < 4){
                 labelImputImagen.classList.remove('d-none')
                 contenedorImput.classList.remove('d-none')
