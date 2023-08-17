@@ -134,7 +134,6 @@ const editarSolicitud = (id) => {
     `
     const solicitud = ipcRenderer.sendSync('consultarSolicitud', id)
     if (solicitud.msg) return modalMensaje({ titulo: 'ERROR', mensaje: 'No se pudo consultar la solicitud' })
-
     const idActivo = seccion.querySelector('.idActivo')
     const codigoInterno = seccion.querySelector('.codigoInterno')
     const tipoActivo = seccion.querySelector('.tipoActivo')
@@ -190,65 +189,76 @@ const editarSolicitud = (id) => {
         imagen.onload = e => rotarImg(e)
     })
 
-    const contenedorImagenes = seccion.querySelector('.imagenesSolicitud')
-    solicitud.imagenesSolicitud.forEach((element, index) => {
-        const contenedorImagen = document.createElement('div')
-        contenedorImagen.setAttribute('nombre', `Img-${solicitud.img_solicitud[index]}`)
-        contenedorImagen.classList.add('w-25', 'm-2')
-        const imagen = document.createElement('img')
-        imagen.classList.add('img-thumbnail', solicitud.img_solicitud[index])
-        imagen.src = element
-        contenedorImagen.appendChild(imagen)
+    if(solicitud.img_solicitud.length !== 0){
+        const contenedorImagenes = seccion.querySelector('.imagenesSolicitud')
+        solicitud.imagenesSolicitud.forEach((element, index) => {
+            const contenedorImagen = document.createElement('div')
+            contenedorImagen.setAttribute('nombre', `Img-${solicitud.img_solicitud[index]}`)
+            contenedorImagen.classList.add('w-25', 'm-2')
+            const imagen = document.createElement('img')
+            imagen.classList.add('img-thumbnail', solicitud.img_solicitud[index])
+            imagen.src = element
+            contenedorImagen.appendChild(imagen)
 
-        if (!solicitud.editar) {
+            if (solicitud.editar) {
 
-            const contenedorBotones = document.createElement('div')
-            contenedorBotones.classList.add('contenedorbotones', 'd-flex', 'justify-content-center', 'p-0', 'm-0')
+                const contenedorBotones = document.createElement('div')
+                contenedorBotones.classList.add('contenedorbotones', 'd-flex', 'justify-content-center', 'p-0', 'm-0')
 
-            const iEliminar = document.createElement('i')
-            iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-3', 'fw-bold', 'text-danger', 'p-0')
-            const btnEliminar = document.createElement('button')
-            btnEliminar.setAttribute('imagen', solicitud.img_solicitud[index])
-            btnEliminar.setAttribute('solicitud', `Sol-${solicitud.id}`)
-            btnEliminar.classList.add('btn', 'text-center', 'm-1', 'p-0')
-            btnEliminar.appendChild(iEliminar)
-            btnEliminar.onclick = e => eliminarImagenSolicitud(e, seccion)
-            contenedorBotones.appendChild(btnEliminar)
-            contenedorImagen.appendChild(contenedorBotones)
-        }
-        contenedorImagenes.appendChild(contenedorImagen)
-
-        if (!solicitud.editar) {
-            const guardarEdicion = seccion.querySelector('.guardarEdicion')
-            const crearReporte = seccion.querySelector('.elaborarReporte')
-            const btneliminarSolicitud = seccion.querySelector('.eliminar')
-            const labelImputImagen = seccion.querySelector('.labelSeleccionarImagen')
-            const contenedorImput = seccion.querySelector('.contendorInput')
-            const imagenesSoporte = contenedorImput.querySelector('.imagenesSoporte')
-            const inputImagen = contenedorImput.querySelector('input')
-
-            guardarEdicion.classList.remove('d-none')
-            guardarEdicion.setAttribute('solicitud', `Sol-${solicitud.id}`)
-            guardarEdicion.onclick = e => guardarEditarSolicitud(e, seccion)
-
-            crearReporte.classList.remove('d-none')
-            crearReporte.setAttribute('solicitud', `Sol-${solicitud.id}`)
-            crearReporte.onclick = e => cargarNuevaVista('crearReporte', {solicitud:solicitud.id, tipo:'Sol'})
-
-            btneliminarSolicitud.classList.remove('d-none')
-            btneliminarSolicitud.setAttribute('solicitud', `Sol-${solicitud.id}`)
-            btneliminarSolicitud.onclick = e => eliminarSolicitud(e, seccion)
-
-            descripcionSolicitud.readOnly= false
-
-            if(solicitud.imagenesSolicitud.length < 4){
-                labelImputImagen.classList.remove('d-none')
-                contenedorImput.classList.remove('d-none')
-                imagenesSoporte.textContent = `Selecione ${4-solicitud.imagenesSolicitud.length} imagenes`
-                inputImagen.onchange = e => cargarImagenGrid(e, seccion)
+                const iEliminar = document.createElement('i')
+                iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-3', 'fw-bold', 'text-danger', 'p-0')
+                const btnEliminar = document.createElement('button')
+                btnEliminar.setAttribute('imagen', solicitud.img_solicitud[index])
+                btnEliminar.setAttribute('solicitud', `Sol-${solicitud.id}`)
+                btnEliminar.classList.add('btn', 'text-center', 'm-1', 'p-0')
+                btnEliminar.appendChild(iEliminar)
+                btnEliminar.onclick = e => eliminarImagenSolicitud(e, seccion)
+                contenedorBotones.appendChild(btnEliminar)
+                contenedorImagen.appendChild(contenedorBotones)
             }
+            contenedorImagenes.appendChild(contenedorImagen)
+        })
+
+    }
+
+
+    if (solicitud.editar) {
+        const guardarEdicion = seccion.querySelector('.guardarEdicion')
+        const btneliminarSolicitud = seccion.querySelector('.eliminar')
+        const labelImputImagen = seccion.querySelector('.labelSeleccionarImagen')
+        const contenedorImput = seccion.querySelector('.contendorInput')
+        const imagenesSoporte = contenedorImput.querySelector('.imagenesSoporte')
+        const inputImagen = contenedorImput.querySelector('input')
+
+        guardarEdicion.classList.remove('d-none')
+        guardarEdicion.setAttribute('solicitud', `Sol-${solicitud.id}`)
+        guardarEdicion.onclick = e => guardarEditarSolicitud(e, seccion)
+
+        btneliminarSolicitud.classList.remove('d-none')
+        btneliminarSolicitud.setAttribute('solicitud', `Sol-${solicitud.id}`)
+        btneliminarSolicitud.onclick = e => eliminarSolicitud(e, seccion)
+
+        descripcionSolicitud.readOnly = false
+
+        if (solicitud.img_solicitud.length < 4) {
+            labelImputImagen.classList.remove('d-none')
+            contenedorImput.classList.remove('d-none')
+            imagenesSoporte.textContent = `Selecione ${4 - solicitud.img_solicitud.length} imagenes`
+            inputImagen.onchange = e => cargarImagenGrid(e, seccion)
         }
-    })
+    }
+
+    if (solicitud.reporte) {
+        const crearReporte = seccion.querySelector('.elaborarReporte')
+        crearReporte.classList.remove('d-none')
+        crearReporte.setAttribute('solicitud', `Sol-${solicitud.id}`)
+        if (solicitud.idReporte === null) {
+            crearReporte.onclick = e => cargarNuevaVista('crearReporte', solicitud.id)
+        } else {
+            crearReporte.onclick = e => cargarNuevaVista('consultarReporte', solicitud.idReporte)
+        }
+
+    }
 
     return seccion
 }

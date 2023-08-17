@@ -23,8 +23,7 @@ const crearSolicitud = (id = null) => {
             <form class="w-100 position-relative">
                 <div class="row mx-3 align-items-center ">
                     <div class="form-group col-4 p-4">
-                        <div id="carouselExampleControls" class="carousel slide"
-                            ata-bs-ride="carousel">
+                        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner"></div>
                             <button class="carousel-control-prev" type="button" title="Previo"
                                 data-bs-target="#carouselExampleControls" data-bs-slide="prev">

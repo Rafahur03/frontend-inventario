@@ -1,4 +1,4 @@
-const editarReporte = () => {
+const editarReporte = (id) => {
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
@@ -34,33 +34,32 @@ const editarReporte = () => {
                     <div class="form-group col-2">
 
                         <label for="codigoInterno">Codigo interno</label>
-                        <input type="text" class="form-control my-1" id="codigoInterno"
-                            list="listActivos">
-                        <datalist id="listActivos"></datalist>
+                        <input type="text" class="form-control my-1 codigoInterno" id="">
+
 
                         <label for=" modeloActivo">Modelo</label>
-                        <input type="text" class="form-control my-1" id="modeloActivo" readonly>
+                        <input type="text" class="form-control my-1 modeloActivo" id="" readonly>
 
                         <label for="areaActivo">Area</label>
-                        <input type="text" class="form-control my-1" id="areaActivo" readonly>
+                        <input type="text" class="form-control my-1 areaActivo" id="" readonly>
 
                         <label for="tipoActivo">Tipo activo</label>
-                        <input type="text" class="form-control my-1" id="tipoActivo" readonly>
+                        <input type="text" class="form-control my-1 tipoActivo" id="" readonly>
 
                     </div>
                     <div class="form-group col-3">
 
                         <label for="nombreActivo">Nombre</label>
-                        <input type="text" class="form-control my-1" id="nombreActivo" readonly>
+                        <input type="text" class="form-control my-1 nombreActivo" id="" readonly>
 
                         <label for="serieActivo">Serie</label>
-                        <input type="text" class="form-control my-1" id="serieActivo" readonly>
+                        <input type="text" class="form-control my-1 serieActivo" id="" readonly>
 
                         <label for="ubicacionActivo">Ubicacion Especifica</label>
-                        <input type="text" class="form-control my-1" id="ubicacionActivo" readonly>
+                        <input type="text" class="form-control my-1 ubicacionActivo" id="" readonly>
 
                         <label for="estadoActivo">Estado</label>
-                        <input type="text" class="form-control my-1 fw-bold" id="estadoActivo"
+                        <input type="text" class="form-control my-1 fw-bold estadoActivo" id=""
                             list="listEsatdoActivo">
                         <datalist id="listEsatdoActivo"></datalist>
 
@@ -68,10 +67,10 @@ const editarReporte = () => {
                     <div class="form-group col-3">
 
                         <label for="marcaActivo">Marca</label>
-                        <input type="text" class="form-control my-1" id="marcaActivo" readonly>
+                        <input type="text" class="form-control my-1 marcaActivo" id="" readonly>
 
                         <label for="procesoActivo">Proceso</label>
-                        <input type="text" class="form-control my-1" id="procesoActivo" readonly>
+                        <input type="text" class="form-control my-1 procesoActivo" id="" readonly>
 
                         <label for="imagenesSoporte">Soporte Fotografico del Reporte</label>
                         <div class="contendorInput position-relative">
@@ -91,37 +90,35 @@ const editarReporte = () => {
                 <div class="row mx-3 align-items-center">
                     <div class="form-group col-1">
                         <label for="idSolicitud">ID solicitud</label>
-                        <input type="text" class="form-control my-1" id="idSolicitud"
-                            list="listSolicitudes">
-                        <datalist id="listSolicitudes"></datalist>
+                        <input type="text" class="form-control my-1 idSolicitud" id="">
                     </div>
 
                     <div class="form-group col-2">
                         <label for="fechaSolicitud">Fecha de solicitud</label>
-                        <input type="datetime" class="form-control my-1" id="fechaSolicitud" readonly>
+                        <input type="datetime" class="form-control my-1 fechaSolicitud" id="" readonly>
                     </div>
 
                     <div class="form-group col-2">
                         <label for="fechaReporte">Fecha de reporte</label>
-                        <input type="date" class="form-control my-1" id="fechaReporte">
+                        <input type="date" class="form-control my-1 fechaReporte" id="">
                     </div>
 
                     <div class="form-group col-2">
                         <label for="tipoMantenimiento">Tipo de Mtto</label>
-                        <input type="text" class="form-control my-1" id="tipoMantenimiento"
+                        <input type="text" class="form-control my-1 tipoMantenimiento" id=""
                             list="listTipoMtto">
                         <datalist id="listTipoMtto"></datalist>
                     </div>
 
                     <div class="form-group col-2">
                         <label for="CostoMo">Costo Mano de obra</label>
-                        <input type="number" class="form-control my-1" id="costoMo"
+                        <input type="number" class="form-control my-1 costoMo" id=""
                             placeholder="1000,00">
                     </div>
 
                     <div class="form-group col-2">
                         <label for="costoMa">Costo materiales</label>
-                        <input type="number" class="form-control my-1" id="costoMp"
+                        <input type="number" class="form-control my-1 costoMp" id=""
                             placeholder="1000,00">
                     </div>
 
@@ -129,27 +126,27 @@ const editarReporte = () => {
                 <div class="row mx-3 align-items-center">
                     <div class="form-group col-4">
                         <label for="ProvedorMtto">Proveedor de Mtto</label>
-                        <input type="text" class="form-control my-1" id="provedorMtto"
+                        <input type="text" class="form-control my-1 provedorMtto" id=""
                             list="listProvedorMtto">
                         <datalist id="listProvedorMtto"></datalist>
                     </div>
                     <div class="form-group col-3">
                         <label for="diligenciaReporte">Reporte Tecnico Por:</label>
-                        <input type="datetime" class="form-control my-1" id="diligenciaReporte"
+                        <input type="datetime" class="form-control my-1 diligenciaReporte" id=""
                             list="listDiligenciaReporte" readonly>
                         <datalist id="listDiligenciaReporte"></datalist>
                     </div>
 
                     <div class="form-group col-3">
                         <label for="recibidoConforme">Recibido Conforme</label>
-                        <input type="text" class="form-control my-1" id="recibidoConforme"
+                        <input type="text" class="form-control my-1 recibidoConforme" id=""
                             list="listRecibidoConforme">
                         <datalist id="listRecibidoConforme"></datalist>
                     </div>
 
                     <div class="form-group col-2 p-1">
                         <label for="estadoSolicitud">Estado Solicitud</label>
-                        <input type="text" class="form-control my-1 fw-bold" id="estadoSolicitud"
+                        <input type="text" class="form-control my-1 fw-bold estadoSolicitud" id=""
                             list="listestadoSolicitud">
                         <datalist id="listestadoSolicitud"></datalist>
                     </div>
@@ -157,13 +154,13 @@ const editarReporte = () => {
                     <div class="row m-3 align-items-center">
                         <div class="form-group col-6">
                             <label for="descripcionSolicitud">Descripcion solicitud</label>
-                            <textarea class="form-control m-1" id="descripcionSolicitud" rows="6"
+                            <textarea class="form-control m-1 descripcionSolicitud" id="" rows="6"
                                 readonly></textarea>
                         </div>
                         <div class="form-group col-6">
                             <label for="descripcionHallazgos">Descripcion Hallazgos</label>
                             <p class="m-0" id="caracteresHallazgos">Maximo 1000 caracteres</p>
-                            <textarea class="form-control m-1" id="descripcionHallazgos"
+                            <textarea class="form-control m-1 descripcionHallazgos" id=""
                                 rows="6"></textarea>
                         </div>
                     </div>
@@ -172,13 +169,13 @@ const editarReporte = () => {
                         <div class="form-group col-6">
                             <label for="descripcionReporte">Descripcion de reporte</label>
                             <p class="m-0" id="caracteresReporte">Maximo 1000 caracteres</p>
-                            <textarea class="form-control m-1" id="descripcionReporte"
+                            <textarea class="form-control m-1 descripcionReporte" id=""
                                 rows="6"></textarea>
                         </div>
                         <div class="form-group col-6">
                             <label for="recomendaciones">Recomendaciones</label>
                             <p class="m-0" id="caracteresRecomendacion">Maximo 1000 caracteres</p>
-                            <textarea class="form-control m-1" id="recomendaciones" rows="6"></textarea>
+                            <textarea class="form-control m-1 recomendaciones" id="" rows="6"></textarea>
                         </div>
                     </div>
                 </div>

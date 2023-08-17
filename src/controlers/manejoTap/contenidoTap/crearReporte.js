@@ -1,4 +1,6 @@
-const crearReporte = () => {
+import { modalMensaje } from "../../helpers/modalEleccion.js";
+
+const crearReporte = id => {
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
@@ -11,16 +13,15 @@ const crearReporte = () => {
                 <form class="container-fluid w-100 position-relative">
                     <div class="row mx-3 align-items-center">
                         <div class="form-group col-4 p-4">
-                            <div id="carruselImgActivo" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-indicators"></div>
+                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner"></div>
-                                <button class="carousel-control-prev" type="button"
-                                    data-bs-target="#carruselImgActivo" data-bs-slide="prev">
+                                <button class="carousel-control-prev" type="button" title="Previo"
+                                    data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
                                 </button>
-                                <button class="carousel-control-next" type="button"
-                                    data-bs-target="#carruselImgActivo" data-bs-slide="next">
+                                <button class="carousel-control-next" type="button" title="Siguiente"
+                                    data-bs-target="#carouselExampleControls" data-bs-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Next</span>
                                 </button>
@@ -29,45 +30,44 @@ const crearReporte = () => {
                         <div class="form-group col-2">
 
                             <label for="idActivo"> Id Activo</label>
-                            <input type="text" class="form-control my-1 idActivo" list="listActivos" opcionId="Act--0">
-                            <datalist id="listActivos"></datalist>
+                            <input type="text" class="form-control my-1 idActivo" opcionId="Act--0">
 
                             <label for="codigoInterno">Codigo interno</label>
-                            <input type="text" class="form-control my-1" id="codigoInterno"                           
+                            <input type="text" class="form-control my-1 codigoInterno" id=""                           
 
                             <label for=" modeloActivo">Modelo</label>
-                            <input type="text" class="form-control my-1" id="modeloActivo" readonly>
+                            <input type="text" class="form-control my-1 modeloActivo" id="" readonly>
 
                             <label for="areaActivo">Area</label>
-                            <input type="text" class="form-control my-1" id="areaActivo" readonly>
+                            <input type="text" class="form-control my-1 areaActivo" id="" readonly>
 
                         </div>
                         <div class="form-group col-3">
 
                             <label for="nombreActivo">Nombre</label>
-                            <input type="text" class="form-control my-1" id="nombreActivo" readonly>
+                            <input type="text" class="form-control my-1 nombreActivo" id="" readonly>
 
                             <label for="serieActivo">Serie</label>
-                            <input type="text" class="form-control my-1" id="serieActivo" readonly>
+                            <input type="text" class="form-control my-1 serieActivo" id="" readonly>
 
                             <label for="ubicacionActivo">Ubicacion Especifica</label>
-                            <input type="text" class="form-control my-1" id="ubicacionActivo" readonly>
+                            <input type="text" class="form-control my-1 ubicacionActivo" id="" readonly>
 
                             <label for="estadoActivo">Estado</label>
-                            <input type="text" class="form-control my-1 fw-bold" id="estadoActivo" list="listEsatdoActivo">
+                            <input type="text" class="form-control my-1 fw-bold estadoActivo" id="" list="listEsatdoActivo">
                             <datalist id="listEsatdoActivo"></datalist>
 
                         </div>
                         <div class="form-group col-3">
 
                             <label for="marcaActivo">Marca</label>
-                            <input type="text" class="form-control my-1" id="marcaActivo" readonly>
+                            <input type="text" class="form-control my-1 marcaActivo" id="" readonly>
 
                             <label for="procesoActivo">Proceso</label>
-                            <input type="text" class="form-control my-1" id="procesoActivo" readonly>
+                            <input type="text" class="form-control my-1 procesoActivo" id="" readonly>
 
                             <label for="tipoActivo">Tipo activo</label>
-                            <input type="text" class="form-control my-1" id="tipoActivo" readonly>
+                            <input type="text" class="form-control my-1 tipoActivo" id="" readonly>
 
                             <label for="imagenesSoporte">Soporte Fotografico del Reporte</label>
                             <div class="contendorInput position-relative">
@@ -87,37 +87,37 @@ const crearReporte = () => {
                     <div class="row mx-3 align-items-center">
                         <div class="form-group col-1">
                             <label for="idSolicitud">ID solicitud</label>
-                            <input type="text" class="form-control my-1" id="idSolicitud"
+                            <input type="text" class="form-control my-1 idSolicitud" id=""
                                 list="listSolicitudes">
                             <datalist id="listSolicitudes"></datalist>
                         </div>
 
                         <div class="form-group col-2">
                             <label for="fechaSolicitud">Fecha de solicitud</label>
-                            <input type="datetime" class="form-control my-1" id="fechaSolicitud" readonly>
+                            <input type="datetime" class="form-control my-1 fechaSolicitud" id="" readonly>
                         </div>
 
                         <div class="form-group col-2">
                             <label for="fechaReporte">Fecha de reporte</label>
-                            <input type="date" class="form-control my-1" id="fechaReporte">
+                            <input type="date" class="form-control my-1 fechaReporte" id="">
                         </div>
 
                         <div class="form-group col-2">
                             <label for="tipoMantenimiento">Tipo de Mtto</label>
-                            <input type="text" class="form-control my-1" id="tipoMantenimiento"
+                            <input type="text" class="form-control my-1 tipoMantenimiento" id=""
                                 list="listTipoMtto">
                             <datalist id="listTipoMtto"></datalist>
                         </div>
 
                         <div class="form-group col-2">
                             <label for="CostoMo">Costo Mano de obra</label>
-                            <input type="number" class="form-control my-1" id="costoMo"
+                            <input type="number" class="form-control my-1 costoMo" id=""
                                 placeholder="1000,00">
                         </div>
 
                         <div class="form-group col-2">
                             <label for="costoMa">Costo materiales</label>
-                            <input type="number" class="form-control my-1" id="costoMp"
+                            <input type="number" class="form-control my-1 costoMp" id=""
                                 placeholder="1000,00">
                         </div>
 
@@ -125,27 +125,21 @@ const crearReporte = () => {
                     <div class="row mx-3 align-items-center">
                         <div class="form-group col-4">
                             <label for="ProvedorMtto">Proveedor de Mtto</label>
-                            <input type="text" class="form-control my-1" id="provedorMtto"
+                            <input type="text" class="form-control my-1 provedorMtto" id=""
                                 list="listProvedorMtto">
                             <datalist id="listProvedorMtto"></datalist>
                         </div>
-                        <div class="form-group col-3">
-                            <label for="diligenciaReporte">Reporte Tecnico Por:</label>
-                            <input type="datetime" class="form-control my-1" id="diligenciaReporte"
-                                list="listDiligenciaReporte" readonly>
-                            <datalist id="listDiligenciaReporte"></datalist>
-                        </div>
-
+                        
                         <div class="form-group col-3">
                             <label for="recibidoConforme">Recibido Conforme</label>
-                            <input type="text" class="form-control my-1" id="recibidoConforme"
+                            <input type="text" class="form-control my-1 recibidoConforme" id=""
                                 list="listRecibidoConforme">
                             <datalist id="listRecibidoConforme"></datalist>
                         </div>
 
                         <div class="form-group col-2 p-1">
                             <label for="estadoSolicitud">Estado Solicitud</label>
-                            <input type="text" class="form-control my-1 fw-bold" id="estadoSolicitud"
+                            <input type="text" class="form-control my-1 fw-bold estadoSolicitud" id=""
                                 list="listestadoSolicitud">
                             <datalist id="listestadoSolicitud"></datalist>
                         </div>
@@ -153,12 +147,12 @@ const crearReporte = () => {
                         <div class="row m-3 align-items-center">
                             <div class="form-group col-6">
                                 <label for="descripcionSolicitud">Descripcion solicitud</label>
-                                <textarea class="form-control m-1" id="descripcionSolicitud" rows="6" readonly></textarea>
+                                <textarea class="form-control m-1 descripcionSolicitud" id="" rows="6" readonly></textarea>
                             </div>
                             <div class="form-group col-6">
                                 <label for="descripcionHallazgos">Descripcion Hallazgos</label>
                                 <p class="m-0" id="caracteresHallazgos">Maximo 1000 caracteres</p>
-                                <textarea class="form-control m-1" id="descripcionHallazgos"
+                                <textarea class="form-control m-1 descripcionHallazgos" id=""
                                     rows="6"></textarea>
                             </div>
                         </div>
@@ -167,20 +161,50 @@ const crearReporte = () => {
                             <div class="form-group col-6">
                                 <label for="descripcionReporte">Descripcion de reporte</label>
                                 <p class="m-0" id="caracteresReporte">Maximo 1000 caracteres</p>
-                                <textarea class="form-control m-1" id="descripcionReporte"
+                                <textarea class="form-control m-1 descripcionReporte" id=""
                                     rows="6"></textarea>
                             </div>
                             <div class="form-group col-6">
                                 <label for="recomendaciones">Recomendaciones</label>
                                 <p class="m-0" id="caracteresRecomendacion">Maximo 1000 caracteres</p>
-                                <textarea class="form-control m-1" id="recomendaciones" rows="6"></textarea>
+                                <textarea class="form-control m-1 recomendaciones" id="" rows="6"></textarea>
                             </div>
                         </div>
                     </div>
                 </form>
             </div> 
     `
+    console.log(id)
+    const solicitud = ipcRenderer.sendSync('consultarSolicitud', id)
+    if(solicitud.msg) return modalMensaje({ titulo:'ERROR', mensaje: solicitud.msg })
 
+    const idActivo = seccion.querySelector('.idActivo')
+    const codigoInterno = seccion.querySelector('.codigoInterno')
+    const modeloActivo = seccion.querySelector('.modeloActivo')
+    const areaActivo= seccion.querySelector('.areaActivo')
+    const nombreActivo= seccion.querySelector('.nombreActivo')
+    const serieActivo = seccion.querySelector('.serieActivo')
+    const ubicacionActivo = seccion.querySelector('.ubicacionActivo')
+    const estadoActivo = seccion.querySelector('.estadoActivo')
+    const marcaActivo = seccion.querySelector('.marcaActivo')
+    const procesoActivo = seccion.querySelector('.procesoActivo')
+    const tipoActivo = seccion.querySelector('.tipoActivo')
+    const idSolicitud = seccion.querySelector('.idSolicitud')
+    const fechaSolicitud = seccion.querySelector('.fechaSolicitud')
+    const tipoMantenimiento = seccion.querySelector('.tipoMantenimiento')
+    const provedorMtto = seccion.querySelector('.provedorMtto')
+    const recibidoConforme = seccion.querySelector('.recibidoConforme')
+    const estadoSolicitud = seccion.querySelector('.estadoSolicitud')
+    const fechaReporte = seccion.querySelector('.fechaReporte')   
+
+    const listEsatdoActivo = seccion.querySelector('#listEsatdoActivo')
+    const listTipoMtto = seccion.querySelector('#listTipoMtto')
+    const listProvedorMtto = seccion.querySelector('#listProvedorMtto')
+    const listRecibidoConforme = seccion.querySelector('#listRecibidoConforme')
+    const listestadoSolicitud = seccion.querySelector('#listestadoSolicitud')
+
+    const fecha = new Date
+    fechaReporte.value  =  fecha.toJSON().slice(0,10);
     return seccion
 }
 

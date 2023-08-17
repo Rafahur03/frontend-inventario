@@ -208,7 +208,26 @@ const eliminarImagenSolicitud = async (datos, token) => {
     }
 
 }
+const consultarSolicitudReporte = async (id, token) => {
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ id })
+    }
+    
+    try {
+        const url = urlbase + '/consultarSolicitudReporte'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
 
+}
 
 
 
@@ -220,5 +239,6 @@ module.exports = {
     eliminarSolicitud,
     descargarSolicitud,
     guardarImagenSolicitud,
-    eliminarImagenSolicitud
+    eliminarImagenSolicitud,
+    consultarSolicitudReporte
 }
