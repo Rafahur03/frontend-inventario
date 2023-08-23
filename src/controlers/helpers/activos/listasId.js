@@ -6,7 +6,7 @@ const opcionId = e => {
     if (input.value.trim() == '') {
         return modalMensaje({ titulo: 'ERROR', mensaje: 'No ha seleccionado ninguna opcion' })
     }
-    const idLista = input.getAtopcionIdtribute('list')
+    const idLista = input.getAttribute('list')
     const lista = document.querySelector('#' + idLista)
     const opciones = lista.querySelectorAll('option')
     const opcionId = input.getAttribute('opcionId').split('-')[1]

@@ -141,7 +141,7 @@ const crearSolicitud = (id = null) => {
         listaActivos.appendChild(option)
     });
 
-    if (id !== null) {   
+    if (id !== null) {      
         idActivo.setAttribute('opcionId', id)
         cargarActivoSolicitud(id, seccion)
     }

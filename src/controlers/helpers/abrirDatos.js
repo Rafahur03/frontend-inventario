@@ -2,7 +2,7 @@
 import { cargarNuevaVista } from "../manejoTap/cargarTapContenido.js"
 import { cargarDatosActivo } from "../activos/cargarDatosActivo.js"
 import { cargarTapContenido } from "../manejoTap/cargarTapContenido.js"
-import { editarSolicitud } from "../manejoTap/contenidoTap/editarSolicitud.js"
+
 const abrirDatos =  (e) => {
     const vista = {
         Act: 'editarActivo',

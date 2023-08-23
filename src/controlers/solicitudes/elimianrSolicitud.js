@@ -12,13 +12,13 @@ const eliminarSolicitud = async (e, seccion) => {
         boton = e.target
     }
 
-    const solicitud = boton.getAttribute('solicitud')
-    const codigo = seccion.querySelector('.idActivo').value
-    const idSolicitud = seccion.querySelector('.idSolicitud').value.split('-')[1]
-
     const eleccion = await modalEleccion({ titulo: 'ELIMINAR SOLICITUD', mensaje: `Esta seguro(a) de eliminar la solicitud numero ${solicitud} esta accion es irreversible` })
 
     if (!eleccion) return
+
+    const solicitud = boton.getAttribute('solicitud')
+    const codigo = seccion.querySelector('.idActivo').value
+    const idSolicitud = seccion.querySelector('.idSolicitud').value.split('-')[1]
 
     const data = {
         solicitud,
@@ -28,7 +28,7 @@ const eliminarSolicitud = async (e, seccion) => {
 
     const eliminar = ipcRenderer.sendSync('eliminarSolicitud', data);
 
-    if (eliminar.msg) return modalMensaje({titulo: 'ERROR', mensaje: eliminar.msg})
+    if (eliminar.msg) return modalMensaje({ titulo: 'ERROR', mensaje: eliminar.msg })
 
     modalMensaje({ titulo: 'EXITO', mensaje: eliminar.exito })
 

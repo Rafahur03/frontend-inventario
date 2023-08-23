@@ -1,4 +1,10 @@
+const { ipcRenderer } = require('electron')
 import { modalMensaje } from "../../helpers/modalEleccion.js";
+import { rotarImg } from "../../helpers/activos/rotarImg.js";
+import { generateRandomId } from "../../helpers/nombreRandon.js";
+import { opcionId } from "../../helpers/activos/listasId.js";
+import { cargarImagenGridReporte } from "../../helpers/cargaImagenGrid.js";
+import { nuevoReporte } from "../../reportes/nuevoReporte.js";
 
 const crearReporte = id => {
     const seccion = document.createElement('section');
@@ -6,7 +12,11 @@ const crearReporte = id => {
     seccion.innerHTML = `
             <h3 class="text-center mt-1 fw-bold">CREAR REPORTE</h3>
             <div class="container-fluid w-100 d-flex ">
-                <div class="p-2"><button type="button" class="btn btn-success crear">Crear</button></div>
+                <div class="p-2">
+                <button type="button" class="btn mt-0 pt-0 crearReporte" title="Crear Solicitud">
+                    <i class="bi bi-check-square-fill fs-1 text-success"></i>
+                </button>
+                </div>
             </div>
             <h3 class="text-center mt-1 fw-bold">Datos del Activo</h3>
             <div class="container-fluid w-100 m-0 p-0 mb-3 dataActivo">
@@ -30,10 +40,10 @@ const crearReporte = id => {
                         <div class="form-group col-2">
 
                             <label for="idActivo"> Id Activo</label>
-                            <input type="text" class="form-control my-1 idActivo" opcionId="Act--0">
+                            <input type="text" class="form-control my-1 fw-bold idActivo" opcionId="Act--0">
 
                             <label for="codigoInterno">Codigo interno</label>
-                            <input type="text" class="form-control my-1 codigoInterno" id=""                           
+                            <input type="text" class="form-control my-1  fw-bold codigoInterno" id=""                           
 
                             <label for=" modeloActivo">Modelo</label>
                             <input type="text" class="form-control my-1 modeloActivo" id="" readonly>
@@ -54,8 +64,8 @@ const crearReporte = id => {
                             <input type="text" class="form-control my-1 ubicacionActivo" id="" readonly>
 
                             <label for="estadoActivo">Estado</label>
-                            <input type="text" class="form-control my-1 fw-bold estadoActivo" id="" list="listEsatdoActivo">
-                            <datalist id="listEsatdoActivo"></datalist>
+                            <input type="text" class="form-control my-1 fw-bold estadoActivo  fw-bold " id="" list="listEstadoActivo"  opcionId="Es--1">
+                            <datalist id="listEstadoActivo"></datalist>
 
                         </div>
                         <div class="form-group col-3">
@@ -69,25 +79,24 @@ const crearReporte = id => {
                             <label for="tipoActivo">Tipo activo</label>
                             <input type="text" class="form-control my-1 tipoActivo" id="" readonly>
 
-                            <label for="imagenesSoporte">Soporte Fotografico del Reporte</label>
-                            <div class="contendorInput position-relative">
-                                <button id="imagenesSoporte" type="button"
-                                    class="btn btn-secondary fs-6 btn-lg h-25">Seleccionar Max 4
-                                    Imagenes</button>
-                                <input class="opacity-0 w-75 position-absolute top-0 start-0" type="file"
-                                    id="inputImagenSoporte" accept="image/png, image/jpeg, image/jpg">
+                            <label for="imagenesSoporte" class="labelSeleccionarImagen">Soporte Fotografico</label>
+                            <div class="contendorInput position-relative" >
+                                <button type="button"
+                                    class="btn btn-secondary fs-6 btn-lg h-25 imagenesSoporte">Seleccionar Max 4 Imagenes</button>
+                                <input class="opacity-0 w-75 position-absolute top-0 start-0 inputImagenSoporte" type="file"
+                                    accept="image/png, image/jpeg, image/jpg" style="box-sizing:content-box" multiple>
                             </div>
                         </div>
                     </div>
                     <h3 class="text-center mt-1 fw-bold">Datos del Reporte</h3>
                     <!-- aqui van las imagenes -->
-                    <div class="row mx-3 align-items-center" id="ImagenesReporte">
-
+                    <div class="form-group row d-block">
+                        <div class="d-flex flex-row align-items-center justify-content-center imagenesReporte"></div>
                     </div>
                     <div class="row mx-3 align-items-center">
-                        <div class="form-group col-1">
+                        <div class="form-group col-2">
                             <label for="idSolicitud">ID solicitud</label>
-                            <input type="text" class="form-control my-1 idSolicitud" id=""
+                            <input type="text" class="form-control my-1  fw-bold idSolicitud" id=""
                                 list="listSolicitudes">
                             <datalist id="listSolicitudes"></datalist>
                         </div>
@@ -105,7 +114,7 @@ const crearReporte = id => {
                         <div class="form-group col-2">
                             <label for="tipoMantenimiento">Tipo de Mtto</label>
                             <input type="text" class="form-control my-1 tipoMantenimiento" id=""
-                                list="listTipoMtto">
+                                list="listTipoMtto" opcionId="Tm--1">
                             <datalist id="listTipoMtto"></datalist>
                         </div>
 
@@ -124,23 +133,28 @@ const crearReporte = id => {
                     </div>
                     <div class="row mx-3 align-items-center">
                         <div class="form-group col-4">
-                            <label for="ProvedorMtto">Proveedor de Mtto</label>
+                            <label for="ProvedorMtto">Proveedor Mtto</label>
                             <input type="text" class="form-control my-1 provedorMtto" id=""
-                                list="listProvedorMtto">
+                                list="listProvedorMtto"  opcionId="Pro--1">
                             <datalist id="listProvedorMtto"></datalist>
+                        </div>
+
+                        <div class="form-group col-3">
+                            <label for="nitProveedor">NIT proveedor o</label>
+                            <input type="text" class="form-control my-1 nitProveedor" readonly>
                         </div>
                         
                         <div class="form-group col-3">
                             <label for="recibidoConforme">Recibido Conforme</label>
                             <input type="text" class="form-control my-1 recibidoConforme" id=""
-                                list="listRecibidoConforme">
+                                list="listRecibidoConforme"  opcionId="Re--1">
                             <datalist id="listRecibidoConforme"></datalist>
                         </div>
 
                         <div class="form-group col-2 p-1">
                             <label for="estadoSolicitud">Estado Solicitud</label>
                             <input type="text" class="form-control my-1 fw-bold estadoSolicitud" id=""
-                                list="listestadoSolicitud">
+                                list="listestadoSolicitud" opcionId="Ess--1">
                             <datalist id="listestadoSolicitud"></datalist>
                         </div>
 
@@ -171,18 +185,32 @@ const crearReporte = id => {
                             </div>
                         </div>
                     </div>
+                    <!-- aqui va el cargue del soporte -->
+                    <div class="form-group row d-block mt-2">
+                        <div class="form-group col-4">
+                            <label for="pdfSoporte" class="labelSeleccionarSoportepdf">Soporte De Mantenimiento</label>
+                            <div class="contendorInputpdf position-relative" >
+                                <button type="button"
+                                    class="btn btn-secondary fs-6 btn-lg h-25 pdfSoporte">Seleccionar Un archivo en PDF</button>
+                                <input class="opacity-0 w-75 position-absolute top-0 start-0 inputPdfSoporte" type="file"
+                                    accept="application/pdf" style="box-sizing:content-box">
+                            </div>
+                        </div>
+                        <div class="col-8 d-flex flex-row align-items-center justify-content-center pdfReporte"> hol
+                        </div>
+                    </div>  
                 </form>
             </div> 
     `
-    console.log(id)
-    const solicitud = ipcRenderer.sendSync('consultarSolicitud', id)
-    if(solicitud.msg) return modalMensaje({ titulo:'ERROR', mensaje: solicitud.msg })
 
+    const solicitud = ipcRenderer.sendSync('consultarSolicitudReporte', id)
+    if (solicitud.msg) return modalMensaje({ titulo: 'ERROR', mensaje: solicitud.msg })
+    
     const idActivo = seccion.querySelector('.idActivo')
     const codigoInterno = seccion.querySelector('.codigoInterno')
     const modeloActivo = seccion.querySelector('.modeloActivo')
-    const areaActivo= seccion.querySelector('.areaActivo')
-    const nombreActivo= seccion.querySelector('.nombreActivo')
+    const areaActivo = seccion.querySelector('.areaActivo')
+    const nombreActivo = seccion.querySelector('.nombreActivo')
     const serieActivo = seccion.querySelector('.serieActivo')
     const ubicacionActivo = seccion.querySelector('.ubicacionActivo')
     const estadoActivo = seccion.querySelector('.estadoActivo')
@@ -195,16 +223,122 @@ const crearReporte = id => {
     const provedorMtto = seccion.querySelector('.provedorMtto')
     const recibidoConforme = seccion.querySelector('.recibidoConforme')
     const estadoSolicitud = seccion.querySelector('.estadoSolicitud')
-    const fechaReporte = seccion.querySelector('.fechaReporte')   
+    const fechaReporte = seccion.querySelector('.fechaReporte')
+    const descripcionSolicitud = seccion.querySelector('.descripcionSolicitud')
 
-    const listEsatdoActivo = seccion.querySelector('#listEsatdoActivo')
-    const listTipoMtto = seccion.querySelector('#listTipoMtto')
-    const listProvedorMtto = seccion.querySelector('#listProvedorMtto')
-    const listRecibidoConforme = seccion.querySelector('#listRecibidoConforme')
+    idActivo.value = 'Act-' + solicitud.id_activo
+    codigoInterno.value = solicitud.codigo
+    modeloActivo.value = solicitud.modelo
+    nombreActivo.value = solicitud.nombre
+    serieActivo.value = solicitud.serie
+    ubicacionActivo.value = solicitud.ubicacion
+    estadoActivo.value = solicitud.estadoActivo
+    estadoActivo.setAttribute('opcionId', `Es-${solicitud.idEstadoActivo}`)
+    marcaActivo.value = solicitud.marca
+    tipoActivo.value = solicitud.tipoActivo
+    idSolicitud.value = 'Sol-' + solicitud.id
+    fechaSolicitud.value = solicitud.fecha_solicitud
+    estadoSolicitud.value = solicitud.estadoSolicitud
+    estadoSolicitud.setAttribute('opcionId', `Ess-${solicitud.idEstadoSolicitud}`)
+    descripcionSolicitud.value = solicitud.solicitud
+    areaActivo.value = solicitud.area
+    procesoActivo.value = solicitud.proceso
+    const fecha = new Date
+    fechaReporte.value = fecha.toJSON().slice(0, 10);
+
+
+    const carruselimagenes = seccion.querySelector('.carousel-inner')
+
+    solicitud.imagenesActivo.forEach((element, index) => {
+        const itemCarrusel = document.createElement('div')
+        itemCarrusel.setAttribute('nombre', `Img-${solicitud.imagenes_Activo[index]}`)
+        itemCarrusel.classList.add('carousel-item', `Img-${solicitud.imagenes_Activo[index]}`)
+        if (index == 0) itemCarrusel.classList.add('active')
+        const divContainer = document.createElement('div')
+        const divContainerBotones = document.createElement('div')
+        divContainerBotones.classList.add('d-block')
+        divContainer.classList.add('d-flex', 'flex-column', 'justify-content-center', 'align-items-center')
+        const imagen = document.createElement('img')
+        imagen.classList.add('d-block', 'w-100')
+        imagen.src = element
+        divContainer.appendChild(imagen)
+        divContainer.appendChild(divContainerBotones)
+        itemCarrusel.appendChild(divContainer)
+        carruselimagenes.appendChild(itemCarrusel)
+        carruselimagenes.setAttribute('activo', 'Act-' + solicitud.id_activo)
+        imagen.onload = e => rotarImg(e)
+    })
+
+    const idlista = generateRandomId()
+
+    const listEstadoActivo = seccion.querySelector('#listEstadoActivo')
+
+    listEstadoActivo.id = `${listEstadoActivo.id}${idlista}`
+    estadoActivo.setAttribute('list', listEstadoActivo.id)
+    estadoActivo.onblur = e => opcionId(e)
+    solicitud.listados[0].forEach(element => {
+        const option = document.createElement('option')
+        option.value = element.estado
+        option.textContent = element.id
+        listEstadoActivo.appendChild(option)
+    })
+
     const listestadoSolicitud = seccion.querySelector('#listestadoSolicitud')
 
-    const fecha = new Date
-    fechaReporte.value  =  fecha.toJSON().slice(0,10);
+    listestadoSolicitud.id = `${listestadoSolicitud.id}${idlista}`
+    estadoSolicitud.setAttribute('list', listestadoSolicitud.id)
+    estadoSolicitud.onblur = e => opcionId(e)
+    solicitud.listados[1].forEach(element => {
+        const option = document.createElement('option')
+        option.value = element.estado
+        option.textContent = element.id
+        listestadoSolicitud.appendChild(option)
+    })
+
+    const listTipoMtto = seccion.querySelector('#listTipoMtto')
+
+    listTipoMtto.id = `${listTipoMtto.id}${idlista}`
+    tipoMantenimiento.setAttribute('list', listTipoMtto.id)
+    tipoMantenimiento.onblur = e => opcionId(e)
+    solicitud.listados[2].forEach(element => {
+        const option = document.createElement('option')
+        option.value = element.tipoMantenimeinto
+        option.textContent = element.id
+        listTipoMtto.appendChild(option)
+    })
+
+    const listProvedorMtto = seccion.querySelector('#listProvedorMtto')
+
+    listProvedorMtto.id = `${listProvedorMtto.id}${idlista}`
+    provedorMtto.setAttribute('list', listProvedorMtto.id)
+    provedorMtto.onblur = e => opcionId(e)
+    solicitud.listados[3].forEach(element => {
+        const option = document.createElement('option')
+        option.value = element.razonSocial + '--' + element.nombre + '--' + element.nit
+        option.textContent = element.id
+        listProvedorMtto.appendChild(option)
+    })
+
+    const listRecibidoConforme = seccion.querySelector('#listRecibidoConforme')
+
+    listRecibidoConforme.id = `${listRecibidoConforme.id}${idlista}`
+    recibidoConforme.setAttribute('list', listRecibidoConforme.id)
+    recibidoConforme.onblur = e => opcionId(e)
+    solicitud.listados[4].forEach(element => {
+        const option = document.createElement('option')
+        option.value = element.usuario
+        option.textContent = element.id
+        listRecibidoConforme.appendChild(option)
+    })
+
+    const inputImagenes = seccion.querySelector('.inputImagenSoporte')
+    inputImagenes.onchange = e => cargarImagenGridReporte(e, seccion)
+
+    const crearReporte = seccion.querySelector('.crearReporte')
+    crearReporte.setAttribute('Solicitud', `Sol-${solicitud.id}`)
+    crearReporte.onclick = e => nuevoReporte(e, seccion)
+    
+
     return seccion
 }
 

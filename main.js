@@ -27,7 +27,9 @@ const { consultarListadoSolicitudes,
     eliminarImagenSolicitud,
     consultarSolicitudReporte
 } = require('./src/controlers/solicitudes/solicitudes.js')
-const { consultarListadoReportes, descargarListaMtto } = require('./src/controlers/reportes/reporte.js')
+const { consultarListadoReportes,
+     descargarListaMtto,
+     crearNuevoReporte } = require('./src/controlers/reportes/reporte.js')
 const {
     eliminarComponente,
     guardarComponente,
@@ -244,8 +246,11 @@ ipcMain.on('eliminarImagenSolicitud', async (e, data) => {
     e.returnValue = respuesta;
 })
 
-
-
+ipcMain.on('nuevoReporte', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const reporte = await crearNuevoReporte(data, token)
+    e.returnValue = reporte;
+})
 
 //////////////////////////////// reportes////////////////////////////////
 

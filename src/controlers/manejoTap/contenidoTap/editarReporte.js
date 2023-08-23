@@ -184,6 +184,8 @@ const editarReporte = (id) => {
         
     `
 
+    console.log(id)
+
     return seccion
 }
 

@@ -44,27 +44,26 @@ const cargarTapContenido = async id => {
         contenidoTap.appendChild(contenido[id]());
         return
     }
-
-    const contenActivo = bodyTap.querySelector('#TabContent .active')
-    if (contenActivo.firstChild !== null) {
-        while (contenActivo.firstChild) {
-            contenActivo.removeChild(contenActivo.firstChild);
+    const taps = bodyTap.querySelector('#containerTap')
+    const tapActiva = taps.querySelector('.active')
+    const idconten = tapActiva.id.split('-')[0]
+    const contenedor  = bodyTap.querySelector('#'+ idconten)
+    if (contenedor.firstChild !== null) {
+        while (contenedor.firstChild) {
+            contenedor.removeChild(contenedor.firstChild);
         }
     }
 
-    if (!contenActivo.tipoVista) {
+    if (!contenedor.tipoVista) {
         const atribute = document.createAttribute('tipoVista')
         atribute.value = id
-        contenActivo.setAttributeNode(atribute)
+        contenedor.setAttributeNode(atribute)
     }
-
-    contenActivo.appendChild(await contenido[id]());
-
-
+  
+    contenedor.appendChild(await contenido[id]());
 }
 
 // carga el contenido de una vista pero agregando una nueva pestaña y con un nueco content.
-
 const cargarNuevaVista = (id, dato) => {
 
     const contenido = {

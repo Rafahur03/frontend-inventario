@@ -1,6 +1,9 @@
 ﻿require('dotenv').config()
 const urlbase = process.env.API_URL
 
+const { validarDatosReporte } = require('./validarDatosReporte.js')
+const { validarImagenes } = require('../helpers/validarImagenes.js')
+
 const consultarListadoReportes = async token => {
     const options = {
         method: 'GET',
@@ -33,7 +36,7 @@ const descargarListaMtto = async (datos, token) => {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-        body: JSON.stringify( data )
+        body: JSON.stringify(data)
     }
 
     try {
@@ -48,8 +51,41 @@ const descargarListaMtto = async (datos, token) => {
 
 }
 
+const crearNuevoReporte = async (datos, token) => {
+    
+    const validacion = await validarDatosReporte(datos, token)
+    if (validacion.msg) return validacion
+
+    if (datos.imagenes.length > 0) {
+        for (let imagen of datos.imagenes) {
+            const validacionImagen = validarImagenes(imagen)
+            if (validacionImagen.msg) return validacionImagen
+        }
+    }
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({datos})
+    }
+
+    try {
+        const url = urlbase + '/crearReporte'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+        return ({ msg: 'ocurrio un error al intentar conectar con el servidor intente mas tarde' })
+    }
+
+}
 
 module.exports = {
     consultarListadoReportes,
-    descargarListaMtto
+    descargarListaMtto,
+    crearNuevoReporte
 }

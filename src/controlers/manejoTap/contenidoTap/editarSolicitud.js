@@ -194,9 +194,9 @@ const editarSolicitud = (id) => {
         solicitud.imagenesSolicitud.forEach((element, index) => {
             const contenedorImagen = document.createElement('div')
             contenedorImagen.setAttribute('nombre', `Img-${solicitud.img_solicitud[index]}`)
-            contenedorImagen.classList.add('w-25', 'm-2')
+            contenedorImagen.classList.add('m-2', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center', 'col-3')
             const imagen = document.createElement('img')
-            imagen.classList.add('img-thumbnail', solicitud.img_solicitud[index])
+            imagen.classList.add('rounded', 'img-fluid', solicitud.img_solicitud[index])
             imagen.src = element
             contenedorImagen.appendChild(imagen)
 

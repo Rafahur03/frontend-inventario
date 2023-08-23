@@ -32,9 +32,8 @@ const guardarSolicitud = (e, nodo) =>{
     const respuesta = ipcRenderer.sendSync('crearSolicitud', solicitud);
     if(respuesta.msg)  return modalMensaje({titulo:'ERROR', mensaje:respuesta.msg})
 
-    const tapcontent = nodo.parentNode
     abrirDatosNuevo('Sol')
-    editarSolicitud(respuesta, tapcontent)
+    editarSolicitud(respuesta)
     
 
 }
