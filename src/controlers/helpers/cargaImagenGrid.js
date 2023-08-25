@@ -2,7 +2,7 @@ const mime = require('mime-types')
 import { modalMensaje } from './modalEleccion.js'
 import { generateRandomId } from './nombreRandon.js'
 import { rotarImg } from './activos/rotarImg.js'
-import { eliminarImagen } from './eliminarImagenGrid.js'
+import { eliminarImagen, eliminarImagenReporte } from './eliminarImagenGrid.js'
 import { guardarImagenSolicitud } from '../solicitudes/guardarImagenSolicitud.js'
 
 
@@ -96,24 +96,23 @@ const cargarImagenGrid = (e, nodo) => {
             }
             contenedorBotones.appendChild(btnGuardar)
         }
-        console.log(imagen)
+    
         contenedorImagen.appendChild(imagen)
         contenedorImagen.appendChild(contenedorBotones)
         contenedorImagenes.appendChild(contenedorImagen)
         imagen.onload = e => rotarImg(e)
     }
     const imagenesFinal = contenedorImagenes.querySelectorAll('img')
-
+    const contendorInput = nodo.querySelector('.contendorInput')
     if (imagenesFinal.length >= 4) {
-        const labelCargarImagenes = nodo.querySelector('.labelSeleccionarImagen')
-
-        const contendorInput = nodo.querySelector('.contendorInput')
-        labelCargarImagenes.classList.add('d-none')
+        
         contendorInput.classList.add('d-none')
     } else {
         const botonCargarImagenes = nodo.querySelector('.imagenesSoporte')
         botonCargarImagenes.textContent = `Selecione Max ${4 - imagenesFinal.length} Imagenes`
     }
+
+    contendorInput.querySelector('input').value = ''
 
 }
 
@@ -189,7 +188,7 @@ const cargarImagenGridReporte = (e, nodo) => {
         btnEliminar.appendChild(iEliminar)
         btnEliminar.onclick = e => {
             e.preventDefault()
-            console.log('tienes que crear la funcion eliminar imagen')
+            eliminarImagenReporte(e, nodo)
         }
         contenedorBotones.appendChild(btnEliminar)
         const idReporte = nodo.querySelector('.idReporte')
@@ -216,17 +215,15 @@ const cargarImagenGridReporte = (e, nodo) => {
     }
     const imagenesFinal = contenedorImagenes.querySelectorAll('img')
 
-    if (imagenesFinal.length >= 4) {
-        const labelCargarImagenes = nodo.querySelector('.labelSeleccionarImagen')
+    const contendorInput = nodo.querySelector('.contendorInput')
 
-        const contendorInput = nodo.querySelector('.contendorInput')
-        labelCargarImagenes.classList.add('d-none')
+    if (imagenesFinal.length >= 4) {          
         contendorInput.classList.add('d-none')
     } else {
         const botonCargarImagenes = nodo.querySelector('.imagenesSoporte')
         botonCargarImagenes.textContent = `Selecione Max ${4 - imagenesFinal.length} Imagenes`
     }
-
+    contendorInput.querySelector('input').value = ''
 }
 
 export { cargarImagenGrid, cargarImagenGridReporte }

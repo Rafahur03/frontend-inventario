@@ -5,6 +5,7 @@ import { generateRandomId } from "../../helpers/nombreRandon.js";
 import { opcionId } from "../../helpers/activos/listasId.js";
 import { cargarImagenGridReporte } from "../../helpers/cargaImagenGrid.js";
 import { nuevoReporte } from "../../reportes/nuevoReporte.js";
+import { cargarReportePdf } from "../../reportes/cargarReportePdf.js";
 
 const crearReporte = id => {
     const seccion = document.createElement('section');
@@ -13,9 +14,9 @@ const crearReporte = id => {
             <h3 class="text-center mt-1 fw-bold">CREAR REPORTE</h3>
             <div class="container-fluid w-100 d-flex ">
                 <div class="p-2">
-                <button type="button" class="btn mt-0 pt-0 crearReporte" title="Crear Solicitud">
-                    <i class="bi bi-check-square-fill fs-1 text-success"></i>
-                </button>
+                    <button type="button" class="btn mt-0 pt-0 crearReporte" title="Crear Solicitud">
+                        <i class="bi bi-check-square-fill fs-1 text-success"></i>
+                    </button>
                 </div>
             </div>
             <h3 class="text-center mt-1 fw-bold">Datos del Activo</h3>
@@ -23,7 +24,8 @@ const crearReporte = id => {
                 <form class="container-fluid w-100 position-relative">
                     <div class="row mx-3 align-items-center">
                         <div class="form-group col-4 p-4">
-                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                            <div id="carouselExampleControls" class="carousel slide"
+                                data-bs-ride="carousel">
                                 <div class="carousel-inner"></div>
                                 <button class="carousel-control-prev" type="button" title="Previo"
                                     data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -43,7 +45,7 @@ const crearReporte = id => {
                             <input type="text" class="form-control my-1 fw-bold idActivo" opcionId="Act--0">
 
                             <label for="codigoInterno">Codigo interno</label>
-                            <input type="text" class="form-control my-1  fw-bold codigoInterno" id=""                           
+                            <input type="text" class="form-control my-1  fw-bold codigoInterno">
 
                             <label for=" modeloActivo">Modelo</label>
                             <input type="text" class="form-control my-1 modeloActivo" id="" readonly>
@@ -64,7 +66,8 @@ const crearReporte = id => {
                             <input type="text" class="form-control my-1 ubicacionActivo" id="" readonly>
 
                             <label for="estadoActivo">Estado</label>
-                            <input type="text" class="form-control my-1 fw-bold estadoActivo  fw-bold " id="" list="listEstadoActivo"  opcionId="Es--1">
+                            <input type="text" class="form-control my-1 fw-bold estadoActivo  fw-bold "
+                                id="" list="listEstadoActivo" opcionId="Es--1">
                             <datalist id="listEstadoActivo"></datalist>
 
                         </div>
@@ -79,20 +82,13 @@ const crearReporte = id => {
                             <label for="tipoActivo">Tipo activo</label>
                             <input type="text" class="form-control my-1 tipoActivo" id="" readonly>
 
-                            <label for="imagenesSoporte" class="labelSeleccionarImagen">Soporte Fotografico</label>
-                            <div class="contendorInput position-relative" >
-                                <button type="button"
-                                    class="btn btn-secondary fs-6 btn-lg h-25 imagenesSoporte">Seleccionar Max 4 Imagenes</button>
-                                <input class="opacity-0 w-75 position-absolute top-0 start-0 inputImagenSoporte" type="file"
-                                    accept="image/png, image/jpeg, image/jpg" style="box-sizing:content-box" multiple>
-                            </div>
+                            <label for="fechaproximoMtto">Fecha del proximo Mtto</label>
+                            <input type="date" class="form-control my-1 fechaproximoMtto" >
+                        </div>
+
                         </div>
                     </div>
                     <h3 class="text-center mt-1 fw-bold">Datos del Reporte</h3>
-                    <!-- aqui van las imagenes -->
-                    <div class="form-group row d-block">
-                        <div class="d-flex flex-row align-items-center justify-content-center imagenesReporte"></div>
-                    </div>
                     <div class="row mx-3 align-items-center">
                         <div class="form-group col-2">
                             <label for="idSolicitud">ID solicitud</label>
@@ -135,7 +131,7 @@ const crearReporte = id => {
                         <div class="form-group col-4">
                             <label for="ProvedorMtto">Proveedor Mtto</label>
                             <input type="text" class="form-control my-1 provedorMtto" id=""
-                                list="listProvedorMtto"  opcionId="Pro--1">
+                                list="listProvedorMtto" opcionId="Pro--1">
                             <datalist id="listProvedorMtto"></datalist>
                         </div>
 
@@ -143,11 +139,11 @@ const crearReporte = id => {
                             <label for="nitProveedor">NIT proveedor o</label>
                             <input type="text" class="form-control my-1 nitProveedor" readonly>
                         </div>
-                        
+
                         <div class="form-group col-3">
                             <label for="recibidoConforme">Recibido Conforme</label>
                             <input type="text" class="form-control my-1 recibidoConforme" id=""
-                                list="listRecibidoConforme"  opcionId="Re--1">
+                                list="listRecibidoConforme" opcionId="Re--1">
                             <datalist id="listRecibidoConforme"></datalist>
                         </div>
 
@@ -161,7 +157,8 @@ const crearReporte = id => {
                         <div class="row m-3 align-items-center">
                             <div class="form-group col-6">
                                 <label for="descripcionSolicitud">Descripcion solicitud</label>
-                                <textarea class="form-control m-1 descripcionSolicitud" id="" rows="6" readonly></textarea>
+                                <textarea class="form-control m-1 descripcionSolicitud" id="" rows="6"
+                                    readonly></textarea>
                             </div>
                             <div class="form-group col-6">
                                 <label for="descripcionHallazgos">Descripcion Hallazgos</label>
@@ -181,26 +178,46 @@ const crearReporte = id => {
                             <div class="form-group col-6">
                                 <label for="recomendaciones">Recomendaciones</label>
                                 <p class="m-0" id="caracteresRecomendacion">Maximo 1000 caracteres</p>
-                                <textarea class="form-control m-1 recomendaciones" id="" rows="6"></textarea>
+                                <textarea class="form-control m-1 recomendaciones" id=""
+                                    rows="6"></textarea>
                             </div>
                         </div>
                     </div>
+                    <div class="form-group w-50 mx-auto text-center d-block my-2">
+                        <label for="imagenesSoporte" class="labelSeleccionarImagen">Soporte
+                            Fotografico</label>
+                        <div class="contendorInput position-relative">
+                            <input
+                                class="opacity-0 position-absolute top-0 start-25 z-2 w-50 inputImagenSoporte"
+                                type="file" accept="image/png, image/jpeg, image/jpg"
+                                style="box-sizing:content-box" multiple>
+                            <button type="button"
+                                class="btn btn-secondary position-relative fs-6 btn-lg imagenesSoporte">Seleccionar
+                                Max 4 Imagenes</button>
+                        </div>
+                    </div>
+                    <!-- aqui van las imagenes -->
+                    <div class="form-group row d-block">
+                        <div class="d-flex flex-row align-items-center justify-content-center imagenesReporte"></div>
+                    </div>
                     <!-- aqui va el cargue del soporte -->
-                    <div class="form-group row d-block mt-2">
-                        <div class="form-group col-4">
-                            <label for="pdfSoporte" class="labelSeleccionarSoportepdf">Soporte De Mantenimiento</label>
-                            <div class="contendorInputpdf position-relative" >
-                                <button type="button"
-                                    class="btn btn-secondary fs-6 btn-lg h-25 pdfSoporte">Seleccionar Un archivo en PDF</button>
-                                <input class="opacity-0 w-75 position-absolute top-0 start-0 inputPdfSoporte" type="file"
-                                    accept="application/pdf" style="box-sizing:content-box">
-                            </div>
+                    <div class="form-group w-50 mx-auto text-center d-block my-2">
+                        <label for="pdfSoporte" class="labelSeleccionarSoportepdf">Documento externo soporte
+                            de mantenimiento</label>
+                        <div class="contendorInputpdf position-relative">
+                            <input
+                                class="opacity-0 position-absolute top-0 start-25 z-2 w-50 inputPdfSoporte"
+                                type="file" accept="application/pdf">
+                            <button type="button"
+                                class="btn btn-secondary position-relative fs-6 btn-lg pdfSoporte">Seleccione
+                                Un archivo en PDF</button>
                         </div>
-                        <div class="col-8 d-flex flex-row align-items-center justify-content-center pdfReporte"> hol
-                        </div>
-                    </div>  
+                    </div>
+                    <div class="form-group row d-block">
+                        <div class="d-flex flex-row align-items-center justify-content-center contendorpdfReporte"></div>
+                    </div>
                 </form>
-            </div> 
+            </div>
     `
 
     const solicitud = ipcRenderer.sendSync('consultarSolicitudReporte', id)
@@ -224,6 +241,7 @@ const crearReporte = id => {
     const recibidoConforme = seccion.querySelector('.recibidoConforme')
     const estadoSolicitud = seccion.querySelector('.estadoSolicitud')
     const fechaReporte = seccion.querySelector('.fechaReporte')
+    const fechaproximoMtto = seccion.querySelector('.fechaproximoMtto')
     const descripcionSolicitud = seccion.querySelector('.descripcionSolicitud')
 
     idActivo.value = 'Act-' + solicitud.id_activo
@@ -244,7 +262,10 @@ const crearReporte = id => {
     areaActivo.value = solicitud.area
     procesoActivo.value = solicitud.proceso
     const fecha = new Date
+    
     fechaReporte.value = fecha.toJSON().slice(0, 10);
+    fecha.setDate(fecha.getDate() + solicitud.dias)
+    fechaproximoMtto.value = fecha.toJSON().slice(0, 10)
 
 
     const carruselimagenes = seccion.querySelector('.carousel-inner')
@@ -333,6 +354,9 @@ const crearReporte = id => {
 
     const inputImagenes = seccion.querySelector('.inputImagenSoporte')
     inputImagenes.onchange = e => cargarImagenGridReporte(e, seccion)
+
+    const inputSoportePdf = seccion.querySelector('.inputPdfSoporte')
+    inputSoportePdf.onchange = e => cargarReportePdf(e, seccion)
 
     const crearReporte = seccion.querySelector('.crearReporte')
     crearReporte.setAttribute('Solicitud', `Sol-${solicitud.id}`)

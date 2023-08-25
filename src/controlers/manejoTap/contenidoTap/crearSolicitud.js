@@ -78,19 +78,7 @@ const crearSolicitud = (id = null) => {
                         <label for="responsable">Responsable</label>
                         <input type="text" class="form-control my-1 responsable" readonly>
 
-                        <label for="imagenesSoporte" class="labelSeleccionarImagen">Soporte Fotografico</label>
-                        <div class="contendorInput position-relative" >
-                            <button type="button"
-                                class="btn btn-secondary fs-6 btn-lg h-25 imagenesSoporte">Seleccionar Max 4 Imagenes</button>
-                            <input class="opacity-0 w-75 position-absolute top-0 start-0 inputImagenSoporte" type="file"
-                                accept="image/png, image/jpeg, image/jpg" style="box-sizing:content-box" multiple>
-                        </div>
                     </div>
-                    <!-- div para las imagenes -->
-                    <div class="form-group row d-block">
-                        <div class="d-flex flex-row align-items-center justify-content-center imagenesSolicitud"></div>
-                    </div>
-
                     <div class="row m-2 align-items-center">
                         <div class="form-group col d-flex flex-column">
                             <label class="text-center fw-bold" for="descripcionSolicitud">DESCRIPCION DE
@@ -99,6 +87,19 @@ const crearSolicitud = (id = null) => {
                             <textarea class="form-control descripcionSolicitud" rows="4" ></textarea>
                         </div>
                     </div>
+                </div>
+                <div class="form-group w-50 mx-auto text-center d-block my-2">
+                    <label for="imagenesSoporte" class="labelSeleccionarImagen">Soporte Fotografico</label>
+                    <div class="contendorInput position-relative" >
+                        <input class="opacity-0 position-absolute top-0 start-25 z-2 w-50 inputImagenSoporte" type="file"
+                        accept="image/png, image/jpeg, image/jpg" style="box-sizing:content-box" multiple>
+                        <button type="button"
+                            class="btn btn-secondary position-relative fs-6 btn-lg imagenesSoporte">Seleccionar Max 4 Imagenes</button>
+                    </div>
+                    </div>
+                <!-- div para las imagenes -->
+                <div class="form-group row d-block">
+                    <div class="d-flex flex-row align-items-center justify-content-center imagenesSolicitud"></div>
                 </div>
             </form>
         </div>    

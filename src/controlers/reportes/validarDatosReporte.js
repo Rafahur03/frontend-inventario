@@ -131,12 +131,18 @@ const validarDatosReporte = async (datos, token) => {
         if (config[4].length === key + 1) return { msg: 'Debe escoger un responsable del recibido conforme del listado' }
     }
 
-    const timestamp = Date.now();
-    const fechaActual = new Date(timestamp).toISOString().substring(0, 10)
+    const fecha = new Date
+    const fechaActual = new Date(fecha).toISOString().substring(0, 10)
 
     if (datos.fechaReporte == '') return { titulo: 'ERROR', mensaje: 'El campo fecha de reporte es obligatorio' }
 
     if (fechaActual < datos.fechaReporte) return { titulo: 'ERROR', mensaje: 'La fecha de reporte no puede ser mayor al dia de hoy' }
+
+    if (datos.fechaReporte < datos.fechaSolicitud) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha del reporte no puede ser menor a la fecha de solicitud' })
+
+    if (datos.fechaproximoMtto == '') return { titulo: 'ERROR', mensaje: 'El campo fecha de reporte es obligatorio' }
+
+    if (datos.fechaproximoMtto < datos.fechaReporte) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha del proximo mantenimeinto no puede ser menor a la fecha de reporte' })
 
     return true
 

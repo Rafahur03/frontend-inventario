@@ -3,6 +3,7 @@ const urlbase = process.env.API_URL
 
 const { validarDatosReporte } = require('./validarDatosReporte.js')
 const { validarImagenes } = require('../helpers/validarImagenes.js')
+const {validarDocumentos} = require('../helpers/validarDocumentos.js')
 
 const consultarListadoReportes = async token => {
     const options = {
@@ -53,6 +54,7 @@ const descargarListaMtto = async (datos, token) => {
 
 const crearNuevoReporte = async (datos, token) => {
     
+
     const validacion = await validarDatosReporte(datos, token)
     if (validacion.msg) return validacion
 
@@ -61,6 +63,11 @@ const crearNuevoReporte = async (datos, token) => {
             const validacionImagen = validarImagenes(imagen)
             if (validacionImagen.msg) return validacionImagen
         }
+    }
+
+    if(datos.reportePDF != null) {
+        const validacionDocumento = validarDocumentos(datos.reportePDF)
+        if (validacionDocumento.msg) return validacionDocumento
     }
 
     const options = {

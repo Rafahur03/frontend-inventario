@@ -22,6 +22,7 @@ const nuevoReporte = async (e, nodo) => {
     const estadoSolicitud = nodo.querySelector('.estadoSolicitud').value
     const fechaReporte = nodo.querySelector('.fechaReporte').value
     const fechaSolicitud = nodo.querySelector('.fechaSolicitud').value
+    const fechaproximoMtto = nodo.querySelector('.fechaproximoMtto').value 
     const hallazgos = nodo.querySelector('.descripcionHallazgos').value
     const reporte = nodo.querySelector('.descripcionReporte').value
     const recomendaciones = nodo.querySelector('.recomendaciones').value
@@ -79,14 +80,17 @@ const nuevoReporte = async (e, nodo) => {
     if (recibidoConformeId.includes('--')) return modalMensaje({ titulo: 'ERROR', mensaje: 'el campo recibido conforme es obligatorio' })
 
     const fecha = new Date
+ 
     if (fechaReporte == fecha.toJSON().slice(0, 10)) {
-        const eleccion = await modalEleccion({ titulo: 'Advertencia', mensaje: 'La fecha del reporte será tomada como el dia de hoy ya que no se selecciono una' })
+        const eleccion = await modalEleccion({ titulo: 'Advertencia', mensaje: 'La fecha del reporte será tomada como el ' + fechaReporte +' y la del proximo Mantenimeinto el '+ fechaproximoMtto + ' ya se que no se ha seleccionado otra' })
         if(!eleccion) return
-    }
+    }  
 
     if (fechaReporte > fecha.toJSON().slice(0, 10)) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha del reporte no puede ser mayor al dia de hoy' })
 
     if (fechaReporte < fechaSolicitud) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha del reporte no puede ser menor a la fecha de solicitud' })
+
+    if (fechaproximoMtto < fechaReporte) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha del proximo mantenimeinto no puede ser menor a la fecha de reporte' })
 
 
     let imagenes = []
@@ -97,6 +101,9 @@ const nuevoReporte = async (e, nodo) => {
         }
 
     }
+    let  soportePDF = null
+    if(nodo.querySelector('iframe') != null) soportePDF = nodo.querySelector('iframe').src
+    
 
     const data = {
         solicitud,
@@ -118,17 +125,17 @@ const nuevoReporte = async (e, nodo) => {
         recomendaciones,
         costoMo,
         costoMp,
-        imagenes
+        imagenes,
+        soportePDF,
+        fechaproximoMtto
 
     }
 
-    const nuevoReporte = ipcRenderer.sendSync('nuevoReporte', data)
-    if (nuevoReporte.msg) return modalMensaje({ titulo: 'ERROR', mensaje: nuevoReporte.msg })
-
-    return console.log(nuevoReporte)
-
+    const respuesta = ipcRenderer.sendSync('nuevoReporte', data)
+    if (respuesta.msg)  modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
+    
     abrirDatosNuevo('Rep')
-    editarReporte(55555)
+    editarReporte(respuesta)
 
 }
 
