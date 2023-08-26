@@ -116,13 +116,13 @@ const crearReporte = id => {
 
                         <div class="form-group col-2">
                             <label for="CostoMo">Costo Mano de obra</label>
-                            <input type="number" class="form-control my-1 costoMo" id=""
+                            <input type="number" class="form-control my-1 costoMo" min="0"
                                 placeholder="1000,00">
                         </div>
 
                         <div class="form-group col-2">
                             <label for="costoMa">Costo materiales</label>
-                            <input type="number" class="form-control my-1 costoMp" id=""
+                            <input type="number" class="form-control my-1 costoMp" min="0"
                                 placeholder="1000,00">
                         </div>
 

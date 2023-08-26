@@ -56,6 +56,7 @@ const crearSolicitud = async (datos, token) => {
 }
 
 const consultarSolicitud = async (id, token) => {
+    if (parseInt(id) == NaN) return ({msg: 'Debe ingresar un id valido'})
     const options = {
         method: 'POST',
         headers: {

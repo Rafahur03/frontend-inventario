@@ -91,8 +91,34 @@ const crearNuevoReporte = async (datos, token) => {
 
 }
 
+const consultarReporte = async (id, token) => {
+   
+    if (parseInt(id) == NaN) return ({msg: 'Debe ingresar un id valido'})
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ id })
+    }
+
+    try {
+        const url = urlbase + '/consultarReporte'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
+
+
 module.exports = {
     consultarListadoReportes,
     descargarListaMtto,
-    crearNuevoReporte
+    crearNuevoReporte,
+    consultarReporte
 }

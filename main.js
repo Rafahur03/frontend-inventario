@@ -29,13 +29,15 @@ const { consultarListadoSolicitudes,
 } = require('./src/controlers/solicitudes/solicitudes.js')
 const { consultarListadoReportes,
      descargarListaMtto,
-     crearNuevoReporte } = require('./src/controlers/reportes/reporte.js')
+     crearNuevoReporte,
+     consultarReporte } = require('./src/controlers/reportes/reporte.js')
 const {
     eliminarComponente,
     guardarComponente,
 } = require('./src/controlers/componentes/componentes.js')
 
-const { consultarTablasConfig, consultarListasCofigActivos} = require('./src/controlers/tablasConfig/tablasConfig.js')
+const { consultarTablasConfig,
+     consultarListasCofigActivos} = require('./src/controlers/tablasConfig/tablasConfig.js')
 
 require('dotenv').config()
 require('electron-reload')(__dirname, {
@@ -254,7 +256,7 @@ ipcMain.on('nuevoReporte', async (e, data) => {
 
 //////////////////////////////// reportes////////////////////////////////
 
-// litado reportes
+// listado reportes
 
 ipcMain.on('listadoReportes', async (e) => {
     const token = dataUsuarioSesion.token
@@ -268,8 +270,11 @@ ipcMain.on('descargarListaMtto', async (e, data) => {
     e.returnValue = documento;
 })
 
-
-
+ipcMain.on('consultarReporte', async (e, id) => {
+    const token = dataUsuarioSesion.token
+    const respuesta = await consultarReporte( id, token)
+    e.returnValue = respuesta;
+})
 
 
 ///////////////////////////componentes//////////////////////////////////////////
