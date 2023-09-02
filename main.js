@@ -27,10 +27,18 @@ const { consultarListadoSolicitudes,
     eliminarImagenSolicitud,
     consultarSolicitudReporte
 } = require('./src/controlers/solicitudes/solicitudes.js')
-const { consultarListadoReportes,
-     descargarListaMtto,
-     crearNuevoReporte,
-     consultarReporte } = require('./src/controlers/reportes/reporte.js')
+const {consultarListadoReportes,
+    descargarListaMtto,
+    crearNuevoReporte,
+    consultarReporte,
+    eliminarReporte,
+    eliminarImagenReporte,
+    guardarImagenReporte,
+    editarReporte,
+    descargarReporte,
+    descargarReporteExterno,
+    guardarSoporteExtReporte,
+    eliminarSoporteExtReporte  } = require('./src/controlers/reportes/reporte.js')
 const {
     eliminarComponente,
     guardarComponente,
@@ -273,6 +281,54 @@ ipcMain.on('descargarListaMtto', async (e, data) => {
 ipcMain.on('consultarReporte', async (e, id) => {
     const token = dataUsuarioSesion.token
     const respuesta = await consultarReporte( id, token)
+    e.returnValue = respuesta;
+})
+
+ipcMain.on('eliminarReporte', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const respuesta = await eliminarReporte(data, token)
+    e.returnValue = respuesta;
+})
+
+ipcMain.on('descargarReporte', async (e, data) => { 
+    const token = dataUsuarioSesion.token
+    const respuesta = await descargarReporte(data, token)
+    e.returnValue = respuesta;
+})
+
+ipcMain.on('descargarReporteExterno', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const respuesta = await descargarReporteExterno(data, token)
+    e.returnValue = respuesta;
+})
+
+ipcMain.on('editarReporte', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const respuesta = await editarReporte(data, token)
+    e.returnValue = respuesta;
+})
+
+ipcMain.on('eliminarImagenReporte', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const respuesta = await eliminarImagenReporte(data, token)
+    e.returnValue = respuesta;
+})
+
+ipcMain.on('guardarImagenReporte', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const respuesta = await guardarImagenReporte(data, token)
+    e.returnValue = respuesta;
+})
+
+ipcMain.on('guardarSoporteExtReporte', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const respuesta = await guardarSoporteExtReporte(data, token)
+    e.returnValue = respuesta;
+})
+
+ipcMain.on('eliminarSoporteExtReporte', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const respuesta = await eliminarSoporteExtReporte(data, token)
     e.returnValue = respuesta;
 })
 

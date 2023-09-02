@@ -1,8 +1,7 @@
 const { consultarListasCofigReporte } = require('../tablasConfig/tablasConfig.js')
 
 const validarDatosReporte = async (datos, token) => {
-
-    if (datos.solicitud != datos.idSolicitud) return { msg: 'No fue posible validar la solicitud' }
+    if(!datos.reporteId) if (datos.solicitud != datos.idSolicitud) return { msg: 'No fue posible validar la solicitud' }
 
     if (validarVacios(datos.estadoActivoId)) return { msg: 'El campo estado activo no puede estar vacio' }
 

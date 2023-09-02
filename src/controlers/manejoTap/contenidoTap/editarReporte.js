@@ -1,5 +1,15 @@
 const { ipcRenderer } = require('electron')
 import { rotarImg } from '../../helpers/activos/rotarImg.js';
+import { generateRandomId } from "../../helpers/nombreRandon.js";
+import { opcionId } from "../../helpers/activos/listasId.js";
+import { eliminarImgReporte } from '../../reportes/eliminarImgReporte.js';
+import { eliminarSoporteExtReporte } from '../../reportes/eliminarSoporteExterno.js';
+import { descargarReporteExterno } from '../../reportes/descargarSoporteExterno.js';
+import { eliminarReporte } from '../../reportes/eliminarReporte.js';
+import { descargarReporte } from '../../reportes/descargarReporte.js';
+import { modificarReporte } from '../../reportes/modificarReporte.js';
+import { cargarReportePdf } from '../../reportes/cargarReportePdf.js';
+import { cargarImagenGridReporte } from '../../helpers/cargaImagenGrid.js';
 const editarReporte = () => {
     const id = 929
     const seccion = document.createElement('section');
@@ -8,7 +18,7 @@ const editarReporte = () => {
         <h3 class="text-center fw-bold">   CONSULTAR O EDITAR UN REPORTE</h3>
         <div class="container-fluid w-100 d-flex">
             <div class="p-2">
-                 <button type="button" class="btn mt-0 pt-0 guardarEdicionReporte" title="Guardar Datos">
+                 <button type="button" class="btn mt-0 pt-0 guardarEdicionReporte d-none" title="Guardar Datos">
                 <i class="bi bi-save2-fill fs-1 text-warning"></i></button>
             </div>
 
@@ -18,7 +28,7 @@ const editarReporte = () => {
                 </button>
             </div>
             <div class="p-2 ms-auto">
-                <button type="button" class="btn  mt-0 pt-0 eliminarReporte" title="Eliminar Activo">
+                <button type="button" class="btn  mt-0 pt-0 eliminarReporte d-none" title="Eliminar Reporte">
                     <i class="bi bi-trash-fill fs-1 text-danger"></i>
                 </button>
             </div>
@@ -94,12 +104,16 @@ const editarReporte = () => {
                     </div>
                 </div>
                 <h3 class="text-center mt-1 fw-bold">Datos del Reporte</h3>
+
                 <div class="row mx-3 align-items-center">
                     <div class="form-group col-2">
-                        <label for="idSolicitud">ID solicitud</label>
-                        <input type="text" class="form-control my-1  fw-bold idSolicitud"
-                            list="listSolicitudes" readonly>
-                        <datalist id="listSolicitudes"></datalist>
+                        <label for="idSolicitud">ID Solicitud</label>
+                        <input type="text" class="form-control my-1  fw-bold idSolicitud" readonly>
+                    </div>
+
+                    <div class="form-group col-2">
+                        <label for="idReporte">ID Reporte</label>
+                        <input type="text" class="form-control my-1  fw-bold idReporte" readonly>
                     </div>
 
                     <div class="form-group col-2">
@@ -118,7 +132,17 @@ const editarReporte = () => {
                             list="listTipoMtto" opcionId="Tm--1" readonly>
                         <datalist id="listTipoMtto"></datalist>
                     </div>
+                    
+                    <div class="form-group col-2 p-1">
+                        <label for="estadoSolicitud">Estado Solicitud</label>
+                        <input type="text" class="form-control my-1 fw-bold estadoSolicitud" id=""
+                            list="listestadoSolicitud" opcionId="Ess--1" readonly>
+                        <datalist id="listestadoSolicitud"></datalist>
+                    </div>
+                </div>
 
+                <div class="row mx-3 align-items-center">
+                  
                     <div class="form-group col-2">
                         <label for="CostoMo">Costo Mano de obra</label>
                         <input type="number" class="form-control my-1 costoMo" min="0"
@@ -131,19 +155,12 @@ const editarReporte = () => {
                             placeholder="1000,00" readonly>
                     </div>
 
-                </div>
-                <div class="row mx-3 align-items-center">
-                    <div class="form-group col-4">
-                        <label for="ProvedorMtto">Proveedor Mtto</label>
-                        <input type="text" class="form-control my-1 provedorMtto" id=""
-                            list="listProvedorMtto" opcionId="Pro--1" readonly>
-                        <datalist id="listProvedorMtto"></datalist>
-                    </div>
-
                     <div class="form-group col-3">
                         <label for="usuarioReporte">Responsable del reporte</label>
-                        <input type="text" class="form-control my-1 usuarioReporte" opcionId="Rer--1" readonly>
+                        <input type="text" class="form-control my-1 usuarioReporte" opcionId="Rer--1" list="listUsuarioReporte"readonly>
+                        <datalist id="listUsuarioReporte"></datalist>
                     </div>
+
 
                     <div class="form-group col-3">
                         <label for="recibidoConforme">Recibido Conforme</label>
@@ -152,11 +169,13 @@ const editarReporte = () => {
                         <datalist id="listRecibidoConforme"></datalist>
                     </div>
 
-                    <div class="form-group col-2 p-1">
-                        <label for="estadoSolicitud">Estado Solicitud</label>
-                        <input type="text" class="form-control my-1 fw-bold estadoSolicitud" id=""
-                            list="listestadoSolicitud" opcionId="Ess--1" readonly>
-                        <datalist id="listestadoSolicitud"></datalist>
+                </div>
+                <div class="row mx-3 align-items-center">
+                    <div class="form-group col-12">
+                        <label for="ProvedorMtto">Proveedor Mtto</label>
+                        <input type="text" class="form-control my-1 provedorMtto" id=""
+                            list="listProvedorMtto" opcionId="Pro--1" readonly>
+                        <datalist id="listProvedorMtto"></datalist>
                     </div>
 
                     <div class="row m-3 align-items-center">
@@ -189,8 +208,7 @@ const editarReporte = () => {
                     </div>
                 </div>
                 <div class="form-group w-50 mx-auto text-center d-block my-2">
-                    <label for="imagenesSoporte" class="labelSeleccionarImagen">Soporte
-                        Fotografico</label>
+                    <label for="imagenesSoporte" class="labelSeleccionarImagen fw-bold">SOPORTE FOTOGRAFICO</label>
                     <div class="contendorInput position-relative d-none">
                         <input
                             class="opacity-0 position-absolute top-0 start-25 z-2 w-50 inputImagenSoporte"
@@ -207,8 +225,7 @@ const editarReporte = () => {
                 </div>
                 <!-- aqui va el cargue del soporte -->
                 <div class="form-group w-50 mx-auto text-center d-block my-2">
-                    <label for="pdfSoporte" class="labelSeleccionarSoportepdf">Documento externo soporte
-                        de mantenimiento</label>
+                    <label for="pdfSoporte" class="labelSeleccionarSoportepdf fw-bold">SOPORTE EXTERNO DE MANTENIMIENTO</label>
                     <div class="contendorInputpdf position-relative d-none">
                         <input
                             class="opacity-0 position-absolute top-0 start-25 z-2 w-50 inputPdfSoporte"
@@ -218,8 +235,8 @@ const editarReporte = () => {
                             Un archivo en PDF</button>
                     </div>
                 </div>
-                <div class="form-group row d-block">
-                    <div class="d-flex flex-row align-items-center justify-content-center contendorpdfReporte"></div>
+                <div class="d-block">
+                    <div class="contendorpdfReporte"></div>
                 </div>
             </form>
         </div>        
@@ -253,8 +270,11 @@ const editarReporte = () => {
     const reporteTecnico = seccion.querySelector('.descripcionReporte')
     const recomendaciones = seccion.querySelector('.recomendaciones')
     const usuarioReporte = seccion.querySelector('.usuarioReporte')
+    const idReporte = seccion.querySelector('.idReporte')
     const costoMo = seccion.querySelector('.costoMo')
     const costoMp = seccion.querySelector('.costoMp')
+    const printReporte = seccion.querySelector('.printReporte')
+
 
     idActivo.value = 'Act-' + reporte.idActivo
     codigoInterno.value = reporte.codigo
@@ -273,6 +293,7 @@ const editarReporte = () => {
     descripcionSolicitud.value = reporte.solicitud
     areaActivo.value = reporte.area
     procesoActivo.value = reporte.proceso
+    idReporte.value = 'Rep-' + reporte.idReporte
     tipoMantenimiento.value = reporte.tipoMtto
     tipoMantenimiento.setAttribute('opcionId', `Tm-${reporte.tipoMttoId}`)
     provedorMtto.value = reporte.proveedor
@@ -288,6 +309,8 @@ const editarReporte = () => {
     costoMp.value = reporte.costoMp
     usuarioReporte.value = reporte.usuarioReporte
     usuarioReporte.setAttribute('opcionId', `Rer-${reporte.estadoActivoId}`)
+    printReporte.setAttribute('reporte', `Rep-${reporte.idReporte}`)
+    printReporte.onclick = e => descargarReporte(e, reporte.idReporte)
 
     const carruselimagenes = seccion.querySelector('.carousel-inner')
 
@@ -297,14 +320,12 @@ const editarReporte = () => {
         itemCarrusel.classList.add('carousel-item', `Img-${reporte.imgActivo[index]}`)
         if (index == 0) itemCarrusel.classList.add('active')
         const divContainer = document.createElement('div')
-        const divContainerBotones = document.createElement('div')
-        divContainerBotones.classList.add('d-block')
+
         divContainer.classList.add('d-flex', 'flex-column', 'justify-content-center', 'align-items-center')
         const imagen = document.createElement('img')
         imagen.classList.add('d-block', 'w-100')
         imagen.src = element
         divContainer.appendChild(imagen)
-        divContainer.appendChild(divContainerBotones)
         itemCarrusel.appendChild(divContainer)
         carruselimagenes.appendChild(itemCarrusel)
         carruselimagenes.setAttribute('activo', 'Act-' + reporte.idActivo)
@@ -331,45 +352,162 @@ const editarReporte = () => {
             iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-3', 'fw-bold', 'text-danger', 'p-0')
             const btnEliminar = document.createElement('button')
             btnEliminar.setAttribute('imagen', reporte.imgReporte[index])
-            btnEliminar.setAttribute('Reporte', `Rep-${reporte.idReporte}`)
+            btnEliminar.setAttribute('reporte', `Rep-${reporte.idReporte}`)
             btnEliminar.classList.add('btn', 'text-center', 'm-1', 'p-0')
             btnEliminar.appendChild(iEliminar)
-            btnEliminar.onclick = e => { console.lof('crear funcion para eliminar d ela bd') }
+            btnEliminar.onclick = e => eliminarImgReporte(e, seccion)
             contenedorBotones.appendChild(btnEliminar)
             contenedorImagen.appendChild(contenedorBotones)
 
             contenedorImagenes.appendChild(contenedorImagen)
         })
+    }
 
-        if (reporte.soporte) {
-            const contenedorReporte = seccion.querySelector('.contendorpdfReporte')
-            const contenedorpdf = document.createElement('div')
-            contenedorpdf.classList.add('m-2', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center', 'col-3', 'embed-responsive')
-            const iframepdf = document.createElement('iframe')
-            iframepdf.classList.add('embed-responsive-item')
-            iframepdf.src = reporte.soporte
-            const contenedorBotones = document.createElement('div')
-            contenedorBotones.classList.add('contenedorbotones', 'd-flex', 'justify-content-center', 'p-0', 'm-0')
+    if (reporte.soporte) {
+        const contenedorReporte = seccion.querySelector('.contendorpdfReporte')
+        const contenedorpdf = document.createElement('div')
+        contenedorpdf.classList.add('m-2', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center', 'embed-responsive')
+        const iframepdf = document.createElement('iframe')
+        iframepdf.classList.add('embed-responsive-item', 'w-75','mh-50') 
+        iframepdf.style.height = '400px'   
+        iframepdf.src = reporte.soporte
+        const contenedorBotones = document.createElement('div')
+        contenedorBotones.classList.add('contenedorbotones', 'd-flex', 'justify-content-center', 'p-0', 'm-0')
+
+        if (reporte.editar) {
             const iEliminar = document.createElement('i')
             iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-3', 'fw-bold', 'text-danger', 'p-0')
             const btnEliminar = document.createElement('button')
-            btnEliminar.classList.add('btn', 'text-center', 'm-1', 'p-0')
+            btnEliminar.setAttribute('reporte', `Rep-${reporte.idReporte}`)
+            btnEliminar.classList.add('btn', 'text-center', 'm-1', 'p-0', 'eliminar')
             btnEliminar.appendChild(iEliminar)
-            btnEliminar.onclick = e => { console.log('debes crear al funcion eliminardocumento') }
-            const iDescargar = document.createElement('i')
-            iDescargar.classList.add('bi', 'bi-file-earmark-pdf-fill', 'fs-3', 'fw-bold', 'text-success', 'p-0')
-            const btnDescargar = document.createElement('button')
-            btnDescargar.classList.add('btn', 'text-center', 'm-1', 'p-0')
-            btnDescargar.appendChild(iDescargar)
-            btnDescargar.onclick = e => { console.log('debes crear al funcion descargar') }
-
+            btnEliminar.onclick = e => eliminarSoporteExtReporte(e, seccion)
             contenedorBotones.appendChild(btnEliminar)
-            contenedorBotones.appendChild(btnDescargar)
-            contenedorpdf.appendChild(iframepdf)
-            contenedorpdf.appendChild(contenedorBotones)
-            contenedorReporte.appendChild(contenedorpdf)
+        }
+        const iDescargar = document.createElement('i')
+        iDescargar.classList.add('bi', 'bi-file-earmark-pdf-fill', 'fs-3', 'fw-bold', 'text-success', 'p-0')
+        const btnDescargar = document.createElement('button')
+        btnDescargar.classList.add('btn', 'text-center', 'm-1', 'p-0', 'descargar')
+        btnDescargar.setAttribute('reporte', `Rep-${reporte.idReporte}`)
+        btnDescargar.appendChild(iDescargar)
+        btnDescargar.onclick = e => descargarReporteExterno(e, reporte.idReporte)
+
+        contenedorBotones.appendChild(btnDescargar)
+        contenedorpdf.appendChild(iframepdf)
+        contenedorpdf.appendChild(contenedorBotones)
+        contenedorReporte.appendChild(contenedorpdf)
+    } else {
+        if (reporte.editar) {
+            const contenedorInputPdf = seccion.querySelector('.contendorInputpdf')
+            contenedorInputPdf.classList.remove('d-none')
+            const botonInput = contenedorInputPdf.querySelector('input')
+            botonInput.onchange = e => cargarReportePdf(e, seccion)
+        }
+    }
+
+    if (reporte.editar) {
+
+        // habilita el boton selecionar imagen
+        if (reporte.imgReporte.length < 4) {
+            const botonImagenes = seccion.querySelector('.imagenesSoporte')
+            const contendorInput = seccion.querySelector('.contendorInput')
+            const input = contendorInput.querySelector('input')
+            input.onchange = e => cargarImagenGridReporte(e, seccion)
+            botonImagenes.textContent = `Selecione ${4 - reporte.imgReporte.length } imagenes`
+            contendorInput.classList.remove('d-none')
         }
 
+        const idlista = generateRandomId()
+        const listEstadoActivo = seccion.querySelector('#listEstadoActivo')
+
+        listEstadoActivo.id = `${listEstadoActivo.id}${idlista}`
+        estadoActivo.setAttribute('list', listEstadoActivo.id)
+        estadoActivo.onblur = e => opcionId(e)
+        reporte.listados[0].forEach(element => {
+            const option = document.createElement('option')
+            option.value = element.estado
+            option.textContent = element.id
+            listEstadoActivo.appendChild(option)
+        })
+        estadoActivo.readOnly = false
+
+        const listestadoSolicitud = seccion.querySelector('#listestadoSolicitud')
+
+        listestadoSolicitud.id = `${listestadoSolicitud.id}${idlista}`
+        estadoSolicitud.setAttribute('list', listestadoSolicitud.id)
+        estadoSolicitud.onblur = e => opcionId(e)
+        reporte.listados[1].forEach(element => {
+            const option = document.createElement('option')
+            option.value = element.estado
+            option.textContent = element.id
+            listestadoSolicitud.appendChild(option)
+        })
+        estadoSolicitud.readOnly = false
+
+        const listTipoMtto = seccion.querySelector('#listTipoMtto')
+
+        listTipoMtto.id = `${listTipoMtto.id}${idlista}`
+        tipoMantenimiento.setAttribute('list', listTipoMtto.id)
+        tipoMantenimiento.onblur = e => opcionId(e)
+        reporte.listados[2].forEach(element => {
+            const option = document.createElement('option')
+            option.value = element.tipoMantenimeinto
+            option.textContent = element.id
+            listTipoMtto.appendChild(option)
+        })
+
+        tipoMantenimiento.readOnly = false
+
+        const listProvedorMtto = seccion.querySelector('#listProvedorMtto')
+
+        listProvedorMtto.id = `${listProvedorMtto.id}${idlista}`
+        provedorMtto.setAttribute('list', listProvedorMtto.id)
+        provedorMtto.onblur = e => opcionId(e)
+        reporte.listados[3].forEach(element => {
+            const option = document.createElement('option')
+            option.value = element.razonSocial + '--' + element.nombre + '--' + element.nit
+            option.textContent = element.id
+            listProvedorMtto.appendChild(option)
+        })
+
+        provedorMtto.readOnly = false
+
+        const listRecibidoConforme = seccion.querySelector('#listRecibidoConforme')
+        const listUsuarioReporte = seccion.querySelector('#listUsuarioReporte')
+        listRecibidoConforme.id = `${listRecibidoConforme.id}${idlista}`
+        recibidoConforme.setAttribute('list', listRecibidoConforme.id)
+        recibidoConforme.onblur = e => opcionId(e)
+        listUsuarioReporte.id = `${listUsuarioReporte.id}${idlista}`
+        usuarioReporte.setAttribute('list', listUsuarioReporte.id)
+        usuarioReporte.onblur = e => opcionId(e)
+        reporte.listados[4].forEach(element => {
+            const optionr = document.createElement('option')
+            optionr.value = element.usuario
+            optionr.textContent = element.id
+            const optione = document.createElement('option')
+            optione.value = element.usuario
+            optione.textContent = element.id
+            listRecibidoConforme.appendChild(optionr)
+            listUsuarioReporte.appendChild(optione)
+        })
+        recibidoConforme.readOnly = false
+        console.log(reporte.edOt)
+        if (reporte.edOt) {
+            console.log('aqui')
+            usuarioReporte.readOnly = false
+        }
+
+        const guardarEdicionReporte = seccion.querySelector('.guardarEdicionReporte')
+        const btneliminarReporte = seccion.querySelector('.eliminarReporte')
+        guardarEdicionReporte.classList.remove('d-none')
+        btneliminarReporte.classList.remove('d-none')
+        guardarEdicionReporte.setAttribute('reporte', `Rep-${reporte.idReporte}`)
+        btneliminarReporte.setAttribute('reporte', `Rep-${reporte.idReporte}`)
+        hallazgos.readOnly = false
+        reporteTecnico.readOnly = false
+        recomendaciones.readOnly = false
+        guardarEdicionReporte.onclick = e => modificarReporte(e, seccion)
+        btneliminarReporte.onclick = e => eliminarReporte(e, seccion)
     }
 
     return seccion

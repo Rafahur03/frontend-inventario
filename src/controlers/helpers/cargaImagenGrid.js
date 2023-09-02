@@ -4,6 +4,7 @@ import { generateRandomId } from './nombreRandon.js'
 import { rotarImg } from './activos/rotarImg.js'
 import { eliminarImagen, eliminarImagenReporte } from './eliminarImagenGrid.js'
 import { guardarImagenSolicitud } from '../solicitudes/guardarImagenSolicitud.js'
+import { guardarImgReporte } from '../reportes/guardarImgReporte.js'
 
 
 const cargarImagenGrid = (e, nodo) => {
@@ -191,20 +192,18 @@ const cargarImagenGridReporte = (e, nodo) => {
             eliminarImagenReporte(e, nodo)
         }
         contenedorBotones.appendChild(btnEliminar)
+        
         const idReporte = nodo.querySelector('.idReporte')
-
         if (idReporte !== null) {
             const iGuardar = document.createElement('i')
             iGuardar.classList.add('bi', 'bi-save2-fill', 'fs-3', 'fw-bold', 'text-primary', 'p-0')
             const btnGuardar = document.createElement('button')
             btnGuardar.setAttribute('imagen', nombre)
-            btnGuardar.setAttribute('solicitud', `${idReporte.value}`)
+            btnGuardar.setAttribute('reporte', `${idReporte.value}`)
             btnGuardar.classList.add('btn', 'text-center', 'm-1', 'p-0')
             btnGuardar.appendChild(iGuardar)
-            btnGuardar.onclick = e => {
-                e.preventDefault()
-                console.log('tienes que crear la funcion fuardar imagen')
-            }
+            btnGuardar.onclick = e => guardarImgReporte(e,nodo)
+            
             contenedorBotones.appendChild(btnGuardar)
         }
 

@@ -3,7 +3,7 @@ const urlbase = process.env.API_URL
 
 const { validarDatosReporte } = require('./validarDatosReporte.js')
 const { validarImagenes } = require('../helpers/validarImagenes.js')
-const {validarDocumentos} = require('../helpers/validarDocumentos.js')
+const { validarDocumentos } = require('../helpers/validarDocumentos.js')
 
 const consultarListadoReportes = async token => {
     const options = {
@@ -51,9 +51,8 @@ const descargarListaMtto = async (datos, token) => {
     }
 
 }
-
 const crearNuevoReporte = async (datos, token) => {
-    
+
 
     const validacion = await validarDatosReporte(datos, token)
     if (validacion.msg) return validacion
@@ -65,7 +64,7 @@ const crearNuevoReporte = async (datos, token) => {
         }
     }
 
-    if(datos.reportePDF != null) {
+    if (datos.reportePDF != null) {
         const validacionDocumento = validarDocumentos(datos.reportePDF)
         if (validacionDocumento.msg) return validacionDocumento
     }
@@ -76,7 +75,7 @@ const crearNuevoReporte = async (datos, token) => {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({datos})
+        body: JSON.stringify({ datos })
     }
 
     try {
@@ -91,9 +90,35 @@ const crearNuevoReporte = async (datos, token) => {
 
 }
 
+const editarReporte = async (datos, token) => {
+
+
+    const validacion = await validarDatosReporte(datos, token)
+    if (validacion.msg) return validacion
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ datos })
+    }
+
+    try {
+        const url = urlbase + '/editarReporte'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+        return ({ msg: 'ocurrio un error al intentar conectar con el servidor intente mas tarde' })
+    }
+
+}
 const consultarReporte = async (id, token) => {
-   
-    if (parseInt(id) == NaN) return ({msg: 'Debe ingresar un id valido'})
+
+    if (parseInt(id) == NaN) return ({ msg: 'Debe ingresar un id valido' })
     const options = {
         method: 'POST',
         headers: {
@@ -113,12 +138,175 @@ const consultarReporte = async (id, token) => {
     }
 
 }
+const eliminarReporte = async (datos, token) => {
 
+    datos.idActivo = datos.codigo
+    delete datos.codigo
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ datos })
+    }
+    try {
+        const url = urlbase + '/eliminarReporte'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
 
+}
+const eliminarImagenReporte = async (datos, token) => {
+
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ datos })
+    }
+
+    try {
+        const url = urlbase + '/eliminarImagenReporte'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+const guardarImagenReporte = async (datos, token) => {
+
+    const validacionImagen = validarImagenes(datos.imagen)
+    if (validacionImagen.msg) return validacionImagen
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ datos })
+    }
+
+    try {
+        const url = urlbase + '/guardarImagenReporte'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+const descargarReporte = async (datos, token) => {
+
+    const reporte = datos.reporte.split('-')[1]
+    if (reporte != datos.idReporte) return { msg: 'Error en el ID del reporte' }
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ datos })
+    }
+
+    try {
+        const url = urlbase + '/descargarReporte'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+const descargarReporteExterno = async (datos, token) => {
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ datos })
+    }
+
+    try {
+        const url = urlbase + '/descargarReporteExterno'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+const guardarSoporteExtReporte = async (datos, token) => {
+
+    const validacionDocumento = validarDocumentos(datos.soportePDF)
+    if (validacionDocumento.msg) return validacionDocumento
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ datos })
+    }
+
+    try {
+        const url = urlbase + '/guardarSoporteExtReporte'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+const eliminarSoporteExtReporte = async (datos, token) => {
+
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ datos })
+    }
+
+    try {
+        const url = urlbase + '/eliminarSoporteExtReporte'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+
+}
 
 module.exports = {
     consultarListadoReportes,
     descargarListaMtto,
     crearNuevoReporte,
-    consultarReporte
+    consultarReporte,
+    eliminarReporte,
+    eliminarImagenReporte,
+    guardarImagenReporte,
+    editarReporte,
+    descargarReporte,
+    descargarReporteExterno,
+    guardarSoporteExtReporte,
+    eliminarSoporteExtReporte
 }

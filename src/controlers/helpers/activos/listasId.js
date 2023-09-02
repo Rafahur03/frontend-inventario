@@ -24,9 +24,6 @@ const opcionId = e => {
             if (opcion.value === input.value) {
                 if (opcion.textContent !== opcionId) {
                     input.setAttribute('opcionId', complemento + '-' + opcion.textContent);
-                    if (complemento === 'Pro') {
-                        inputnit.value = opcion.value.split('--')[2].trim();
-                    }
                 }
                 break
             }
@@ -42,9 +39,6 @@ const opcionId = e => {
                     input.setAttribute('opcionId', complemento + '-' + opcion.textContent);
                     if (opcion.textContent !== opcionId) {
                         input.setAttribute('opcionId', complemento + '-' + opcion.textContent);
-                        if (complemento === 'Pro') {
-                            inputnit.value = opcion.value.split('--')[2].trim();
-                        }
                     }
                 }
                 break

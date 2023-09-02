@@ -1,5 +1,5 @@
 import { modalEleccion } from "../helpers/modalEleccion.js"
-const eliminarPdfReprote = async nodo=>{
+const eliminarPdfReprote = async nodo =>{
     
     const elecion = await modalEleccion({titulo: 'ADVERTENCIA', mensaje: '¿Esta seguro de eliminar el documento?'})
     if(!elecion) return

@@ -1,4 +1,4 @@
-
+import { cargarImagenGridReporte } from "./cargaImagenGrid.js"
 const eliminarImagen = (e, nodo) => {
 
     const tagName = e.target.tagName.toLowerCase()
@@ -18,7 +18,8 @@ const eliminarImagen = (e, nodo) => {
     const botonImagenes = nodo.querySelector('.imagenesSoporte')
     const contendorImput = nodo.querySelector('.contendorInput')
 
-    const imagenes = nodo.querySelectorAll('.imagenesSolicitud img')
+    const imagenes = contendorImagenes.querySelectorAll('img')
+ 
     if (imagenes.length < 4) {
         if (contendorImput.classList.contains('d-none')) {
             contendorImput.classList.remove('d-none')
@@ -47,13 +48,14 @@ const eliminarImagenReporte = (e, nodo) => {
     contendorImagenes.removeChild(divImagen)
 
     const botonImagenes = nodo.querySelector('.imagenesSoporte')
-    const contendorImput = nodo.querySelector('.contendorInputpdf')
-
-    const imagenes = nodo.querySelectorAll('.imagenesReporte img')
+    const contendorInput = nodo.querySelector('.contendorInput')
+    const input = contendorInput.querySelector('input')
+    input.onchange = e => cargarImagenGridReporte(e,nodo)
+    const imagenes = contendorImagenes.querySelectorAll('img')
 
     if (imagenes.length < 4) {
-        if (contendorImput.classList.contains('d-none')) {
-            contendorImput.classList.remove('d-none')            
+        if (contendorInput.classList.contains('d-none')) {
+            contendorInput.classList.remove('d-none')            
         }
         botonImagenes.textContent = `Selecione ${4 - imagenes.length} imagenes`
     }
