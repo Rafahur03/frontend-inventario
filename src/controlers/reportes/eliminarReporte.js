@@ -28,6 +28,8 @@ const eliminarReporte = async (e, seccion) => {
 
     const eliminar = ipcRenderer.sendSync('eliminarReporte', data);
 
+    console.log(eliminar);
+
     if (eliminar.msg) return modalMensaje({ titulo: 'ERROR', mensaje: eliminar.msg })
 
     modalMensaje({ titulo: 'EXITO', mensaje: eliminar.exito })

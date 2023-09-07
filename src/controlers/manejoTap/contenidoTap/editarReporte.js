@@ -10,8 +10,10 @@ import { descargarReporte } from '../../reportes/descargarReporte.js';
 import { modificarReporte } from '../../reportes/modificarReporte.js';
 import { cargarReportePdf } from '../../reportes/cargarReportePdf.js';
 import { cargarImagenGridReporte } from '../../helpers/cargaImagenGrid.js';
-const editarReporte = () => {
-    const id = 929
+import { modalMensaje } from '../../helpers/modalEleccion.js';
+
+const editarReporte = id => {
+
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
@@ -244,7 +246,6 @@ const editarReporte = () => {
 
     const reporte = ipcRenderer.sendSync('consultarReporte', id);
     if (reporte.msg) return modalMensaje({ titulo: 'ERROR', mensaje: reporte.msg })
-    console.log(reporte)
 
     const idActivo = seccion.querySelector('.idActivo')
     const codigoInterno = seccion.querySelector('.codigoInterno')
@@ -491,9 +492,8 @@ const editarReporte = () => {
             listUsuarioReporte.appendChild(optione)
         })
         recibidoConforme.readOnly = false
-        console.log(reporte.edOt)
+
         if (reporte.edOt) {
-            console.log('aqui')
             usuarioReporte.readOnly = false
         }
 

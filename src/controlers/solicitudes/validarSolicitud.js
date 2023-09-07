@@ -1,7 +1,7 @@
 
 const validarDatosSolicitud = async (datos) => {
-
-    if(validarVacios( datos.idActivo) && validarCaracteres( datos.idActivo) && validarPalabras( datos.idActivo)) return {msg: 'Debe seleccionar un activo valido para poder crear la solciud'}
+   
+    if(validarVacios(datos.idActivo) && validarCaracteres( datos.idActivo) && validarPalabras( datos.idActivo)) return {msg: 'Debe seleccionar un activo valido para poder crear la solciud'}
     
     if(validarVacios( datos.descripcion )) return {msg: 'El campo descripcion es obligatorio'}
 

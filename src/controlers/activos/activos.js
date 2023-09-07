@@ -371,6 +371,30 @@ const consultarDatosActivoSolicitud = async (id, token) => {
 
 }
 
+const consultarDatosActivoReportePrev = async (id, token) => {
+    const idActivo = id.split('-')[1]
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ id:idActivo })
+
+    }
+
+
+    try {
+        const url = urlbase + '/consultarDatosActivoReportePrev'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
 
 module.exports = {
     consultarListadoActivos,
@@ -384,5 +408,6 @@ module.exports = {
     descargarHojaDeVida,
     eliminarActivo,
     crearActivo,
-    consultarDatosActivoSolicitud
+    consultarDatosActivoSolicitud,
+    consultarDatosActivoReportePrev
 }

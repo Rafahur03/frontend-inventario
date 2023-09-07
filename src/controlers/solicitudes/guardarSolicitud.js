@@ -1,11 +1,19 @@
 const { ipcRenderer } = require('electron')
 import { modalMensaje } from "../helpers/modalEleccion.js"
-import { abrirDatosNuevo } from "../helpers/abrirDatos.js"
-import { editarSolicitud } from "../manejoTap/contenidoTap/editarSolicitud.js"
+import { cargarTapContenido } from "../manejoTap/cargarTapContenido.js"
 
 const guardarSolicitud = (e, nodo) =>{
-    const activo = e.target.getAttribute('opcionid')
-    const idActivo= nodo.querySelector('.idActivo').value
+
+    const tagName = e.target.tagName.toLowerCase()
+    let boton
+    if (tagName === 'i') {
+        boton = e.target.parentNode
+    } else {
+        boton = e.target
+    }
+    const activo = boton.getAttribute('opcionid')
+    const idActivo = nodo.querySelector('.idActivo').value
+
 
     if(activo !== idActivo) return modalMensaje({titulo:'ERROR', mensaje:'Debe seleccionar un activo valido para poder crear una solicitud'})
 
@@ -32,8 +40,7 @@ const guardarSolicitud = (e, nodo) =>{
     const respuesta = ipcRenderer.sendSync('crearSolicitud', solicitud);
     if(respuesta.msg)  return modalMensaje({titulo:'ERROR', mensaje:respuesta.msg})
 
-    abrirDatosNuevo('Sol')
-    editarSolicitud(respuesta)
+    cargarTapContenido('consultarSolicitud', respuesta.id)
     
 
 }

@@ -8,8 +8,7 @@ import { cargarImagenGrid } from '../../helpers/cargaImagenGrid.js';
 import { imprimirSolicitud } from '../../solicitudes/imprimirSolicitud.js';
 import { cargarNuevaVista } from '../cargarTapContenido.js';
 const editarSolicitud = (id) => {
-
-
+    
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `

@@ -27,6 +27,7 @@ const consultarListadoSolicitudes = async token => {
 const crearSolicitud = async (datos, token) => {
 
     const validacion = validarDatosSolicitud(datos)
+
     if (validacion.msg) return (validacion)
 
     if (datos.imagenes.length > 0) {

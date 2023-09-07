@@ -118,9 +118,11 @@ const crearSolicitud = (id = null) => {
                 crear.setAttribute('opcionId', 'Act-00')
                 return
             }
+
         const id = idActivo.getAttribute('opcionId')
         cargarActivoSolicitud(id, seccion)
     }
+
     idActivo.addEventListener('keydown', (e) => {
         // 3. Verificar si la tecla presionada es "Enter" (keyCode 13)
         if (e.keyCode === 13) {
@@ -129,10 +131,12 @@ const crearSolicitud = (id = null) => {
                 crear.setAttribute('opcionId', 'Act-00')
                 return
             }
+            
             const id = idActivo.getAttribute('opcionId')
             cargarActivoSolicitud(id, seccion)
         }
     })
+
     const listado = ipcRenderer.sendSync('listadoActivo');
     if (listado.msg) return modalMensaje({ titulo: 'ERROR', mensaje: listado.msg })
     listado.forEach(element => {

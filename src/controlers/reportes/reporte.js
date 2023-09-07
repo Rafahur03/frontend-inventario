@@ -1,7 +1,7 @@
 ﻿require('dotenv').config()
 const urlbase = process.env.API_URL
 
-const { validarDatosReporte } = require('./validarDatosReporte.js')
+const { validarDatosReporte, validarDatosReportePrev } = require('./validarDatosReporte.js')
 const { validarImagenes } = require('../helpers/validarImagenes.js')
 const { validarDocumentos } = require('../helpers/validarDocumentos.js')
 
@@ -80,6 +80,45 @@ const crearNuevoReporte = async (datos, token) => {
 
     try {
         const url = urlbase + '/crearReporte'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+        return ({ msg: 'ocurrio un error al intentar conectar con el servidor intente mas tarde' })
+    }
+
+}
+
+const guardarReportePrev = async (datos, token) => {
+
+
+    const validacion = await validarDatosReportePrev(datos, token)
+    if (validacion.msg) return validacion
+
+    if (datos.imagenes.length > 0) {
+        for (let imagen of datos.imagenes) {
+            const validacionImagen = validarImagenes(imagen)
+            if (validacionImagen.msg) return validacionImagen
+        }
+    }
+
+    if (datos.reportePDF != null) {
+        const validacionDocumento = validarDocumentos(datos.reportePDF)
+        if (validacionDocumento.msg) return validacionDocumento
+    }
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ datos })
+    }
+
+    try {
+        const url = urlbase + '/guardarReportePrev'
         const response = await fetch(url, options);
         const json = await response.json();
         return (json)
@@ -308,5 +347,6 @@ module.exports = {
     descargarReporte,
     descargarReporteExterno,
     guardarSoporteExtReporte,
-    eliminarSoporteExtReporte
+    eliminarSoporteExtReporte,
+    guardarReportePrev
 }

@@ -1,8 +1,7 @@
 
 const { ipcRenderer } = require('electron')
 import { modalMensaje, modalEleccion } from "../helpers/modalEleccion.js"
-import { abrirDatosNuevo } from "../helpers/abrirDatos.js"
-import { editarReporte } from "../manejoTap/contenidoTap/editarReporte.js"
+import { cargarTapContenido } from "../manejoTap/cargarTapContenido.js"
 
 const modificarReporte = async (e, nodo) => {
 
@@ -118,14 +117,12 @@ const modificarReporte = async (e, nodo) => {
         costoMp,
         fechaproximoMtto
     }
-    console.log(data)
-    const respuesta = ipcRenderer.sendSync('editarReporte', data)
-    console.log(respuesta)
- 
+
+    const respuesta = ipcRenderer.sendSync('editarReporte', data) 
     if (respuesta.msg) return modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
     modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
-    abrirDatosNuevo('Rep')
-    editarReporte(respuesta.idReporte)
+    cargarTapContenido('consultarReporte', respuesta.idReporte)
+    //editarReporte(respuesta.idReporte)
 
 }
 

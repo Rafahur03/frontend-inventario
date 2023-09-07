@@ -14,7 +14,8 @@ const {
     descargarHojaDeVida,
     eliminarActivo,
     crearActivo,
-    consultarDatosActivoSolicitud
+    consultarDatosActivoSolicitud,
+    consultarDatosActivoReportePrev
 } = require('./src/controlers/activos/activos.js')
 
 const { consultarListadoSolicitudes,
@@ -38,7 +39,8 @@ const {consultarListadoReportes,
     descargarReporte,
     descargarReporteExterno,
     guardarSoporteExtReporte,
-    eliminarSoporteExtReporte  } = require('./src/controlers/reportes/reporte.js')
+    eliminarSoporteExtReporte,
+    guardarReportePrev  } = require('./src/controlers/reportes/reporte.js')
 const {
     eliminarComponente,
     guardarComponente,
@@ -198,6 +200,12 @@ ipcMain.on('consultarDatosActivoSolicitud', async (e, id) => {
     e.returnValue = activo;
 })
 
+ipcMain.on('consultarDatosActivoReportePrev', async (e, id) => {
+    const token = dataUsuarioSesion.token
+    const activo = await consultarDatosActivoReportePrev(id, token)
+    e.returnValue = activo;
+})
+
 /////////////////////////////////solicitudes////////////////////////////
 
 // consultar el listado de solicitud
@@ -256,12 +264,6 @@ ipcMain.on('eliminarImagenSolicitud', async (e, data) => {
     e.returnValue = respuesta;
 })
 
-ipcMain.on('nuevoReporte', async (e, data) => {
-    const token = dataUsuarioSesion.token
-    const reporte = await crearNuevoReporte(data, token)
-    e.returnValue = reporte;
-})
-
 //////////////////////////////// reportes////////////////////////////////
 
 // listado reportes
@@ -270,6 +272,18 @@ ipcMain.on('listadoReportes', async (e) => {
     const token = dataUsuarioSesion.token
     const listado = await consultarListadoReportes(token)
     e.returnValue = listado;
+})
+
+ipcMain.on('nuevoReporte', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const reporte = await crearNuevoReporte(data, token)
+    e.returnValue = reporte;
+})
+
+ipcMain.on('guardarReportePrev', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const reporte = await guardarReportePrev(data, token)
+    e.returnValue = reporte;
 })
 
 ipcMain.on('descargarListaMtto', async (e, data) => {

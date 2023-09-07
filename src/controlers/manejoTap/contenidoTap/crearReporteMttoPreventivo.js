@@ -1,17 +1,16 @@
 const { ipcRenderer } = require('electron')
 import { modalMensaje } from "../../helpers/modalEleccion.js";
-import { rotarImg } from "../../helpers/activos/rotarImg.js";
 import { generateRandomId } from "../../helpers/nombreRandon.js";
-import { opcionId } from "../../helpers/activos/listasId.js";
+import { opcionIdAct } from "../../helpers/activos/listasId.js";
 import { cargarImagenGridReporte } from "../../helpers/cargaImagenGrid.js";
-import { nuevoReporte } from "../../reportes/nuevoReporte.js";
 import { cargarReportePdf } from "../../reportes/cargarReportePdf.js";
-
-const crearReporte = id => {
+import { cargarActivoReportePrev } from "../../reportes/cargarActivoReportePrev.js";
+import { guardarReportePrev } from "../../reportes/guardarReportePrev.js";
+const crearReporteMttoPreventivo = () => {
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
-            <h3 class="text-center mt-1 fw-bold">CREAR REPORTE</h3>
+            <h3 class="text-center mt-1 fw-bold">CREAR REPORTE MANTENIMIENTO PREVENTIVO</h3>
             <div class="container-fluid w-100 d-flex ">
                 <div class="p-2">
                     <button type="button" class="btn mt-0 pt-0 crearReporte" title="Crear Reporte">
@@ -42,7 +41,8 @@ const crearReporte = id => {
                         <div class="form-group col-2">
 
                             <label for="idActivo"> Id Activo</label>
-                            <input type="text" class="form-control my-1 fw-bold idActivo" opcionId="Act--0">
+                            <input type="text" class="form-control my-1 fw-bold idActivo" list="listActivo" opcionId="Act--0">
+                            <datalist id="listActivo"></datalist>
 
                             <label for="codigoInterno">Codigo interno</label>
                             <input type="text" class="form-control my-1  fw-bold codigoInterno">
@@ -83,35 +83,17 @@ const crearReporte = id => {
                             <input type="text" class="form-control my-1 tipoActivo" id="" readonly>
 
                             <label for="fechaproximoMtto">Fecha del proximo Mtto</label>
-                            <input type="date" class="form-control my-1 fechaproximoMtto" >
+                            <input type="date" class="form-control my-1 fechaproximoMtto" readonly>
                         </div>
 
                         </div>
                     </div>
                     <h3 class="text-center mt-1 fw-bold">Datos del Reporte</h3>
                     <div class="row mx-3 align-items-center">
-                        <div class="form-group col-2">
-                            <label for="idSolicitud">ID solicitud</label>
-                            <input type="text" class="form-control my-1  fw-bold idSolicitud" id=""
-                                list="listSolicitudes">
-                            <datalist id="listSolicitudes"></datalist>
-                        </div>
-
-                        <div class="form-group col-2">
-                            <label for="fechaSolicitud">Fecha de solicitud</label>
-                            <input type="datetime" class="form-control my-1 fechaSolicitud" id="" readonly>
-                        </div>
 
                         <div class="form-group col-2">
                             <label for="fechaReporte">Fecha de reporte</label>
                             <input type="date" class="form-control my-1 fechaReporte" id="">
-                        </div>
-
-                        <div class="form-group col-2">
-                            <label for="tipoMantenimiento">Tipo de Mtto</label>
-                            <input type="text" class="form-control my-1 tipoMantenimiento" id=""
-                                list="listTipoMtto" opcionId="Tm--1">
-                            <datalist id="listTipoMtto"></datalist>
                         </div>
 
                         <div class="form-group col-2">
@@ -126,15 +108,6 @@ const crearReporte = id => {
                                 placeholder="1000,00">
                         </div>
 
-                    </div>
-                    <div class="row mx-3 align-items-center">
-                        <div class="form-group col-7">
-                            <label for="ProvedorMtto">Proveedor Mtto</label>
-                            <input type="text" class="form-control my-1 provedorMtto" id=""
-                                list="listProvedorMtto" opcionId="Pro--1">
-                            <datalist id="listProvedorMtto"></datalist>
-                        </div>
-
                         <div class="form-group col-3">
                             <label for="recibidoConforme">Recibido Conforme</label>
                             <input type="text" class="form-control my-1 recibidoConforme" id=""
@@ -142,41 +115,69 @@ const crearReporte = id => {
                             <datalist id="listRecibidoConforme"></datalist>
                         </div>
 
-                        <div class="form-group col-2 p-1">
-                            <label for="estadoSolicitud">Estado Solicitud</label>
-                            <input type="text" class="form-control my-1 fw-bold estadoSolicitud" id=""
-                                list="listestadoSolicitud" opcionId="Ess--1">
-                            <datalist id="listestadoSolicitud"></datalist>
+                        <div class="form-group col-3">
+                            <label for="proximoMtto">Proximo Mtto</label>
+                            <input type="date" class="form-control my-1 proximoMtto">
                         </div>
+
+                    </div>
+                        <div class="row mx-3 align-items-center">
+                            <div class="form-group col-3">
+                                <label for="fechaSolicitud">Fecha de solicitud</label>
+                                <input type="date" class="form-control my-1 fechaSolicitud" id="">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="ProvedorMtto">Proveedor Mtto</label>
+                                <input type="text" class="form-control my-1 provedorMtto" id=""
+                                    list="listProvedorMtto" opcionId="Pro--1">
+                                <datalist id="listProvedorMtto"></datalist>
+                            </div>    
+
+                                <div class="form-group col-3 p-1">
+                                <label for="estadoSolicitud">Estado Reporte</label>
+                                <input type="text" class="form-control my-1 fw-bold estadoSolicitud" id=""
+                                    list="listestadoSolicitud" opcionId="Ess--1">
+                                <datalist id="listestadoSolicitud"></datalist>
+                            </div>
+                        </div>
+                        
 
                         <div class="row m-3 align-items-center">
                             <div class="form-group col-6">
                                 <label for="descripcionSolicitud">Descripcion solicitud</label>
-                                <textarea class="form-control m-1 descripcionSolicitud" id="" rows="6"
-                                    readonly></textarea>
+                                <p class="m-0" id="caracteresReporte">Maximo 1000 caracteres</p>
+                                <textarea class="form-control m-1 descripcionSolicitud" id="" rows="6" readonly="true"></textarea>
+                                ></textarea>
                             </div>
+
                             <div class="form-group col-6">
                                 <label for="descripcionHallazgos">Descripcion Hallazgos</label>
                                 <p class="m-0" id="caracteresHallazgos">Maximo 1000 caracteres</p>
                                 <textarea class="form-control m-1 descripcionHallazgos" id=""
                                     rows="6"></textarea>
                             </div>
+
                         </div>
 
-                        <div class="row mx-3 align-items-center">
+                        <div class="row m-3 align-items-center">
+
                             <div class="form-group col-6">
                                 <label for="descripcionReporte">Descripcion de reporte</label>
                                 <p class="m-0" id="caracteresReporte">Maximo 1000 caracteres</p>
                                 <textarea class="form-control m-1 descripcionReporte" id=""
                                     rows="6"></textarea>
                             </div>
+
                             <div class="form-group col-6">
                                 <label for="recomendaciones">Recomendaciones</label>
                                 <p class="m-0" id="caracteresRecomendacion">Maximo 1000 caracteres</p>
                                 <textarea class="form-control m-1 recomendaciones" id=""
-                                    rows="6"></textarea>
+                                rows="6"></textarea>
                             </div>
+
                         </div>
+
+                      
                     </div>
                     <div class="form-group w-50 mx-auto text-center d-block my-2">
                         <label for="imagenesSoporte" class="labelSeleccionarImagen">Soporte
@@ -214,137 +215,44 @@ const crearReporte = id => {
                 </form>
             </div>
     `
-
-    const solicitud = ipcRenderer.sendSync('consultarSolicitudReporte', id)
-    if (solicitud.msg) return modalMensaje({ titulo: 'ERROR', mensaje: solicitud.msg })
-    
-    const idActivo = seccion.querySelector('.idActivo')
-    const codigoInterno = seccion.querySelector('.codigoInterno')
-    const modeloActivo = seccion.querySelector('.modeloActivo')
-    const areaActivo = seccion.querySelector('.areaActivo')
-    const nombreActivo = seccion.querySelector('.nombreActivo')
-    const serieActivo = seccion.querySelector('.serieActivo')
-    const ubicacionActivo = seccion.querySelector('.ubicacionActivo')
-    const estadoActivo = seccion.querySelector('.estadoActivo')
-    const marcaActivo = seccion.querySelector('.marcaActivo')
-    const procesoActivo = seccion.querySelector('.procesoActivo')
-    const tipoActivo = seccion.querySelector('.tipoActivo')
-    const idSolicitud = seccion.querySelector('.idSolicitud')
-    const fechaSolicitud = seccion.querySelector('.fechaSolicitud')
-    const tipoMantenimiento = seccion.querySelector('.tipoMantenimiento')
-    const provedorMtto = seccion.querySelector('.provedorMtto')
-    const recibidoConforme = seccion.querySelector('.recibidoConforme')
-    const estadoSolicitud = seccion.querySelector('.estadoSolicitud')
-    const fechaReporte = seccion.querySelector('.fechaReporte')
-    const fechaproximoMtto = seccion.querySelector('.fechaproximoMtto')
-    const descripcionSolicitud = seccion.querySelector('.descripcionSolicitud')
-
-    idActivo.value = 'Act-' + solicitud.id_activo
-    codigoInterno.value = solicitud.codigo
-    modeloActivo.value = solicitud.modelo
-    nombreActivo.value = solicitud.nombre
-    serieActivo.value = solicitud.serie
-    ubicacionActivo.value = solicitud.ubicacion
-    estadoActivo.value = solicitud.estadoActivo
-    estadoActivo.setAttribute('opcionId', `Es-${solicitud.idEstadoActivo}`)
-    marcaActivo.value = solicitud.marca
-    tipoActivo.value = solicitud.tipoActivo
-    idSolicitud.value = 'Sol-' + solicitud.id
-    fechaSolicitud.value = solicitud.fecha_solicitud
-    estadoSolicitud.value = solicitud.estadoSolicitud
-    estadoSolicitud.setAttribute('opcionId', `Ess-${solicitud.idEstadoSolicitud}`)
-    descripcionSolicitud.value = solicitud.solicitud
-    areaActivo.value = solicitud.area
-    procesoActivo.value = solicitud.proceso
-    const fecha = new Date
-    
-    fechaReporte.value = fecha.toJSON().slice(0, 10);
-    fecha.setDate(fecha.getDate() + solicitud.dias)
-    fechaproximoMtto.value = fecha.toJSON().slice(0, 10)
-
-
-    const carruselimagenes = seccion.querySelector('.carousel-inner')
-
-    solicitud.imagenesActivo.forEach((element, index) => {
-        const itemCarrusel = document.createElement('div')
-        itemCarrusel.setAttribute('nombre', `Img-${solicitud.imagenes_Activo[index]}`)
-        itemCarrusel.classList.add('carousel-item', `Img-${solicitud.imagenes_Activo[index]}`)
-        if (index == 0) itemCarrusel.classList.add('active')
-        const divContainer = document.createElement('div')
-        const divContainerBotones = document.createElement('div')
-        divContainerBotones.classList.add('d-block')
-        divContainer.classList.add('d-flex', 'flex-column', 'justify-content-center', 'align-items-center')
-        const imagen = document.createElement('img')
-        imagen.classList.add('d-block', 'w-100')
-        imagen.src = element
-        divContainer.appendChild(imagen)
-        divContainer.appendChild(divContainerBotones)
-        itemCarrusel.appendChild(divContainer)
-        carruselimagenes.appendChild(itemCarrusel)
-        carruselimagenes.setAttribute('activo', 'Act-' + solicitud.id_activo)
-        imagen.onload = e => rotarImg(e)
-    })
-
+    const listado = ipcRenderer.sendSync('listadoActivo');
+    if(listado.msg) return modalMensaje({ titulo:'ERROR', mensaje:'No se pudieron cargar los activos.'})
     const idlista = generateRandomId()
-
-    const listEstadoActivo = seccion.querySelector('#listEstadoActivo')
-
-    listEstadoActivo.id = `${listEstadoActivo.id}${idlista}`
-    estadoActivo.setAttribute('list', listEstadoActivo.id)
-    estadoActivo.onblur = e => opcionId(e)
-    solicitud.listados[0].forEach(element => {
+    const idActivo = seccion.querySelector('.idActivo')
+    const listActivo = seccion.querySelector('#listActivo')
+    const crear = seccion.querySelector('.crearReporte')
+    listActivo.id = `${listActivo.id}${idlista}`
+    idActivo.setAttribute('list', listActivo.id)
+    listado.forEach(element => {
         const option = document.createElement('option')
-        option.value = element.estado
-        option.textContent = element.id
-        listEstadoActivo.appendChild(option)
+        option.value = 'Act-' + element.id 
+        option.textContent = element.codigoInterno +' ' + element.nombreActivo +' ' + element.ubicacion+ ' ' + element.nombreResponsable + ' ' + element.marca + ' ' + element.serie
+        listActivo.appendChild(option)
     })
 
-    const listestadoSolicitud = seccion.querySelector('#listestadoSolicitud')
+    idActivo.onblur = e => {
+        const consultarActivo = opcionIdAct(e)
+            if(!consultarActivo) {
+                crear.setAttribute('opcionId', 'Act-00')
+                return
+            }
 
-    listestadoSolicitud.id = `${listestadoSolicitud.id}${idlista}`
-    estadoSolicitud.setAttribute('list', listestadoSolicitud.id)
-    estadoSolicitud.onblur = e => opcionId(e)
-    solicitud.listados[1].forEach(element => {
-        const option = document.createElement('option')
-        option.value = element.estado
-        option.textContent = element.id
-        listestadoSolicitud.appendChild(option)
-    })
+        const id = idActivo.getAttribute('opcionId')
+        cargarActivoReportePrev(id, seccion)
+    }
 
-    const listTipoMtto = seccion.querySelector('#listTipoMtto')
-
-    listTipoMtto.id = `${listTipoMtto.id}${idlista}`
-    tipoMantenimiento.setAttribute('list', listTipoMtto.id)
-    tipoMantenimiento.onblur = e => opcionId(e)
-    solicitud.listados[2].forEach(element => {
-        const option = document.createElement('option')
-        option.value = element.tipoMantenimeinto
-        option.textContent = element.id
-        listTipoMtto.appendChild(option)
-    })
-
-    const listProvedorMtto = seccion.querySelector('#listProvedorMtto')
-
-    listProvedorMtto.id = `${listProvedorMtto.id}${idlista}`
-    provedorMtto.setAttribute('list', listProvedorMtto.id)
-    provedorMtto.onblur = e => opcionId(e)
-    solicitud.listados[3].forEach(element => {
-        const option = document.createElement('option')
-        option.value = element.razonSocial + '--' + element.nombre + '--' + element.nit
-        option.textContent = element.id
-        listProvedorMtto.appendChild(option)
-    })
-
-    const listRecibidoConforme = seccion.querySelector('#listRecibidoConforme')
-
-    listRecibidoConforme.id = `${listRecibidoConforme.id}${idlista}`
-    recibidoConforme.setAttribute('list', listRecibidoConforme.id)
-    recibidoConforme.onblur = e => opcionId(e)
-    solicitud.listados[4].forEach(element => {
-        const option = document.createElement('option')
-        option.value = element.usuario
-        option.textContent = element.id
-        listRecibidoConforme.appendChild(option)
+    idActivo.addEventListener('keydown', (e) => {
+        // 3. Verificar si la tecla presionada es "Enter" (keyCode 13)
+        if (e.keyCode === 13) {
+            const consultarActivo = opcionIdAct(e)
+            if(!consultarActivo) {
+                crear.setAttribute('opcionId', 'Act-00')
+                return
+            }
+            
+            const   id = idActivo.getAttribute('opcionId')
+            cargarActivoReportePrev(id, seccion)
+        }
     })
 
     const inputImagenes = seccion.querySelector('.inputImagenSoporte')
@@ -353,14 +261,11 @@ const crearReporte = id => {
     const inputSoportePdf = seccion.querySelector('.inputPdfSoporte')
     inputSoportePdf.onchange = e => cargarReportePdf(e, seccion)
 
-    const crearReporte = seccion.querySelector('.crearReporte')
-    crearReporte.setAttribute('Solicitud', `Sol-${solicitud.id}`)
-    crearReporte.onclick = e => nuevoReporte(e, seccion)
+    crear.onclick = e => guardarReportePrev(e, seccion)
     
-
     return seccion
 }
 
 export {
-    crearReporte,
+    crearReporteMttoPreventivo,
 }

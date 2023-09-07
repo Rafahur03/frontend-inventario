@@ -4,6 +4,7 @@ const menu = (vector) => {
         const divUsuario = document.querySelectorAll('#collapseUsuario a')
         const divActivo = document.querySelectorAll('#collapseActivos a')
         const divReporte = document.querySelectorAll('#collapseReporte a')
+        
         switch (element) {
             case 1:
                 const uCrear = document.createElement('a')
@@ -46,9 +47,9 @@ const menu = (vector) => {
                 const rCrear = document.createElement('a')
                 rCrear.setAttribute('href', '#')
                 rCrear.classList.add('nav-link', 'ms-3', 'item-nav-bar')
-                rCrear.id = 'crearReporte'
-                rCrear.textContent = 'Crear Reporte'
-                divReporte[1].parentElement.insertBefore(rCrear, divReporte[1])
+                rCrear.id = 'crearReporteMttoPreventivo'
+                rCrear.textContent = 'Crear Reporte preventivo'
+                divReporte[0].parentElement.insertBefore(rCrear, divReporte[1])
                 break;
             default:
                 break;

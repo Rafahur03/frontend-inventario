@@ -13,10 +13,10 @@ import { editarUsuario } from "./contenidoTap/editarUsuario.js"
 import { cambiarClave } from "./contenidoTap/cambiarClave.js"
 import { configuracionVista } from "./contenidoTap/configuracionVista.js"
 import { cambiarClasificacion } from "./contenidoTap/cambiarClasificacion.js"
-
+import { crearReporteMttoPreventivo } from "./contenidoTap/crearReporteMttoPreventivo.js"
 
 // carga las vistas en un nodo de contenido existente.
-const cargarTapContenido = async id => {
+const cargarTapContenido = async (id, dato) => {
     const contenido = {
         'nuevoUsuario': crearUsuario,// abre la ventana para crear un nuevo Usuario
         'editarUsuario': editarUsuario, // abre la ventana para editar un usuario
@@ -30,11 +30,11 @@ const cargarTapContenido = async id => {
         'consultarSolicitud': editarSolicitud, // abre ventana editar o consultar solicitud
         'verReportes': listadoReportes, // abre ventana de listado de reportes
         'crearReporte': crearReporte, // abrre ventana de crearReporte
+        'crearReporteMttoPreventivo': crearReporteMttoPreventivo, // abrre ventana de crearReporte
         'consultarReporte': editarReporte, //abre ventana de consultar o editar un reporte
         'configuracion': configuracionVista //abre ventana de configuracion
-
     }
-    
+   
     const bodyTap = document.querySelector('#bodyTap')
     if (bodyTap.querySelectorAll('.tab-pane').length == 0) {
         const contenidoTap = agregarTap(document.querySelector('#nueva-tap'))
@@ -47,7 +47,8 @@ const cargarTapContenido = async id => {
     const taps = bodyTap.querySelector('#containerTap')
     const tapActiva = taps.querySelector('.active')
     const idconten = tapActiva.id.split('-')[0]
-    const contenedor  = bodyTap.querySelector('#'+ idconten)
+    const contenedor = bodyTap.querySelector('#'+ idconten)
+
     if (contenedor.firstChild !== null) {
         while (contenedor.firstChild) {
             contenedor.removeChild(contenedor.firstChild);
@@ -60,7 +61,7 @@ const cargarTapContenido = async id => {
         contenedor.setAttributeNode(atribute)
     }
   
-    contenedor.appendChild(await contenido[id]());
+    contenedor.appendChild(await contenido[id](dato));
 }
 
 // carga el contenido de una vista pero agregando una nueva pestaña y con un nueco content.
