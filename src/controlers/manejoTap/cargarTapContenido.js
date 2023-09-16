@@ -17,6 +17,7 @@ import { crearReporteMttoPreventivo } from "./contenidoTap/crearReporteMttoPreve
 
 // carga las vistas en un nodo de contenido existente.
 const cargarTapContenido = async (id, dato) => {
+
     const contenido = {
         'nuevoUsuario': crearUsuario,// abre la ventana para crear un nuevo Usuario
         'editarUsuario': editarUsuario, // abre la ventana para editar un usuario
@@ -60,7 +61,7 @@ const cargarTapContenido = async (id, dato) => {
         atribute.value = id
         contenedor.setAttributeNode(atribute)
     }
-  
+
     contenedor.appendChild(await contenido[id](dato));
 }
 

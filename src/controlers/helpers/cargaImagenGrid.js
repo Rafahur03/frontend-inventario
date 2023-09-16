@@ -97,7 +97,7 @@ const cargarImagenGrid = (e, nodo) => {
             }
             contenedorBotones.appendChild(btnGuardar)
         }
-    
+
         contenedorImagen.appendChild(imagen)
         contenedorImagen.appendChild(contenedorBotones)
         contenedorImagenes.appendChild(contenedorImagen)
@@ -106,7 +106,7 @@ const cargarImagenGrid = (e, nodo) => {
     const imagenesFinal = contenedorImagenes.querySelectorAll('img')
     const contendorInput = nodo.querySelector('.contendorInput')
     if (imagenesFinal.length >= 4) {
-        
+
         contendorInput.classList.add('d-none')
     } else {
         const botonCargarImagenes = nodo.querySelector('.imagenesSoporte')
@@ -116,7 +116,6 @@ const cargarImagenGrid = (e, nodo) => {
     contendorInput.querySelector('input').value = ''
 
 }
-
 
 const cargarImagenGridReporte = (e, nodo) => {
 
@@ -192,7 +191,7 @@ const cargarImagenGridReporte = (e, nodo) => {
             eliminarImagenReporte(e, nodo)
         }
         contenedorBotones.appendChild(btnEliminar)
-        
+
         const idReporte = nodo.querySelector('.idReporte')
         if (idReporte !== null) {
             const iGuardar = document.createElement('i')
@@ -202,8 +201,8 @@ const cargarImagenGridReporte = (e, nodo) => {
             btnGuardar.setAttribute('reporte', `${idReporte.value}`)
             btnGuardar.classList.add('btn', 'text-center', 'm-1', 'p-0')
             btnGuardar.appendChild(iGuardar)
-            btnGuardar.onclick = e => guardarImgReporte(e,nodo)
-            
+            btnGuardar.onclick = e => guardarImgReporte(e, nodo)
+
             contenedorBotones.appendChild(btnGuardar)
         }
 
@@ -216,13 +215,96 @@ const cargarImagenGridReporte = (e, nodo) => {
 
     const contendorInput = nodo.querySelector('.contendorInput')
 
-    if (imagenesFinal.length >= 4) {          
+    if (imagenesFinal.length >= 4) {
         contendorInput.classList.add('d-none')
     } else {
+        const contendorInput = nodo.querySelector('.contendorInput')
         const botonCargarImagenes = nodo.querySelector('.imagenesSoporte')
         botonCargarImagenes.textContent = `Selecione Max ${4 - imagenesFinal.length} Imagenes`
     }
     contendorInput.querySelector('input').value = ''
 }
 
-export { cargarImagenGrid, cargarImagenGridReporte }
+const cargarImagenFirma = (e, nodo) => {
+
+    const files = e.target.files
+
+    if (files.length === 0) {
+        const mensaje = {
+            titulo: 'ERROR',
+            mensaje: 'Debe seleccionar Una firma'
+        }
+
+        return modalMensaje(mensaje)
+    }
+
+    if (files.length > 1) {
+        const mensaje = {
+            titulo: 'ERROR',
+            mensaje: 'Solo se puede cargar una firma, se cargara la primera seleccionada'
+        }
+
+        return modalMensaje(mensaje)
+    }
+
+    const contenedorImagenes = nodo.querySelector('.imageneFirma')
+    const imagenesCargadas = contenedorImagenes.querySelectorAll('img')
+
+    const file = files[0]
+    const extensiones = ['png', 'jpg', 'jpeg']
+    if (extensiones.indexOf(mime.extension(file.type)) == -1 || file.size > 3145728) {
+        const mensaje = {
+            titulo: 'ERROR',
+            mensaje: 'Solo se aceptan imagenes en formato png, jpg o jpeg y con tamaños de hasta 3Mb'
+        }
+        return modalMensaje(mensaje)
+    }
+
+    if (imagenesCargadas.length > 0) {
+        contenedorImagenes.removeChild(contenedorImagenes.firstChild)
+    }
+
+    const nombre = generateRandomId()
+    const reader = new FileReader()
+    const contenedorImagen = document.createElement('div')
+    contenedorImagen.setAttribute('nombre', `Img-${nombre}`)
+    contenedorImagen.classList.add('m-2', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center', 'col-3')
+    const imagen = document.createElement('img')
+    imagen.classList.add('rounded', 'img-fluid', nombre)
+
+
+    reader.onload = function (e) {
+        imagen.src = e.target.result
+    }
+
+    reader.readAsDataURL(file)
+
+    const usuarios = nodo.querySelector('.editarUsuario')
+
+    const contenedorBotones = document.createElement('div')
+    contenedorBotones.classList.add('contenedorbotones', 'd-flex', 'justify-content-center', 'p-0', 'm-0')
+
+    const iGuardar = document.createElement('i')
+    iGuardar.classList.add('bi', 'bi-save2-fill', 'fs-3', 'fw-bold', 'text-primary', 'p-0')
+    const btnGuardar = document.createElement('button')
+    btnGuardar.setAttribute('imagen', nombre)
+    btnGuardar.classList.add('btn', 'text-center', 'm-1', 'p-0')
+    btnGuardar.appendChild(iGuardar)
+    btnGuardar.onclick = e => {
+        e.preventDefault()
+        console.log('funcion guardar Imagen')
+    }
+    contenedorBotones.appendChild(btnGuardar)
+    contenedorImagen.appendChild(imagen)
+    if (usuarios !== null) contenedorImagen.appendChild(contenedorBotones)
+    contenedorImagenes.appendChild(contenedorImagen)
+
+
+    const contendorInput = nodo.querySelector('.contendorInput')
+    const boton = contendorInput.querySelector('button')
+    boton.textContent = 'Cambiar La Firma del usuario'
+}
+
+
+
+export { cargarImagenGrid, cargarImagenGridReporte, cargarImagenFirma }

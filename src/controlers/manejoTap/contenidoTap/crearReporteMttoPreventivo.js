@@ -147,7 +147,6 @@ const crearReporteMttoPreventivo = () => {
                                 <label for="descripcionSolicitud">Descripcion solicitud</label>
                                 <p class="m-0" id="caracteresReporte">Maximo 1000 caracteres</p>
                                 <textarea class="form-control m-1 descripcionSolicitud" id="" rows="6" readonly="true"></textarea>
-                                ></textarea>
                             </div>
 
                             <div class="form-group col-6">

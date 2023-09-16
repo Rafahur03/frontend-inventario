@@ -1,7 +1,7 @@
 const { app, BrowserWindow, screen, ipcMain } = require('electron')
 const path = require('path')
 
-const { iniciarSesion } = require('./src/controlers/usuarios/usuario.js')
+const { iniciarSesion, crearNuevoUsuario, guardarEdicionUsuario, consultarUsuario } = require('./src/controlers/usuarios/usuario.js')
 const {
     consultarListadoActivos,
     actualizarDatosActivos,
@@ -81,6 +81,8 @@ ipcMain.on('salir', (e) => {
     app.quit()
 })
 
+
+///// usuarios ///////////////////////////////
 // Iniciar sesion 
 let dataUsuarioSesion
 ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
@@ -107,6 +109,29 @@ ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
 
     }
 
+})
+
+
+ipcMain.on('crearNuevoUsuario', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const guardar = await crearNuevoUsuario(data, token)
+    e.returnValue = guardar;
+})
+
+ipcMain.on('editarUsuario', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const guardar = await guardarEdicionUsuario(data, token)
+    e.returnValue = guardar;
+})
+
+ipcMain.on('consultarUsuario', async (e, id) => {
+    if(id == null || parseInt(id) ==NaN){
+        id =  dataUsuarioSesion.data.id
+    }
+
+    const token = dataUsuarioSesion.token
+    const guardar = await consultarUsuario(id, token)
+    e.returnValue = guardar;
 })
 
 /////////////////activos ///////////////////////////////

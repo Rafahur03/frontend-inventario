@@ -1,6 +1,6 @@
 const menu = (vector) => {
-    const data = JSON.parse(vector)
-    data.forEach(element => {
+
+    vector.forEach(element => {
         const divUsuario = document.querySelectorAll('#collapseUsuario a')
         const divActivo = document.querySelectorAll('#collapseActivos a')
         const divReporte = document.querySelectorAll('#collapseReporte a')

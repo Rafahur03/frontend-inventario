@@ -51,7 +51,7 @@ const modalMensaje = data => {
             if (contentModal.classList.contains('border-warning')) contentModal.classList.remove('border-warning')
             if (contentModal.classList.contains('border-danger')) contentModal.classList.remove('border-danger')
             if (!contentModal.classList.contains('border-success')) contentModal.classList.add('border-success')
-            if (!tituloModal.classList.contains('text-danger')) tituloModal.classList.remove('text-danger')
+            if (tituloModal.classList.contains('text-danger')) tituloModal.classList.remove('text-danger')
             if (tituloModal.classList.contains('text-warning')) tituloModal.classList.remove('text-warning')
             if (!tituloModal.classList.contains('text-success')) tituloModal.classList.add('text-success')
             if (textoModal.classList.contains('text-danger')) textoModal.classList.remove('text-danger')
