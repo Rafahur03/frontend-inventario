@@ -21,7 +21,7 @@ const abrirDatos =  (e) => {
     const id = tr.id.split('-')[1]
     const contenedor = cargarNuevaVista(vista[contenido], id)
 
-    if(contenido=== 'Act') cargarDatosActivo(id, contenedor)
+    if(contenido === 'Act') cargarDatosActivo(id, contenedor)
 
 }
 

@@ -1,5 +1,7 @@
 const { ipcRenderer } = require("electron");
 
+import { modalMensaje } from "./helpers/modalEleccion.js";
+
 const form = document.querySelector("form");
 const user = document.querySelector("#idUsuario");
 const password = document.querySelector("#password");
@@ -42,5 +44,10 @@ form.addEventListener("submit", async (e) => {
 	};
 
     ipcRenderer.send("iniciarSesion", datosInicioSesion );
+
+	ipcRenderer.on('error', (event, data) => {
+		modalMensaje({titulo:'ERROR', mensaje: data.msg})
+	})
+
   	
 });

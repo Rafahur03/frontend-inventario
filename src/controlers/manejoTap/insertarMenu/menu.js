@@ -14,8 +14,6 @@ const menu = (vector) => {
                 uCrear.textContent = 'Nuevo Usuario'
                 divUsuario[0].parentElement.insertBefore(uCrear, divUsuario[0])
 
-                break;
-            case 2:
                 const uEditar = document.createElement('a')
                 uEditar.setAttribute('href', '#')
                 uEditar.classList.add('nav-link', 'ms-3', 'item-nav-bar')
@@ -33,15 +31,7 @@ const menu = (vector) => {
                 aCrear.classList.add('nav-link', 'ms-3', 'item-nav-bar')
                 aCrear.id = 'crearActivo'
                 aCrear.textContent = 'Crear Activo'
-                divActivo[1].parentElement.insertBefore(aCrear, divActivo[1])
-                break;
-            case 4:
-                const aCambiar = document.createElement('a')
-                aCambiar.setAttribute('href', '#')
-                aCambiar.classList.add('nav-link', 'ms-3', 'item-nav-bar')
-                aCambiar.id = 'cambiarClasificacion'
-                aCambiar.textContent = 'Cambiar Clasificacion'
-                divActivo[0].parentElement.appendChild(aCambiar)
+                divActivo[0].parentElement.insertBefore(aCrear, divActivo[0])
                 break;
             case 6:
                 const rCrear = document.createElement('a')

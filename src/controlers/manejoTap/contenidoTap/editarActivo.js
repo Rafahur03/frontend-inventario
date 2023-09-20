@@ -1,3 +1,4 @@
+
 const editarActivo = () => {
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
@@ -7,7 +8,7 @@ const editarActivo = () => {
         <div class="container-fluid w-100 border border-1 border-dark m-2 dataActivo">
             <div class="container-fluid me-5 w-100 d-flex ">
                 <div class=" ms-2">
-                    <button type="button" class="btn mt-0 pt-0 guardarEdicion" title="Guardar Datos">
+                    <button type="button" class="btn mt-0 pt-0 d-none guardarEdicion" title="Guardar Datos">
                         <i class="bi bi-save2-fill fs-1 text-warning"></i>
                     </button>
                 </div>
@@ -18,11 +19,16 @@ const editarActivo = () => {
                 </div>
                 <div class="ms-2r"> 
                     <button type="button" class="btn  mt-0 pt-0 print" title="Imprimir Hoja de vida">
-                        <i class="bi bi-file-earmark-pdf-fill fs-1 text-primary"></i>
+                        <i class="bi bi-file-pdf-fill fs-1 text-primary"></i>
                     </button>
                 </div>
                 <div class="ms-auto">
-                    <button type="button" class="btn  mt-0 pt-0 eliminar" title="Eliminar Activo">
+                    <button type="button" class="btn  mt-0 pt-0  d-none cambiarClasificacion" title="Cambiar Clasificacion">
+                        <i class="bi bi-sign-turn-right-fill fs-1 text-danger"></i>                    
+                    </button>
+                </div>
+                <div class="mr-2">
+                    <button type="button" class="btn  mt-0 pt-0 d-none eliminar" title="Eliminar Activo">
                         <i class="bi bi-trash-fill fs-1 text-danger"></i>                    
                     </button>
                 </div>
@@ -411,7 +417,6 @@ const editarActivo = () => {
             </table>
         </div>
     `
-
     return seccion
 }
 

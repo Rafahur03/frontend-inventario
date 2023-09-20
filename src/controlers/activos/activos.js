@@ -2,8 +2,8 @@ require('dotenv').config()
 const mime = require('mime-types')
 const { validarDatosActivo } = require('./validarDatosActivo.js')
 const { validarDatosComponente } = require('../componentes/validarComponentes.js')
-const {validarImagenes} = require('../helpers/validarImagenes.js')
-const {validarDocumentos} = require('../helpers/validarDocumentos.js')
+const { validarImagenes } = require('../helpers/validarImagenes.js')
+const { validarDocumentos } = require('../helpers/validarDocumentos.js')
 
 const urlbase = process.env.API_URL
 
@@ -64,31 +64,31 @@ const crearActivo = async (data, token) => {
     if (validacionCampos.msg) return validacionCampos
 
     if (imagenes.length > 0) {
-        for(let imagen of imagenes){
+        for (let imagen of imagenes) {
             const validacionImagen = validarImagenes(imagen)
-            if(validacionImagen.msg) return validacionImagen
+            if (validacionImagen.msg) return validacionImagen
         }
     } else {
         return { msg: 'El activo debe tener almenos una Imagen' }
     }
 
     if (documentos.length > 0) {
-        for(let documento of documentos){
+        for (let documento of documentos) {
             const validacionDocumento = validarDocumentos(documento)
-            if(validacionDocumento.msg) return validacionDocumento
+            if (validacionDocumento.msg) return validacionDocumento
         }
     }
 
     if (componentes.length > 0) {
-        for(let componente of componentes){
-            componente.idNombre = componente.idNombre.split('-')[1]      
-            componente.idmarca = componente.idmarca.split('-')[1] 
+        for (let componente of componentes) {
+            componente.idNombre = componente.idNombre.split('-')[1]
+            componente.idmarca = componente.idmarca.split('-')[1]
             const validacionComponente = await validarDatosComponente(componente, token, 'crear')
-            if(validacionComponente.msg) return validacionComponente
+            if (validacionComponente.msg) return validacionComponente
         }
-    }   
+    }
 
-    const datos= campos 
+    const datos = campos
     datos.imagenes = imagenes
     datos.documentos = documentos
     datos.componentes = componentes
@@ -355,7 +355,7 @@ const consultarDatosActivoSolicitud = async (id, token) => {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ id:idActivo })
+        body: JSON.stringify({ id: idActivo })
 
     }
 
@@ -379,7 +379,7 @@ const consultarDatosActivoReportePrev = async (id, token) => {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ id:idActivo })
+        body: JSON.stringify({ id: idActivo })
 
     }
 
@@ -396,6 +396,54 @@ const consultarDatosActivoReportePrev = async (id, token) => {
 }
 
 
+const consultarActivoCambiarClasificacion = async (id, token) => {
+    if(parseInt(id) === NaN) return {msg: 'El ID del activo no es valido'}
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ id })
+    }
+
+    try {
+        const url = urlbase + '/consultarActivoCambiarClasificacion'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+const modificarClasificacion = async (data, token) => {
+
+    if(parseInt(data.id) === NaN) return {msg: 'El ID del activo no es valido'}
+    if(parseInt(data.siglas.split('-')[1]) === NaN) return {msg: 'La clasificacion No es valida, debe escoger una clasificacion del listado'}
+    
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ data})
+    }
+
+
+    try {
+        const url = urlbase + '/cambiarClasificacion'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
 module.exports = {
     consultarListadoActivos,
     actualizarDatosActivos,
@@ -409,5 +457,7 @@ module.exports = {
     eliminarActivo,
     crearActivo,
     consultarDatosActivoSolicitud,
-    consultarDatosActivoReportePrev
+    consultarDatosActivoReportePrev,
+    consultarActivoCambiarClasificacion,
+    modificarClasificacion
 }

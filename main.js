@@ -1,7 +1,14 @@
 const { app, BrowserWindow, screen, ipcMain } = require('electron')
 const path = require('path')
 
-const { iniciarSesion, crearNuevoUsuario, guardarEdicionUsuario, consultarUsuario } = require('./src/controlers/usuarios/usuario.js')
+const { iniciarSesion,
+     crearNuevoUsuario,
+      guardarEdicionUsuario,
+       consultarUsuario,
+       cambiarFirma,
+       guardarProveedorUsuario,
+       eliminarProveedorUsuario,
+       cambiarClave} = require('./src/controlers/usuarios/usuario.js')
 const {
     consultarListadoActivos,
     actualizarDatosActivos,
@@ -15,7 +22,10 @@ const {
     eliminarActivo,
     crearActivo,
     consultarDatosActivoSolicitud,
-    consultarDatosActivoReportePrev
+    consultarDatosActivoReportePrev,
+    consultarActivoCambiarClasificacion,
+    modificarClasificacion
+
 } = require('./src/controlers/activos/activos.js')
 
 const { consultarListadoSolicitudes,
@@ -88,9 +98,11 @@ let dataUsuarioSesion
 ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
     try {
         dataUsuarioSesion = await iniciarSesion(datosInicioSesion)
-        if (dataUsuarioSesion.msg) {
-            win.webContents('error', dataUsuarioSesion)
-        }
+        
+        if (dataUsuarioSesion.msg) {    
+           win.webContents.send('error', dataUsuarioSesion)
+           return
+        }   
         win.loadFile('src/view/index.html')
 
         const sesion = {
@@ -100,6 +112,7 @@ ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
             },
             motivacion: dataUsuarioSesion.frase
         }
+
         win.webContents.on('dom-ready', () => {
             win.webContents.send('sesion', sesion)
         })
@@ -111,16 +124,48 @@ ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
 
 })
 
-
 ipcMain.on('crearNuevoUsuario', async (e, data) => {
     const token = dataUsuarioSesion.token
+    data.datosExtendidos = true
     const guardar = await crearNuevoUsuario(data, token)
     e.returnValue = guardar;
 })
 
-ipcMain.on('editarUsuario', async (e, data) => {
+ipcMain.on('guardarEdicionUsuarioExt', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    data.datosExtendidos = true
+    const guardar = await guardarEdicionUsuario(data, token)
+    e.returnValue = guardar;
+})
+
+ipcMain.on('guardarEdicionUsuario', async (e, data) => {
     const token = dataUsuarioSesion.token
     const guardar = await guardarEdicionUsuario(data, token)
+    e.returnValue = guardar;
+})
+
+ipcMain.on('cambiarFirma', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const guardar = await cambiarFirma(data, token)
+    e.returnValue = guardar;
+})
+
+ipcMain.on('guardarProveedorUsuario', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const guardar = await guardarProveedorUsuario(data, token)
+    e.returnValue = guardar;
+})
+
+ipcMain.on('eliminarProveedorUsuario', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const guardar = await eliminarProveedorUsuario(data, token)
+    e.returnValue = guardar;
+})
+
+ipcMain.on('cambiarContraseña', async (e, data) => {
+    data.usuario = dataUsuarioSesion.data.id
+    const token = dataUsuarioSesion.token
+    const guardar = await cambiarClave(data, token)
     e.returnValue = guardar;
 })
 
@@ -153,12 +198,6 @@ ipcMain.on('actualizarDatosActivos', async (e, data) => {
 ipcMain.on('consultarActivo', async (e, id) => {
     const token = dataUsuarioSesion.token
     const activo = await consultarActivo(id, token)
-    if (!activo.msg) {
-        activo.editar = false
-    }
-    if (dataUsuarioSesion.data.permisos.indexOf(3) !== -1) {
-        activo.editar = true
-    }
     e.returnValue = activo;
 })
 
@@ -193,6 +232,19 @@ ipcMain.on('eliminarActivo', async (e, data) => {
     const eliminar = await eliminarActivo(data, token)
     e.returnValue = eliminar;
 })
+
+ipcMain.on('consultarActivoCambiarClasificacion', async (e, id) => {
+    const token = dataUsuarioSesion.token
+    const datos = await consultarActivoCambiarClasificacion(id, token)
+    e.returnValue = datos;
+})
+
+ipcMain.on('CambiarClasificacion', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const datos = await modificarClasificacion(data, token)
+    e.returnValue = datos;
+})
+
 
 //eliminar un docuemnto del activo
 ipcMain.on('eliminarDocumento', async (e, data) => {

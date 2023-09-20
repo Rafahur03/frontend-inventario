@@ -23,38 +23,38 @@ const crearUsuario = () => {
 
                         <label for="tipoId">Tipo Id</label>
                         <input type="text" class="form-control my-1 tipoId"
-                            list="listadoTipoId" value="CC">
+                            list="listadoTipoId">
                         <datalist id="listadoTipoId"></datalist>
 
                         <label for="primerNombre">Primer Nombre</label>
-                        <input type="text" class="form-control my-1 primerNombre" value="Rafael"> 
+                        <input type="text" class="form-control my-1 primerNombre" > 
 
                         <label for="primerApellido">Primer Apellido</label>
-                        <input type="text" class="form-control my-1 primerApellido" value="Huertas">
+                        <input type="text" class="form-control my-1 primerApellido" >
                         
                         <label for="email">email</label>
                         <input type="email" class="form-control my-1 email"
-                            pattern=".+@globex\.com" size="30" value="rhrelrepe@hotmail.com">
+                            pattern=".+@globex\.com" size="30" >
 
                         <label for="contraseña">contraseña</label>
-                        <input type="password" class="form-control my-1 contraseña" value="Anakarina">
+                        <input type="password" class="form-control my-1 contraseña">
 
                     </div>
                     <div class="col-4">
                         <label for="numeroDocumento">Numero Id</label>
-                        <input type="text" class="form-control my-1 numeroDocumento" value="1102849823">
+                        <input type="text" class="form-control my-1 numeroDocumento">
 
                         <label for="segundoNombre">Segundo Nombre</label>
-                        <input type="text" class="form-control my-1 segundoNombre" value="Jose">
+                        <input type="text" class="form-control my-1 segundoNombre" >
 
                         <label for="segundoApellido">Segundo Apellido</label>
-                        <input type="text" class="form-control my-1 segundoApellido" value="Ruiz">
+                        <input type="text" class="form-control my-1 segundoApellido">
 
                         <label for="estado">Estado</label>
                         <input type="text" class="form-control my-1" value="Activo" readOnly >
 
                         <label for="confirmarContraseña">Confirmar contraseña</label>
-                        <input type="password" class="form-control my-1 confirmarContraseña" value="Anakarina">
+                        <input type="password" class="form-control my-1 confirmarContraseña" >
                         
                     </div>
                 </div>
@@ -111,7 +111,7 @@ const crearUsuario = () => {
 
                     <div class=" col-2"> 
                             <div class="form-check form-switch">
-                            <input class="form-check-input checkSolicitudes" type="checkbox" checked>
+                            <input class="form-check-input checkSolicitudes" type="checkbox">
                             <label class="form-check-label" for="checkSolicitudes">Editar Solicitudes</label>
                         </div>
                     </div>

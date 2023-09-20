@@ -2,7 +2,7 @@ import { eliminarProvUsuario } from "./eliminarProveUsuario.js";
 import { guardarProveedor } from "./guardarProveedor.js";
 
 const cargarProveedor = (e, nodo) => {
-
+    e.preventDefault();
     if (e.target.value.includes('--')) {
         const seleccionarProveedores = nodo.querySelector('.seleccionarProveedores')
         const listID = seleccionarProveedores.getAttribute('list')
@@ -29,10 +29,13 @@ const cargarProveedor = (e, nodo) => {
                     const contenedorBotones = document.createElement('div')
                     const usuarios = nodo.querySelector('.editarUsuario')
                     if (usuarios !== null) {
+                        const usuario = usuarios.getAttribute('usuario')
                         const iGuardar = document.createElement('i')
                         iGuardar.classList.add('bi', 'bi-save2-fill', 'fs-3', 'fw-bold', 'text-primary', 'p-0')
                         const btnGuardar = document.createElement('button')
                         btnGuardar.setAttribute('linea', trs.length)
+                        btnGuardar.setAttribute('usuario', usuario)
+                        btnGuardar.setAttribute('opcionId', opciones[i].textContent)
                         btnGuardar.classList.add('btn', 'text-center', 'm-2', 'p-0')
                         btnGuardar.appendChild(iGuardar)
                         btnGuardar.onclick = e => guardarProveedor(e, nodo)

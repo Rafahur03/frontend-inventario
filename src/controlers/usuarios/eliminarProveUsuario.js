@@ -34,14 +34,17 @@ const eliminarProvUsuarioBd =  async (e, nodo) => {
     }
     const proveedor = boton.getAttribute('opcionId')
     if(parseInt(proveedor.split('-')[1]) == NaN)  return modalMensaje({ titulo: 'ERROR', mesaje: 'La eliminacion del proveedor no es valida' })
-
-    const eleccion = modalEleccion({ titulo: 'ELIMINAR PROVEEDRO', mesaje:'esta seguro(a) de quitar la asociacion del proveedor '+ proveedor +' al usuario' })
+   
+    const eleccion = await modalEleccion({ titulo: 'ELIMINAR PROVEEDRO', mensaje:'Esta seguro(a) de eliminar la asociacion del proveedor '+ proveedor +' al usuario' })
     if(!eleccion) return
 
-    const eliminado = ipcRenderer.sendSync('eliminarProveedorUsuario', proveedor)
-    if (eliminado.msg) return modalMensaje({ titulo: 'ERROR', mesaje: eliminado.msg })
+    const id = nodo.querySelector('.numeroDocumento').value
+    const usuario = boton.getAttribute('usuario')
+    const eliminado = ipcRenderer.sendSync('eliminarProveedorUsuario', {proveedor, id, usuario})
+    
+    if (eliminado.msg) return modalMensaje({ titulo: 'ERROR', mensaje: eliminado.msg })
 
-    modalMensaje({ titulo: 'ERROR', mesaje: eliminado.exito })
+    modalMensaje({ titulo: 'EXITO', mensaje: eliminado.exito })
 
     eliminarProvUsuario(e, nodo)
 

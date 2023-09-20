@@ -5,6 +5,7 @@ import { rotarImg } from './activos/rotarImg.js'
 import { eliminarImagen, eliminarImagenReporte } from './eliminarImagenGrid.js'
 import { guardarImagenSolicitud } from '../solicitudes/guardarImagenSolicitud.js'
 import { guardarImgReporte } from '../reportes/guardarImgReporte.js'
+import { cambiarFirmaUsuario } from '../usuarios/cambiarFirmaUsuario.js'
 
 
 const cargarImagenGrid = (e, nodo) => {
@@ -292,7 +293,7 @@ const cargarImagenFirma = (e, nodo) => {
     btnGuardar.appendChild(iGuardar)
     btnGuardar.onclick = e => {
         e.preventDefault()
-        console.log('funcion guardar Imagen')
+        cambiarFirmaUsuario(e, nodo)
     }
     contenedorBotones.appendChild(btnGuardar)
     contenedorImagen.appendChild(imagen)

@@ -1,12 +1,9 @@
 
-
 const validarDatosUsuario = datos => {
 
+    if(datos.usuario) if(validarId(datos.usuario)) return { msg: 'El Usuario es invalido' }
+
     if (validarVacios(datos.tipoId) || validarCaracteres(datos.tipoId) || validarPalabras(datos.tipoId) || datos.tipoId.length > 2) return { msg: 'Debe escoger un tipo de identificacion del listado' }
-
-    if (validarVacios(datos.numeroDocumento)) return { msg: 'El campo numero de documento no puede estar vacio' }
-
-    if (parseInt(datos.numeroDocumento) == NaN) return { msg: 'El campo numero de documento solo puede contener letras'}
 
     if (validarVacios(datos.primerNombre)) return { msg: 'El campo Primer Nombre no puede estar vacio' }
 
@@ -37,43 +34,41 @@ const validarDatosUsuario = datos => {
     if (validarPalabras(datos.email)) return { msg: 'El campo Email no puede contener palabaras como Select, from, Insert, ect..' }
 
     const regex = /^[^@]+@[^@]+\.[a-zA-Z]+$/;
-    if(!regex.test(datos.email)) return { msg: 'Debe ingresar un Email valido'}
+    if (!regex.test(datos.email)) return { msg: 'Debe ingresar un Email valido' }
 
-    if (validarVacios(datos.contraseña)) return { msg: 'El campo Contraseña no puede estar vacio' }
-    
-    if (datos.contraseña.includes(' ')) return { msg: 'El campo Contraseña no puede contener espacios' }
+    if (datos.datosExtendidos) {
+        if (datos.contraseña.length > 0) {
+            if (validarVacios(datos.contraseña)) return { msg: 'El campo Contraseña no puede estar vacio' }
 
-    if(datos.contraseña !== datos.confirmarContraseña) return { msg: 'Las contraseñas no conciden' }
+            if (datos.contraseña.includes(' ')) return { msg: 'El campo Contraseña no puede contener espacios' }
 
-    if (typeof datos.usuarios !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Usuarios' }
+            if (datos.contraseña !== datos.confirmarContraseña) return { msg: 'Las contraseñas no conciden' }
+        }
 
-    if (typeof datos.activos !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Activos' }
+        if (typeof datos.usuarios !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Usuarios' }
 
-    if (typeof datos.solicitudes !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Solicitudes' }
+        if (typeof datos.activos !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Activos' }
 
-    if (typeof datos.reportes !== "boolean") return{ msg: 'Debe Selecioar un estado de la opcion permisos para el menu Reportes' }
+        if (typeof datos.solicitudes !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Solicitudes' }
 
-    if (typeof datos.confguraciones !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Configuraciones' }
-    
-    if (typeof datos.clasificacion !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Cambiar clasificacion activos' }
+        if (typeof datos.reportes !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Reportes' }
 
-    if (datos.proveedores.length == 0) return modalMensaje({ titulo: 'ERROR', mensaje: 'El usuario debe estar asociado al menos un porveedor' })
+        if (typeof datos.confguraciones !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Configuraciones' }
 
-    const validarproveedor = datos.proveedores.map( item =>{
-        if(validarId(item)) return true
-        return false
-    })
+        if (typeof datos.clasificacion !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Cambiar clasificacion activos' }
 
-    if(validarproveedor.some(elemento => elemento === true)) return { msg: 'Todos los proveedores deben ser escogidos del listado' }
+        if (validarVacios(datos.numeroDocumento)) return { msg: 'El campo numero de documento no puede estar vacio' }
 
-    if(!datos.firma) return { msg: 'Debe cargar obligatoriamente una firma' }
+        if (parseInt(datos.numeroDocumento) == NaN) return { msg: 'El campo numero de documento solo puede contener letras' }
+
+    }
 
     return true
 
 }
 
 const validarVacios = dato => {
-    if (dato.includes('')) {
+    if (dato.includes(' ')) {
         if (dato.trim() == '') return true
     } else {
         if (dato == '') return true

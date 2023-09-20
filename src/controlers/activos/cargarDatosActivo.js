@@ -14,9 +14,13 @@ import { eliminarDocumento } from '../helpers/documentacion/eliminardocumento.js
 import { descargarDocumento } from '../helpers/documentacion/descargardocumento.js'
 import { cargarDocumento } from '../helpers/documentacion/cargarDocumento.js'
 import { opcionId } from '../helpers/activos/listasId.js'
+import { modalMensaje } from '../helpers/modalEleccion.js'
+import { cargarTapContenido } from '../manejoTap/cargarTapContenido.js'
 
 const cargarDatosActivo = (id, nodo) => {
     const data = ipcRenderer.sendSync('consultarActivo', id)
+    if(data.msg) return modalMensaje({title: 'ERROR', message: data.msg})
+
     const activo = data.activo
 
     const form = nodo.querySelector('form')
@@ -90,8 +94,7 @@ const cargarDatosActivo = (id, nodo) => {
     recomendacionActivo.value = activo.recomendaciones_Mtto
     observacionActivo.value = activo.obervacion
 
-    if (data.editar) {
-
+    if (activo.editar) {
         const listados = ipcRenderer.sendSync('consultarListasCofigActivos')  
         const idlista = generateRandomId()
 
@@ -215,8 +218,10 @@ const cargarDatosActivo = (id, nodo) => {
 
     const actualizarActivo = nodo.querySelector('.guardarEdicion')
     const eliminarActivob = nodo.querySelector('.eliminar')
+    actualizarActivo.classList.remove('d-none')
     actualizarActivo.setAttribute('activo', `Act-${activo.id}`)
     actualizarActivo.onclick = e => editarActivo(e)
+    eliminarActivob.classList.remove('d-none')
     eliminarActivob.setAttribute('activo', `Act-${activo.id}`)
     eliminarActivob.onclick = e => eliminarActivo(e)
 
@@ -306,8 +311,6 @@ const cargarDatosActivo = (id, nodo) => {
         contenedorImput.classList.remove('d-none')
     }
 
-
-
     // cargamos los componentes en la tabla componentes
     const componentes = data.componentes
     componentes.forEach(element => {
@@ -389,7 +392,15 @@ const cargarDatosActivo = (id, nodo) => {
     });
     imprimirlistadomtto.setAttribute('activo', `Act-${activo.id}`)
     imprimirlistadomtto.onclick = e => imprimirListadoMtoActivo(e)
-
+    
+    if(activo.cambiarClasificacion) {
+        const cambiarClasificacion = document.querySelector('.cambiarClasificacion')
+        cambiarClasificacion.classList.remove('d-none')
+        cambiarClasificacion.onclick = e =>{
+            e.preventDefault()
+            cargarTapContenido('cambiarClasificacion', activo.id)
+        }
+    }
 }
 
 export {

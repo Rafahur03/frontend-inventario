@@ -10,6 +10,31 @@
 </head>
 
 <body>
+    <!-- Button trigger modal -->
+    <button type="button" id="abrirModal" class="d-none" data-bs-toggle="modal"
+        data-bs-target="#modalMensaje">xxx</button>
+    <!-- Modal -->
+    <div class="modal fade" id="modalMensaje" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="modalMensajeLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border border-2" id="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-2" id="modalMensajeLabel"></h5>
+                    <button type="button" class="btn-close d-none" id="cerrarModal" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="fs-3" id="modalBodyText"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="modalAceptar"
+                        data-bs-dismiss="modal">Aceptar</button>
+                    <button type="button" class="btn btn-danger" id="modalCancelar"
+                        data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <section class="vh-100">
         <div class="container container-fluid mb-5">
             <div class="row d-flex justify-content-center align-items-center h-100">

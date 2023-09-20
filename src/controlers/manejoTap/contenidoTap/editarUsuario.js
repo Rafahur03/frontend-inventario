@@ -6,6 +6,7 @@ import { cargarProveedor } from '../../usuarios/cargarProveedor.js';
 import { cargarImagenFirma } from '../../helpers/cargaImagenGrid.js';
 import { cargarTapContenido } from '../cargarTapContenido.js';
 import { eliminarProvUsuarioBd } from '../../usuarios/eliminarProveUsuario.js';
+import { guardarEdicionUsuario, guardarEdicionUsuarioExt } from '../../usuarios/guardarEdicionusuario.js';
 
 const editarUsuario = async (id = null) => {
     const seccion = document.createElement('section');
@@ -167,12 +168,15 @@ const editarUsuario = async (id = null) => {
             </form>
         </div>
     `
-    console.log(id)
     const usuario = ipcRenderer.sendSync('consultarUsuario', id)
     if (usuario.msg) return modalMensaje({ titulo: 'ERROR', mesaje: usuario.msg })
 
     console.log(usuario)
     const edicionUsuario = seccion.querySelector('.editarUsuario')
+    edicionUsuario.onclick = e=>{
+        e.preventDefault()
+        guardarEdicionUsuario(e, seccion)
+    }
     const tipoId = seccion.querySelector('.tipoId')
     const primerNombre = seccion.querySelector('.primerNombre')
     const primerApellido = seccion.querySelector('.primerApellido')
@@ -279,7 +283,9 @@ const editarUsuario = async (id = null) => {
             option.textContent = element.id
             listProveedores.appendChild(option)
         })
-        seleccionarProveedores.onchange = e => cargarProveedor(e, seccion)
+        seleccionarProveedores.onchange = e => {
+            e.preventDefault()
+            cargarProveedor(e, seccion)}
 
         listEstado.id = `${listEstado.id}${idlista}`
         estado.setAttribute('list', listEstado.id)
@@ -291,6 +297,11 @@ const editarUsuario = async (id = null) => {
         })
         estado.onblur = e => opcionId(e)
         estado.readOnly = false
+
+        edicionUsuario.onclick = e=>{
+            e.preventDefault()
+            guardarEdicionUsuarioExt(e, seccion)
+        }
     }
 
     if (usuario.listaUsuarios) {
@@ -355,13 +366,13 @@ const editarUsuario = async (id = null) => {
             iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-3', 'fw-bold', 'text-danger', 'p-0')
             const btnEliminar = document.createElement('button')
             btnEliminar.setAttribute('linea', trs.length)
+            btnEliminar.setAttribute('usuario', 'Us-'+ usuario.id)
             btnEliminar.setAttribute('opcionId', element[0].id)
             btnEliminar.classList.add('btn', 'text-center', 'm-1', 'p-0')
             btnEliminar.appendChild(iEliminar)
             btnEliminar.onclick = e => { 
-
-                eliminarProvUsuarioBd(e, seccion);
-                
+                e.preventDefault();
+                eliminarProvUsuarioBd(e, seccion);                
             }
             contenedorBotones.appendChild(btnEliminar)
             tdboton.appendChild(contenedorBotones)

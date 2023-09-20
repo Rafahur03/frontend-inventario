@@ -11,16 +11,19 @@ const guardarProveedor =  async (e, nodo) => {
     }
     const proveedor = boton.getAttribute('opcionId')
     if(parseInt(proveedor.split('-')[1]) == NaN)  return modalMensaje({ titulo: 'ERROR', mesaje: 'El id del proveedor no es valido' })
+    const id = nodo.querySelector('.numeroDocumento').value
+    const usuario = boton.getAttribute('usuario')
+    const guardado = ipcRenderer.sendSync('guardarProveedorUsuario', {proveedor, id, usuario})
 
-    const guardado = ipcRenderer.sendSync('guardarProveedorUsuario', proveedor)
-    if (guardado.msg) return modalMensaje({ titulo: 'ERROR', mesaje: guardado.msg })
+    if (guardado.msg) return modalMensaje({ titulo: 'ERROR', mensaje: guardado.msg })
 
     const contenedorBotones = boton.parentNode
     contenedorBotones.removeChild(boton)
     const botoneliminar = contenedorBotones.querySelector('button')
+    botoneliminar.setAttribute('usuario', usuario)
     botoneliminar.onclick = (e) => eliminarProvUsuarioBd(e, nodo)
 
-    modalMensaje({ titulo: 'ERROR', mesaje: guardado.exito })
+    modalMensaje({ titulo: 'EXITO', mensaje: guardado.exito })
 }
 
 export{
