@@ -4,20 +4,20 @@ import { rotarImg } from '../helpers/activos/rotarImg.js'
 import { eliminarImgActivo } from '../helpers/eliminarImg.js'
 import { imprimirActivo } from './ImprimirActivo.js'
 import { solicitarMttoActivo } from './solicitarMttoActivo.js'
-import { editarActivo } from './editarActivo.js'
+import { guardarEditarActivo } from './editarActivo.js'
 import { imprimirListadoMtoActivo } from './ImprimirListadoMtto.js'
 import { agregarComponente } from '../componentes/agregarLineaComponente.js'
 import { eliminarActivo } from './eliminarActivo.js'
 import { eliminarComponente } from '../componentes/eliminarComponente.js'
 import { nuevaImagen } from '../helpers/activos/cargarNuevaImagenCarrusel.js'
-import { eliminarDocumento } from '../helpers/documentacion/eliminardocumento.js'
 import { descargarDocumento } from '../helpers/documentacion/descargardocumento.js'
 import { cargarDocumento } from '../helpers/documentacion/cargarDocumento.js'
 import { opcionId } from '../helpers/activos/listasId.js'
 import { modalMensaje } from '../helpers/modalEleccion.js'
 import { cargarTapContenido } from '../manejoTap/cargarTapContenido.js'
 
-const cargarDatosActivo = (id, nodo) => {
+const cargarDatosActiv0o = (id, nodo) => {
+    console.log(nodo)
     const data = ipcRenderer.sendSync('consultarActivo', id)
     if(data.msg) return modalMensaje({title: 'ERROR', message: data.msg})
 
@@ -220,7 +220,7 @@ const cargarDatosActivo = (id, nodo) => {
     const eliminarActivob = nodo.querySelector('.eliminar')
     actualizarActivo.classList.remove('d-none')
     actualizarActivo.setAttribute('activo', `Act-${activo.id}`)
-    actualizarActivo.onclick = e => editarActivo(e)
+    actualizarActivo.onclick = e => guardarEditarActivo(e)
     eliminarActivob.classList.remove('d-none')
     eliminarActivob.setAttribute('activo', `Act-${activo.id}`)
     eliminarActivob.onclick = e => eliminarActivo(e)
@@ -404,5 +404,5 @@ const cargarDatosActivo = (id, nodo) => {
 }
 
 export {
-    cargarDatosActivo
+    cargarDatosActiv0o
 }

@@ -2,7 +2,7 @@ const { ipcRenderer } = require('electron')
 import { modalEleccion, modalMensaje } from '../helpers/modalEleccion.js'
 import { mostarSpinner, cerrarSpinner } from '../helpers/modalSpinner.js'
 
-const editarActivo = async e => {
+const guardarEditarActivo = async e => {
     const tagName = e.target.tagName.toLowerCase()
     let boton
     if (tagName === 'i') {
@@ -132,5 +132,5 @@ const editarActivo = async e => {
 
 
 export {
-    editarActivo
+    guardarEditarActivo
 }

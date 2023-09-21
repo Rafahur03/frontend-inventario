@@ -1,7 +1,7 @@
 const { ipcRenderer } = require('electron')
 import { modalMensaje } from "../helpers/modalEleccion.js"
-import { abrirDatosNuevo } from "../helpers/abrirDatos.js"
-import { cargarDatosActivo } from "./cargarDatosActivo.js"
+import { cargarTapContenido } from "../manejoTap/cargarTapContenido.js"
+
 
 const nuevoActivo = async nodo => {
 
@@ -132,11 +132,8 @@ const nuevoActivo = async nodo => {
     const guardar = ipcRenderer.sendSync('crearActivo', data)
 
     if (guardar.msg) modalMensaje({ titulo: 'error', mensaje: guardar.msg })
+    cargarTapContenido('editarActivo', guardar.id)
 
-    
-    const tapcontent = nodo.parentNode
-    abrirDatosNuevo('Act')
-    cargarDatosActivo(guardar.id, tapcontent)
 }
 
 export {

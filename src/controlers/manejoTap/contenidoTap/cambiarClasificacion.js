@@ -3,8 +3,8 @@ import { modalMensaje } from '../../helpers/modalEleccion.js';
 import { rotarImg } from '../../helpers/activos/rotarImg.js';
 import { generateRandomId } from '../../helpers/nombreRandon.js';
 import { opcionId } from '../../helpers/activos/listasId.js';
-import { cargarNuevaVista } from '../cargarTapContenido.js';
-
+import { cargarTapContenido } from '../cargarTapContenido.js';
+import { editarActivo } from './editarActivo.js';
 
 const cambiarClasificacion = id => {
     const seccion = document.createElement('section');
@@ -89,7 +89,7 @@ const cambiarClasificacion = id => {
 
     if (activo.msg) {
         modalMensaje({ titulo: 'ERROR', mensaje: activo.msg })
-        return seccion      
+        return editarActivo(id)
     }
 
     const codigoActivo = seccion.querySelector('.codigoActivo')
@@ -157,7 +157,7 @@ const cambiarClasificacion = id => {
     })
     guardarEdicion.onclick = () => {
         const clasificacion = clasificacionActivo.getAttribute('opcionId')
-        if(clasificacion === 'Sig--1') return modalMensaje({titulo: 'ERROR', mensaje: 'Debe escojer una nueva clasificacion del listado'})
+        if (clasificacion === 'Sig--1') return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe escojer una nueva clasificacion del listado' })
 
         const data = {
             id,
@@ -166,7 +166,10 @@ const cambiarClasificacion = id => {
         }
 
         const cambiar = ipcRenderer.sendSync('CambiarClasificacion', data)
-        if(cambiar.msg) return modalMensaje({titulo: 'ERROR', mensaje: cambiar.msg})
+        if (cambiar.msg) return modalMensaje({ titulo: 'ERROR', mensaje: cambiar.msg })
+        modalMensaje({ titulo: 'EXITO', mensaje: cambiar.exito })
+        cargarTapContenido('editarActivo', cambiar.id)
+
     }
 
     return seccion
