@@ -1,4 +1,9 @@
-import { agregarLinea } from "../../helpers/configuracion/agregarLinea.js";
+const { ipcRenderer } = require('electron')
+import { modalMensaje } from "../../helpers/modalEleccion.js";
+import { agregarLinea, habilitarNuevoProveedor } from "../../helpers/configuracion/agregarLinea.js";
+import { generateRandomId } from "../../helpers/nombreRandon.js";
+import { opcionId } from "../../helpers/activos/listasId.js";
+import { filtroBusquedaTablas } from "../../helpers/filtroBusqueda.js"
 const configuracionVista = () => {
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
@@ -53,14 +58,14 @@ const configuracionVista = () => {
                     aria-labelledby="area-tab">
                     <h3 class="fw-bold text-center my-2">AREAS</h3>
                     <label for="estadoProveedor" class="fw-bold text-center ">Buscar Areas</label>
-                    <input type="text" class="form-control my-3 w-50 buscarAreas">
+                    <input type="text" class="form-control my-3 w-50 buscarAreas" tabla="tablaAreas">
                     <div class="container-fluid table-responsive m-0 p-0 mb-4 ">
                         <div class="p-1  d-flex flex-row-reverse">
-                            <button type="button" class="btn nuevaArea" nombre="Area" >
+                            <button type="button" class="btn d-none nuevaArea" nombre="Area" >
                                 <i class="bi bi-plus-square-fill fs-2"></i>
                             </button>
                         </div>
-                        <table class="table table-borderless table-striped" id="tablaAreas">
+                        <table class="table table-borderless table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
@@ -69,33 +74,7 @@ const configuracionVista = () => {
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5 idArea"
-                                            readonly>
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5 nombreArea">
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5 estadoArea" list="estadoArea">
-                                        <datalist id="estadoArea"></datalist>
-
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn mt-0 pt-0 crearUsuario" title="Crear Usuario">
-                                            <i class="bi bi-check-square-fill fs-1 text-success"></i>
-                                        </button>
-
-                                        <button type="button" class="btn mt-0 pt-0  guardarEdicion" title="Guardar Datos">
-                                            <i class="bi bi-save2-fill fs-1 text-warning"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                            <tbody id="tablaAreas">                                
                             </tbody>
                         </table>                        
                     </div>
@@ -104,9 +83,14 @@ const configuracionVista = () => {
                     aria-labelledby="marca-tab">
                     <h3 class="fw-bold text-center my-2">MARCAS</h3>
                     <label for="estadoProveedor" class="fw-bold text-center ">Buscar Marcas</label>
-                    <input type="text" class="form-control my-3 w-50 buscarMarcas">
+                    <input type="text" class="form-control my-3 w-50 buscarMarcas" tabla ="tablaMarca">
                     <div class="container-fluid table-responsive m-0 p-0 mb-4 ">
-                        <table class="table table-borderless table-striped" id="tablaMarca">
+                        <div class="p-1  d-flex flex-row-reverse">
+                            <button type="button" class="btn d-none nuevaMarca" nombre="Marca" >
+                                <i class="bi bi-plus-square-fill fs-2"></i>
+                            </button>
+                        </div>
+                        <table class="table table-borderless table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
@@ -115,42 +99,9 @@ const configuracionVista = () => {
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            readonly id="idMarca0">
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            id="nombreMarca0">
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            id="estadoMarca0" list="estadoMarca0">
-                                        <datalist id="estadoMarca0"></datalist>
-
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn mt-0 pt-0 crearUsuario" title="Crear Usuario">
-                                            <i class="bi bi-check-square-fill fs-1 text-success"></i>
-                                        </button>
-
-                                        <button type="button" class="btn mt-0 pt-0  guardarEdicion" title="Guardar Datos">
-                                            <i class="bi bi-save2-fill fs-1 text-warning"></i>
-                                        </button>
-                                    </td>
-                                </tr>                                
+                            <tbody  id="tablaMarca">           
                             </tbody>
                         </table>
-                        <div class="p-1">
-                            <button type="button" class="btn nuevaMarca">
-                                <i class="bi bi-plus-square-fill fs-2"></i>
-                            </button>
-                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade show mt-4" id="tipoActivo" role="tabpanel"
@@ -158,8 +109,13 @@ const configuracionVista = () => {
                     <h3 class="fw-bold text-center my-2">TIPOS DE ACTIVOS</h3>
                     <div class="container-fluid table-responsive m-0 p-0 mb-4 ">
                     <label for="estadoProveedor" class="fw-bold text-center ">Buscar TipoActivos</label>
-                    <input type="text" class="form-control my-3 w-50 buscarTipoActivos">
-                        <table class="table table-borderless table-striped" id="tablaTiposActivos">
+                    <input type="text" class="form-control my-3 w-50 buscarTipoActivos" tabla = "tablaTiposActivos">
+                        <div class="p-1  d-flex flex-row-reverse">
+                            <button type="button" class="btn d-none nuevaTipoActivo" nombre="Tipo Activo" >
+                                <i class="bi bi-plus-square-fill fs-2"></i>
+                            </button>
+                        </div>
+                        <table class="table table-borderless table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
@@ -168,51 +124,23 @@ const configuracionVista = () => {
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            readonly id="idTipoActivo0">
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            id="nombreMarca0">
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            id="estadoMarca0" list="estadoMarca0">
-                                        <datalist id="estadoMarca0"></datalist>
-
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn mt-0 pt-0 crearUsuario" title="Crear Usuario">
-                                            <i class="bi bi-check-square-fill fs-1 text-success"></i>
-                                        </button>
-
-                                        <button type="button" class="btn mt-0 pt-0  guardarEdicion" title="Guardar Datos">
-                                            <i class="bi bi-save2-fill fs-1 text-warning"></i>
-                                        </button>
-                                    </td>
-                                </tr>                               
+                            <tbody  id="tablaTiposActivos">              
                             </tbody>
-                        </table>
-                        <div class="p-1">
-                            <button type="button" class="btn nuevaTipoActivo">
-                                <i class="bi bi-plus-square-fill fs-2"></i>
-                            </button>
-                        </div>
+                        </table>                        
                     </div>
                 </div>
                 <div class="tab-pane fade show mt-4" id="componentes" role="tabpanel"
                     aria-labelledby="componentes-tab">
                     <h3 class="fw-bold text-center my-2">COMPONENTES</h3>
                     <label for="estadoProveedor" class="fw-bold text-center ">Buscar Componentes</label>
-                    <input type="text" class="form-control my-3 w-50 buscarComponentes">
+                    <input type="text" class="form-control my-3 w-50 buscarComponentes" tabla = "tablaComponentes">
                     <div class="container-fluid table-responsive m-0 p-0 mb-4 ">
-                        <table class="table table-borderless table-striped" id="tablaComponentes">
+                        <div class="p-1  d-flex flex-row-reverse">
+                            <button type="button" class="btn d-none nuevaComponente" nombre="Componente" >
+                                <i class="bi bi-plus-square-fill fs-2"></i>
+                            </button>
+                        </div>
+                        <table class="table table-borderless table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
@@ -221,52 +149,23 @@ const configuracionVista = () => {
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            readonly id="idComponente0">
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            id="nombreComponente0">
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            id="estadoComponente0" list="estadoComponente0">
-                                        <datalist id="estadoComponente0"></datalist>
-
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn mt-0 pt-0 crearUsuario" title="Crear Usuario">
-                                            <i class="bi bi-check-square-fill fs-1 text-success"></i>
-                                        </button>
-
-                                        <button type="button" class="btn mt-0 pt-0  guardarEdicion" title="Guardar Datos">
-                                            <i class="bi bi-save2-fill fs-1 text-warning"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                
+                            <tbody id="tablaComponentes">
                             </tbody>
-                        </table>
-                        <div class="p-1">
-                            <button type="button" class="btn nuevaComponente">
-                                <i class="bi bi-plus-square-fill fs-2"></i>
-                            </button>
-                        </div>
+                        </table>                       
                     </div>
                 </div>
                 <div class="tab-pane fade show mt-4" id="frecuenciaMtto" role="tabpanel"
                     aria-labelledby="frecuenciaMtto-tab">
                     <h3 class="fw-bold text-center my-2">FECUENCIA DE MANTENIMEINTO</h3>
                     <label for="estadoProveedor" class="fw-bold text-center ">Buscar Frecuencia</label>
-                    <input type="text" class="form-control my-3 w-50 buscarFrecuencia">
+                    <input type="text" class="form-control my-3 w-50 buscarFrecuencia" tabla = "tablaFrecuencia">
                     <div class="container-fluid table-responsive m-0 p-0 mb-4 ">
-                        <table class="table table-borderless table-striped" id="tablaFrecuencia">
+                        <div class="p-1  d-flex flex-row-reverse">
+                            <button type="button" class="btn d-none nuevaFrecuencia" nombre="Frecuencia" >
+                                <i class="bi bi-plus-square-fill fs-2"></i>
+                            </button>
+                        </div>
+                        <table class="table table-borderless table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
@@ -276,56 +175,23 @@ const configuracionVista = () => {
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            readonly id="idFrecuencia0">
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            id="nombreFrecuencia0">
-                                    </td>
-                                    <td>
-                                        <input type="number"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            id="diasFrecuencia0">
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            id="estadoFrecuencia0" list="estadoFrecuencia0">
-                                        <datalist id="estadoFrecuencia0"></datalist>
-
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn mt-0 pt-0 crearUsuario" title="Crear Usuario">
-                                            <i class="bi bi-check-square-fill fs-1 text-success"></i>
-                                        </button>
-
-                                        <button type="button" class="btn mt-0 pt-0  guardarEdicion" title="Guardar Datos">
-                                            <i class="bi bi-save2-fill fs-1 text-warning"></i>
-                                        </button>
-                                    </td>
-                                </tr>                                
+                            <tbody id="tablaFrecuencia">                  
                             </tbody>
                         </table>
-                        <div class="p-1">
-                            <button type="button" class="btn nuevaFrecuencia" >
-                                <i class="bi bi-plus-square-fill fs-2"></i>
-                            </button>
-                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade show mt-4" id="procesos" role="tabpanel"
                     aria-labelledby="procesos-tab">
                     <h3 class="fw-bold text-center my-2">PROCESOS</h3>
                     <label for="estadoProveedor" class="fw-bold text-center ">Buscar Proceso</label>
-                    <input type="text" class="form-control my-3 w-50 buscarProceso">
+                    <input type="text" class="form-control my-3 w-50 buscarProceso" tabla = "tablaProcesos">
                     <div class="container-fluid table-responsive m-0 p-0 mb-4 ">
-                        <table class="table table-borderless table-striped" id="tablaProcesos">
+                        <div class="p-1  d-flex flex-row-reverse">
+                            <button type="button" class="btn d-none nuevaProceso" nombre="Proceso" >
+                                <i class="bi bi-plus-square-fill fs-2"></i>
+                            </button>
+                        </div>
+                        <table class="table table-borderless table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
@@ -335,57 +201,23 @@ const configuracionVista = () => {
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            readonly id="idProceso0">
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            id="nombreProceso0">
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            id="siglaProceso0">
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            id="estadoProceso0" list="estadoProceso0">
-                                        <datalist id="estadoProceso0"></datalist>
-
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn mt-0 pt-0 crearUsuario" title="Crear Usuario">
-                                            <i class="bi bi-check-square-fill fs-1 text-success"></i>
-                                        </button>
-
-                                        <button type="button" class="btn mt-0 pt-0  guardarEdicion" title="Guardar Datos">
-                                            <i class="bi bi-save2-fill fs-1 text-warning"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                            <tbody id="tablaProcesos">
                             </tbody>
                         </table>
-                        <div class="p-1">
-                            <button type="button" class="btn nuevaProceso" >
-                                <i class="bi bi-plus-square-fill fs-2"></i>
-                            </button>
-                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade show mt-4" id="clasificacionActivos" role="tabpanel"
                     aria-labelledby="clasificacionActivos-tab">
                     <h3 class="fw-bold text-center my-2">CLASIFICACION DE ACTIVOS</h3>
                     <label for="estadoProveedor" class="fw-bold text-center ">Buscar Clasificacion</label>
-                    <input type="text" class="form-control my-3 w-50 buscarclasificacion">
+                    <input type="text" class="form-control my-3 w-50 buscarclasificacion" tabla ="tablaClasificacionActivos">
                     <div class="container-fluid table-responsive m-0 p-0 mb-4 ">
-                            <table class="table table-borderless table-striped"
-                            id="tablaClasificacionActivos">
+                        <div class="p-1  d-flex flex-row-reverse">
+                            <button type="button" class="btn d-none nuevaClasificacionActivo" nombre="Clasificacion Activo" >
+                                <i class="bi bi-plus-square-fill fs-2"></i>
+                            </button>
+                        </div>
+                        <table class="table table-borderless table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
@@ -395,48 +227,9 @@ const configuracionVista = () => {
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            readonly id="idClasificacionActivos">
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            id="nombreClasificacionActivos1">
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            id="siglaClasificacionActivos1">
-                                    </td>
-                                    <td>
-                                        <input type="text"
-                                            class="border border-secondary bg-light border-l border-opacity-25 rounded-3 fs-5"
-                                            id="estadoClasificacionActivos1"
-                                            list="estadoClasificacionActivos1">
-                                        <datalist id="estadoClasificacionActivos1"></datalist>
-
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn mt-0 pt-0 crearUsuario" title="Crear Usuario">
-                                            <i class="bi bi-check-square-fill fs-1 text-success"></i>
-                                        </button>
-
-                                        <button type="button" class="btn mt-0 pt-0  guardarEdicion" title="Guardar Datos">
-                                            <i class="bi bi-save2-fill fs-1 text-warning"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                            <tbody id="tablaClasificacionActivos">
                             </tbody>
-                        </table>
-                        <div class="p-1">
-                            <button type="button" class="btn nuevaClasificacionActivos" >
-                                <i class="bi bi-plus-square-fill fs-2"></i>
-                            </button>
-                        </div>
+                        </table>                        
                     </div>  
                 </div>             
                 <div class="tab-pane fade show mt-4" id="proveedores" role="tabpanel"
@@ -446,85 +239,622 @@ const configuracionVista = () => {
                         <label for="estadoProveedor" class="fw-bold">Buscar Proveedor</label>
                         <input type="text" class="form-control my-3 w-50 buscarProveedor"list="listbuscarProveedor">
                         <datalist id="listbuscarProveedor"></datalist>
+                        <div class="p-1 d-flex flex-row-reverse">
+                            <button type="button" class="btn  d-none nuevaProveedor" nombre="Proveedor" >
+                                <i class="bi bi-plus-square-fill fs-2"></i>
+                            </button>
+                        </div>
                         <div class="row">
                             <div class="col-1">
                                 <label for="idProveedor" class="fw-bold">ID</label>
-                                <input type="text" class="form-control my-1" id="idProveedor">
+                                <input type="text" class="form-control my-1 idProveedor">
                             </div>
                             <div class="col-2">
                                 <label for="nitProveedor" class=" fs-6 fw-bold">Nit</label>
-                                <input type="text" class="form-control my-1" id="nitProveedor">
+                                <input type="text" class="form-control my-1 nitProveedor">
                             </div>
                             <div class="col-1">
                                 <label for="dvProveedor" class=" fs-6 fw-bold">Dv</label>
-                                <input type="text" class="form-control my-1" id="dvProveedor">
+                                <input type="text" class="form-control my-1 dvProveedor">
                             </div>
-                            <div class="col-8">
+                            <div class="col-4">
                                 <label for="razonProveedor" class=" fs-6 fw-bold">Razon Social</label>
-                                <input type="text" class="form-control my-1" id="razonProveedor">
+                                <input type="text" class="form-control my-1 razonProveedor" >
                             </div>
-                            <div class="col-8">
+                            <div class="col-4">
                                 <label for="nombreProveedor" class=" fs-6 fw-bold">Nombre comercial</label>
-                                <input type="text" class="form-control my-1" id="nombreProveedor">
+                                <input type="text" class="form-control my-1 nombreProveedor">
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <label for="contactoProveedor" class=" fs-6 fw-bold">Contacto</label>
-                                <input type="text" class="form-control my-1" id="contactoProveedor">
+                                <input type="text" class="form-control my-1 contactoProveedor">
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <label for="telefonoProveedor" class=" fs-6 fw-bold">Telefono</label>
-                                <input type="text" class="form-control my-1" id="contactoProveedor">
+                                <input type="text" class="form-control my-1 telefonosProveedor">
                             </div>
                             <div class="col-4">
                                 <label for="direccionProveedor" class=" fs-6 fw-bold">Direccion</label>
-                                <input type="text" class="form-control my-1" id="telefonoProveedor">
+                                <input type="text" class="form-control my-1 direccionProveedor">
                             </div>
                             <div class="col-2">
                                 <label for="estadoProveedor" class="fw-bold">Estado</label>
-                                <input type="text" class="form-control my-1" id="direccionProveedor">
-                                <datalist id="estadoClasificacionActivos1"></datalist>
+                                <input type="text" class="form-control my-1 estadoProveedor" list="listEstadoProveedor">
+                                <datalist id="listEstadoProveedor"></datalist>
                             </div>
 
-                            <div class="col-2">
-                                <div class=" ms-2 d-inline">
-                                    <button type="button" class="btn mt-0 pt-0 d-none crearUsuario" title="Crear Usuario">
-                                        <i class="bi bi-check-square-fill fs-1 text-success"></i>
-                                    </button>
-                                </div>
-
-                                <div class=" ms-2 d-inline">
-                                    <button type="button" class="btn mt-0 pt-0 d-none  guardarEdicion" title="Guardar Datos">
-                                        <i class="bi bi-save2-fill fs-1 text-warning"></i>
-                                    </button>
-                                </div>
+                            <div class="col-8">
+                                <label for="descripcionProveedor" class="fw-bold">Descripcion</label>
+                                <textarea type="text" class="form-control my-1 descripcionProveedor" rows ="3"></textarea>                            
                             </div>
-                        </div>
-                        <div class="p-1 mt-3">
-                            <button type="button" class="btn nuevoProvedor">
-                                <i class="bi bi-plus-square-fill fs-3"></i>
-                            </button>
-                        </div>
+                        </div>                         
                     </div>
                 </div>
             </div>
         </div>
     `
+    const listados = ipcRenderer.sendSync('consultarTablasCofig')
+    if (listados.msg) return modalMensaje({ titulo: 'ERROR', mensaje: listados.msg })
+    console.log(listados)
+    const tbodyArea = seccion.querySelector('#tablaAreas')
+    listados.areas.forEach(element => {
+        const tr = document.createElement('tr')
+        const tdId = document.createElement('td')
+        const inputId = document.createElement('input')
+        inputId.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'idArea')
+        inputId.type = 'text'
+        inputId.readOnly = true
+        inputId.value = 'Ar-' + element.id
+        tdId.appendChild(inputId)
+        const tdNombre = document.createElement('td')
+        const inputNombre = document.createElement('input')
+        inputNombre.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'nombreArea')
+        inputNombre.type = 'text'
+        inputNombre.readOnly = true
+        inputNombre.value = element.nombre
+        tdNombre.appendChild(inputNombre)
+        const tdEstado = document.createElement('td')
+        const inputEstado = document.createElement('input')
+        inputEstado.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'estadoArea')
+        inputEstado.readOnly = true
+        inputEstado.type = 'text'
+        inputEstado.value = element.estado
+        tdEstado.appendChild(inputEstado)
 
+        tr.appendChild(tdId)
+        tr.appendChild(tdNombre)
+        tr.appendChild(tdEstado)
+
+
+        if (listados.editar) {
+            const ramndonId = generateRandomId()
+            const datalistEstado = document.createElement('datalist')
+            datalistEstado.id = ramndonId
+            inputEstado.setAttribute('List', ramndonId)
+            inputEstado.readOnly = false
+            inputEstado.setAttribute('opcionId', element.estadoId)
+            inputEstado.onblur = e => opcionId(e)
+            inputNombre.readOnly = false
+            tdEstado.appendChild(datalistEstado)
+            listados.estado.forEach(item => {
+                const option = document.createElement('option')
+                option.value = item.estado
+                option.textContent = item.id
+                datalistEstado.appendChild(option)
+            })
+            const tdBotones = document.createElement('td')
+            const contenedorBotones = document.createElement('div')
+            contenedorBotones.classList.add('d-flex', 'justify-content-center')
+            const botonEditar = document.createElement('button')
+            botonEditar.classList.add('btn', 'mt-0', 'pt-0')
+            botonEditar.type = 'button'
+            botonEditar.title = 'Editar Area'
+            const iCrear = document.createElement('i')
+            iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
+            botonEditar.appendChild(iCrear)
+            contenedorBotones.appendChild(botonEditar)
+            tdBotones.appendChild(contenedorBotones)
+            tr.appendChild(tdBotones)
+        }
+
+        tbodyArea.appendChild(tr)
+    })
+    const areaFiltro = seccion.querySelector('.buscarAreas')
+    areaFiltro.oninput = e => { filtroBusquedaTablas(e) }
+     
+    const tbodymarcas = seccion.querySelector('#tablaMarca')
+    listados.marcas.forEach(element => {
+        const tr = document.createElement('tr')
+        const tdId = document.createElement('td')
+        const inputId = document.createElement('input')
+        inputId.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'idmarca')
+        inputId.type = 'text'
+        inputId.readOnly = true
+        inputId.value = 'Ma-' + element.id
+        tdId.appendChild(inputId)
+        const tdNombre = document.createElement('td')
+        const inputNombre = document.createElement('input')
+        inputNombre.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'nombreMarca')
+        inputNombre.type = 'text'
+        inputNombre.readOnly = true
+        inputNombre.value = element.nombre
+        tdNombre.appendChild(inputNombre)
+        const tdEstado = document.createElement('td')
+        const inputEstado = document.createElement('input')
+        inputEstado.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'estadoMarca')
+        inputEstado.readOnly = true
+        inputEstado.type = 'text'
+        inputEstado.value = element.estado
+        tdEstado.appendChild(inputEstado)
+
+        tr.appendChild(tdId)
+        tr.appendChild(tdNombre)
+        tr.appendChild(tdEstado)
+
+
+        if (listados.editar) {
+            const ramndonId = generateRandomId()
+            const datalistEstado = document.createElement('datalist')
+            datalistEstado.id = ramndonId
+            inputEstado.setAttribute('List', ramndonId)
+            inputEstado.readOnly = false
+            inputEstado.setAttribute('opcionId', element.estadoId)
+            inputEstado.onblur = e => opcionId(e)
+            inputNombre.readOnly = false
+            tdEstado.appendChild(datalistEstado)
+            listados.estado.forEach(item => {
+                const option = document.createElement('option')
+                option.value = item.estado
+                option.textContent = item.id
+                datalistEstado.appendChild(option)
+            })
+            const tdBotones = document.createElement('td')
+            const contenedorBotones = document.createElement('div')
+            contenedorBotones.classList.add('d-flex', 'justify-content-center')
+            const botonEditar = document.createElement('button')
+            botonEditar.classList.add('btn', 'mt-0', 'pt-0')
+            botonEditar.type = 'button'
+            botonEditar.title = 'Editar Marca'
+            const iCrear = document.createElement('i')
+            iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
+            botonEditar.appendChild(iCrear)
+            contenedorBotones.appendChild(botonEditar)
+            tdBotones.appendChild(contenedorBotones)
+            tr.appendChild(tdBotones)
+        }
+
+        tbodymarcas.appendChild(tr)
+    })
+
+    const marcaFiltro = seccion.querySelector('.buscarMarcas')
+    marcaFiltro.oninput = e => { filtroBusquedaTablas(e) }
+
+        
+    const tbodyTiposActivos = seccion.querySelector('#tablaTiposActivos')
+    listados.tipoActivos.forEach(element => {
+        const tr = document.createElement('tr')
+        const tdId = document.createElement('td')
+        const inputId = document.createElement('input')
+        inputId.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'idtipoActivo')
+        inputId.type = 'text'
+        inputId.readOnly = true
+        inputId.value = 'Ta-' + element.id
+        tdId.appendChild(inputId)
+        const tdNombre = document.createElement('td')
+        const inputNombre = document.createElement('input')
+        inputNombre.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'nombretipoActivo')
+        inputNombre.type = 'text'
+        inputNombre.readOnly = true
+        inputNombre.value = element.nombre
+        tdNombre.appendChild(inputNombre)
+        const tdEstado = document.createElement('td')
+        const inputEstado = document.createElement('input')
+        inputEstado.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'estadotipoActivo')
+        inputEstado.readOnly = true
+        inputEstado.type = 'text'
+        inputEstado.value = element.estado
+        tdEstado.appendChild(inputEstado)
+
+        tr.appendChild(tdId)
+        tr.appendChild(tdNombre)
+        tr.appendChild(tdEstado)
+
+
+        if (listados.editar) {
+            const ramndonId = generateRandomId()
+            const datalistEstado = document.createElement('datalist')
+            datalistEstado.id = ramndonId
+            inputEstado.setAttribute('List', ramndonId)
+            inputEstado.readOnly = false
+            inputEstado.setAttribute('opcionId', element.estadoId)
+            inputEstado.onblur = e => opcionId(e)
+            inputNombre.readOnly = false
+            tdEstado.appendChild(datalistEstado)
+            listados.estado.forEach(item => {
+                const option = document.createElement('option')
+                option.value = item.estado
+                option.textContent = item.id
+                datalistEstado.appendChild(option)
+            })
+            const tdBotones = document.createElement('td')
+            const contenedorBotones = document.createElement('div')
+            contenedorBotones.classList.add('d-flex', 'justify-content-center')
+            const botonEditar = document.createElement('button')
+            botonEditar.classList.add('btn', 'mt-0', 'pt-0')
+            botonEditar.type = 'button'
+            botonEditar.title = 'Editar Tipo Activo'
+            const iCrear = document.createElement('i')
+            iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
+            botonEditar.appendChild(iCrear)
+            contenedorBotones.appendChild(botonEditar)
+            tdBotones.appendChild(contenedorBotones)
+            tr.appendChild(tdBotones)
+        }
+
+        tbodyTiposActivos.appendChild(tr)
+    })
+
+    const tipoActivosFiltro = seccion.querySelector('.buscarTipoActivos')
+    tipoActivosFiltro.oninput = e => { filtroBusquedaTablas(e) }
+
+    const tbodyComponente = seccion.querySelector('#tablaComponentes')
+    listados.componentes.forEach(element => {
+        const tr = document.createElement('tr')
+        const tdId = document.createElement('td')
+        const inputId = document.createElement('input')
+        inputId.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'idComponente')
+        inputId.type = 'text'
+        inputId.readOnly = true
+        inputId.value = 'Com-' + element.id
+        tdId.appendChild(inputId)
+        const tdNombre = document.createElement('td')
+        const inputNombre = document.createElement('input')
+        inputNombre.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'nombreComponente')
+        inputNombre.type = 'text'
+        inputNombre.readOnly = true
+        inputNombre.value = element.nombre
+        tdNombre.appendChild(inputNombre)
+        const tdEstado = document.createElement('td')
+        const inputEstado = document.createElement('input')
+        inputEstado.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'estadoComponente')
+        inputEstado.readOnly = true
+        inputEstado.type = 'text'
+        inputEstado.value = element.estado
+        tdEstado.appendChild(inputEstado)
+
+        tr.appendChild(tdId)
+        tr.appendChild(tdNombre)
+        tr.appendChild(tdEstado)
+
+
+        if (listados.editar) {
+            const ramndonId = generateRandomId()
+            const datalistEstado = document.createElement('datalist')
+            datalistEstado.id = ramndonId
+            inputEstado.setAttribute('List', ramndonId)
+            inputEstado.readOnly = false
+            inputEstado.setAttribute('opcionId', element.estadoId)
+            inputEstado.onblur = e => opcionId(e)
+            inputNombre.readOnly = false
+            tdEstado.appendChild(datalistEstado)
+            listados.estado.forEach(item => {
+                const option = document.createElement('option')
+                option.value = item.estado
+                option.textContent = item.id
+                datalistEstado.appendChild(option)
+            })
+            const tdBotones = document.createElement('td')
+            const contenedorBotones = document.createElement('div')
+            contenedorBotones.classList.add('d-flex', 'justify-content-center')
+            const botonEditar = document.createElement('button')
+            botonEditar.classList.add('btn', 'mt-0', 'pt-0')
+            botonEditar.type = 'button'
+            botonEditar.title = 'Editar Componente'
+            const iCrear = document.createElement('i')
+            iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
+            botonEditar.appendChild(iCrear)
+            contenedorBotones.appendChild(botonEditar)
+            tdBotones.appendChild(contenedorBotones)
+            tr.appendChild(tdBotones)
+        }
+
+        tbodyComponente.appendChild(tr)
+    })
+
+    const componentesFiltro = seccion.querySelector('.buscarComponentes')
+    componentesFiltro.oninput = e => { filtroBusquedaTablas(e) }
+  
+    const tbodyFrecuencia = seccion.querySelector('#tablaFrecuencia')
+    listados.frecuencia.forEach(element => {
+        const tr = document.createElement('tr')
+        const tdId = document.createElement('td')
+        const inputId = document.createElement('input')
+        inputId.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'idFrecuencia')
+        inputId.type = 'text'
+        inputId.readOnly = true
+        inputId.value = 'Fre-' + element.id
+        tdId.appendChild(inputId)
+        const tdNombre = document.createElement('td')
+        const inputNombre = document.createElement('input')
+        inputNombre.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'nombreFrecuencia')
+        inputNombre.type = 'text'
+        inputNombre.readOnly = true
+        inputNombre.value = element.nombre
+        tdNombre.appendChild(inputNombre)
+        const tdDias = document.createElement('td')
+        const inputDias = document.createElement('input')
+        inputDias.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'diasFrecuencia')
+        inputDias.type = 'text'
+        inputDias.readOnly = true
+        inputDias.value = element.dias
+        tdDias.appendChild(inputDias)
+        const tdEstado = document.createElement('td')
+        const inputEstado = document.createElement('input')
+        inputEstado.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'estadofrecuencia')
+        inputEstado.readOnly = true
+        inputEstado.type = 'text'
+        inputEstado.value = element.estado
+        tdEstado.appendChild(inputEstado)
+
+        tr.appendChild(tdId)
+        tr.appendChild(tdNombre)
+        tr.appendChild(tdDias)
+        tr.appendChild(tdEstado)
+
+
+        if (listados.editar) {
+            const ramndonId = generateRandomId()
+            const datalistEstado = document.createElement('datalist')
+            datalistEstado.id = ramndonId
+            inputEstado.setAttribute('List', ramndonId)
+            inputEstado.readOnly = false
+            inputEstado.setAttribute('opcionId', element.estadoId)
+            inputEstado.onblur = e => opcionId(e)
+            inputNombre.readOnly = false
+            inputDias.readOnly= false
+            tdEstado.appendChild(datalistEstado)
+            listados.estado.forEach(item => {
+                const option = document.createElement('option')
+                option.value = item.estado
+                option.textContent = item.id
+                datalistEstado.appendChild(option)
+            })
+            const tdBotones = document.createElement('td')
+            const contenedorBotones = document.createElement('div')
+            contenedorBotones.classList.add('d-flex', 'justify-content-center')
+            const botonEditar = document.createElement('button')
+            botonEditar.classList.add('btn', 'mt-0', 'pt-0')
+            botonEditar.type = 'button'
+            botonEditar.title = 'Editar Frecuencia'
+            const iCrear = document.createElement('i')
+            iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
+            botonEditar.appendChild(iCrear)
+            contenedorBotones.appendChild(botonEditar)
+            tdBotones.appendChild(contenedorBotones)
+            tr.appendChild(tdBotones)
+        }
+
+        tbodyFrecuencia.appendChild(tr)
+    })
+
+    const frecuenciaFiltro = seccion.querySelector('.buscarFrecuencia')
+    frecuenciaFiltro.oninput = e => { filtroBusquedaTablas(e) }
+
+    const tbodyproceso = seccion.querySelector('#tablaProcesos')
+    listados.procesos.forEach(element => {
+        const tr = document.createElement('tr')
+        const tdId = document.createElement('td')
+        const inputId = document.createElement('input')
+        inputId.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'idProceso')
+        inputId.type = 'text'
+        inputId.readOnly = true
+        inputId.value = 'Proc-' + element.id
+        tdId.appendChild(inputId)
+        const tdNombre = document.createElement('td')
+        const inputNombre = document.createElement('input')
+        inputNombre.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'nombreProceso')
+        inputNombre.type = 'text'
+        inputNombre.readOnly = true
+        inputNombre.value = element.nombre
+        tdNombre.appendChild(inputNombre)
+        const tdSigla = document.createElement('td')
+        const inputSigla = document.createElement('input')
+        inputSigla.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'siglaproceso')
+        inputSigla.type = 'text'
+        inputSigla.readOnly = true
+        inputSigla.value = element.sigla
+        tdSigla.appendChild(inputSigla)
+        const tdEstado = document.createElement('td')
+        const inputEstado = document.createElement('input')
+        inputEstado.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'estadoProceso')
+        inputEstado.readOnly = true
+        inputEstado.type = 'text'
+        inputEstado.value = element.estado
+        tdEstado.appendChild(inputEstado)
+
+        tr.appendChild(tdId)
+        tr.appendChild(tdNombre)
+        tr.appendChild(tdSigla)
+        tr.appendChild(tdEstado)
+
+
+        if (listados.editar) {
+            const ramndonId = generateRandomId()
+            const datalistEstado = document.createElement('datalist')
+            datalistEstado.id = ramndonId
+            inputEstado.setAttribute('List', ramndonId)
+            inputEstado.readOnly = false
+            inputEstado.setAttribute('opcionId', element.estadoId)
+            inputEstado.onblur = e => opcionId(e)
+            inputNombre.readOnly = false
+            inputSigla.readOnly= false
+            tdEstado.appendChild(datalistEstado)
+            listados.estado.forEach(item => {
+                const option = document.createElement('option')
+                option.value = item.estado
+                option.textContent = item.id
+                datalistEstado.appendChild(option)
+            })
+            const tdBotones = document.createElement('td')
+            const contenedorBotones = document.createElement('div')
+            contenedorBotones.classList.add('d-flex', 'justify-content-center')
+            const botonEditar = document.createElement('button')
+            botonEditar.classList.add('btn', 'mt-0', 'pt-0')
+            botonEditar.type = 'button'
+            botonEditar.title = 'Editar Proceso'
+            const iCrear = document.createElement('i')
+            iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
+            botonEditar.appendChild(iCrear)
+            contenedorBotones.appendChild(botonEditar)
+            tdBotones.appendChild(contenedorBotones)
+            tr.appendChild(tdBotones)
+        }
+
+        tbodyproceso.appendChild(tr)
+    })
+
+    const procesoFiltro = seccion.querySelector('.buscarProceso')
+    procesoFiltro.oninput = e => { filtroBusquedaTablas(e) }
+
+     const tbodyClasificacionActivos = seccion.querySelector('#tablaClasificacionActivos')
+    listados.clasificacionActivos.forEach(element => {
+        const tr = document.createElement('tr')
+        const tdId = document.createElement('td')
+        const inputId = document.createElement('input')
+        inputId.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'idClasificacionActivo')
+        inputId.type = 'text'
+        inputId.readOnly = true
+        inputId.value = 'Cla-' + element.id
+        tdId.appendChild(inputId)
+        const tdNombre = document.createElement('td')
+        const inputNombre = document.createElement('input')
+        inputNombre.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'nombreClasificacionActivo')
+        inputNombre.type = 'text'
+        inputNombre.readOnly = true
+        inputNombre.value = element.nombre
+        tdNombre.appendChild(inputNombre)
+        const tdSigla = document.createElement('td')
+        const inputSigla = document.createElement('input')
+        inputSigla.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'siglaClasificacionActivo')
+        inputSigla.type = 'text'
+        inputSigla.readOnly = true
+        inputSigla.value = element.sigla
+        tdSigla.appendChild(inputSigla)
+        const tdEstado = document.createElement('td')
+        const inputEstado = document.createElement('input')
+        inputEstado.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'estadoClasificacionActivo')
+        inputEstado.readOnly = true
+        inputEstado.type = 'text'
+        inputEstado.value = element.estado
+        tdEstado.appendChild(inputEstado)
+
+        tr.appendChild(tdId)
+        tr.appendChild(tdNombre)
+        tr.appendChild(tdSigla)
+        tr.appendChild(tdEstado)
+
+
+        if (listados.editar) {
+            const ramndonId = generateRandomId()
+            const datalistEstado = document.createElement('datalist')
+            datalistEstado.id = ramndonId
+            inputEstado.setAttribute('List', ramndonId)
+            inputEstado.readOnly = false
+            inputEstado.setAttribute('opcionId', element.estadoId)
+            inputEstado.onblur = e => opcionId(e)
+            inputNombre.readOnly = false
+            inputSigla.readOnly= false
+            tdEstado.appendChild(datalistEstado)
+            listados.estado.forEach(item => {
+                const option = document.createElement('option')
+                option.value = item.estado
+                option.textContent = item.id
+                datalistEstado.appendChild(option)
+            })
+            const tdBotones = document.createElement('td')
+            const contenedorBotones = document.createElement('div')
+            contenedorBotones.classList.add('d-flex', 'justify-content-center')
+            const botonEditar = document.createElement('button')
+            botonEditar.classList.add('btn', 'mt-0', 'pt-0')
+            botonEditar.type = 'button'
+            botonEditar.title = 'Editar Clasificacion Activo'
+            const iCrear = document.createElement('i')
+            iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
+            botonEditar.appendChild(iCrear)
+            contenedorBotones.appendChild(botonEditar)
+            tdBotones.appendChild(contenedorBotones)
+            tr.appendChild(tdBotones)
+        }
+
+        tbodyClasificacionActivos.appendChild(tr)
+    })
+
+    const clasificacionFiltro = seccion.querySelector('.buscarclasificacion')
+    clasificacionFiltro.oninput = e => { filtroBusquedaTablas(e) }
+        
+
+    
+
+    
     const nuevaArea = seccion.querySelector('.nuevaArea')
     const nuevaMarca = seccion.querySelector('.nuevaMarca')
     const nuevaTipoActivo = seccion.querySelector('.nuevaTipoActivo')
     const nuevaComponente = seccion.querySelector('.nuevaComponente')
     const nuevaFrecuencia = seccion.querySelector('.nuevaFrecuencia')
     const nuevaProceso = seccion.querySelector('.nuevaProceso')
-    const nuevaClasificacionActivos = seccion.querySelector('.nuevaClasificacionActivos')
-    const nuevoProvedor = seccion.querySelector('.nuevoProvedor')
+    const nuevaClasificacionActivos = seccion.querySelector('.nuevaClasificacionActivo')
+    const nuevoProveedor = seccion.querySelector('.nuevaProveedor')
+    if (listados.editar) {
+        nuevaArea.classList.remove('d-none')
+        nuevaMarca.classList.remove('d-none')
+        nuevaTipoActivo.classList.remove('d-none')
+        nuevaComponente.classList.remove('d-none')
+        nuevaFrecuencia.classList.remove('d-none')
+        nuevaProceso.classList.remove('d-none')
+        nuevaClasificacionActivos.classList.remove('d-none')
+        nuevoProveedor.classList.remove('d-none')
 
-    nuevaArea.onclick = e => {
-        e.preventDefault()
-        const boton = agregarLinea(e)
-        
+        nuevaArea.onclick = e => {
+            e.preventDefault()
+            const boton = agregarLinea(e)
+        }
+
+        nuevaMarca.onclick = e => {
+            e.preventDefault()
+            const boton = agregarLinea(e)
+        }
+
+        nuevaTipoActivo.onclick = e => {
+            e.preventDefault()
+            const boton = agregarLinea(e)
+        }
+
+        nuevaComponente.onclick = e => {
+            e.preventDefault()
+            const boton = agregarLinea(e)
+        }
+
+        nuevaFrecuencia.onclick = e => {
+            e.preventDefault()
+            const boton = agregarLinea(e)
+        }
+
+        nuevaProceso.onclick = e => {
+            e.preventDefault()
+            const boton = agregarLinea(e)
+        }
+
+        nuevaClasificacionActivos.onclick = e => {
+            e.preventDefault()
+            const boton = agregarLinea(e)
+        }
+
+        nuevoProveedor.onclick = e => {
+            e.preventDefault()
+            const boton = habilitarNuevoProveedor(e)
+        }
+
     }
-
     return seccion
 }
 

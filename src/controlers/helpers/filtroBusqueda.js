@@ -11,4 +11,20 @@ const filtroBusqueda = (e) => {
     })
 }
 
-export { filtroBusqueda } 
+const filtroBusquedaTablas = (e) => {
+    const id = e.target.getAttribute('tabla')
+    const tbody = document.querySelector('#'+id)
+    const tablaTr = tbody.querySelectorAll('tr')
+    tablaTr.forEach(tr => {
+        const inputs = tr.querySelectorAll('input')
+        const values =  Array.from(inputs).map(input => {return input.value})
+        const valores = values.join(' ')
+        if (valores.toLowerCase().indexOf(e.target.value.toLowerCase()) === -1) {
+            tr.classList.add('d-none')
+        } else {
+            tr.classList.remove('d-none')
+        }
+    })
+}
+
+export { filtroBusqueda, filtroBusquedaTablas } 

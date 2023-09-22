@@ -57,7 +57,8 @@ const {
 } = require('./src/controlers/componentes/componentes.js')
 
 const { consultarTablasConfig,
-     consultarListasCofigActivos} = require('./src/controlers/tablasConfig/tablasConfig.js')
+     consultarListasCofigActivos,
+     consultarTodasTablasConfig} = require('./src/controlers/tablasConfig/tablasConfig.js')
 
 require('dotenv').config()
 require('electron-reload')(__dirname, {
@@ -457,3 +458,8 @@ ipcMain.on('datalist', async (e, id) => {
     e.returnValue = resultado;
 })
 
+ipcMain.on('consultarTablasCofig', async (e) => {
+    const token = dataUsuarioSesion.token
+    const resultado = await consultarTodasTablasConfig(token)
+    e.returnValue = resultado;
+})

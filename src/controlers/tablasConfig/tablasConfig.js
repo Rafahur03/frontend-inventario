@@ -60,8 +60,28 @@ const consultarListasCofigReporte = async token => {
 
 }
 
+const consultarTodasTablasConfig = async token => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        }
+    }
+    try {
+        const url = urlbase + '/consultarTodasTablasConfig'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
 module.exports = {
     consultarTablasConfig,
     consultarListasCofigActivos,
-    consultarListasCofigReporte
+    consultarListasCofigReporte,
+    consultarTodasTablasConfig
 }
