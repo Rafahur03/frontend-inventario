@@ -18,7 +18,7 @@ const agregarLinea = (e) => {
     inpiId.type = 'text'
     inpiId.value = 'crear'
     inpiId.readOnly = true
-    inpiId.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'idArea')
+    inpiId.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'id' + nombre.replace(' ', ''))
     tdId.appendChild(inpiId)
     const tdNombre = document.createElement('td')
     const inpNombre = document.createElement('input')
@@ -54,7 +54,7 @@ const agregarLinea = (e) => {
             const tdDias = document.createElement('td')
             const inpDias = document.createElement('input')
             inpDias.type = 'number'
-            inpDias.placeholder ='Frec en dias'
+            inpDias.placeholder = 'Frec en dias'
             inpDias.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'frecuenciaDias')
             tdDias.appendChild(inpDias)
             tr.appendChild(tdDias)
@@ -63,7 +63,7 @@ const agregarLinea = (e) => {
             const tdsiglas = document.createElement('td')
             const inpSiglas = document.createElement('input')
             inpSiglas.type = 'text'
-            inpSiglas.placeholder ='Siglas del proceso'
+            inpSiglas.placeholder = 'Siglas del proceso'
             inpSiglas.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'siglasProceso')
             tdsiglas.appendChild(inpSiglas)
             tr.appendChild(tdsiglas)
@@ -72,8 +72,8 @@ const agregarLinea = (e) => {
             const tdsiglasc = document.createElement('td')
             const inpSiglasc = document.createElement('input')
             inpSiglasc.type = 'text'
-            inpSiglasc.placeholder ='Siglas del proceso'
-            inpSiglasc.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'siglasClasificacion)')
+            inpSiglasc.placeholder = 'Siglas del Clasificaccion Activo'
+            inpSiglasc.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'siglasClasificacion')
             tdsiglasc.appendChild(inpSiglasc)
             tr.appendChild(tdsiglasc)
             break
@@ -122,8 +122,21 @@ const habilitarNuevoProveedor = (e) => {
     estadoProveedor.readOnly = true
     descripcionProveedor.value = ''
     descripcionProveedor.placeholder = 'Describa o liste los productos o servicios que brinda este proveedor'
+    nitProveedor.readOnly = false
+    dvProveedor.readOnly = false
+    razonProveedor.readOnly = false
+    nombreProveedor.readOnly = false
+    contactoProveedor.readOnly = false
+    telefonosProveedor.readOnly = false
+    direccionProveedor.readOnly = false
+    descripcionProveedor.readOnly = false
+
+    const existeBotonEditar = divProveedor.querySelector('.gridBotonesEditar')
+    if (existeBotonEditar !== null) existeBotonEditar.parentElement.removeChild(existeBotonEditar)
+    const existeBotonCrear = divProveedor.querySelector('.gridBotonesCrear')
+    if (existeBotonCrear !== null) return
     const gridBortones = document.createElement('div')
-    gridBortones.classList.add('col-4', 'align-self-center')
+    gridBortones.classList.add('col-4', 'align-self-center', 'gridBotonesCrear')
     const contenedorBotones = document.createElement('div')
     contenedorBotones.classList.add('d-flex', 'justify-content-center')
     const botonCrear = document.createElement('button')

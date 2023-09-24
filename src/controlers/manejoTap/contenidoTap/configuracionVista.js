@@ -3,7 +3,22 @@ import { modalMensaje } from "../../helpers/modalEleccion.js";
 import { agregarLinea, habilitarNuevoProveedor } from "../../helpers/configuracion/agregarLinea.js";
 import { generateRandomId } from "../../helpers/nombreRandon.js";
 import { opcionId } from "../../helpers/activos/listasId.js";
-import { filtroBusquedaTablas } from "../../helpers/filtroBusqueda.js"
+import { filtroBusquedaTablas, filtroBusquedaProveedor } from "../../helpers/filtroBusqueda.js"
+import { guardarArea,
+    guardarMarca,
+    guardarTiposActivo,
+    guardaComponente,
+    guardarFrecuencia,
+    guardaProceso,
+    guardarclasificacionAcivo,
+    guardarProveedor } from "../../tablasConfig/guardarConfig.js";
+import { editarArea,
+    editarMarca,
+    editarTiposActivo,
+    editarComponente,
+    editarFrecuencia,
+    editarProceso,
+    editarclasificacionAcivo} from "../../tablasConfig/editarConfig.js";
 const configuracionVista = () => {
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
@@ -237,55 +252,55 @@ const configuracionVista = () => {
                     <h3 class="fw-bold text-center my-2">PROVEEDORES</h3>
                     <div class="container-fluid m-0 p-0 mb-4 ">
                         <label for="estadoProveedor" class="fw-bold">Buscar Proveedor</label>
-                        <input type="text" class="form-control my-3 w-50 buscarProveedor"list="listbuscarProveedor">
+                        <input type="text" class="form-control my-3 buscarProveedor"list="listbuscarProveedor">
                         <datalist id="listbuscarProveedor"></datalist>
                         <div class="p-1 d-flex flex-row-reverse">
                             <button type="button" class="btn  d-none nuevaProveedor" nombre="Proveedor" >
                                 <i class="bi bi-plus-square-fill fs-2"></i>
                             </button>
                         </div>
-                        <div class="row">
+                        <div class="row" id="datosProveedor">
                             <div class="col-1">
                                 <label for="idProveedor" class="fw-bold">ID</label>
-                                <input type="text" class="form-control my-1 idProveedor">
+                                <input type="text" class="form-control my-1 idProveedor" readOnly>
                             </div>
                             <div class="col-2">
                                 <label for="nitProveedor" class=" fs-6 fw-bold">Nit</label>
-                                <input type="text" class="form-control my-1 nitProveedor">
+                                <input type="text" class="form-control my-1 nitProveedor" readOnly>
                             </div>
                             <div class="col-1">
                                 <label for="dvProveedor" class=" fs-6 fw-bold">Dv</label>
-                                <input type="text" class="form-control my-1 dvProveedor">
+                                <input type="text" class="form-control my-1 dvProveedor" readOnly>
                             </div>
                             <div class="col-4">
                                 <label for="razonProveedor" class=" fs-6 fw-bold">Razon Social</label>
-                                <input type="text" class="form-control my-1 razonProveedor" >
+                                <input type="text" class="form-control my-1 razonProveedor" readOnly >
                             </div>
                             <div class="col-4">
                                 <label for="nombreProveedor" class=" fs-6 fw-bold">Nombre comercial</label>
-                                <input type="text" class="form-control my-1 nombreProveedor">
+                                <input type="text" class="form-control my-1 nombreProveedor" readOnly>
                             </div>
                             <div class="col-3">
                                 <label for="contactoProveedor" class=" fs-6 fw-bold">Contacto</label>
-                                <input type="text" class="form-control my-1 contactoProveedor">
+                                <input type="text" class="form-control my-1 contactoProveedor" readOnly>
                             </div>
                             <div class="col-3">
                                 <label for="telefonoProveedor" class=" fs-6 fw-bold">Telefono</label>
-                                <input type="text" class="form-control my-1 telefonosProveedor">
+                                <input type="text" class="form-control my-1 telefonosProveedor" readOnly>
                             </div>
                             <div class="col-4">
                                 <label for="direccionProveedor" class=" fs-6 fw-bold">Direccion</label>
-                                <input type="text" class="form-control my-1 direccionProveedor">
+                                <input type="text" class="form-control my-1 direccionProveedor" readOnly>
                             </div>
                             <div class="col-2">
                                 <label for="estadoProveedor" class="fw-bold">Estado</label>
-                                <input type="text" class="form-control my-1 estadoProveedor" list="listEstadoProveedor">
+                                <input type="text" class="form-control my-1 estadoProveedor" list="listEstadoProveedor" readOnly>
                                 <datalist id="listEstadoProveedor"></datalist>
                             </div>
 
                             <div class="col-8">
                                 <label for="descripcionProveedor" class="fw-bold">Descripcion</label>
-                                <textarea type="text" class="form-control my-1 descripcionProveedor" rows ="3"></textarea>                            
+                                <textarea type="text" class="form-control my-1 descripcionProveedor" rows ="3" readOnly></textarea>                            
                             </div>
                         </div>                         
                     </div>
@@ -296,6 +311,7 @@ const configuracionVista = () => {
     const listados = ipcRenderer.sendSync('consultarTablasCofig')
     if (listados.msg) return modalMensaje({ titulo: 'ERROR', mensaje: listados.msg })
     console.log(listados)
+
     const tbodyArea = seccion.querySelector('#tablaAreas')
     listados.areas.forEach(element => {
         const tr = document.createElement('tr')
@@ -352,6 +368,7 @@ const configuracionVista = () => {
             const iCrear = document.createElement('i')
             iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
             botonEditar.appendChild(iCrear)
+            botonEditar.onclick = e=>{ editarArea(e)}
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
@@ -361,13 +378,13 @@ const configuracionVista = () => {
     })
     const areaFiltro = seccion.querySelector('.buscarAreas')
     areaFiltro.oninput = e => { filtroBusquedaTablas(e) }
-     
+
     const tbodymarcas = seccion.querySelector('#tablaMarca')
     listados.marcas.forEach(element => {
         const tr = document.createElement('tr')
         const tdId = document.createElement('td')
         const inputId = document.createElement('input')
-        inputId.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'idmarca')
+        inputId.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'idMarca')
         inputId.type = 'text'
         inputId.readOnly = true
         inputId.value = 'Ma-' + element.id
@@ -418,6 +435,7 @@ const configuracionVista = () => {
             const iCrear = document.createElement('i')
             iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
             botonEditar.appendChild(iCrear)
+            botonEditar.onclick = e=>{ editarMarca(e)}
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
@@ -429,13 +447,13 @@ const configuracionVista = () => {
     const marcaFiltro = seccion.querySelector('.buscarMarcas')
     marcaFiltro.oninput = e => { filtroBusquedaTablas(e) }
 
-        
+
     const tbodyTiposActivos = seccion.querySelector('#tablaTiposActivos')
     listados.tipoActivos.forEach(element => {
         const tr = document.createElement('tr')
         const tdId = document.createElement('td')
         const inputId = document.createElement('input')
-        inputId.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'idtipoActivo')
+        inputId.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'idTipoActivo')
         inputId.type = 'text'
         inputId.readOnly = true
         inputId.value = 'Ta-' + element.id
@@ -486,6 +504,7 @@ const configuracionVista = () => {
             const iCrear = document.createElement('i')
             iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
             botonEditar.appendChild(iCrear)
+            botonEditar.onclick = e=>{ editarTiposActivo(e)}
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
@@ -553,6 +572,7 @@ const configuracionVista = () => {
             const iCrear = document.createElement('i')
             iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
             botonEditar.appendChild(iCrear)
+            botonEditar.onclick = e=>{ editarComponente(e)}
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
@@ -563,7 +583,7 @@ const configuracionVista = () => {
 
     const componentesFiltro = seccion.querySelector('.buscarComponentes')
     componentesFiltro.oninput = e => { filtroBusquedaTablas(e) }
-  
+
     const tbodyFrecuencia = seccion.querySelector('#tablaFrecuencia')
     listados.frecuencia.forEach(element => {
         const tr = document.createElement('tr')
@@ -611,7 +631,7 @@ const configuracionVista = () => {
             inputEstado.setAttribute('opcionId', element.estadoId)
             inputEstado.onblur = e => opcionId(e)
             inputNombre.readOnly = false
-            inputDias.readOnly= false
+            inputDias.readOnly = false
             tdEstado.appendChild(datalistEstado)
             listados.estado.forEach(item => {
                 const option = document.createElement('option')
@@ -629,6 +649,7 @@ const configuracionVista = () => {
             const iCrear = document.createElement('i')
             iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
             botonEditar.appendChild(iCrear)
+            botonEditar.onclick = e=>{ editarFrecuencia(e)}
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
@@ -687,7 +708,7 @@ const configuracionVista = () => {
             inputEstado.setAttribute('opcionId', element.estadoId)
             inputEstado.onblur = e => opcionId(e)
             inputNombre.readOnly = false
-            inputSigla.readOnly= false
+            inputSigla.readOnly = false
             tdEstado.appendChild(datalistEstado)
             listados.estado.forEach(item => {
                 const option = document.createElement('option')
@@ -705,6 +726,7 @@ const configuracionVista = () => {
             const iCrear = document.createElement('i')
             iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
             botonEditar.appendChild(iCrear)
+            botonEditar.onclick = e=>{ editarProceso(e)}
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
@@ -716,7 +738,7 @@ const configuracionVista = () => {
     const procesoFiltro = seccion.querySelector('.buscarProceso')
     procesoFiltro.oninput = e => { filtroBusquedaTablas(e) }
 
-     const tbodyClasificacionActivos = seccion.querySelector('#tablaClasificacionActivos')
+    const tbodyClasificacionActivos = seccion.querySelector('#tablaClasificacionActivos')
     listados.clasificacionActivos.forEach(element => {
         const tr = document.createElement('tr')
         const tdId = document.createElement('td')
@@ -763,7 +785,7 @@ const configuracionVista = () => {
             inputEstado.setAttribute('opcionId', element.estadoId)
             inputEstado.onblur = e => opcionId(e)
             inputNombre.readOnly = false
-            inputSigla.readOnly= false
+            inputSigla.readOnly = false
             tdEstado.appendChild(datalistEstado)
             listados.estado.forEach(item => {
                 const option = document.createElement('option')
@@ -781,6 +803,7 @@ const configuracionVista = () => {
             const iCrear = document.createElement('i')
             iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
             botonEditar.appendChild(iCrear)
+            botonEditar.onclick = e=>{ editarclasificacionAcivo(e)}
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
@@ -791,11 +814,26 @@ const configuracionVista = () => {
 
     const clasificacionFiltro = seccion.querySelector('.buscarclasificacion')
     clasificacionFiltro.oninput = e => { filtroBusquedaTablas(e) }
-        
 
-    
+    const dataListaProveedor = seccion.querySelector('#listbuscarProveedor')
+    listados.proveedores.forEach(element => {
+        const option = document.createElement('option')
+        option.value = element.nombre
+        option.textContent = element.id
+        dataListaProveedor.appendChild(option)
+    })
 
-    
+    const listEstadoProveedor = seccion.querySelector('#listEstadoProveedor')
+    listados.estado.forEach(item => {
+        const option = document.createElement('option')
+        option.value = item.estado
+        option.textContent = item.id
+        listEstadoProveedor.appendChild(option)
+    }) 
+
+    const proveedoreFiltro = seccion.querySelector('.buscarProveedor')
+    proveedoreFiltro.oninput = e => { filtroBusquedaProveedor(e) }
+
     const nuevaArea = seccion.querySelector('.nuevaArea')
     const nuevaMarca = seccion.querySelector('.nuevaMarca')
     const nuevaTipoActivo = seccion.querySelector('.nuevaTipoActivo')
@@ -817,44 +855,54 @@ const configuracionVista = () => {
         nuevaArea.onclick = e => {
             e.preventDefault()
             const boton = agregarLinea(e)
+            boton.onclick = e =>{guardarArea(e)}
         }
 
         nuevaMarca.onclick = e => {
             e.preventDefault()
             const boton = agregarLinea(e)
+            boton.onclick = e =>{guardarMarca(e)}
         }
 
         nuevaTipoActivo.onclick = e => {
             e.preventDefault()
             const boton = agregarLinea(e)
+            boton.onclick = e =>{guardarTiposActivo(e)}
         }
 
         nuevaComponente.onclick = e => {
             e.preventDefault()
             const boton = agregarLinea(e)
+            boton.onclick = e =>{guardaComponente(e)}
         }
 
         nuevaFrecuencia.onclick = e => {
             e.preventDefault()
             const boton = agregarLinea(e)
+            boton.onclick = e =>{guardarFrecuencia(e)}
         }
 
         nuevaProceso.onclick = e => {
             e.preventDefault()
             const boton = agregarLinea(e)
+            boton.onclick = e =>{guardaProceso(e)}
         }
 
         nuevaClasificacionActivos.onclick = e => {
             e.preventDefault()
             const boton = agregarLinea(e)
+            boton.onclick = e =>{guardarclasificacionAcivo(e)}
         }
 
         nuevoProveedor.onclick = e => {
             e.preventDefault()
             const boton = habilitarNuevoProveedor(e)
+            boton.onclick = e =>{guardarProveedor(e)}
         }
 
     }
+
+
     return seccion
 }
 
