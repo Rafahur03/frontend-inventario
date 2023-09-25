@@ -32,3 +32,8 @@ document.addEventListener('click', e => {
     }
 });
 
+const salir = document.querySelector('#SalirAplicacion')
+salir.onclick = () =>{
+	ipcRenderer.send("salir");
+};
+

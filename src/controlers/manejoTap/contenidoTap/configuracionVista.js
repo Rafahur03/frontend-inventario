@@ -310,7 +310,6 @@ const configuracionVista = () => {
     `
     const listados = ipcRenderer.sendSync('consultarTablasCofig')
     if (listados.msg) return modalMensaje({ titulo: 'ERROR', mensaje: listados.msg })
-    console.log(listados)
 
     const tbodyArea = seccion.querySelector('#tablaAreas')
     listados.areas.forEach(element => {
@@ -358,6 +357,7 @@ const configuracionVista = () => {
                 option.textContent = item.id
                 datalistEstado.appendChild(option)
             })
+            const idTr = generateRandomId()
             const tdBotones = document.createElement('td')
             const contenedorBotones = document.createElement('div')
             contenedorBotones.classList.add('d-flex', 'justify-content-center')
@@ -372,6 +372,8 @@ const configuracionVista = () => {
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
+            tr.id= idTr
+            botonEditar.setAttribute("idTr", idTr)
         }
 
         tbodyArea.appendChild(tr)
@@ -425,6 +427,7 @@ const configuracionVista = () => {
                 option.textContent = item.id
                 datalistEstado.appendChild(option)
             })
+            const idTr = generateRandomId()
             const tdBotones = document.createElement('td')
             const contenedorBotones = document.createElement('div')
             contenedorBotones.classList.add('d-flex', 'justify-content-center')
@@ -439,6 +442,8 @@ const configuracionVista = () => {
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
+            tr.id= idTr
+            botonEditar.setAttribute("idTr", idTr)
         }
 
         tbodymarcas.appendChild(tr)
@@ -494,6 +499,7 @@ const configuracionVista = () => {
                 option.textContent = item.id
                 datalistEstado.appendChild(option)
             })
+            const idTr = generateRandomId()
             const tdBotones = document.createElement('td')
             const contenedorBotones = document.createElement('div')
             contenedorBotones.classList.add('d-flex', 'justify-content-center')
@@ -508,6 +514,8 @@ const configuracionVista = () => {
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
+            tr.id= idTr
+            botonEditar.setAttribute("idTr", idTr)
         }
 
         tbodyTiposActivos.appendChild(tr)
@@ -562,6 +570,7 @@ const configuracionVista = () => {
                 option.textContent = item.id
                 datalistEstado.appendChild(option)
             })
+            const idTr = generateRandomId()
             const tdBotones = document.createElement('td')
             const contenedorBotones = document.createElement('div')
             contenedorBotones.classList.add('d-flex', 'justify-content-center')
@@ -576,6 +585,8 @@ const configuracionVista = () => {
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
+            tr.id= idTr
+            botonEditar.setAttribute("idTr", idTr)
         }
 
         tbodyComponente.appendChild(tr)
@@ -610,7 +621,7 @@ const configuracionVista = () => {
         tdDias.appendChild(inputDias)
         const tdEstado = document.createElement('td')
         const inputEstado = document.createElement('input')
-        inputEstado.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'estadofrecuencia')
+        inputEstado.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'estadoFrecuencia')
         inputEstado.readOnly = true
         inputEstado.type = 'text'
         inputEstado.value = element.estado
@@ -639,6 +650,7 @@ const configuracionVista = () => {
                 option.textContent = item.id
                 datalistEstado.appendChild(option)
             })
+            const idTr = generateRandomId()
             const tdBotones = document.createElement('td')
             const contenedorBotones = document.createElement('div')
             contenedorBotones.classList.add('d-flex', 'justify-content-center')
@@ -653,6 +665,8 @@ const configuracionVista = () => {
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
+            tr.id= idTr
+            botonEditar.setAttribute("idTr", idTr)
         }
 
         tbodyFrecuencia.appendChild(tr)
@@ -680,7 +694,7 @@ const configuracionVista = () => {
         tdNombre.appendChild(inputNombre)
         const tdSigla = document.createElement('td')
         const inputSigla = document.createElement('input')
-        inputSigla.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'siglaproceso')
+        inputSigla.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'siglasProceso')
         inputSigla.type = 'text'
         inputSigla.readOnly = true
         inputSigla.value = element.sigla
@@ -716,6 +730,7 @@ const configuracionVista = () => {
                 option.textContent = item.id
                 datalistEstado.appendChild(option)
             })
+            const idTr = generateRandomId()
             const tdBotones = document.createElement('td')
             const contenedorBotones = document.createElement('div')
             contenedorBotones.classList.add('d-flex', 'justify-content-center')
@@ -730,6 +745,8 @@ const configuracionVista = () => {
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
+            tr.id= idTr
+            botonEditar.setAttribute("idTr", idTr)
         }
 
         tbodyproceso.appendChild(tr)
@@ -757,7 +774,7 @@ const configuracionVista = () => {
         tdNombre.appendChild(inputNombre)
         const tdSigla = document.createElement('td')
         const inputSigla = document.createElement('input')
-        inputSigla.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'siglaClasificacionActivo')
+        inputSigla.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'siglasClasificacion')
         inputSigla.type = 'text'
         inputSigla.readOnly = true
         inputSigla.value = element.sigla
@@ -793,6 +810,7 @@ const configuracionVista = () => {
                 option.textContent = item.id
                 datalistEstado.appendChild(option)
             })
+            const idTr = generateRandomId()
             const tdBotones = document.createElement('td')
             const contenedorBotones = document.createElement('div')
             contenedorBotones.classList.add('d-flex', 'justify-content-center')
@@ -803,10 +821,12 @@ const configuracionVista = () => {
             const iCrear = document.createElement('i')
             iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
             botonEditar.appendChild(iCrear)
-            botonEditar.onclick = e=>{ editarclasificacionAcivo(e)}
+            botonEditar.onclick = e=> { editarclasificacionAcivo(e)}
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
+            tr.id= idTr
+            botonEditar.setAttribute("idTr", idTr)
         }
 
         tbodyClasificacionActivos.appendChild(tr)

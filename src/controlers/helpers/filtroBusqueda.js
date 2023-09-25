@@ -61,7 +61,6 @@ const filtroBusquedaProveedor = (e) => {
     descripcionProveedor.value = datos[8]
     if (datos.length === 11) {
         estadoProveedor.setAttribute('opcionId', datos[10])
-        idProveedor.readOnly= false
         nitProveedor.readOnly= false
         dvProveedor.readOnly= false
         razonProveedor.readOnly= false

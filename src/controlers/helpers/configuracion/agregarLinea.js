@@ -33,6 +33,19 @@ const agregarLinea = (e) => {
     inpEstado.readOnly = true
     inpEstado.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'estado' + nombre.replace(' ', ''))
     tdEstado.appendChild(inpEstado)
+    const listEstado = document.createElement('datalist')
+    const opcion1 = document.createElement('option')
+    const opcion2 = document.createElement('option')
+    opcion1.value = 'Activo'
+    opcion2.value = 'Dado de baja'
+    opcion1.textContent = 1
+    opcion2.textContent = 2
+    listEstado.appendChild(opcion1)
+    listEstado.appendChild(opcion2)
+    tdEstado.appendChild(listEstado)
+    const idList = generateRandomId()
+    listEstado.id = idList
+    inpEstado.setAttribute('List', idList)
     const contenedorBotones = document.createElement('div')
     contenedorBotones.classList.add('d-flex', 'justify-content-center')
     const tdBotones = document.createElement('td')
@@ -55,7 +68,7 @@ const agregarLinea = (e) => {
             const inpDias = document.createElement('input')
             inpDias.type = 'number'
             inpDias.placeholder = 'Frec en dias'
-            inpDias.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'frecuenciaDias')
+            inpDias.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'diasFrecuencia')
             tdDias.appendChild(inpDias)
             tr.appendChild(tdDias)
             break

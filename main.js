@@ -58,7 +58,9 @@ const {
 
 const { consultarTablasConfig,
      consultarListasCofigActivos,
-     consultarTodasTablasConfig} = require('./src/controlers/tablasConfig/tablasConfig.js')
+     consultarTodasTablasConfig,
+     crearConfig,
+     actualizarConfig} = require('./src/controlers/tablasConfig/tablasConfig.js')
 
 require('dotenv').config()
 require('electron-reload')(__dirname, {
@@ -461,5 +463,21 @@ ipcMain.on('datalist', async (e, id) => {
 ipcMain.on('consultarTablasCofig', async (e) => {
     const token = dataUsuarioSesion.token
     const resultado = await consultarTodasTablasConfig(token)
+    e.returnValue = resultado;
+})
+
+// configuraciones 
+
+ipcMain.on('nuevaConfig', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    
+    const resultado = await crearConfig(data, token)
+    e.returnValue = resultado;
+})
+
+ipcMain.on('editarConfig', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    
+    const resultado = await actualizarConfig(data, token)
     e.returnValue = resultado;
 })
