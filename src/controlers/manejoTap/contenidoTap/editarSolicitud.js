@@ -8,7 +8,7 @@ import { cargarImagenGrid } from '../../helpers/cargaImagenGrid.js';
 import { imprimirSolicitud } from '../../solicitudes/imprimirSolicitud.js';
 import { cargarNuevaVista } from '../cargarTapContenido.js';
 const editarSolicitud = (id) => {
-    
+
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
@@ -190,7 +190,8 @@ const editarSolicitud = (id) => {
         imagen.onload = e => rotarImg(e)
     })
 
-    if (solicitud.img_solicitud.length !== 0) {
+    console.log(solicitud)
+    if (solicitud.img_solicitud !== null) {
         const contenedorImagenes = seccion.querySelector('.imagenesSolicitud')
         solicitud.imagenesSolicitud.forEach((element, index) => {
             const contenedorImagen = document.createElement('div')
@@ -239,10 +240,15 @@ const editarSolicitud = (id) => {
         btneliminarSolicitud.onclick = e => eliminarSolicitud(e, seccion)
 
         descripcionSolicitud.readOnly = false
-
-        if (solicitud.img_solicitud.length < 4) {
+        if (solicitud.img_solicitud !== null) {
+            if (solicitud.img_solicitud.length < 4) {
+                contenedorImput.classList.remove('d-none')
+                imagenesSoporte.textContent = `Selecione ${4 - solicitud.img_solicitud.length} imagenes`
+                inputImagen.onchange = e => cargarImagenGrid(e, seccion)
+            }
+        } else {
             contenedorImput.classList.remove('d-none')
-            imagenesSoporte.textContent = `Selecione ${4 - solicitud.img_solicitud.length} imagenes`
+            imagenesSoporte.textContent = `Selecione 4 imagenes`
             inputImagen.onchange = e => cargarImagenGrid(e, seccion)
         }
     }

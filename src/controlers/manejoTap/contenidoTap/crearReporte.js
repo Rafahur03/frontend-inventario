@@ -216,6 +216,7 @@ const crearReporte = id => {
     `
 
     const solicitud = ipcRenderer.sendSync('consultarSolicitudReporte', id)
+    console.log(solicitud, id)
     if (solicitud.msg) return modalMensaje({ titulo: 'ERROR', mensaje: solicitud.msg })
     
     const idActivo = seccion.querySelector('.idActivo')

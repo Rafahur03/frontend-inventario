@@ -1,10 +1,11 @@
 const { ipcRenderer } = require('electron')
 import { filtroBusqueda } from "../../helpers/filtroBusqueda.js";
 import { abrirDatos } from "../../helpers/abrirDatos.js"
+import { modalMensaje } from "../../helpers/modalEleccion.js";
 
 const listadoSolicitudes = () => {
 
-    const listado = ipcRenderer.sendSync('listadoSolicitud');
+    
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
@@ -36,6 +37,10 @@ const listadoSolicitudes = () => {
         </div>
     `
     const tbody = seccion.querySelector('tbody')
+    const listado = ipcRenderer.sendSync('listadoSolicitud');
+    console.log(listado)
+    if(listado.msg)  return modalMensaje( {titulo :'ERROR', mensaje: listado.msg})
+
     listado.forEach(element => {
         const tr = document.createElement('tr')
 

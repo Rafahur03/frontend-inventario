@@ -75,7 +75,7 @@ app.whenReady().then(() => {
     win = new BrowserWindow({
         width: screen.getPrimaryDisplay().size.width,
         height: screen.getPrimaryDisplay().size.height,
-        fullscreen: true,
+        fullscreen: false,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
