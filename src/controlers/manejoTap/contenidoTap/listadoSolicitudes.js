@@ -38,7 +38,6 @@ const listadoSolicitudes = () => {
     `
     const tbody = seccion.querySelector('tbody')
     const listado = ipcRenderer.sendSync('listadoSolicitud');
-    console.log(listado)
     if(listado.msg)  return modalMensaje( {titulo :'ERROR', mensaje: listado.msg})
 
     listado.forEach(element => {

@@ -131,9 +131,9 @@ const nuevoReporte = async (e, nodo) => {
     }
 
     const respuesta = ipcRenderer.sendSync('nuevoReporte', data)
-    if (respuesta.msg)  modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
-    
-    cargarTapContenido('consultarReporte', respuesta)
+    if (respuesta.msg) return  modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
+    modalMensaje({ titulo: 'exito', mensaje: respuesta.exito })
+    cargarTapContenido('consultarReporte', respuesta.reporte)
 
 }
 

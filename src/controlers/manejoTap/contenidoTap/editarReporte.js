@@ -243,7 +243,7 @@ const editarReporte = id => {
             </form>
         </div>        
     `
-
+    
     const reporte = ipcRenderer.sendSync('consultarReporte', id);
     if (reporte.msg) return modalMensaje({ titulo: 'ERROR', mensaje: reporte.msg })
 
@@ -333,7 +333,7 @@ const editarReporte = id => {
         imagen.onload = e => rotarImg(e)
     })
 
-    if (reporte.imgReporte.length !== 0) {
+    if (reporte.imgReporte !== null) {
         const contenedorImagenes = seccion.querySelector('.imagenesReporte')
         reporte.imagenesReporte.forEach((element, index) => {
             const contenedorImagen = document.createElement('div')
@@ -369,8 +369,8 @@ const editarReporte = id => {
         const contenedorpdf = document.createElement('div')
         contenedorpdf.classList.add('m-2', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center', 'embed-responsive')
         const iframepdf = document.createElement('iframe')
-        iframepdf.classList.add('embed-responsive-item', 'w-75','mh-50') 
-        iframepdf.style.height = '400px'   
+        iframepdf.classList.add('embed-responsive-item', 'w-75', 'mh-50')
+        iframepdf.style.height = '400px'
         iframepdf.src = reporte.soporte
         const contenedorBotones = document.createElement('div')
         contenedorBotones.classList.add('contenedorbotones', 'd-flex', 'justify-content-center', 'p-0', 'm-0')
@@ -409,13 +409,22 @@ const editarReporte = id => {
     if (reporte.editar) {
 
         // habilita el boton selecionar imagen
-        if (reporte.imgReporte.length < 4) {
+        if (reporte.imgReporte !== null) {
+            if (reporte.imgReporte.length < 4) {
+                const botonImagenes = seccion.querySelector('.imagenesSoporte')
+                const contendorInput = seccion.querySelector('.contendorInput')
+                const input = contendorInput.querySelector('input')
+                input.onchange = e => cargarImagenGridReporte(e, seccion)
+                botonImagenes.textContent = `Selecione ${4 - reporte.imgReporte.length} imagenes`
+                contendorInput.classList.remove('d-none')
+            }
+        }else{
             const botonImagenes = seccion.querySelector('.imagenesSoporte')
-            const contendorInput = seccion.querySelector('.contendorInput')
-            const input = contendorInput.querySelector('input')
-            input.onchange = e => cargarImagenGridReporte(e, seccion)
-            botonImagenes.textContent = `Selecione ${4 - reporte.imgReporte.length } imagenes`
-            contendorInput.classList.remove('d-none')
+                const contendorInput = seccion.querySelector('.contendorInput')
+                const input = contendorInput.querySelector('input')
+                input.onchange = e => cargarImagenGridReporte(e, seccion)
+                botonImagenes.textContent = `Selecione 4 imagenes`
+                contendorInput.classList.remove('d-none')
         }
 
         const idlista = generateRandomId()
