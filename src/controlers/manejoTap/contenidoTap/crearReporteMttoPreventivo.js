@@ -216,6 +216,7 @@ const crearReporteMttoPreventivo = () => {
     `
     const listado = ipcRenderer.sendSync('listadoActivo');
     if(listado.msg) return modalMensaje({ titulo:'ERROR', mensaje:'No se pudieron cargar los activos.'})
+    
     const idlista = generateRandomId()
     const idActivo = seccion.querySelector('.idActivo')
     const listActivo = seccion.querySelector('#listActivo')
