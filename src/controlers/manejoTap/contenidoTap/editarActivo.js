@@ -441,43 +441,43 @@ const editarActivo = (id) => {
     if (data.msg) {
         modalMensaje({ titulo: 'ERROR', mensaje: data.msg })
         return listadoActivos()
-    } 
+    }
     const activo = data.activo
 
-    const form =  seccion.querySelector('form')
-    const codigoInterno =  seccion.querySelector('.codigoInterno')
-    const modeloActivo =  seccion.querySelector('.modeloActivo')
-    const areaActivo =  seccion.querySelector('.areaActivo')
-    const nombreActivo =  seccion.querySelector('.nombreActivo')
-    const serieActivo =  seccion.querySelector('.serieActivo')
-    const ubicacionActivo =  seccion.querySelector('.ubicacionActivo')
-    const marcaActivo =  seccion.querySelector('.marcaActivo')
-    const procesoActivo =  seccion.querySelector('.procesoActivo')
-    const estadoActivo =  seccion.querySelector('.estadoActivo')
-    const proveedorActivo =  seccion.querySelector('.proveedorActivo')
-    const nitProveedor =  seccion.querySelector('.nitProveedor')
-    const responsableActivo =  seccion.querySelector('.responsableActivo')
-    const tipoActivo =  seccion.querySelector('.tipoActivo')
-    const facturaActivo =  seccion.querySelector('.facturaActivo')
-    const valorActivo =  seccion.querySelector('.valorActivo')
-    const ingresoActivo =  seccion.querySelector('.ingresoActivo')
-    const fechaCompra =  seccion.querySelector('.fechaCompra')
-    const garantiaActivo =  seccion.querySelector('.garantiaActivo')
-    const frecuenciaMtto =  seccion.querySelector('.frecuenciaMtto')
-    const proximoMtto =  seccion.querySelector('.proximoMtto')
-    const descripcionActivo =  seccion.querySelector('.descripcionActivo')
-    const recomendacionActivo =  seccion.querySelector('.recomendacionActivo')
-    const observacionActivo =  seccion.querySelector('.observacionActivo')
-    const componentesbody =  seccion.querySelector('.componentes').querySelector('tbody')
-    const historialMantenimiento =  seccion.querySelector('.historialMantenimiento').querySelector('tbody')
-    const carruselimagenes =  seccion.querySelector('.carousel-inner')
-    const carruseldiv =  seccion.querySelector('#carouselExampleControls')
+    const form = seccion.querySelector('form')
+    const codigoInterno = seccion.querySelector('.codigoInterno')
+    const modeloActivo = seccion.querySelector('.modeloActivo')
+    const areaActivo = seccion.querySelector('.areaActivo')
+    const nombreActivo = seccion.querySelector('.nombreActivo')
+    const serieActivo = seccion.querySelector('.serieActivo')
+    const ubicacionActivo = seccion.querySelector('.ubicacionActivo')
+    const marcaActivo = seccion.querySelector('.marcaActivo')
+    const procesoActivo = seccion.querySelector('.procesoActivo')
+    const estadoActivo = seccion.querySelector('.estadoActivo')
+    const proveedorActivo = seccion.querySelector('.proveedorActivo')
+    const nitProveedor = seccion.querySelector('.nitProveedor')
+    const responsableActivo = seccion.querySelector('.responsableActivo')
+    const tipoActivo = seccion.querySelector('.tipoActivo')
+    const facturaActivo = seccion.querySelector('.facturaActivo')
+    const valorActivo = seccion.querySelector('.valorActivo')
+    const ingresoActivo = seccion.querySelector('.ingresoActivo')
+    const fechaCompra = seccion.querySelector('.fechaCompra')
+    const garantiaActivo = seccion.querySelector('.garantiaActivo')
+    const frecuenciaMtto = seccion.querySelector('.frecuenciaMtto')
+    const proximoMtto = seccion.querySelector('.proximoMtto')
+    const descripcionActivo = seccion.querySelector('.descripcionActivo')
+    const recomendacionActivo = seccion.querySelector('.recomendacionActivo')
+    const observacionActivo = seccion.querySelector('.observacionActivo')
+    const componentesbody = seccion.querySelector('.componentes').querySelector('tbody')
+    const historialMantenimiento = seccion.querySelector('.historialMantenimiento').querySelector('tbody')
+    const carruselimagenes = seccion.querySelector('.carousel-inner')
+    const carruseldiv = seccion.querySelector('#carouselExampleControls')
     const carruselBotonSiguente = carruseldiv.querySelector('.carousel-control-next')
     const carruselBotonAnterior = carruseldiv.querySelector('.carousel-control-prev')
-    const solicitarMantenimiento =  seccion.querySelector('.solicitar')
-    const imprimirHojadevida =  seccion.querySelector('.print')
-    const imprimirlistadomtto =  seccion.querySelector('.imprimirlistadomtto')
-    const agregarcomponentes =  seccion.querySelector('.componentes').querySelector('.nuevoComponente')
+    const solicitarMantenimiento = seccion.querySelector('.solicitar')
+    const imprimirHojadevida = seccion.querySelector('.print')
+    const imprimirlistadomtto = seccion.querySelector('.imprimirlistadomtto')
+    const agregarcomponentes = seccion.querySelector('.componentes').querySelector('.nuevoComponente')
 
 
     // cargamos los datos del activo
@@ -522,7 +522,7 @@ const editarActivo = (id) => {
         modeloActivo.removeAttribute('readonly')
 
         areaActivo.removeAttribute('readonly')
-        const listaAreas =  seccion.querySelector('#listaAreas')
+        const listaAreas = seccion.querySelector('#listaAreas')
         listaAreas.id = `${listaAreas.id}${idlista}`
         areaActivo.setAttribute('list', listaAreas.id)
         areaActivo.onblur = e => opcionId(e)
@@ -538,7 +538,7 @@ const editarActivo = (id) => {
         ubicacionActivo.removeAttribute('readonly')
 
         marcaActivo.removeAttribute('readonly')
-        const listaMarca =  seccion.querySelector('#listMarcas')
+        const listaMarca = seccion.querySelector('#listMarcas')
         listaMarca.id = `${listaMarca.id}${idlista}`
         marcaActivo.setAttribute('list', listaMarca.id)
         marcaActivo.onblur = e => opcionId(e)
@@ -550,7 +550,7 @@ const editarActivo = (id) => {
         })
 
         procesoActivo.removeAttribute('readonly')
-        const listProceso =  seccion.querySelector('#listProceso')
+        const listProceso = seccion.querySelector('#listProceso')
         listProceso.id = `${listProceso.id}${idlista}`
         procesoActivo.setAttribute('list', listProceso.id)
         procesoActivo.onblur = e => opcionId(e)
@@ -562,7 +562,7 @@ const editarActivo = (id) => {
         })
 
         estadoActivo.removeAttribute('readonly')
-        const listaEstado =  seccion.querySelector('#listaEstado')
+        const listaEstado = seccion.querySelector('#listaEstado')
         listaEstado.id = `${listaEstado.id}${idlista}`
         estadoActivo.setAttribute('list', listaEstado.id)
         estadoActivo.onblur = e => opcionId(e)
@@ -574,7 +574,7 @@ const editarActivo = (id) => {
         })
 
         proveedorActivo.removeAttribute('readonly')
-        const listaProveedores =  seccion.querySelector('#listaProveedores')
+        const listaProveedores = seccion.querySelector('#listaProveedores')
         listaProveedores.id = `${listaProveedores.id}${idlista}`
         proveedorActivo.setAttribute('list', listaProveedores.id)
         proveedorActivo.onblur = e => opcionId(e)
@@ -586,7 +586,7 @@ const editarActivo = (id) => {
         })
 
         responsableActivo.removeAttribute('readonly')
-        const listaUsuario =  seccion.querySelector('#listaUsuario')
+        const listaUsuario = seccion.querySelector('#listaUsuario')
         listaUsuario.id = `${listaUsuario.id}${idlista}`
         responsableActivo.setAttribute('list', listaUsuario.id)
         responsableActivo.onblur = e => opcionId(e)
@@ -598,7 +598,7 @@ const editarActivo = (id) => {
         })
 
         tipoActivo.removeAttribute('readonly')
-        const listaTipoActivo =  seccion.querySelector('#listaTipoActivo')
+        const listaTipoActivo = seccion.querySelector('#listaTipoActivo')
         listaTipoActivo.id = `${listaTipoActivo.id}${idlista}`
         tipoActivo.setAttribute('list', listaTipoActivo.id)
         tipoActivo.onblur = e => opcionId(e)
@@ -615,7 +615,7 @@ const editarActivo = (id) => {
         garantiaActivo.removeAttribute('readonly')
 
         frecuenciaMtto.removeAttribute('readonly')
-        const listaFrecuencia =  seccion.querySelector('#listaFrecuencia')
+        const listaFrecuencia = seccion.querySelector('#listaFrecuencia')
         listaFrecuencia.id = `${listaFrecuencia.id}${idlista}`
         frecuenciaMtto.setAttribute('list', listaFrecuencia.id)
         frecuenciaMtto.onblur = e => opcionId(e)
@@ -637,8 +637,8 @@ const editarActivo = (id) => {
     imprimirHojadevida.setAttribute('activo', `Act-${activo.id}`)
     imprimirHojadevida.onclick = e => imprimirActivo(e)
 
-    const actualizarActivo =  seccion.querySelector('.guardarEdicion')
-    const eliminarActivob =  seccion.querySelector('.eliminar')
+    const actualizarActivo = seccion.querySelector('.guardarEdicion')
+    const eliminarActivob = seccion.querySelector('.eliminar')
     actualizarActivo.classList.remove('d-none')
     actualizarActivo.setAttribute('activo', `Act-${activo.id}`)
     actualizarActivo.onclick = e => guardarEditarActivo(e)
@@ -652,47 +652,49 @@ const editarActivo = (id) => {
     carruselBotonSiguente.setAttribute('data-bs-target', `#${idCarrusel}`)
     carruselBotonAnterior.setAttribute('data-bs-target', `#${idCarrusel}`)
 
+    carruselimagenes.setAttribute('activo', 'Act-'+ activo.id)
     // cargamos las imagnes en el carrusel
-    activo.BufferImagenes.forEach((element, index) => {
-        const itemCarrusel = document.createElement('div')
-        itemCarrusel.setAttribute('nombre', `Img-${activo.url_img[index]}`)
-        itemCarrusel.classList.add('carousel-item', `Img-${activo.url_img[index]}`)
-        if (index == 0) itemCarrusel.classList.add('active')
-        const divContainer = document.createElement('div')
-        const divContainerBotones = document.createElement('div')
-        divContainerBotones.classList.add('d-block')
-        divContainer.classList.add('d-flex', 'flex-column', 'justify-content-center', 'align-items-center')
-        const imagen = document.createElement('img')
-        imagen.classList.add('d-block', 'w-100')
-        imagen.src = element
-        const iEliminar = document.createElement('i')
-        iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-1', 'fw-bold', 'text-danger')
-        const btnEliminar = document.createElement('button')
-        btnEliminar.setAttribute('activo', `Act-${activo.id}`)
-        btnEliminar.title = 'Eliminar'
-        btnEliminar.setAttribute('nombre', `Img-${activo.url_img[index]}`)
-        btnEliminar.classList.add('btn', 'p-0')
-        btnEliminar.type = 'button'
-        btnEliminar.appendChild(iEliminar)
-        divContainer.appendChild(imagen)
-        divContainerBotones.appendChild(btnEliminar)
-        divContainer.appendChild(divContainerBotones)
-        itemCarrusel.appendChild(divContainer)
-        carruselimagenes.appendChild(itemCarrusel)
-        carruselimagenes.setAttribute('activo', `Act-${activo.id}`)
-        imagen.onload = e => rotarImg(e)
-        btnEliminar.onclick = e => eliminarImgActivo(e)
-    })
-
+    if (activo.url_img !== null && activo.url_img !== '') {
+        activo.BufferImagenes.forEach((element, index) => {
+            const itemCarrusel = document.createElement('div')
+            itemCarrusel.setAttribute('nombre', `Img-${activo.url_img[index]}`)
+            itemCarrusel.classList.add('carousel-item', `Img-${activo.url_img[index]}`)
+            if (index == 0) itemCarrusel.classList.add('active')
+            const divContainer = document.createElement('div')
+            const divContainerBotones = document.createElement('div')
+            divContainerBotones.classList.add('d-block')
+            divContainer.classList.add('d-flex', 'flex-column', 'justify-content-center', 'align-items-center')
+            const imagen = document.createElement('img')
+            imagen.classList.add('d-block', 'w-100')
+            imagen.src = element
+            const iEliminar = document.createElement('i')
+            iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-1', 'fw-bold', 'text-danger')
+            const btnEliminar = document.createElement('button')
+            btnEliminar.setAttribute('activo', `Act-${activo.id}`)
+            btnEliminar.title = 'Eliminar'
+            btnEliminar.setAttribute('nombre', `Img-${activo.url_img[index]}`)
+            btnEliminar.classList.add('btn', 'p-0')
+            btnEliminar.type = 'button'
+            btnEliminar.appendChild(iEliminar)
+            divContainer.appendChild(imagen)
+            divContainerBotones.appendChild(btnEliminar)
+            divContainer.appendChild(divContainerBotones)
+            itemCarrusel.appendChild(divContainer)
+            carruselimagenes.appendChild(itemCarrusel)
+            carruselimagenes.setAttribute('activo', `Act-${activo.id}`)
+            imagen.onload = e => rotarImg(e)
+            btnEliminar.onclick = e => eliminarImgActivo(e)
+        })
+    }
     // mostrar input de cargar imagenes en el activo
     if (activo.url_img.length >= 6) {
-        const contendorImputImagenesActivo =  seccion.querySelector('.contendorImputImagenesActivo')
+        const contendorImputImagenesActivo = seccion.querySelector('.contendorImputImagenesActivo')
         contendorImputImagenesActivo.classList.add('d-none')
     } else {
-        const bottontImagenActivo =  seccion.querySelector('.buttonImagenesActivo')
+        const bottontImagenActivo = seccion.querySelector('.buttonImagenesActivo')
         const faltantes = 6 - activo.url_img.length
         bottontImagenActivo.textContent = `Selecione Max ${faltantes} Imagenes`
-        const inputImagenActivo =  seccion.querySelector('.inputImagenesActivo')
+        const inputImagenActivo = seccion.querySelector('.inputImagenesActivo')
         inputImagenActivo.onchange = e => nuevaImagen(e)
     }
 
@@ -701,7 +703,7 @@ const editarActivo = (id) => {
         const documentos = Object.keys(activo.Buffersoportes)
         if (documentos.length > 0) {
             documentos.forEach(documento => {
-                const containerDocumento =  seccion.querySelector(`.${documento}`)
+                const containerDocumento = seccion.querySelector(`.${documento}`)
                 if (containerDocumento !== undefined) {
                     const embedpdf = containerDocumento.querySelector('embed')
                     embedpdf.src = activo.Buffersoportes[`${documento}`]
@@ -723,7 +725,7 @@ const editarActivo = (id) => {
     }
 
     //cargar los input de los que no tiene documentos
-    const containersDocumentos =  seccion.querySelectorAll('.d-none.pdfDocumentacion')
+    const containersDocumentos = seccion.querySelectorAll('.d-none.pdfDocumentacion')
     for (const element of containersDocumentos) {
         const contenedorImput = element.nextSibling.nextSibling
         const inputdocumento = contenedorImput.querySelector('input')

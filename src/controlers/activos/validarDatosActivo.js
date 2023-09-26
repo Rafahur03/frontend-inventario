@@ -165,7 +165,6 @@ const validarDatosActivo = async (datos, token, crear = null) => {
         if (config[7][key].id == responsableId) if (config[7][key].nombre !== datos.responsableActivo) {
             encontrado = 1
             return { msg: 'Debe escoger un responsable del listado' }
-
         }
         if (encontrado !== null) break
         if (config[7].length === key + 1) return { msg: 'Debe escoger un responsable del listado' }
@@ -173,9 +172,11 @@ const validarDatosActivo = async (datos, token, crear = null) => {
 
     for (let key in config[8]) {
         let encontrado = null
+
         if (config[8][key].id == frecuecniaId) {
-            if (datos.proveedorActivo.includes('--')) {
+            if (datos.frecuenciaMtto.includes('--')) {
                 const frecuencia = datos.frecuenciaMtto.split('--')[1].trim()
+
                 if (config[8][key].frecuencia !== frecuencia) {
                     encontrado = 1
                     return { msg: 'Debe escoger una frecuencia del listado' }
@@ -196,16 +197,15 @@ const validarDatosActivo = async (datos, token, crear = null) => {
     const timestamp = Date.now();
     const fechaActual = new Date(timestamp).toISOString().substring(0, 10)
 
-    if (datos.ingresoActivo == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de ingreso es obligatorio' })
-    if (datos.fechaCompra == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de compra es obligatorio' })
-    if (datos.garantiaActivo == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de vencimiento de la garantia es obligatorio' })
-    if (datos.proximoMtto == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de proximo mantenimiento es obligatorio' })
+    if (datos.ingresoActivo == '') return { msg: 'El campo fecha de ingreso es obligatorio' }
+    if (datos.fechaCompra == '') return { msg: 'El campo fecha de compra es obligatorio' }
+    if (datos.garantiaActivo == '') return {msg: 'El campo fecha de vencimiento de la garantia es obligatorio' }
+    if (datos.proximoMtto == '') return { msg: 'El campo fecha de proximo mantenimiento es obligatorio' }
 
-    if (datos.ingresoActivo !== fechaActual) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha de ingreso no puede ser diferente del dia de hoy' })
-    if (datos.fechaCompra > fechaActual) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha de compra no puede ser superior al dia de hoy' })
-    if (datos.garantiaActivo < datos.fechaCompra) return modalMensaje({ titulo: 'ERROR', mensaje: 'la fecha de vencimiento de la garantia no puede ser menor a la fecha de compra' })
-    if (datos.proximoMtto < fechaActual) return modalMensaje({ titulo: 'ERROR', mensaje: 'la fecha del proximo mantenimeinto no puede ser inferior a el dia de hoy' })
-
+    if (crear !== null) if (datos.ingresoActivo !== fechaActual) return {msg: 'La fecha de ingreso no puede ser diferente del dia de hoy' }
+    if (datos.fechaCompra > fechaActual) return { msg: 'La fecha de compra no puede ser superior al dia de hoy' }
+    if (datos.garantiaActivo < datos.fechaCompra) return {msg: 'la fecha de vencimiento de la garantia no puede ser menor a la fecha de compra' }
+    if (datos.proximoMtto < fechaActual) return {msg: 'la fecha del proximo mantenimeinto no puede ser inferior a el dia de hoy' }
 
     return true
 

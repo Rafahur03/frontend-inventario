@@ -72,26 +72,16 @@ const guardarEditarActivo = async e => {
     }
     
     const mensaje = {
-        titulo: "ACTUALIZAR COMPONENTE",
+        titulo: "ACTUALIZAR ACTIVO",
         mensaje: "Esta seguro(a) de actualizar los datos del activo, favor Confirme la accion"
     }
 
     const eleccion = await modalEleccion(mensaje)
     if (!eleccion) return
 
-    mostarSpinner()
     const actualizar = ipcRenderer.sendSync('actualizarDatosActivos', data);
-
-
-    if (actualizar.msg) {
-        mensaje.titulo = "ERROR"
-        mensaje.mensaje = actualizar.msg
-        cerrarSpinner()
-        modalMensaje(mensaje)
-        return
-    }
-
-    cerrarSpinner()
+    if (actualizar.msg) return  modalMensaje({titulo: "ERROR",mensaje : actualizar.msg})
+    
     modalMensaje({titulo: 'EXITO', mensaje: actualizar.exito})
     const activoActualizado = actualizar.activo
     

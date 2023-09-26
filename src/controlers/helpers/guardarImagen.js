@@ -12,9 +12,11 @@ const guardarImgActivo = e => {
     }
 
     const activo = boton.getAttribute('activo')
+
     const id = activo.split('-')[1]
     const nombre = boton.getAttribute('nombre').split('-')[1]
     const form = document.querySelector(`[form-activo="${activo}"]`)
+
     const codigo = form.querySelector('.codigoInterno').value
     const contenedorBotones = boton.parentNode
     const imagen = contenedorBotones.previousSibling

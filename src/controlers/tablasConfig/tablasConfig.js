@@ -18,27 +18,7 @@ const consultarListasCofigActivos = async token => {
         return (json)
     } catch (error) {
         console.error(error);
-    } const consultarTablasConfig = async (config, token) => {
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ config })
-
-        }
-
-        try {
-            const url = urlbase + '/consultarconfig'
-            const response = await fetch(url, options);
-            const json = await response.json();
-            return (json)
-        } catch (error) {
-            console.error(error);
-        }
     }
-
 }
 
 const consultarListasCofigReporte = async token => {
@@ -100,7 +80,7 @@ const consultarTablasConfig = async (config, token) => {
     }
 }
 
-const crearConfig = async (data, token) => {    
+const crearConfig = async (data, token) => {
     switch (data.id) {
         case 'area':
             if (!data.area) return { msg: ' el campo Nombre del Area es obligatorio' }
@@ -242,7 +222,7 @@ const actualizarConfig = async (data, token) => {
             if (validarCaracteres(data.marca)) return { msg: ' el campo Nombre del Marca no debe llevar palabras reservadas como [], {},()' }
             if (!data.estado) return { msg: 'El Campo estado de la Marca no es valido, Escoja un estado de la lista' }
             if (validarId(data.estado)) return { msg: 'El Campo estado de la Marca no es valido, Escoja un estado de la lista' }
-            
+
             data.id = 2
             break
         case 'tipoActivo':
@@ -254,7 +234,7 @@ const actualizarConfig = async (data, token) => {
             if (validarCaracteres(data.tipoActivo)) return { msg: ' el campo Nombre del Tipo Activo no debe llevar palabras reservadas como [], {},()' }
             if (!data.estado) return { msg: 'El Campo estado del Tipo de Activo no es valido, Escoja un estado de la lista' }
             if (validarId(data.estado)) return { msg: 'El Campo estado del Tipo de Activo no es valido, Escoja un estado de la lista' }
-            
+
             data.id = 3
             break
         case 'componente':
@@ -266,7 +246,7 @@ const actualizarConfig = async (data, token) => {
             if (validarCaracteres(data.componente)) return { msg: ' el campo Nombre del Componente no debe llevar palabras reservadas como [], {},()' }
             if (!data.estado) return { msg: 'El Campo estado del Componente no es valido, Escoja un estado de la lista' }
             if (validarId(data.estado)) return { msg: 'El Campo estado del Componente no es valido, Escoja un estado de la lista' }
-            
+
             data.id = 4
             break
         case 'frecuencia':
@@ -281,7 +261,7 @@ const actualizarConfig = async (data, token) => {
             if (parseInt(data.dias) == NaN) return { msg: ' el campo dias de la Frecuencia debe ser numerico' }
             if (!data.estado) return { msg: 'El Campo estado de la Frecuencia no es valido, Escoja un estado de la lista' }
             if (validarId(data.estado)) return { msg: 'El Campo estado de la Frecuencia no es valido, Escoja un estado de la lista' }
-            
+
             data.id = 5
             break
         case 'proceso':
@@ -297,7 +277,7 @@ const actualizarConfig = async (data, token) => {
             if (validarCaracteres(data.sigla)) return { msg: ' el campo Siglas del Proceso no debe llevar palabras reservadas como [], {},()' }
             if (!data.estado) return { msg: 'El Campo estado del Proceso no es valido, Escoja un estado de la lista' }
             if (validarId(data.estado)) return { msg: 'El Campo estado del Proceso no es valido, Escoja un estado de la lista' }
-            
+
             data.id = 6
             break
         case 'clasificacionActivo':
@@ -313,7 +293,7 @@ const actualizarConfig = async (data, token) => {
             if (validarCaracteres(data.sigla)) return { msg: ' el campo Siglas de la Clasificacion Activo no debe llevar palabras reservadas como [], {},()' }
             if (!data.estado) return { msg: 'El Campo estado del Clasificacion Activo no es valido, Escoja un estado de la lista' }
             if (validarId(data.estado)) return { msg: 'El Campo estado del Clasificacion Activo no es valido, Escoja un estado de la lista' }
-            
+
             data.id = 7
             break
         case 'proveedor':
@@ -352,7 +332,7 @@ const actualizarConfig = async (data, token) => {
             if (validarCaracteres(data.descripcionProveedor)) return { msg: ' el campo Descripcion del Proveedor no debe llevar palabras reservadas como [], {},()' }
             if (!data.estado) return { msg: 'El Campo estado del Proveedor no es valido, Escoja un estado de la lista' }
             if (validarId(data.estado)) return { msg: 'El Campo estado del Proveedor no es valido, Escoja un estado de la lista' }
-            
+
             data.id = 8
             break
         default:
