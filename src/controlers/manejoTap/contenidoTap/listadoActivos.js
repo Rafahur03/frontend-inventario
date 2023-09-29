@@ -69,6 +69,10 @@ const listadoActivos = () => {
 
     const filtro = seccion.querySelector('.inputFiltro')
     filtro.oninput = e => { filtroBusqueda(e) }
+    filtro.onkeyup = e => {
+        e.preventDefault()
+        if (e.keyCode === 13) return
+    }
 
     return seccion
 }

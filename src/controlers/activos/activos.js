@@ -145,7 +145,7 @@ const guardarImagenActivo = async (datos, token) => {
     const imgBase64 = datos.dataImagen.split(',')[1]
     const decodedData = Buffer.from(imgBase64, 'base64');
     const sizeInBytes = decodedData.length
-    if (sizeInBytes > 3145728) return { msg: 'Solo se aceptan imagenes de tamaño hasta 3 Mb' }
+    if (sizeInBytes > 6291456) return { msg: 'Solo se aceptan imagenes de tamaño hasta 6 Mb' }
 
     const data = {
         id: datos.id,
@@ -178,7 +178,7 @@ const eliminarImagenActivo = async (datos, token) => {
     const data = {
         id: datos.activo.split('-')[1],
         codigo: datos.codigo,
-        imagen: `${datos.nombre.split('-')[1]}-${datos.nombre.split('-')[2]}`
+        imagen: `${datos.nombre.split('-')[1]}`
     }
 
     const options = {

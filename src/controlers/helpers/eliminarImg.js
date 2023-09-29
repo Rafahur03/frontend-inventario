@@ -61,7 +61,7 @@ const eliminarImgActivo = async e => {
         }
     }
 
-    modalMensaje({ titulo: 'EXITO', mensaje: eliminarImagen.elimnada.exito })
+    modalMensaje({ titulo: 'EXITO', mensaje: eliminarImagen.exito })
 
 }
 

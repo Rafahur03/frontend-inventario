@@ -1,9 +1,10 @@
 const { consultarListasCofigActivos } = require('../tablasConfig/tablasConfig.js');
 
 const validarDatosActivo = async (datos, token, crear = null) => {
+   
 
     for (const key in datos) {
-
+        
         if (key === 'areaId' || key === 'marcaId' || key === 'procesoId' || key === 'estadoId' || key === 'proveedorId' || key === 'responsableId' || key === 'tipoId' || key === 'frecuecniaId' || key === 'activo') {
             if (validarVacios(datos[key])) return { msg: 'El campo ' + key.replace('Id', '') + ' no puede estar vacio escoja un elemento de la lista o primero' }
 
@@ -15,7 +16,7 @@ const validarDatosActivo = async (datos, token, crear = null) => {
 
         } else {
 
-            if (key !== 'descripcionActivo' && key !== 'recomendacionActivo' && key !== 'observacionActivo') {
+            if (key !== 'descripcionActivo' && key !== 'recomendacionActivo' && key !== 'observacionActivo' && key !== 'proximoMtto') {
 
                 if (validarVacios(datos[key])) return { msg: 'El campo ' + key.replace('Activo', '') + ' no puede estar vacio' }
 
@@ -31,7 +32,6 @@ const validarDatosActivo = async (datos, token, crear = null) => {
 
         }
     }
-
     const config = await consultarListasCofigActivos(token)
     if (config.msg) return { msg: 'no se pudieron validar correctamente los datos intentalo más tarde' }
 
@@ -45,8 +45,8 @@ const validarDatosActivo = async (datos, token, crear = null) => {
 
 
 
-    if (crear !== null){
-       const clasificacionId = datos.clasificacionId.split('-')[1]
+    if (crear !== null) {
+        const clasificacionId = datos.clasificacionId.split('-')[1]
         for (let key in config[0]) {
             let encontrado = null
             if (config[0][key].id == clasificacionId) {
@@ -193,20 +193,29 @@ const validarDatosActivo = async (datos, token, crear = null) => {
         if (encontrado !== null) break
         if (config[8].length === key + 1) return { msg: 'Debe escoger un frecuencia del listado' }
     }
-
+  
     const timestamp = Date.now();
     const fechaActual = new Date(timestamp).toISOString().substring(0, 10)
 
     if (datos.ingresoActivo == '') return { msg: 'El campo fecha de ingreso es obligatorio' }
     if (datos.fechaCompra == '') return { msg: 'El campo fecha de compra es obligatorio' }
-    if (datos.garantiaActivo == '') return {msg: 'El campo fecha de vencimiento de la garantia es obligatorio' }
-    if (datos.proximoMtto == '') return { msg: 'El campo fecha de proximo mantenimiento es obligatorio' }
+    if (datos.garantiaActivo == '') return { msg: 'El campo fecha de vencimiento de la garantia es obligatorio' }
 
-    if (crear !== null) if (datos.ingresoActivo !== fechaActual) return {msg: 'La fecha de ingreso no puede ser diferente del dia de hoy' }
+    if (datos.estadoId) {
+        if (datos.estadoId.split('-')[1] != 2) {
+            if (datos.proximoMtto == '') return { msg: 'El campo fecha de proximo mantenimiento es obligatorio' }
+            if (datos.proximoMtto < fechaActual) return { msg: 'la fecha del proximo mantenimeinto no puede ser inferior a el dia de hoy' }
+        }
+    } else {
+        if (datos.proximoMtto == '') return { msg: 'El campo fecha de proximo mantenimiento es obligatorio' }
+        if (datos.proximoMtto < fechaActual) return { msg: 'la fecha del proximo mantenimeinto no puede ser inferior a el dia de hoy' }
+
+    }
+    if (crear !== null) if (datos.ingresoActivo !== fechaActual) return { msg: 'La fecha de ingreso no puede ser diferente del dia de hoy' }
     if (datos.fechaCompra > fechaActual) return { msg: 'La fecha de compra no puede ser superior al dia de hoy' }
-    if (datos.garantiaActivo < datos.fechaCompra) return {msg: 'la fecha de vencimiento de la garantia no puede ser menor a la fecha de compra' }
-    if (datos.proximoMtto < fechaActual) return {msg: 'la fecha del proximo mantenimeinto no puede ser inferior a el dia de hoy' }
+    if (datos.garantiaActivo < datos.fechaCompra) return { msg: 'la fecha de vencimiento de la garantia no puede ser menor a la fecha de compra' }
 
+    
     return true
 
 }

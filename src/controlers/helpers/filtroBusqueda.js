@@ -2,17 +2,20 @@ import { opcionId } from "./activos/listasId.js"
 import { editarProveedor } from "../tablasConfig/editarConfig.js"
 
 const filtroBusqueda = (e) => {
-    const tapActiva = document.querySelector('#TabContent').querySelector('.active')
-    const tablaTr = tapActiva.querySelector('tbody').querySelectorAll('tr')
-    tablaTr.forEach(tr => {
-        if (tr.innerText.toLowerCase().indexOf(e.target.value.toLowerCase()) === -1) {
-            tr.classList.add('d-none')
-        } else {
-            tr.classList.remove('d-none')
+    const searchTerm = e.target.value.trim().toLowerCase();
+    const tapActiva = document.querySelector('#TabContent').querySelector('.active');
+    const tabla = tapActiva.querySelector('tbody');
+    const tablaTr = tabla.querySelectorAll('tr');
 
+    tablaTr.forEach(tr => {
+        const text = tr.innerText.toLowerCase();
+        if (text.indexOf(searchTerm) === -1) {
+            tr.classList.add('d-none');
+        } else {
+            tr.classList.remove('d-none');
         }
-    })
-}
+    });
+};
 
 const filtroBusquedaTablas = (e) => {
     const id = e.target.getAttribute('tabla')

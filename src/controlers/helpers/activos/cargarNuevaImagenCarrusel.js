@@ -15,7 +15,7 @@ const nuevaImagen = (e, crear = null) => {
     const extensiones = ['png', 'jpg', 'jpeg']
 
     for (const file of files) {
-        if (extensiones.indexOf(mime.extension(file.type)) !== -1 && file.size <= 3145728) {
+        if (extensiones.indexOf(mime.extension(file.type)) !== -1 && file.size <= 6291456) {
             imagenes.push(file)
         }
     }
@@ -23,7 +23,7 @@ const nuevaImagen = (e, crear = null) => {
     if (imagenes.length === 0) {
         const mensaje = {
             titulo: 'ERROR',
-            mensaje: 'Solo se aceptan imagenes en formato png, jpg o jpeg y con tamaños de hasta 3Mb'
+            mensaje: 'Solo se aceptan imagenes en formato png, jpg o jpeg y con tamaños de hasta 6Mb'
         }
         modalMensaje(mensaje)
         return
@@ -119,6 +119,8 @@ const nuevaImagen = (e, crear = null) => {
         const botonInput = contenedorinput.querySelector('.buttonImagenesActivo')
         botonInput.textContent = `Selecione Max ${6 - cantidadImagenes} Imagenes`
     }
+
+    e.target.value =''
 
 }
 

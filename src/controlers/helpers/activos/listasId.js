@@ -3,9 +3,8 @@ import { modalMensaje } from "../modalEleccion.js"
 const opcionId = e => {
 
     const input = e.target
-    if (input.value.trim() == '') {
-        return modalMensaje({ titulo: 'ERROR', mensaje: 'No ha seleccionado ninguna opcion' })
-    }
+    if (input.value.trim() == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'No ha seleccionado ninguna opcion' })
+
     const idLista = input.getAttribute('list')
     const lista = document.querySelector('#' + idLista)
     const opciones = lista.querySelectorAll('option')
@@ -19,13 +18,18 @@ const opcionId = e => {
         inputnit = contendorInputNit.querySelector('input')
     }
 
+    let encontradoInput = true
     for (let opcion of opciones) {
-        if (input.value.includes('--')) {
-            if (opcion.value === input.value) {
-                if (opcion.textContent !== opcionId) {
+        if (input.value.includes('--')) {// EVALUA SI EL VALOR INGRESADO VIENE SEPARADO POR -- O -
+            if (opcion.value === input.value.trim()) { // EVAKUA SI EL VALOR INGRESADO ES IGUAL A EL VALOR DE UNA OPCION 
+                if (opcion.textContent !== opcionId) { // EVALUA SI EL VALOR DEL OPCION ID ES IGUAL A EL ID DE LA OPCION SELECCIONADA
+                    // SI NO ES IGUAL ASIGNA UN NUEVO OPCON ID Y SALE 
                     input.setAttribute('opcionId', complemento + '-' + opcion.textContent);
+                    encontradoInput = false               
+                    break
+                }else{
+                    encontradoInput = false 
                 }
-                break
             }
         } else {
             let opcionvalor
@@ -37,14 +41,16 @@ const opcionId = e => {
             if (opcionvalor === input.value) {
                 if (opcion.textContent !== opcionId) {
                     input.setAttribute('opcionId', complemento + '-' + opcion.textContent);
-                    if (opcion.textContent !== opcionId) {
-                        input.setAttribute('opcionId', complemento + '-' + opcion.textContent);
-                    }
+                    encontradoInput = false
+                    break
+                } else {
+                    encontradoInput = false
                 }
-                break
             }
         }
     }
+
+    if (encontradoInput) modalMensaje({ titulo: 'ERROR', mensaje: 'Debe seleccionar una opcion de la lista' })
 }
 
 const opcionIdAct = e => {
@@ -59,23 +65,23 @@ const opcionIdAct = e => {
     const opciones = lista.querySelectorAll('option')
     const opcionId = input.getAttribute('opcionId')
 
-    if(opcionId === input.value) return false
+    if (opcionId === input.value) return false
     let encontrado = false
-    for (let opcion of opciones) {  
-        if(opcion.value === input.value){
+    for (let opcion of opciones) {
+        if (opcion.value === input.value) {
             input.setAttribute('opcionId', opcion.value)
             encontrado = true
             return true
         }
     }
 
-    if(!encontrado) {  
+    if (!encontrado) {
         modalMensaje({ titulo: 'ERROR', mensaje: 'No ha seleccionado un activo valido' })
         return false
     }
 
     return true
-    
+
 }
 
 export {
