@@ -1,4 +1,6 @@
 const { ipcRenderer } = require('electron')
+//const Buffer = require('buffer').Buffer;
+//const binaryData = Buffer.from(base64String, 'base64').toString('utf-8')
 import { generateRandomId } from '../../helpers/nombreRandon.js';
 import { rotarImg } from '../../helpers/activos/rotarImg.js';
 import { eliminarImgActivo } from '../../helpers/eliminarImg.js';
@@ -16,6 +18,7 @@ import { opcionId } from '../../helpers/activos/listasId.js';
 import { modalMensaje } from '../../helpers/modalEleccion.js';
 import { cargarTapContenido } from '../cargarTapContenido.js';
 import { listadoActivos } from './listadoActivos.js';
+import { eliminarDocumento } from '../../helpers/documentacion/eliminardocumento.js';
 
 
 const editarActivo = (id) => {
@@ -208,10 +211,10 @@ const editarActivo = (id) => {
         <div class="container-fluid w-100 m-0 p-0 my-3 ContainerDocumentacion">
             <h3 class="fw-bold text-center my-2">DOCUMENTACION</h3>
             <div class="container-fluid d-flex  justify-content-around flex-wrap align-items-start w-100 m-0 p-0 my-3 documentacion">
-                <div class="m-2 border border-2 Factura">
+                <div class="my-2 w-50 border border-2 Factura">
                     <h5 class="fw-bold text-center">Factura</h5>
                     <div class="d-none containerFactura pdfDocumentacion">
-                        <embed src="" type="application/pdf" />
+                        <embed class="w-100" style="height:255px" src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesFactura">
                             <button  class="btn p-0 eliminar" type="button" tipo="Factura" title="Eliminar">
                                <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
@@ -233,10 +236,10 @@ const editarActivo = (id) => {
                         </div>
                     </div>
                 </div>
-                <div class="m-2 border border-2 Importacion">
+                <div class="my-2 w-50 border border-2 Importacion">
                     <h5 class="fw-bold text-center">Registro de importacion</h5>
                     <div class="d-none containerImportacion pdfDocumentacion">
-                        <embed src="" type="application/pdf" />
+                        <embed class="w-100" style="height:255px" src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesImportacion">
                             <button class="btn p-0 eliminar" type="button" tipo="Importacion" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
@@ -259,10 +262,10 @@ const editarActivo = (id) => {
                         </div>
                     </div>
                 </div>
-                <div class="m-2 border border-2 Invima">
+                <div class=" my-2 w-50 border border-2 Invima">
                     <h5 class="fw-bold text-center">Registro INVIMA</h5>
                     <div class="d-none containerInvima pdfDocumentacion">
-                        <embed src="" type="application/pdf" />
+                        <embed class="w-100" style="height:255px" src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesInvima">
                             <button  class="btn p-0 eliminar" type="button" tipo="Invima" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
@@ -284,10 +287,10 @@ const editarActivo = (id) => {
                         </div>
                     </div>
                 </div>
-                <div class="m-2 border border-2 ActaEntrega">
+                <div class=" my-2 w-50 border border-2 ActaEntrega">
                     <h5 class="fw-bold text-center">Acta de Entrega</h5>
                     <div class="d-none containerEntrega pdfDocumentacion">
-                        <embed src="" type="application/pdf" />
+                        <embed class="w-100" style="height:255px" src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesEntrega">
                             <button class="btn p-0 eliminar" type="button" tipo="ActaEntrega" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
@@ -310,10 +313,10 @@ const editarActivo = (id) => {
                         </div>
                     </div>
                 </div>
-                <div class="m-2 border border-2 Manual">
+                <div class=" my-2 w-50 border border-2 Manual">
                     <h5 class="fw-bold text-center">Manuales</h5>
                     <div class="d-none containerManual pdfDocumentacion">
-                        <embed src="" type="application/pdf" />
+                        <embed class="w-100" style="height:255px" src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesManual">
                             <button class="btn p-0 eliminar" type="button" tipo="Manual" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
@@ -335,10 +338,10 @@ const editarActivo = (id) => {
                         </div>
                     </div>
                 </div>
-                <div class="m-2 border border-2 Garantia">
+                <div class="my-2 w-50 border border-2 Garantia">
                     <h5 class="fw-bold text-center">Garantia</h5>
                     <div class="d-none containerGarantia pdfDocumentacion">
-                        <embed src="" type="application/pdf" />
+                        <embed class="w-100" style="height:255px" src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesGarantia">
                             <button  class="btn p-0 eliminar" type="button" tipo="Garantia" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
@@ -360,10 +363,10 @@ const editarActivo = (id) => {
                         </div>
                     </div>
                 </div>
-                <div class="m-2 border border-2 Otro">
+                <div class=" my-2 w-50 border border-2 Otro">
                     <h5 class="fw-bold text-center">Otros</h5>
                     <div class="d-none containerOtros pdfDocumentacion">
-                        <embed src="" type="application/pdf" />
+                        <embed class="w-100" style="height:255px" src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesOtros">
                             <button class="btn p-0 eliminar" type="button" tipo="Otro" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
@@ -706,7 +709,9 @@ const editarActivo = (id) => {
                 const containerDocumento = seccion.querySelector(`.${documento}`)
                 if (containerDocumento !== undefined) {
                     const embedpdf = containerDocumento.querySelector('embed')
-                    embedpdf.src = activo.Buffersoportes[`${documento}`]
+                    const arrayBuffer = Uint8Array.from(atob(activo.Buffersoportes[`${documento}`].split(',')[1]), c => c.charCodeAt(0)).buffer;
+                    const blob = new Blob([arrayBuffer], { type: 'application/pdf' })
+                    embedpdf.src = URL.createObjectURL(blob)
                     embedpdf.setAttribute('activo', `Act-${activo.id}`)
                     embedpdf.setAttribute('tipo', `${documento}`)
                     const containerpdf = containerDocumento.querySelector('.pdfDocumentacion')

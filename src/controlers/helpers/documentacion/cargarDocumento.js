@@ -8,18 +8,13 @@ const cargarDocumento = async (e, crear = null) => {
     const file = e.target.files[0]
 
     if (file.type !== 'application/pdf') return modalMensaje({ titulo: 'ERROR', mensaje: 'El documento debe ser en formato pdf' })
-    if (file.size > 3145728) return modalMensaje({ titulo: 'ERROR', mensaje: 'El documento exede los 3Mb' })
+    if (file.size > 6291456) return modalMensaje({ titulo: 'ERROR', mensaje: 'El documento exede los 6Mb' })
 
     const contenerdorInput = e.target.parentNode.parentNode
     const contenedorpdf = contenerdorInput.previousSibling.previousSibling
 
     const embed = contenedorpdf.querySelector('embed')
-    const reader = new FileReader()
-    reader.onload = function (e) {
-        embed.src = e.target.result
-    }
-    reader.readAsDataURL(file) 
-    
+     embed.src = URL.createObjectURL(file)
     const botonEliminar = contenedorpdf.querySelector('.eliminar')
     const botonDescargar = contenedorpdf.querySelector('.descargar')
     botonDescargar.classList.add('d-none')
@@ -33,11 +28,11 @@ const cargarDocumento = async (e, crear = null) => {
         botonGudardar.setAttribute('activo', activo)
         botonGudardar.classList.remove('d-none')
         botonGudardar.onclick = (e) => gudardarDocumento(e)
-    }else{
+    } else {
         botonEliminar.onclick = (e) => quitarDocumento(e, 'crear')
     }
+    e.target.value = ''
 
-    
 
 }
 

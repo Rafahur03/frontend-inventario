@@ -21,9 +21,11 @@
     "electron": "^24.2.0"
   },
   "dependencies": {
+    "@types/pdfjs-dist": "^2.10.378",
     "bootstrap-icons": "^1.10.5",
     "dotenv": "^16.0.3",
     "electron-reload": "^2.0.0-alpha.1",
-    "mime-types": "^2.1.35"
+    "mime-types": "^2.1.35",
+    "pdfjs-dist": "^3.11.174"
   }
 }

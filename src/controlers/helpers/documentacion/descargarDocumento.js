@@ -17,7 +17,7 @@ const descargarDocumento = async e => {
     }
     const descarga = ipcRenderer.sendSync('descargaDocumento', data);
     if(descarga.msg) return modalMensaje({titulo:'error', mensaje:descarga.msg});
-    console.log(descarga)
+
     // Crear un enlace temporal
     const link = document.createElement('a');
     link.href = descarga.buffer;

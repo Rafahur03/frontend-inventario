@@ -16,8 +16,12 @@ const gudardarDocumento = async e => {
     const documento = boton.getAttribute('tipo')
     const contenedorPdf = boton.parentNode.parentNode
     const contendorInput = contenedorPdf.nextSibling.nextSibling
+
     const embed = contenedorPdf.querySelector('embed')
-    const file = embed.src
+    const response = await fetch(embed.src);
+    const blob = await response.blob()
+    const file = await readBlobAsBase64(blob)
+    
     const data = {
         activo,
         documento,
@@ -37,6 +41,19 @@ const gudardarDocumento = async e => {
     botonDescargar.onclick = e => descargarDocumento(e)
     botonDescargar.classList.remove('d-none')
 }
+
+function readBlobAsBase64(blob) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            resolve(reader.result);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+    });
+}
+
+
 
 export {
     gudardarDocumento

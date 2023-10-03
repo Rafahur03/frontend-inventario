@@ -209,7 +209,7 @@ const crearReporteMttoPreventivo = () => {
                         </div>
                     </div>
                     <div class="form-group row d-block">
-                        <div class="d-flex flex-row align-items-center justify-content-center contendorpdfReporte"></div>
+                        <div class=" contendorpdfReporte"></div>
                     </div>
                 </form>
             </div>

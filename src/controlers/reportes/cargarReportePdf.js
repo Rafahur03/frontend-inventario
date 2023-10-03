@@ -4,12 +4,12 @@ import { generateRandomId } from "../helpers/nombreRandon.js"
 import { eliminarPdfReprote } from "./eliminarPdfReporte.js"
 import { guardarSoporteExterno } from "./guardarSoporteExterno.js"
 
-const cargarReportePdf = (e, nodo) => {
+const cargarReportePdf = async (e, nodo) => {
 
     const files = e.target.files
 
     if (files.length < 1) return
-  
+
     if (files.length > 1) return modalMensaje({ titulo: 'ERROR', mensaje: ' Solo se puede cargar un archivo pdf' })
 
     const contenedorReporte = nodo.querySelector('.contendorpdfReporte')
@@ -18,8 +18,8 @@ const cargarReportePdf = (e, nodo) => {
     if (pdfcargado.length > 0) return modalMensaje({ titulo: 'ERROR', mensaje: ' ya se tiene un soporte cargado debe eliminarlo primero para poder cagar otro' })
     const file = files[0]
 
-  
-    if (mime.extension(file.type) != 'pdf' || file.size > 3145728) return modalMensaje({ titulo: 'ERROR', mensaje: ' Solo se permiten archivos PDF menores de 3MB' })
+
+    if (mime.extension(file.type) != 'pdf' || file.size > 6291456) return modalMensaje({ titulo: 'ERROR', mensaje: ' Solo se permiten archivos PDF menores de 6MB' })
 
     const nombre = generateRandomId()
     const reader = new FileReader()
@@ -28,9 +28,14 @@ const cargarReportePdf = (e, nodo) => {
     contenedorpdf.classList.add('m-2', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center', 'embed-responsive')
     const iframepdf = document.createElement('iframe')
     iframepdf.classList.add('embed-responsive-item', 'w-75')
-    iframepdf.style.height = '400px' 
+    iframepdf.style.height = '600px'
+    iframepdf.style.width = '800px'
+    contenedorpdf.appendChild(iframepdf);
+    contenedorReporte.appendChild(contenedorpdf);
+
+    iframepdf.src = URL.createObjectURL(file)
     reader.onload = function (e) {    
-        iframepdf.src = e.target.result
+        iframepdf.src = e.target.result 
     }
 
     reader.readAsDataURL(file)
