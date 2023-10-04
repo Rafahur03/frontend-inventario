@@ -264,7 +264,7 @@ const guardarDocumento = async (datos, token) => {
     const imgBase64 = datos.file.split(',')[1]
     const decodedData = Buffer.from(imgBase64, 'base64');
     const sizeInBytes = decodedData.length
-    if (sizeInBytes > 6291456) return { titulo: 'ERROR', mensaje: 'El documento exede los 6Mb' }
+    if (sizeInBytes > 15000000) return { titulo: 'ERROR', mensaje: 'El documento exede los 15Mb' }
 
     const data = {
         id: datos.activo.split('-')[1],

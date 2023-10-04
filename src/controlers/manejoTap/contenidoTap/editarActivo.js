@@ -214,7 +214,7 @@ const editarActivo = (id) => {
                 <div class="my-2 w-50 border border-2 Factura">
                     <h5 class="fw-bold text-center">Factura</h5>
                     <div class="d-none containerFactura pdfDocumentacion">
-                        <embed class="w-100" style="height:255px" src="" type="application/pdf" />
+                        <embed class="w-100 p-2" style="height:255px" src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesFactura">
                             <button  class="btn p-0 eliminar" type="button" tipo="Factura" title="Eliminar">
                                <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
@@ -239,7 +239,7 @@ const editarActivo = (id) => {
                 <div class="my-2 w-50 border border-2 Importacion">
                     <h5 class="fw-bold text-center">Registro de importacion</h5>
                     <div class="d-none containerImportacion pdfDocumentacion">
-                        <embed class="w-100" style="height:255px" src="" type="application/pdf" />
+                        <embed class="w-100 p-2" style="height:255px" src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesImportacion">
                             <button class="btn p-0 eliminar" type="button" tipo="Importacion" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
@@ -265,7 +265,7 @@ const editarActivo = (id) => {
                 <div class=" my-2 w-50 border border-2 Invima">
                     <h5 class="fw-bold text-center">Registro INVIMA</h5>
                     <div class="d-none containerInvima pdfDocumentacion">
-                        <embed class="w-100" style="height:255px" src="" type="application/pdf" />
+                        <embed class="w-100 p-2"style="height:255px" src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesInvima">
                             <button  class="btn p-0 eliminar" type="button" tipo="Invima" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
@@ -290,7 +290,7 @@ const editarActivo = (id) => {
                 <div class=" my-2 w-50 border border-2 ActaEntrega">
                     <h5 class="fw-bold text-center">Acta de Entrega</h5>
                     <div class="d-none containerEntrega pdfDocumentacion">
-                        <embed class="w-100" style="height:255px" src="" type="application/pdf" />
+                        <embed class="w-100 p-2" style="height:255px" src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesEntrega">
                             <button class="btn p-0 eliminar" type="button" tipo="ActaEntrega" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
@@ -316,7 +316,7 @@ const editarActivo = (id) => {
                 <div class=" my-2 w-50 border border-2 Manual">
                     <h5 class="fw-bold text-center">Manuales</h5>
                     <div class="d-none containerManual pdfDocumentacion">
-                        <embed class="w-100" style="height:255px" src="" type="application/pdf" />
+                        <embed class="w-100 p-2" style="height:255px" src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesManual">
                             <button class="btn p-0 eliminar" type="button" tipo="Manual" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
@@ -341,7 +341,7 @@ const editarActivo = (id) => {
                 <div class="my-2 w-50 border border-2 Garantia">
                     <h5 class="fw-bold text-center">Garantia</h5>
                     <div class="d-none containerGarantia pdfDocumentacion">
-                        <embed class="w-100" style="height:255px" src="" type="application/pdf" />
+                        <embed class="w-100 p-2" style="height:255px" src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesGarantia">
                             <button  class="btn p-0 eliminar" type="button" tipo="Garantia" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>
@@ -366,7 +366,7 @@ const editarActivo = (id) => {
                 <div class=" my-2 w-50 border border-2 Otro">
                     <h5 class="fw-bold text-center">Otros</h5>
                     <div class="d-none containerOtros pdfDocumentacion">
-                        <embed class="w-100" style="height:255px" src="" type="application/pdf" />
+                        <embed class="w-100 p-2" style="height:255px" src="" type="application/pdf" />
                         <div class="d-block text-center containerBotonesOtros">
                             <button class="btn p-0 eliminar" type="button" tipo="Otro" title="Eliminar">
                                 <i class="bi bi-trash-fill fs-4 fw-bold text-danger"></i>

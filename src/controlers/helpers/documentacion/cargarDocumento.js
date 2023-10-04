@@ -8,7 +8,7 @@ const cargarDocumento = async (e, crear = null) => {
     const file = e.target.files[0]
 
     if (file.type !== 'application/pdf') return modalMensaje({ titulo: 'ERROR', mensaje: 'El documento debe ser en formato pdf' })
-    if (file.size > 6291456) return modalMensaje({ titulo: 'ERROR', mensaje: 'El documento exede los 6Mb' })
+    if (file.size > 15000000) return modalMensaje({ titulo: 'ERROR', mensaje: 'El documento exede los 15Mb' })
 
     const contenerdorInput = e.target.parentNode.parentNode
     const contenedorpdf = contenerdorInput.previousSibling.previousSibling
