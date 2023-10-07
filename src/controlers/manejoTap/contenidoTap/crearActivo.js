@@ -63,6 +63,9 @@ const crearActivo = () => {
                         <input type="text" class="form-control my-1 areaActivo" list="listaAreas" opcionId="Ar--1">
                         <datalist id="listaAreas"></datalist>
 
+                        <label class="fw-bold" for="registroInvimaActivo">Registro Invima</label>
+                        <input type="text" class="form-control my-1 registroInvimaActivo">
+
                     </div>
                     <div class="form-group col-3">
                         <label class="fw-bold" for="nombreActivo">Nombre <span class="m-0 p-0 text-danger"> *</span> </label>
@@ -74,10 +77,14 @@ const crearActivo = () => {
                         <label class="fw-bold" for="ubicacionActivo">Ubicacion Especifica <span class="m-0 p-0 text-danger"> *</span> </label>
                         <input type="text" class="form-control my-1 ubicacionActivo">
 
+                        <label class="fw-bold" for="riesgoActivo">Clase de Riesgo</label>
+                        <input type="text" class="form-control my-1 riesgoActivo" list="listaRiesgo" opcionId="Ris--1">
+                        <datalist id="listaRiesgo"></datalist>
+
                     </div>
                     <div class="form-group col-2">
                         <label class="fw-bold" for="marcaActivo">Marca <span class="m-0 p-0 text-danger"> *</span> </label>
-                        <input type="text" class="form-control my-1 marcaActivo" list="listMarcas"  opcionId="Ma--1">
+                        <input type="text" class="form-control my-1 marcaActivo" list="listMarcas" opcionId="Ma--1">
                         <datalist id="listMarcas"></datalist>
 
                         <label class="fw-bold" for="procesoActivo">Proceso <span class="m-0 p-0 text-danger"> *</span> </label>
@@ -466,6 +473,18 @@ const crearActivo = () => {
         option.value = `${element.dias} -- ${element.frecuencia}`
         option.textContent = element.id
         listaFrecuencia.appendChild(option)
+    })
+
+    const riesgoActivo = seccion.querySelector('.riesgoActivo')
+    const listaRiesgo = seccion.querySelector('#listaRiesgo')
+    listaRiesgo.id = `${listaRiesgo.id}${idlista}`
+    riesgoActivo.setAttribute('list', listaRiesgo.id)
+    riesgoActivo.onblur = e => opcionId(e)
+    listados[11].forEach(element => {
+        const option = document.createElement('option')
+        option.value = `${element.riesgo}`
+        option.textContent = element.id
+        listaRiesgo.appendChild(option)
     })
 
     const ingreso = seccion.querySelector('.ingresoActivo')

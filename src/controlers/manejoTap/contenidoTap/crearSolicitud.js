@@ -145,6 +145,7 @@ const crearSolicitud = (id = null) => {
         option.textContent = element.codigoInterno + ' - ' + element.nombreActivo + ' - ' + element.marca + ' - ' + element.modelo + ' - ' + element.serie + '-  ' + element.ubicacion + ' - ' + element.nombreResponsable
         listaActivos.appendChild(option)
     });
+    
 
     if (id !== null) {      
         idActivo.setAttribute('opcionId', id)

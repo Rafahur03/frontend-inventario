@@ -5,7 +5,7 @@ import { cargarTapContenido } from "../manejoTap/cargarTapContenido.js"
 
 const nuevoActivo = async nodo => {
 
-    
+
     const clasificacionActivo = nodo.querySelector('.clasificacionActivo')
     const modeloActivo = nodo.querySelector('.modeloActivo')
     const areaActivo = nodo.querySelector('.areaActivo')
@@ -30,6 +30,8 @@ const nuevoActivo = async nodo => {
     const carouselInner = nodo.querySelector('.carousel-inner')
     const containerDocumentacion = nodo.querySelector('.containerDocumentacion')
     const componentesbody = nodo.querySelector('.componentes').querySelector('tbody')
+    const registroInvimaActivo = nodo.querySelector('.registroInvimaActivo')
+    const riesgoActivo = nodo.querySelector('.riesgoActivo')
 
     const data = {
         clasificacionActivo: clasificacionActivo.value.trim(),
@@ -61,16 +63,19 @@ const nuevoActivo = async nodo => {
         descripcionActivo: descripcionActivo.value.trim(),
         recomendacionActivo: recomendacionActivo.value.trim(),
         observacionActivo: observacionActivo.value.trim(),
+        registroActivo: registroInvimaActivo.value,
+        riesgoId: riesgoActivo.getAttribute('opcionId'),
+        riesgoActivo: riesgoActivo.value
     }
 
     const timestamp = Date.now();
     const fechaActual = new Date(timestamp).toISOString().substring(0, 10)
 
-    if(data.ingresoActivo == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de ingreso es obligatorio' })
-    if(data.fechaCompra == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de compra es obligatorio' })
-    if(data.garantiaActivo == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de vencimiento de la garantia es obligatorio' })
-    if(data.proximoMtto == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de proximo mantenimiento es obligatorio' })
-    
+    if (data.ingresoActivo == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de ingreso es obligatorio' })
+    if (data.fechaCompra == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de compra es obligatorio' })
+    if (data.garantiaActivo == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de vencimiento de la garantia es obligatorio' })
+    if (data.proximoMtto == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El campo fecha de proximo mantenimiento es obligatorio' })
+
     if (data.ingresoActivo !== fechaActual) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha de ingreso no puede ser diferente del dia de hoy' })
     if (data.fechaCompra > fechaActual) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha de compra no puede ser superior al dia de hoy' })
     if (data.garantiaActivo < data.fechaCompra) return modalMensaje({ titulo: 'ERROR', mensaje: 'la fecha de vencimiento de la garantia no puede ser menor a la fecha de compra' })
@@ -79,14 +84,13 @@ const nuevoActivo = async nodo => {
     const keys = Object.keys(data);
 
     for (let key of keys) {
-        if (key !== 'observacionActivo' || key !== 'descricaoActivo' || key !== 'recomendaActivo') {
+        if (key !== 'observacionActivo' && key !== 'descricaoActivo' && key !== 'recomendaActivo'&& key !== 'registroActivo') {
             if (data[key] == '') {
                 if (key.includes('Id')) {
-                    modalMensaje({ titulo: 'ERROR', mensaje: ` EL campo '${key.replace('Id', '').toUpperCase()} debe escoger un item de la lista` })
+                    return modalMensaje({ titulo: 'ERROR', mensaje: ` EL campo '${key.replace('Id', '').toUpperCase()} debe escoger un item de la lista` })
                     break
                 } else {
-                    modalMensaje({ titulo: 'ERROR', mensaje: ` EL campo '${key.replace('Activo', '').toUpperCase()} obligatorio` })
-                    console.log(data[key])
+                    return modalMensaje({ titulo: 'ERROR', mensaje: ` EL campo '${key.replace('Activo', '').toUpperCase()} obligatorio` })
                     break
                 }
             }
@@ -131,7 +135,7 @@ const nuevoActivo = async nodo => {
 
     const guardar = ipcRenderer.sendSync('crearActivo', data)
 
-    if (guardar.msg) modalMensaje({ titulo: 'error', mensaje: guardar.msg })
+    if (guardar.msg) return modalMensaje({ titulo: 'error', mensaje: guardar.msg })
     cargarTapContenido('editarActivo', guardar.id)
 
 }

@@ -1,6 +1,4 @@
 const { ipcRenderer } = require('electron')
-//const Buffer = require('buffer').Buffer;
-//const binaryData = Buffer.from(base64String, 'base64').toString('utf-8')
 import { generateRandomId } from '../../helpers/nombreRandon.js';
 import { rotarImg } from '../../helpers/activos/rotarImg.js';
 import { eliminarImgActivo } from '../../helpers/eliminarImg.js';
@@ -99,6 +97,10 @@ const editarActivo = (id) => {
                             readonly>
                         <datalist id="listaAreas"></datalist>
 
+                        <label class="fw-bold" for="registroInvimaActivo">Registro Invima</label>
+                        <input type="text" class="form-control my-1 registroInvimaActivo" readonly>
+                        
+
                     </div>
                     <div class="form-group col-2">
                         <label class="fw-bold" for="nombreActivo">Nombre</label>
@@ -109,6 +111,11 @@ const editarActivo = (id) => {
 
                         <label class="fw-bold" for="ubicacionActivo">Ubicacion Especifica</label>
                         <input type="text" class="form-control my-1 ubicacionActivo" readonly>
+
+                        <label class="fw-bold" for="riesgoActivo">Clase de Riesgo</label>
+                        <input type="text" class="form-control my-1 riesgoActivo" list="listaRiesgo"
+                            readonly>
+                        <datalist id="listaRiesgo"></datalist>
 
                     </div>
                     <div class="form-group col-3">
@@ -471,6 +478,8 @@ const editarActivo = (id) => {
     const descripcionActivo = seccion.querySelector('.descripcionActivo')
     const recomendacionActivo = seccion.querySelector('.recomendacionActivo')
     const observacionActivo = seccion.querySelector('.observacionActivo')
+    const riesgoActivo = seccion.querySelector('.riesgoActivo')
+    const registroInvimaActivo = form.querySelector('.registroInvimaActivo')
     const componentesbody = seccion.querySelector('.componentes').querySelector('tbody')
     const historialMantenimiento = seccion.querySelector('.historialMantenimiento').querySelector('tbody')
     const carruselimagenes = seccion.querySelector('.carousel-inner')
@@ -517,6 +526,9 @@ const editarActivo = (id) => {
     descripcionActivo.value = activo.descripcion
     recomendacionActivo.value = activo.recomendaciones_Mtto
     observacionActivo.value = activo.obervacion
+    riesgoActivo.value = activo.riesgo
+    riesgoActivo.setAttribute('opcionId', `Ris-${activo.riesgoId}`)
+    registroInvimaActivo.value = activo.invima
 
     if (activo.editar) {
         const listados = ipcRenderer.sendSync('consultarListasCofigActivos')
@@ -629,25 +641,24 @@ const editarActivo = (id) => {
             listaFrecuencia.appendChild(option)
         })
 
+        riesgoActivo.removeAttribute('readonly')
+        const listaRiesgo = seccion.querySelector('#listaRiesgo')
+        listaRiesgo.id = `${listaRiesgo.id}${idlista}`
+        riesgoActivo.setAttribute('list', listaRiesgo.id)
+        riesgoActivo.onblur = e => opcionId(e)
+        listados[11].forEach(element => {
+            const option = document.createElement('option')
+            option.value = `${element.riesgo}`
+            option.textContent = element.id
+            listaRiesgo.appendChild(option)
+        })
+
         proximoMtto.removeAttribute('readonly')
         descripcionActivo.removeAttribute('readonly')
         recomendacionActivo.removeAttribute('readonly')
         observacionActivo.removeAttribute('readonly')
+        registroInvimaActivo.removeAttribute('readonly')
     }
-
-    solicitarMantenimiento.setAttribute('activo', `Act-${activo.id}`)
-    solicitarMantenimiento.onclick = e => solicitarMttoActivo(e)
-    imprimirHojadevida.setAttribute('activo', `Act-${activo.id}`)
-    imprimirHojadevida.onclick = e => imprimirActivo(e)
-
-    const actualizarActivo = seccion.querySelector('.guardarEdicion')
-    const eliminarActivob = seccion.querySelector('.eliminar')
-    actualizarActivo.classList.remove('d-none')
-    actualizarActivo.setAttribute('activo', `Act-${activo.id}`)
-    actualizarActivo.onclick = e => guardarEditarActivo(e)
-    eliminarActivob.classList.remove('d-none')
-    eliminarActivob.setAttribute('activo', `Act-${activo.id}`)
-    eliminarActivob.onclick = e => eliminarActivo(e)
 
     // configuramos el carrusel de imagenes
     const idCarrusel = generateRandomId()
@@ -655,7 +666,7 @@ const editarActivo = (id) => {
     carruselBotonSiguente.setAttribute('data-bs-target', `#${idCarrusel}`)
     carruselBotonAnterior.setAttribute('data-bs-target', `#${idCarrusel}`)
 
-    carruselimagenes.setAttribute('activo', 'Act-'+ activo.id)
+    carruselimagenes.setAttribute('activo', 'Act-' + activo.id)
     // cargamos las imagnes en el carrusel
     if (activo.url_img !== null && activo.url_img !== '') {
         activo.BufferImagenes.forEach((element, index) => {
@@ -821,6 +832,20 @@ const editarActivo = (id) => {
     imprimirlistadomtto.setAttribute('activo', `Act-${activo.id}`)
     imprimirlistadomtto.onclick = e => imprimirListadoMtoActivo(e)
 
+    solicitarMantenimiento.setAttribute('activo', `Act-${activo.id}`)
+    solicitarMantenimiento.onclick = e => solicitarMttoActivo(e)
+    imprimirHojadevida.setAttribute('activo', `Act-${activo.id}`)
+    imprimirHojadevida.onclick = e => imprimirActivo(e)
+
+    const actualizarActivo = seccion.querySelector('.guardarEdicion')
+    const eliminarActivob = seccion.querySelector('.eliminar')
+    actualizarActivo.classList.remove('d-none')
+    actualizarActivo.setAttribute('activo', `Act-${activo.id}`)
+    actualizarActivo.onclick = e => guardarEditarActivo(e)
+    eliminarActivob.classList.remove('d-none')
+    eliminarActivob.setAttribute('activo', `Act-${activo.id}`)
+    eliminarActivob.onclick = e => eliminarActivo(e)
+
     if (activo.cambiarClasificacion) {
         const cambiarClasificacion = seccion.querySelector('.cambiarClasificacion')
         cambiarClasificacion.classList.remove('d-none')
@@ -829,6 +854,7 @@ const editarActivo = (id) => {
             cargarTapContenido('cambiarClasificacion', activo.id)
         }
     }
+
 
     return seccion
 }

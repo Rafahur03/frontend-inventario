@@ -36,6 +36,9 @@ const guardarEditarActivo = async e => {
     const descripcionActivo = form.querySelector('.descripcionActivo')
     const recomendacionActivo = form.querySelector('.recomendacionActivo')
     const observacionActivo = form.querySelector('.observacionActivo')
+    const registroInvimaActivo = form.querySelector('.registroInvimaActivo')
+    const riesgoActivo = form.querySelector('.riesgoActivo')
+
 
     const data = {
         activo,
@@ -69,6 +72,9 @@ const guardarEditarActivo = async e => {
         descripcionActivo: descripcionActivo.value,
         recomendacionActivo: recomendacionActivo.value,
         observacionActivo: observacionActivo.value,
+        registroActivo: registroInvimaActivo.value,
+        riesgoId: riesgoActivo.getAttribute('opcionId'),
+        riesgoActivo: riesgoActivo.value
     }
     
     const mensaje = {
@@ -80,11 +86,11 @@ const guardarEditarActivo = async e => {
     if (!eleccion) return
 
     const actualizar = ipcRenderer.sendSync('actualizarDatosActivos', data);
-    if (actualizar.msg) return  modalMensaje({titulo: "ERROR",mensaje : actualizar.msg})
-    
-    modalMensaje({titulo: 'EXITO', mensaje: actualizar.exito})
+    if (actualizar.msg) return modalMensaje({ titulo: "ERROR", mensaje: actualizar.msg })
+
+    modalMensaje({ titulo: 'EXITO', mensaje: actualizar.exito })
     const activoActualizado = actualizar.activo
-    
+
     codigoInterno.value = activoActualizado.codigo
     codigoInterno.setAttribute('codigo-activo', `Act-${activoActualizado.id}`)
     form.setAttribute('form-activo', `Act-${activoActualizado.id}`)
@@ -118,6 +124,9 @@ const guardarEditarActivo = async e => {
     descripcionActivo.value = activoActualizado.descripcion
     recomendacionActivo.value = activoActualizado.recomendaciones_Mtto
     observacionActivo.value = activoActualizado.obervacion
+    registroInvimaActivo.value = activoActualizado.invima
+    riesgoActivo.value = activoActualizado.riesgo
+    riesgoActivo.setAttribute('opcionId', `Ris-${activoActualizado.riesgoId}`)
 }
 
 

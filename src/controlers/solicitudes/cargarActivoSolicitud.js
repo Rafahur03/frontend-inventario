@@ -2,7 +2,7 @@ const { ipcRenderer } = require('electron')
 import { rotarImg } from '../helpers/activos/rotarImg.js';
 
 const cargarActivoSolicitud = async (id, nodo) => {
-
+  
     const activo = ipcRenderer.sendSync('consultarDatosActivoSolicitud', id);
     const carruselimagenes = nodo.querySelector('.carousel-inner')
     while (carruselimagenes.firstChild) {
@@ -41,7 +41,7 @@ const cargarActivoSolicitud = async (id, nodo) => {
     const procesoActivo = nodo.querySelector('.procesoActivo')
     const responsable = nodo.querySelector('.responsable')
     const idActivo = nodo.querySelector('.idActivo')
-    const crear = document.querySelector('.crear')
+    const crear = nodo.querySelector('.crear')
 
     crear.setAttribute('opcionId', 'Act-' + activo.id)
     idActivo.value = 'Act-' + activo.id
