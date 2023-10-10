@@ -57,6 +57,8 @@ const validarDatosUsuario = datos => {
 
         if (typeof datos.clasificacion !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Cambiar clasificacion activos' }
 
+        if (typeof datos.informes !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Informes' }
+
         if (validarVacios(datos.numeroDocumento)) return { msg: 'El campo numero de documento no puede estar vacio' }
 
         if (parseInt(datos.numeroDocumento) == NaN) return { msg: 'El campo numero de documento solo puede contener letras' }

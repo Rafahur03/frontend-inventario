@@ -7,7 +7,6 @@ import { modalMensaje } from '../helpers/modalEleccion.js';
 const cargarActivoReportePrev = async (id, nodo) => {
 
     const activo = ipcRenderer.sendSync('consultarDatosActivoReportePrev', id);
-    console.log(activo);
     if (activo.msg) return modalMensaje({ titulo: 'ERROR', mensaje: 'No se pudo cargar el activo, recargue e intente mas tarde.' })
     const carruselimagenes = nodo.querySelector('.carousel-inner')
     while (carruselimagenes.firstChild) {
@@ -123,6 +122,10 @@ const cargarActivoReportePrev = async (id, nodo) => {
         option.textContent = element.id
         listestadoSolicitud.appendChild(option)
     })
+
+    const fechaReporte = nodo.querySelector('.fechaReporte')
+    const hoy = new Date(Date.now())
+    fechaReporte.value = hoy.toISOString().substring(0, 10)
 
 }
 

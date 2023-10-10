@@ -109,7 +109,7 @@ const editarUsuario = async (id = null) => {
                 
                 <div class="row  justify-content-center mx-2">
                     <h3 class="text-center mt-1 fw-bold">Permisos Asociados</h3>
-                    <div class=" col-2">
+                    <div class=" col-1">
                         <div class="form-check form-switch">
                             <input class="form-check-input checkUsuarios" type="checkbox" disabled >
                             <label class="form-check-label" for="checkUsuarios">Crea, Editar Usuarios</label>
@@ -148,6 +148,12 @@ const editarUsuario = async (id = null) => {
                             <label class="form-check-label" for="checkConfguraciones">Crear, editar Configuraciones</label>
                         </div>
                     </div>
+                    <div class=" col-1"> 
+                    <div class="form-check form-switch">
+                        <input class="form-check-input checkInformes" type="checkbox" id>
+                        <label class="form-check-label" for="checkInformes">Informes</label>
+                    </div>
+                </div>
                 </div>
                 <div class="row justify-content-center">
                 <h3 class="text-center mt-1 fw-bold">Firma Del Usuario</h3>
@@ -190,6 +196,7 @@ const editarUsuario = async (id = null) => {
     const checkclasificacion = seccion.querySelector('.checkclasificacion')
     const checkSolicitudes = seccion.querySelector('.checkSolicitudes')
     const checkReportes = seccion.querySelector('.checkReportes')
+    const checkInformes = seccion.querySelector('.checkInformes')
     const checkConfguraciones = seccion.querySelector('.checkConfguraciones')
     const imageneFirma = seccion.querySelector('.imageneFirma')
     const estado = seccion.querySelector('.estado')
@@ -212,6 +219,7 @@ const editarUsuario = async (id = null) => {
     if (usuario.solicitudes) checkSolicitudes.checked = true
     if (usuario.reporte) checkReportes.checked = true
     if (usuario.confguraciones) checkConfguraciones.checked = true
+    if (usuario.informes) checkInformes.checked = true
 
     const contenedorImagen = document.createElement('div')
     contenedorImagen.setAttribute('nombre', `Img-${usuario.firma}`)

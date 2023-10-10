@@ -43,7 +43,7 @@ const guardarImgActivo = e => {
         titulo: 'EXITO',
         mensaje: imagenActivo.exito
     }
-    //modalMensaje(mensaje)
+    modalMensaje(mensaje)
 
     const botonEliminar = contenedorBotones.firstChild
     const carruselItem = imagen.parentNode.parentNode

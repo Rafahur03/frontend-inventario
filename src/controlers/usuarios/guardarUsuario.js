@@ -22,6 +22,7 @@ const guardarUsuario = (nodo) => {
     const checkReportes = nodo.querySelector('.checkReportes')
     const checkConfguraciones = nodo.querySelector('.checkConfguraciones')
     const checkclasificacion = nodo.querySelector('.checkclasificacion')
+    const checkInformes = seccion.querySelector('.checkInformes')
     const imageneFirma = nodo.querySelector('.imageneFirma')
     const imagen = imageneFirma.querySelector('img')
 
@@ -88,6 +89,7 @@ const guardarUsuario = (nodo) => {
         reportes: checkReportes.checked ? true: false,
         confguraciones: checkConfguraciones.checked ? true: false,
         clasificacion : checkclasificacion.checked ? true: false,
+        informes : checkInformes.checked ? true: false,
         proveedores,
         firma:imagen.src
 

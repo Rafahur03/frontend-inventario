@@ -20,23 +20,14 @@ form.addEventListener("reset", async (e) => {
 form.addEventListener("submit", async (e) => {
 	e.preventDefault();
 
-	if (user.value === "" && password.value === "") {
-		alerta("Todos los campos son obligatorios", divform, form, "alert-danger");
-		return;
-	}
+	if (user.value === "" && password.value === "") return modalMensaje({titulo:'ERROR', mensaje:"Todos los campos son obligatorios"})
+	
 
-	if (user.value === "") {
-		alerta("Debe ingresar un usuario", divform, form, "alert-danger");
-		return;
-	}
-	if (password.value === "" || password.value.length <= 0) {
-		alerta("Debe ingresar su password", divform, form, "alert-danger");
-		return;
-	}
-	if (password.value.length <= 5) {
-		alerta("El password ingresado es muy corto", divform, form, "alert-danger");
-		return;
-	}
+	if (user.value === "") return modalMensaje({titulo:'ERROR', mensaje:"Debe ingresar un usuario"})
+
+	if (password.value === "" || password.value.length <= 0) return modalMensaje({titulo:'ERROR', mensaje:"Debe ingresar su password"})
+
+	if (password.value.length <= 5) return modalMensaje({titulo:'ERROR', mensaje:"El password ingresado es muy corto"}) 
 
 	const datosInicioSesion = {
 		usuario: user.value,

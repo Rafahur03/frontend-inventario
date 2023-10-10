@@ -4,7 +4,7 @@ const menu = (vector) => {
         const divUsuario = document.querySelectorAll('#collapseUsuario a')
         const divActivo = document.querySelectorAll('#collapseActivos a')
         const divReporte = document.querySelectorAll('#collapseReporte a')
-        
+        const divInforme = document.querySelector('#collapseInformes')
         switch (element) {
             case 1:
                 const uCrear = document.createElement('a')
@@ -25,6 +25,21 @@ const menu = (vector) => {
                     divUsuario[0].parentElement.insertBefore(uEditar, divUsuario[0])
                 }
                 break;
+            case 2:
+                const iCrear = document.createElement('a')
+                iCrear.setAttribute('href', '#')
+                iCrear.classList.add('nav-link', 'ms-3', 'item-nav-bar')
+                iCrear.id = 'listadoCosteado'
+                iCrear.textContent = 'Informe listado Activo costeado'
+                divInforme.appendChild(iCrear)
+                const iaCrear = document.createElement('a')
+                iaCrear.setAttribute('href', '#')
+                iaCrear.classList.add('nav-link', 'ms-3', 'item-nav-bar')
+                iaCrear.id = 'activoCosteado'
+                iaCrear.textContent = 'Informe por activo costeado'
+                divInforme.appendChild(iaCrear)
+                break;
+
             case 3:
                 const aCrear = document.createElement('a')
                 aCrear.setAttribute('href', '#')
