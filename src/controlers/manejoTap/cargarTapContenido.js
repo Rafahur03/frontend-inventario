@@ -14,6 +14,11 @@ import { cambiarClave } from "./contenidoTap/cambiarClave.js"
 import { configuracionVista } from "./contenidoTap/configuracionVista.js"
 import { cambiarClasificacion } from "./contenidoTap/cambiarClasificacion.js"
 import { crearReporteMttoPreventivo } from "./contenidoTap/crearReporteMttoPreventivo.js"
+import { cronogramaMantenimeinto } from "./contenidoTap/cronogramaMantenimeinto.js"
+import { listadoActivoInfome } from "./contenidoTap/listadoActivoInfome.js"
+import { listadoActivoInfomeCosteado } from "./contenidoTap/listadoActivoInfomeCosteado.js"
+import { InfactivoCosteado } from "./contenidoTap/InfactivoCosteado.js"
+
 
 // carga las vistas en un nodo de contenido existente.
 const cargarTapContenido = async (id, dato) => {
@@ -33,7 +38,11 @@ const cargarTapContenido = async (id, dato) => {
         'crearReporte': crearReporte, // abrre ventana de crearReporte
         'crearReporteMttoPreventivo': crearReporteMttoPreventivo, // abrre ventana de crearReporte
         'consultarReporte': editarReporte, //abre ventana de consultar o editar un reporte
-        'configuracion': configuracionVista //abre ventana de configuracion
+        'configuracion': configuracionVista, //abre ventana de configuracion,
+        'cronogramaMantenimeinto':cronogramaMantenimeinto,
+        'infometodosActivos': listadoActivoInfome,
+        'listadoCosteado': listadoActivoInfomeCosteado,
+        'activoCosteado': InfactivoCosteado
     }
    
     const bodyTap = document.querySelector('#bodyTap')
