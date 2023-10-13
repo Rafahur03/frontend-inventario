@@ -1,6 +1,7 @@
 import { cargarTapContenido } from "../cargarTapContenido.js";
+import { agregarTap } from "../agregarTap.js";
 const menu = (vector) => {
-
+    const nuevaTap = document.querySelector('#nueva-tap')
     vector.forEach(element => {
         const divUsuario = document.querySelectorAll('#collapseUsuario a')
         const divActivo = document.querySelectorAll('#collapseActivos a')
@@ -15,6 +16,7 @@ const menu = (vector) => {
                 uCrear.id = 'nuevoUsuario'
                 uCrear.textContent = 'Nuevo Usuario'
                 uCrear.onclick = e => {
+                    agregarTap(nuevaTap, e.target.id)
                     cerrarmenu.click()
                     cargarTapContenido(e.target.id)
                 }
@@ -26,6 +28,7 @@ const menu = (vector) => {
                 uEditar.id = 'editarUsuario'
                 uEditar.textContent = 'Editar Usuario'
                 uEditar.onclick = e => {
+                    agregarTap(nuevaTap, e.target.id)
                     cerrarmenu.click()
                     cargarTapContenido(e.target.id)
                 }
@@ -42,6 +45,7 @@ const menu = (vector) => {
                 iCrear.id = 'listadoCosteado'
                 iCrear.textContent = 'Informe listado Activo costeado'
                 iCrear.onclick = e => {
+                    agregarTap(nuevaTap, e.target.id)
                     cerrarmenu.click()
                     cargarTapContenido(e.target.id)
                 }
@@ -52,6 +56,7 @@ const menu = (vector) => {
                 iaCrear.id = 'activoCosteado'
                 iaCrear.textContent = 'Informe por activo costeado'
                 iaCrear.onclick = e => {
+                    agregarTap(nuevaTap, e.target.id)
                     cerrarmenu.click()
                     cargarTapContenido(e.target.id)
                 }
@@ -65,6 +70,7 @@ const menu = (vector) => {
                 aCrear.id = 'crearActivo'
                 aCrear.textContent = 'Crear Activo'
                 aCrear.onclick = e => {
+                    agregarTap(nuevaTap, e.target.id)
                     cerrarmenu.click()
                     cargarTapContenido(e.target.id)
                 }
@@ -77,6 +83,7 @@ const menu = (vector) => {
                 rCrear.id = 'crearReporteMttoPreventivo'
                 rCrear.textContent = 'Crear Reporte preventivo'
                 rCrear.onclick = e => {
+                    agregarTap(nuevaTap, e.target.id)
                     cerrarmenu.click()
                     cargarTapContenido(e.target.id)
                 }

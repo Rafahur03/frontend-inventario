@@ -2,7 +2,7 @@ import { generateRandomId } from "../helpers/nombreRandon.js"
 import { eliminarTap } from "./eliminarTap.js"
 
 // crea una nueva ventana con un contenedor diferente devuelve el nodo del contendo para cargar el contenido deseado. 
-const agregarTap = nodo => {
+const agregarTap = (nodo, nombre) => {
 
     // creamos un nombre aleatorio para el tap
     const id = generateRandomId()
@@ -19,7 +19,7 @@ const agregarTap = nodo => {
     button.setAttribute('aria-controls', id)
     button.setAttribute('aria-selected', 'True')
     button.type="button"
-    button.textContent = 'new tab'
+    button.textContent = nombre
 
     const span = document.createElement('span')
     span.classList.add('fw-bold', 'text-danger', 'ms-2', 'cerrar-tap')

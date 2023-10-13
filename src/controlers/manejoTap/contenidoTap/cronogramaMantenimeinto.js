@@ -1,6 +1,6 @@
 const { ipcRenderer } = require('electron')
 
-const cronogramaMantenimeinto = () => {
+const cronogramaMantenimiento = () => {
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
@@ -86,5 +86,5 @@ const cronogramaMantenimeinto = () => {
 }
 
 export {
-    cronogramaMantenimeinto,
+    cronogramaMantenimiento,
 }

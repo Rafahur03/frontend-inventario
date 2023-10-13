@@ -14,7 +14,7 @@ import { cambiarClave } from "./contenidoTap/cambiarClave.js"
 import { configuracionVista } from "./contenidoTap/configuracionVista.js"
 import { cambiarClasificacion } from "./contenidoTap/cambiarClasificacion.js"
 import { crearReporteMttoPreventivo } from "./contenidoTap/crearReporteMttoPreventivo.js"
-import { cronogramaMantenimeinto } from "./contenidoTap/cronogramaMantenimeinto.js"
+import { cronogramaMantenimiento } from "./contenidoTap/cronogramaMantenimeinto.js"
 import { listadoActivoInfome } from "./contenidoTap/listadoActivoInfome.js"
 import { listadoActivoInfomeCosteado } from "./contenidoTap/listadoActivoInfomeCosteado.js"
 import { InfactivoCosteado } from "./contenidoTap/InfactivoCosteado.js"
@@ -39,8 +39,8 @@ const cargarTapContenido = async (id, dato) => {
         'crearReporteMttoPreventivo': crearReporteMttoPreventivo, // abrre ventana de crearReporte
         'consultarReporte': editarReporte, //abre ventana de consultar o editar un reporte
         'configuracion': configuracionVista, //abre ventana de configuracion,
-        'cronogramaMantenimeinto':cronogramaMantenimeinto,
-        'infometodosActivos': listadoActivoInfome,
+        'cronogramaMantenimiento':cronogramaMantenimiento,
+        'informetodosActivos': listadoActivoInfome,
         'listadoCosteado': listadoActivoInfomeCosteado,
         'activoCosteado': InfactivoCosteado
     }
@@ -74,6 +74,7 @@ const cargarTapContenido = async (id, dato) => {
 
     contenedor.appendChild(await contenido[id](dato));
 }
+
 
 // carga el contenido de una vista pero agregando una nueva pestaña y con un nueco content.
 const cargarNuevaVista = (id, dato) => {
