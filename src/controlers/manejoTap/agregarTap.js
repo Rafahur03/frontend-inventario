@@ -1,4 +1,5 @@
 import { generateRandomId } from "../helpers/nombreRandon.js"
+import { eliminarTap } from "./eliminarTap.js"
 
 // crea una nueva ventana con un contenedor diferente devuelve el nodo del contendo para cargar el contenido deseado. 
 const agregarTap = nodo => {
@@ -9,10 +10,32 @@ const agregarTap = nodo => {
     const nuevaTap = document.createElement('li')
     nuevaTap.classList.add('nav-item', id)
     nuevaTap.role = 'presentation'
-    nuevaTap.innerHTML = `         
-                <button class="nav-link active" id="${id}-tab" data-bs-toggle="tab" data-bs-target="#${id}"
-                type="button" role="tab" aria-controls="${id}" aria-selected="false">newTap <span class="fw-bold text-danger ms-2 cerrar-tap" id="${id}-cerrar" data-bs-dismiss="tab" aria-label="Close"> X</span></button>
-    `
+    const button = document.createElement('button')
+    button.classList.add('nav-link', 'active')
+    button.id= id + '-tap'
+    button.setAttribute('data-bs-toggle', 'tab')
+    button.setAttribute('data-bs-target','#'+id)
+    button.setAttribute('role','tab')
+    button.setAttribute('aria-controls', id)
+    button.setAttribute('aria-selected', 'True')
+    button.type="button"
+    button.textContent = 'new tab'
+
+    const span = document.createElement('span')
+    span.classList.add('fw-bold', 'text-danger', 'ms-2', 'cerrar-tap')
+    span.id = id + '-cerrar'
+    span.setAttribute('data-bs-dismiss', 'tab')
+    span.setAttribute('aria-label', 'Close')
+    span.textContent = 'X'
+    span.onclick = e =>{
+        eliminarTap(e)}
+    button.appendChild(span)
+    nuevaTap.appendChild(button)
+    
+    // nuevaTap.innerHTML = `         
+    //             <button class="nav-link active" id="${id}-tab" data-bs-toggle="tab" data-bs-target="#${id}"
+    //             type="button" role="tab" aria-controls="${id}" aria-selected="false">new Tap <span class="fw-bold text-danger ms-2 cerrar-tap" id="${id}-cerrar" data-bs-dismiss="tab" aria-label="Close"> X</span></button>
+    // `
 
     // creamos el contenedor del contenido de la nueva pestaña vacia sera llenado despues al seleccioanr el menu
     const contenidoTAP = document.createElement('div')

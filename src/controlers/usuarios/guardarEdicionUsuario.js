@@ -87,6 +87,7 @@ const guardarEdicionUsuarioExt = (e, nodo) => {
     const checkReportes = nodo.querySelector('.checkReportes')
     const checkConfguraciones = nodo.querySelector('.checkConfguraciones')
     const checkclasificacion = nodo.querySelector('.checkclasificacion')
+    const checkInformes = nodo.querySelector('.checkInformes')
 
     if (tipoId.length === 0 || tipoId.length > 2) return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe seleccionar un tipo de documento' })
 
@@ -146,8 +147,9 @@ const guardarEdicionUsuarioExt = (e, nodo) => {
         reportes: checkReportes.checked ? true : false,
         confguraciones: checkConfguraciones.checked ? true : false,
         clasificacion: checkclasificacion.checked ? true : false,
+        informes: checkInformes.checked ? true : false,
     }
-
+   
 
     const edicion = ipcRenderer.sendSync('guardarEdicionUsuarioExt', data);
     if (edicion.msg) return modalMensaje({ titulo: 'ERROR', mensaje: edicion.msg })

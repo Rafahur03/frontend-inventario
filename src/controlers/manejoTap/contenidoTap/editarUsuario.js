@@ -177,7 +177,6 @@ const editarUsuario = async (id = null) => {
     const usuario = ipcRenderer.sendSync('consultarUsuario', id)
     if (usuario.msg) return modalMensaje({ titulo: 'ERROR', mesaje: usuario.msg })
 
-    console.log(usuario)
     const edicionUsuario = seccion.querySelector('.editarUsuario')
     edicionUsuario.onclick = e=>{
         e.preventDefault()

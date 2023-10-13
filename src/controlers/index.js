@@ -7,33 +7,35 @@ import { mostrarFrase } from "./manejoTap/mostrarFrases.js";
 
 
 
-const nuevaTap = document.querySelector('#nueva-tap')
 
 ipcRenderer.on('sesion', (e, sesion) => {
     insertarMenu(sesion.data)
     mostrarFrase(sesion.motivacion)
 })
 
-nuevaTap.addEventListener("click", e => {
-    agregarTap(nuevaTap)
-})
+const nuevaTap = document.querySelector('#nueva-tap')
+const cerrarmenu = document.querySelector('#cerrarNavBar')
 
+nuevaTap.onclick  = e => {agregarTap(nuevaTap)}
 
-document.addEventListener('click', e => {
-    if (e.target.classList.contains('cerrar-tap')) {
-        const selector = e.target.id.split('-')[0]
-        const tapli = document.querySelector(`.${selector}`)
-        eliminarTap(tapli, selector)
-    }
-
-    if (e.target.classList.contains('item-nav-bar')) {
-        document.querySelector('#cerrarNavBar').click()
+const itemsNavbar = document.querySelectorAll('.item-nav-bar')
+const itemsNavbararray = Array.from(itemsNavbar)
+itemsNavbararray.forEach(item => {
+    item.onclick = e => {
+        cerrarmenu.click()
         cargarTapContenido(e.target.id)
     }
-});
+})
 
 const salir = document.querySelector('#SalirAplicacion')
 salir.onclick = () =>{
 	ipcRenderer.send("salir");
+};
+
+
+const cerrarSesion = document.querySelector('#cerrarSesion')
+cerrarSesion.onclick = () =>{
+    
+	ipcRenderer.send("cerrarSesion");
 };
 

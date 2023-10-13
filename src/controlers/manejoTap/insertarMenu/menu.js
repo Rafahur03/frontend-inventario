@@ -1,3 +1,4 @@
+import { cargarTapContenido } from "../cargarTapContenido.js";
 const menu = (vector) => {
 
     vector.forEach(element => {
@@ -5,6 +6,7 @@ const menu = (vector) => {
         const divActivo = document.querySelectorAll('#collapseActivos a')
         const divReporte = document.querySelectorAll('#collapseReporte a')
         const divInforme = document.querySelector('#collapseInformes')
+        const cerrarmenu = document.querySelector('#cerrarNavBar')
         switch (element) {
             case 1:
                 const uCrear = document.createElement('a')
@@ -12,6 +14,10 @@ const menu = (vector) => {
                 uCrear.classList.add('nav-link', 'ms-3', 'item-nav-bar')
                 uCrear.id = 'nuevoUsuario'
                 uCrear.textContent = 'Nuevo Usuario'
+                uCrear.onclick = e => {
+                    cerrarmenu.click()
+                    cargarTapContenido(e.target.id)
+                }
                 divUsuario[0].parentElement.insertBefore(uCrear, divUsuario[0])
 
                 const uEditar = document.createElement('a')
@@ -19,6 +25,10 @@ const menu = (vector) => {
                 uEditar.classList.add('nav-link', 'ms-3', 'item-nav-bar')
                 uEditar.id = 'editarUsuario'
                 uEditar.textContent = 'Editar Usuario'
+                uEditar.onclick = e => {
+                    cerrarmenu.click()
+                    cargarTapContenido(e.target.id)
+                }
                 if (divUsuario.length > 1) {
                     divUsuario[1].parentElement.insertBefore(uEditar, divUsuario[1])
                 } else {
@@ -31,12 +41,20 @@ const menu = (vector) => {
                 iCrear.classList.add('nav-link', 'ms-3', 'item-nav-bar')
                 iCrear.id = 'listadoCosteado'
                 iCrear.textContent = 'Informe listado Activo costeado'
+                iCrear.onclick = e => {
+                    cerrarmenu.click()
+                    cargarTapContenido(e.target.id)
+                }
                 divInforme.appendChild(iCrear)
                 const iaCrear = document.createElement('a')
                 iaCrear.setAttribute('href', '#')
                 iaCrear.classList.add('nav-link', 'ms-3', 'item-nav-bar')
                 iaCrear.id = 'activoCosteado'
                 iaCrear.textContent = 'Informe por activo costeado'
+                iaCrear.onclick = e => {
+                    cerrarmenu.click()
+                    cargarTapContenido(e.target.id)
+                }
                 divInforme.appendChild(iaCrear)
                 break;
 
@@ -46,6 +64,10 @@ const menu = (vector) => {
                 aCrear.classList.add('nav-link', 'ms-3', 'item-nav-bar')
                 aCrear.id = 'crearActivo'
                 aCrear.textContent = 'Crear Activo'
+                aCrear.onclick = e => {
+                    cerrarmenu.click()
+                    cargarTapContenido(e.target.id)
+                }
                 divActivo[0].parentElement.insertBefore(aCrear, divActivo[0])
                 break;
             case 6:
@@ -54,6 +76,10 @@ const menu = (vector) => {
                 rCrear.classList.add('nav-link', 'ms-3', 'item-nav-bar')
                 rCrear.id = 'crearReporteMttoPreventivo'
                 rCrear.textContent = 'Crear Reporte preventivo'
+                rCrear.onclick = e => {
+                    cerrarmenu.click()
+                    cargarTapContenido(e.target.id)
+                }
                 divReporte[0].parentElement.insertBefore(rCrear, divReporte[1])
                 break;
             default:

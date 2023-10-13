@@ -97,7 +97,7 @@ ipcMain.on('salir', (e) => {
 
 ///// usuarios ///////////////////////////////
 // Iniciar sesion 
-let dataUsuarioSesion
+let dataUsuarioSesion = null
 ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
     try {
         dataUsuarioSesion = await iniciarSesion(datosInicioSesion)
@@ -126,6 +126,12 @@ ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
     }
 
 })
+
+ipcMain.on('cerrarSesion', (e) => {
+    win.loadFile('src/view/inicio.html')
+    dataUsuarioSesion = null
+})
+
 
 ipcMain.on('crearNuevoUsuario', async (e, data) => {
     const token = dataUsuarioSesion.token

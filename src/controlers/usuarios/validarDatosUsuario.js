@@ -45,19 +45,19 @@ const validarDatosUsuario = datos => {
             if (datos.contraseña !== datos.confirmarContraseña) return { msg: 'Las contraseñas no conciden' }
         }
 
-        if (typeof datos.usuarios !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Usuarios' }
+        if (typeof datos.usuarios !== "boolean") return { msg: 'Debe Selecionar un estado de la opcion permisos para el menu Usuarios' }
 
-        if (typeof datos.activos !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Activos' }
+        if (typeof datos.activos !== "boolean") return { msg: 'Debe Selecionar un estado de la opcion permisos para el menu Activos' }
 
-        if (typeof datos.solicitudes !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Solicitudes' }
+        if (typeof datos.solicitudes !== "boolean") return { msg: 'Debe Selecionar un estado de la opcion permisos para el menu Solicitudes' }
 
-        if (typeof datos.reportes !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Reportes' }
+        if (typeof datos.reportes !== "boolean") return { msg: 'Debe Selecionar un estado de la opcion permisos para el menu Reportes' }
 
-        if (typeof datos.confguraciones !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Configuraciones' }
+        if (typeof datos.confguraciones !== "boolean") return { msg: 'Debe Selecionar un estado de la opcion permisos para el menu Configuraciones' }
 
-        if (typeof datos.clasificacion !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Cambiar clasificacion activos' }
+        if (typeof datos.clasificacion !== "boolean") return { msg: 'Debe Selecionar un estado de la opcion permisos para el menu Cambiar clasificacion activos' }
 
-        if (typeof datos.informes !== "boolean") return { msg: 'Debe Selecioar un estado de la opcion permisos para el menu Informes' }
+        if (typeof datos.informes !== "boolean") return { msg: 'Debe Selecionar un estado de la opcion permisos para el menu Informes' }
 
         if (validarVacios(datos.numeroDocumento)) return { msg: 'El campo numero de documento no puede estar vacio' }
 

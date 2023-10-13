@@ -1,20 +1,23 @@
-const eliminarTap = (nodo, id) => {
-    // seleccionamos el contendor de los contenidos de las tap
-    const contenTap = nodo.parentNode.nextSibling.nextSibling
-    const hijoContenTap = contenTap.querySelector(`#${id}`)
-    // eliminamos el contenedor asociado al tap y el tap
-    contenTap.removeChild(hijoContenTap)
-    const contendorSelectorTap = nodo.parentNode
-    contendorSelectorTap.removeChild(nodo)
+const eliminarTap = (e) => {
 
-    // activar primer tap
+    console.log(e.target)
+    
+    const id = e.target.id.split('-')[0]
+    const liTapEL = document.querySelector('.'+id)
+    const contenTapEl = document.querySelector('#'+id)
+    console.log(liTapEL,contenTapEl)
+    // seleccionamos el contendor de los contenidos de las tap
+    const contenTap = contenTapEl.parentNode
     const contenidos = contenTap.querySelectorAll('.tab-pane')
     if(contenidos.length === 0) return
+    liTapEL.parentNode.removeChild(liTapEL)
+    contenTapEl.parentNode.removeChild(contenTapEl)
     const primerContenido = contenidos[0]
     const idContenido = primerContenido.id
-    const tapActiva = contendorSelectorTap.querySelector(`.${idContenido} > .nav-link`)
+    const tapActiva = document.querySelector(`.${idContenido} > .nav-link`)
     tapActiva.click()
 
+    setTimeout(() =>{if(!primerContenido.classList.contains("active")) primerContenido.classList.add("active")},160) 
 }
 
 export {

@@ -48,7 +48,7 @@ const cargarActivoReportePrev = async (id, nodo) => {
     const fechaproximoMtto = nodo.querySelector('.fechaproximoMtto')
     const descripcionSolicitud = nodo.querySelector('.descripcionSolicitud')
     //const fechaReporte = document.querySelector('.fechaReporte')
-    const crear = document.querySelector('.crearReporte')
+    const crear = nodo.querySelector('.crearReporte')
 
 
     crear.setAttribute('activo', 'Act-' + activo.id)
