@@ -85,8 +85,7 @@ const crearReporteMttoPreventivo = () => {
                             <label for="fechaproximoMtto">Fecha del proximo Mtto</label>
                             <input type="date" class="form-control my-1 fechaproximoMtto" readonly>
                         </div>
-
-                        </div>
+                        
                     </div>
                     <h3 class="text-center mt-1 fw-bold">Datos del Reporte</h3>
                     <div class="row mx-3 align-items-center">
@@ -226,7 +225,7 @@ const crearReporteMttoPreventivo = () => {
     listado.forEach(element => {
         const option = document.createElement('option')
         option.value = 'Act-' + element.id 
-        option.textContent = element.codigoInterno +' ' + element.nombreActivo +' ' + element.ubicacion+ ' ' + element.nombreResponsable + ' ' + element.marca + ' ' + element.serie
+        option.textContent = element.codigoInterno + '--' + element.nombreActivo +  '--' + element.ubicacion+  '--' + element.nombreResponsable +  '--' + element.marca + '--' + element.serie
         listActivo.appendChild(option)
     })
 

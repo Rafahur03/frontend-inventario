@@ -1,11 +1,8 @@
-const eliminarTap = (e) => {
-
-    console.log(e.target)
-    
+const eliminarTap = (e) => {    
     const id = e.target.id.split('-')[0]
     const liTapEL = document.querySelector('.'+id)
     const contenTapEl = document.querySelector('#'+id)
-    console.log(liTapEL,contenTapEl)
+   
     // seleccionamos el contendor de los contenidos de las tap
     const contenTap = contenTapEl.parentNode
     const contenidos = contenTap.querySelectorAll('.tab-pane')
