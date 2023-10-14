@@ -1,5 +1,5 @@
 const { ipcRenderer } = require('electron')
-
+import { descargarCronograma } from '../../informes/cronogramaMtto.js';
 const cronogramaMantenimiento = () => {
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
@@ -7,18 +7,23 @@ const cronogramaMantenimiento = () => {
         <div class="container-fluid d-flex w-100 m-0 p-0 mb-4">
             <form class="w-100 d-flex flex-column">                          
                 <div class="row  justify-content-center mx-2 contenedorfiltros">
-                    <h3 class="text-center mt-1 mb-3 fw-bold">Cronograma de Mantenimiento</h3>
-                    <h4 class="text-center mt-1 mb-3 fw-bold">Seleccione los Activos Que Desee</h4>
-                                       
+                    <h3 class="text-center mt-1 mb-3 fw-bold">Cronograma de Mantenimiento</h3>                              
                     <div class="col-6">
-                        <h5 class="text-center mt-1 mb-3 fw-bold">Clasificacion Activos</h5> 
-                        <div class="d-flex flex-column justify-content-center align-items-center">
-                            <div class="d-inline clasificacion">
+                    <h4 class="text-center mt-1 mb-3 fw-bold">Seleccione los Activos y el año</h4>
+                        <div class="row">
+                            <div class="d-inline clasificacion col-9">
+                                <h5 class="text-center mt-1 mb-3 fw-bold">Clasificacion Activos</h5> 
                                 <div class="form-check form-switch my-2">
-                                    <input class="form-check-input checkTodosClasificacion" type="checkbox">
+                                    <input class="form-check-input checkTodosClasificacion" type="checkbox" id="TD">
                                     <label class="form-check-label" for="checkTodosClasificacion">Incluir todos</label>
                                 </div>
-                            </div>    
+                            </div>
+                            <div class="d-inline AñoClasificacion col-3">
+                                <h5 class="text-center mt-1 mb-3 fw-bold">Año</h5>
+                                <select class="form-select selectYear" aria-label="Select Año">
+                                    <option selected>Seleccione un año</option>
+                                </select>
+                            </div>                           
                         </div>
                     </div>
                         
@@ -27,11 +32,11 @@ const cronogramaMantenimiento = () => {
                         <div class="d-flex flex-row justify-content-center align-items-center">
                             <div class="d-inline tipoActivos">
                            
-                                <button type="button" class="btn mt-0 mx-5 pt-0 cronogramaPdf" title="Cronograma en PDF"> 
+                                <button type="button" class="btn mt-0 mx-5 pt-0 cronogramaPdf" title="Cronograma en PDF" tipo="pdf"> 
                                      <i class="bi bi-file-earmark-pdf-fill fs-1 text-primary">PDF</i>
                                 </button>
 
-                                <button type="button" class="btn mt-0 mx-5 pt-0 cronogramaExcel" title="Cronograma en EXCEL">
+                                <button type="button" class="btn mt-0 mx-5 pt-0 cronogramaExcel" title="Cronograma en EXCEL" tipo="excel">
                                     <i class="bi bi-file-earmark-spreadsheet-fill fs-1 text-success"> EXCEL</i> 
                                 </button>
                             </div>    
@@ -86,6 +91,19 @@ const cronogramaMantenimiento = () => {
 
     }
 
+    const selectYear = seccion.querySelector('.selectYear')
+    let year = 2023
+    for (let i = 0; i < 101; i++) {
+        const opcion = document.createElement('option')
+        opcion.value = year + i
+        opcion.textContent = year + i
+        selectYear.appendChild(opcion)
+    }
+
+    const cronogramaPdf = seccion.querySelector('.cronogramaPdf')
+    const cronogramaExcel = seccion.querySelector('.cronogramaExcel')
+    cronogramaPdf.onclick = e  => descargarCronograma(e, seccion)
+    cronogramaExcel.onclick = e  => descargarCronograma(e, seccion)
     return seccion
 }
 

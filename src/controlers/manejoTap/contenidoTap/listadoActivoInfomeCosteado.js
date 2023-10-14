@@ -1,5 +1,5 @@
 const { ipcRenderer } = require('electron')
-
+import { descargarlistadoActivoInfomeCosteado } from '../../informes/descargarInfoListadoActCost.js';
 const listadoActivoInfomeCosteado = () => {
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
@@ -27,11 +27,11 @@ const listadoActivoInfomeCosteado = () => {
                         <div class="d-flex flex-row justify-content-center align-items-center">
                             <div class="d-inline tipoActivos">
                            
-                                <button type="button" class="btn mt-0 mx-5 pt-0 informeActivoPdf" title="Cronograma en PDF"> 
+                                <button type="button" class="btn mt-0 mx-5 pt-0 informeActivoPdf" title="Cronograma en PDF" tipo="pdf"> 
                                      <i class="bi bi-file-earmark-pdf-fill fs-1 text-primary">PDF</i>
                                 </button>
 
-                                <button type="button" class="btn mt-0 mx-5 pt-0 informeActivoExcel" title="Cronograma en EXCEL">
+                                <button type="button" class="btn mt-0 mx-5 pt-0 informeActivoExcel" title="Cronograma en EXCEL" tipo="excel">
                                     <i class="bi bi-file-earmark-spreadsheet-fill fs-1 text-success"> EXCEL</i> 
                                 </button>
                             </div>    
@@ -85,8 +85,15 @@ const listadoActivoInfomeCosteado = () => {
         })
 
     }
+
+    const informeActivoPdf = seccion.querySelector('.informeActivoPdf')
+    const informeActivoExcel = seccion.querySelector('.informeActivoExcel')
+    informeActivoPdf.onclick = e  => descargarlistadoActivoInfomeCosteado(e, seccion)
+    informeActivoExcel.onclick = e  => descargarlistadoActivoInfomeCosteado(e, seccion)
+
+
     return seccion
-}
+} 
 
 export {
     listadoActivoInfomeCosteado,

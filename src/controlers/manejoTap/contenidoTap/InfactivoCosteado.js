@@ -1,6 +1,7 @@
 const { ipcRenderer } = require('electron')
 import { generateRandomId } from '../../helpers/nombreRandon.js';
 import { modalMensaje } from '../../helpers/modalEleccion.js';
+import { descargarInfActCosteado } from '../../informes/descargarInfActCosteado.js';
 const InfactivoCosteado = () => {
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
@@ -32,7 +33,7 @@ const InfactivoCosteado = () => {
                                 <div class="form-group col-6">
                                     
                                     <label for="codigoInterno">Codigo interno</label>
-                                    <input type="text" class="form-control my-1  fw-bold codigoInterno">                                  
+                                    <input type="text" class="form-control my-1  fw-bold codigoInterno" readonly>                                  
                                     
                                     <label for="marcaActivo">Marca</label>
                                     <input type="text" class="form-control my-1 marcaActivo"  readonly>
@@ -51,11 +52,11 @@ const InfactivoCosteado = () => {
                         <div class="d-flex flex-row justify-content-center align-items-center">
                             <div class="d-inline tipoActivos">
                            
-                                <button type="button" class="btn mt-0 mx-5 pt-0 cronogramaPdf" title="Cronograma en PDF"> 
+                                <button type="button" class="btn mt-0 mx-5 pt-0 informePdf" title="Cronograma en PDF" tipo="pdf"> 
                                      <i class="bi bi-file-earmark-pdf-fill fs-1 text-primary">PDF</i>
                                 </button>
 
-                                <button type="button" class="btn mt-0 mx-5 pt-0 cronogramaExcel" title="Cronograma en EXCEL">
+                                <button type="button" class="btn mt-0 mx-5 pt-0 informeExcel" title="Cronograma en EXCEL"  tipo="excel">
                                     <i class="bi bi-file-earmark-spreadsheet-fill fs-1 text-success"> EXCEL</i> 
                                 </button>
                             </div>    
@@ -163,6 +164,12 @@ const InfactivoCosteado = () => {
             return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe escoger un activo del listado' })
         }
     })
+
+    
+    const informeActivoPdf = seccion.querySelector('.informePdf')
+    const informeActivoExcel = seccion.querySelector('.informeExcel')
+    informeActivoPdf.onclick = e  => descargarInfActCosteado(e, seccion)
+    informeActivoExcel.onclick = e  => descargarInfActCosteado(e, seccion)
 
     return seccion
 }

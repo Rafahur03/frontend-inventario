@@ -8,7 +8,9 @@ const { iniciarSesion,
        cambiarFirma,
        guardarProveedorUsuario,
        eliminarProveedorUsuario,
-       cambiarClave} = require('./src/controlers/usuarios/usuario.js')
+       cambiarClave
+} = require('./src/controlers/usuarios/usuario.js')
+
 const {
     consultarListadoActivos,
     actualizarDatosActivos,
@@ -38,6 +40,7 @@ const { consultarListadoSolicitudes,
     eliminarImagenSolicitud,
     consultarSolicitudReporte
 } = require('./src/controlers/solicitudes/solicitudes.js')
+
 const {consultarListadoReportes,
     descargarListaMtto,
     crearNuevoReporte,
@@ -50,7 +53,9 @@ const {consultarListadoReportes,
     descargarReporteExterno,
     guardarSoporteExtReporte,
     eliminarSoporteExtReporte,
-    guardarReportePrev  } = require('./src/controlers/reportes/reporte.js')
+    guardarReportePrev  
+} = require('./src/controlers/reportes/reporte.js')
+
 const {
     eliminarComponente,
     guardarComponente,
@@ -60,7 +65,14 @@ const { consultarTablasConfig,
      consultarListasCofigActivos,
      consultarTodasTablasConfig,
      crearConfig,
-     actualizarConfig} = require('./src/controlers/tablasConfig/tablasConfig.js')
+     actualizarConfig
+} = require('./src/controlers/tablasConfig/tablasConfig.js')
+
+const {  descargaCronograma,
+    informelistadoAct,
+    informelistadoActCost,
+    descargarIfoActCosteado
+} = require('./src/controlers/informes/informes.js')
 
 require('dotenv').config()
 require('electron-reload')(__dirname, {
@@ -131,7 +143,6 @@ ipcMain.on('cerrarSesion', (e) => {
     win.loadFile('src/view/inicio.html')
     dataUsuarioSesion = null
 })
-
 
 ipcMain.on('crearNuevoUsuario', async (e, data) => {
     const token = dataUsuarioSesion.token
@@ -485,5 +496,37 @@ ipcMain.on('editarConfig', async (e, data) => {
     const token = dataUsuarioSesion.token
     
     const resultado = await actualizarConfig(data, token)
+    e.returnValue = resultado;
+})
+
+
+// informes 
+
+ipcMain.on('descargaCronograma', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    
+    const resultado = await descargaCronograma(data, token)
+    e.returnValue = resultado;
+})
+
+ipcMain.on('informelistadoAct', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    
+    const resultado = await informelistadoAct(data, token)
+    e.returnValue = resultado;
+})
+
+
+ipcMain.on('informelistadoActCost', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    
+    const resultado = await informelistadoActCost(data, token)
+    e.returnValue = resultado;
+})
+
+ipcMain.on('descargarIfoActCosteado', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    
+    const resultado = await descargarIfoActCosteado(data, token)
     e.returnValue = resultado;
 })
