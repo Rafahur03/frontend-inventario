@@ -1,5 +1,5 @@
 const mime = require('mime-types')
-import { gudardarDocumento } from "./guardarDocumento.js"
+import { gudardarDocumento } from "./guardarDocumentoActivo.js"
 import { quitarDocumento } from "./quitarDocumento.js"
 import { modalMensaje } from "../modalEleccion.js"
 

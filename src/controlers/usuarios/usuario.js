@@ -1,9 +1,6 @@
-require('dotenv').config()
 const urlbase = process.env.API_URL
 const { validarDatosUsuario } = require('./validarDatosUsuario.js')
 const { validarImagenes } = require('../helpers/validarImagenes.js')
-
-
 
 const iniciarSesion = async data => {
     const options = {

@@ -16,7 +16,6 @@ const descargarReporteExterno = (e, idReporte) =>{
         idReporte
     }
     const descarga = ipcRenderer.sendSync('descargarReporteExterno', data);
-    console.log(descarga)
     if(descarga.msg) return modalMensaje({titulo:'error', mensaje:descarga.msg});
 
     // Crear un enlace temporal

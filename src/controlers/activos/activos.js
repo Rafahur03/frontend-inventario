@@ -1,4 +1,3 @@
-require('dotenv').config()
 const mime = require('mime-types')
 const { validarDatosActivo } = require('./validarDatosActivo.js')
 const { validarDatosComponente } = require('../componentes/validarComponentes.js')

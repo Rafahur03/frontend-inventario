@@ -6,7 +6,7 @@ import { cargarProveedor } from '../../usuarios/cargarProveedor.js';
 import { cargarImagenFirma } from '../../helpers/cargaImagenGrid.js';
 import { cargarTapContenido } from '../cargarTapContenido.js';
 import { eliminarProvUsuarioBd } from '../../usuarios/eliminarProveUsuario.js';
-import { guardarEdicionUsuario, guardarEdicionUsuarioExt } from '../../usuarios/guardarEdicionusuario.js';
+import { guardarEdicionUsuarioPropio, guardarEdicionUsuarioExterno } from '../../usuarios/guardarEdicionesUsuario.js';
 
 const editarUsuario = async (id = null) => {
     const seccion = document.createElement('section');
@@ -180,7 +180,7 @@ const editarUsuario = async (id = null) => {
     const edicionUsuario = seccion.querySelector('.editarUsuario')
     edicionUsuario.onclick = e=>{
         e.preventDefault()
-        guardarEdicionUsuario(e, seccion)
+        guardarEdicionUsuarioPropio(e, seccion)
     }
     const tipoId = seccion.querySelector('.tipoId')
     const primerNombre = seccion.querySelector('.primerNombre')
@@ -307,7 +307,7 @@ const editarUsuario = async (id = null) => {
 
         edicionUsuario.onclick = e=>{
             e.preventDefault()
-            guardarEdicionUsuarioExt(e, seccion)
+            guardarEdicionUsuarioExterno(e, seccion)
         }
     }
 

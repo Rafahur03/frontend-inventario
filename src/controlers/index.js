@@ -4,9 +4,6 @@ import { insertarMenu } from "./manejoTap/insertarMenu/insertarMenu.js";
 import { cargarTapContenido } from "./manejoTap/cargarTapContenido.js";
 import { mostrarFrase } from "./manejoTap/mostrarFrases.js";
 
-
-
-
 ipcRenderer.on('sesion', (e, sesion) => {
     insertarMenu(sesion.data)
     mostrarFrase(sesion.motivacion)

@@ -1,14 +1,22 @@
+const dotenvExpand = require("dotenv-expand");
+const dotenv = require("dotenv");
+const path = require("path");
+
+// if (process.resourcesPath) {
+//     dotenvExpand.expand(dotenv.config({ path: path.join(process.resourcesPath, ".env") }));
+// }
+
+dotenv.config()
 const { app, BrowserWindow, screen, ipcMain } = require('electron')
-const path = require('path')
 
 const { iniciarSesion,
-     crearNuevoUsuario,
-      guardarEdicionUsuario,
-       consultarUsuario,
-       cambiarFirma,
-       guardarProveedorUsuario,
-       eliminarProveedorUsuario,
-       cambiarClave
+    crearNuevoUsuario,
+    guardarEdicionUsuario,
+    consultarUsuario,
+    cambiarFirma,
+    guardarProveedorUsuario,
+    eliminarProveedorUsuario,
+    cambiarClave
 } = require('./src/controlers/usuarios/usuario.js')
 
 const {
@@ -41,7 +49,7 @@ const { consultarListadoSolicitudes,
     consultarSolicitudReporte
 } = require('./src/controlers/solicitudes/solicitudes.js')
 
-const {consultarListadoReportes,
+const { consultarListadoReportes,
     descargarListaMtto,
     crearNuevoReporte,
     consultarReporte,
@@ -53,7 +61,7 @@ const {consultarListadoReportes,
     descargarReporteExterno,
     guardarSoporteExtReporte,
     eliminarSoporteExtReporte,
-    guardarReportePrev  
+    guardarReportePrev
 } = require('./src/controlers/reportes/reporte.js')
 
 const {
@@ -62,19 +70,18 @@ const {
 } = require('./src/controlers/componentes/componentes.js')
 
 const { consultarTablasConfig,
-     consultarListasCofigActivos,
-     consultarTodasTablasConfig,
-     crearConfig,
-     actualizarConfig
+    consultarListasCofigActivos,
+    consultarTodasTablasConfig,
+    crearConfig,
+    actualizarConfig
 } = require('./src/controlers/tablasConfig/tablasConfig.js')
 
-const {  descargaCronograma,
+const { descargaCronograma,
     informelistadoAct,
     informelistadoActCost,
     descargarIfoActCosteado
 } = require('./src/controlers/informes/informes.js')
 
-require('dotenv').config()
 require('electron-reload')(__dirname, {
     electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
 })
@@ -93,7 +100,7 @@ app.whenReady().then(() => {
             contextIsolation: false
         }
     })
-
+    win.setMenuBarVisibility(false)
     win.loadFile('src/view/inicio.html')
 })
 
@@ -113,11 +120,11 @@ let dataUsuarioSesion = null
 ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
     try {
         dataUsuarioSesion = await iniciarSesion(datosInicioSesion)
-        
-        if (dataUsuarioSesion.msg) {    
-           win.webContents.send('error', dataUsuarioSesion)
-           return
-        }   
+
+        if (dataUsuarioSesion.msg) {
+            win.webContents.send('error', dataUsuarioSesion)
+            return
+        }
         win.loadFile('src/view/index.html')
 
         const sesion = {
@@ -134,6 +141,8 @@ ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
 
     } catch (error) {
         console.log(error)
+
+        win.webContents.send('errorOtro','error')
 
     }
 
@@ -190,8 +199,8 @@ ipcMain.on('cambiarContraseña', async (e, data) => {
 })
 
 ipcMain.on('consultarUsuario', async (e, id) => {
-    if(id == null || parseInt(id) ==NaN){
-        id =  dataUsuarioSesion.data.id
+    if (id == null || parseInt(id) == NaN) {
+        id = dataUsuarioSesion.data.id
     }
 
     const token = dataUsuarioSesion.token
@@ -391,7 +400,7 @@ ipcMain.on('descargarListaMtto', async (e, data) => {
 
 ipcMain.on('consultarReporte', async (e, id) => {
     const token = dataUsuarioSesion.token
-    const respuesta = await consultarReporte( id, token)
+    const respuesta = await consultarReporte(id, token)
     e.returnValue = respuesta;
 })
 
@@ -401,7 +410,7 @@ ipcMain.on('eliminarReporte', async (e, data) => {
     e.returnValue = respuesta;
 })
 
-ipcMain.on('descargarReporte', async (e, data) => { 
+ipcMain.on('descargarReporte', async (e, data) => {
     const token = dataUsuarioSesion.token
     const respuesta = await descargarReporte(data, token)
     e.returnValue = respuesta;
@@ -454,7 +463,7 @@ ipcMain.on('eliminarComponente', async (e, data) => {
 
 ipcMain.on('guardarComponente', async (e, data) => {
     const token = dataUsuarioSesion.token
-    
+
     const resultado = await guardarComponente(data, token)
     e.returnValue = resultado;
 })
@@ -487,14 +496,14 @@ ipcMain.on('consultarTablasCofig', async (e) => {
 
 ipcMain.on('nuevaConfig', async (e, data) => {
     const token = dataUsuarioSesion.token
-    
+
     const resultado = await crearConfig(data, token)
     e.returnValue = resultado;
 })
 
 ipcMain.on('editarConfig', async (e, data) => {
     const token = dataUsuarioSesion.token
-    
+
     const resultado = await actualizarConfig(data, token)
     e.returnValue = resultado;
 })
@@ -504,14 +513,14 @@ ipcMain.on('editarConfig', async (e, data) => {
 
 ipcMain.on('descargaCronograma', async (e, data) => {
     const token = dataUsuarioSesion.token
-    
+
     const resultado = await descargaCronograma(data, token)
     e.returnValue = resultado;
 })
 
 ipcMain.on('informelistadoAct', async (e, data) => {
     const token = dataUsuarioSesion.token
-    
+
     const resultado = await informelistadoAct(data, token)
     e.returnValue = resultado;
 })
@@ -519,14 +528,14 @@ ipcMain.on('informelistadoAct', async (e, data) => {
 
 ipcMain.on('informelistadoActCost', async (e, data) => {
     const token = dataUsuarioSesion.token
-    
+
     const resultado = await informelistadoActCost(data, token)
     e.returnValue = resultado;
 })
 
 ipcMain.on('descargarIfoActCosteado', async (e, data) => {
     const token = dataUsuarioSesion.token
-    
+
     const resultado = await descargarIfoActCosteado(data, token)
     e.returnValue = resultado;
 })

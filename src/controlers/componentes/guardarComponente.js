@@ -41,7 +41,7 @@ const guardarComponente = e => {
         serie: tr.querySelector('.serieComponente').value,
         capacidad: tr.querySelector('.capacidadComponente').value
     }
-    console.log(nuevoComponente)
+
     const componente = ipcRenderer.sendSync('guardarComponente', nuevoComponente);
 
     if(componente.msg){

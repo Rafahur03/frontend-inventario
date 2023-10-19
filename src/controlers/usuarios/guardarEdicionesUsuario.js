@@ -2,7 +2,7 @@ const { ipcRenderer } = require('electron')
 import { modalMensaje } from "../helpers/modalEleccion.js";
 import { cargarTapContenido } from "../manejoTap/cargarTapContenido.js";
 
-const guardarEdicionUsuario = (e, nodo) => {
+const guardarEdicionUsuarioPropio = (e, nodo) => {
 
     const tagName = e.target.tagName.toLowerCase()
     let boton
@@ -61,7 +61,7 @@ const guardarEdicionUsuario = (e, nodo) => {
 
 }
 
-const guardarEdicionUsuarioExt = (e, nodo) => {
+const guardarEdicionUsuarioExterno = (e, nodo) => {
 
     const tagName = e.target.tagName.toLowerCase()
     let boton
@@ -158,4 +158,4 @@ const guardarEdicionUsuarioExt = (e, nodo) => {
 
 }
 
-export { guardarEdicionUsuario, guardarEdicionUsuarioExt }
+export { guardarEdicionUsuarioPropio, guardarEdicionUsuarioExterno }

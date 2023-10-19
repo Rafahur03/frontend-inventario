@@ -1,7 +1,7 @@
 const { ipcRenderer } = require('electron')
 import { modalMensaje } from "../modalEleccion.js"
-import { eliminarDocumento } from "./eliminardocumento.js"
-import { descargarDocumento } from "./descargardocumento.js"
+import { eliminarDocumento } from "./eliminardocumentoActivo.js"
+import { descargarDocumento } from "./descargarDocumentoActivo.js"
 
 const gudardarDocumento = async e => {
 

@@ -1,4 +1,3 @@
-require('dotenv').config()
 const urlbase = process.env.API_URL
 const {validarDatosComponente} = require('./validarComponentes.js')
 const eliminarComponente = async (data, token) => {

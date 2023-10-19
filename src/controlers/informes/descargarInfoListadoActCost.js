@@ -23,7 +23,6 @@ const descargarlistadoActivoInfomeCosteado = (e, seccion) =>{
         tipo,
         filtros,
     }   
-    console.log(data)
 
     const descarga = ipcRenderer.sendSync('informelistadoActCost', data);
     if(descarga.msg) return modalMensaje({titulo:'error', mensaje:descarga.msg});
@@ -35,9 +34,7 @@ const descargarlistadoActivoInfomeCosteado = (e, seccion) =>{
 
     // Simular un clic en el enlace para abrir el administrador de archivos
     link.click();
-  
-
-    
+      
 }
 
 export {

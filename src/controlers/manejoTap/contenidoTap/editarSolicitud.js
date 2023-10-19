@@ -190,7 +190,6 @@ const editarSolicitud = (id) => {
         imagen.onload = e => rotarImg(e)
     })
 
-    console.log(solicitud)
     if (solicitud.img_solicitud !== null) {
         const contenedorImagenes = seccion.querySelector('.imagenesSolicitud')
         solicitud.imagenesSolicitud.forEach((element, index) => {

@@ -1,11 +1,16 @@
 {
-  "name": "frontend-inventario",
-  "version": "0.0.0",
+  "name": "frontend-inventrio",
+  "version": "1.0.0",
   "description": "Manejo de inventario, mantenimientos, app de escritorio con electron ",
   "main": "./main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "electron-builder"
+  },
+  "build": {
+    "extraResources": [
+      ".env"
+    ]
   },
   "keywords": [
     "electron",
@@ -18,12 +23,14 @@
   "author": "Rafael Jose Huertas Ruiz",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^24.2.0"
+    "electron": "^24.2.0",
+    "electron-builder": "^24.6.4",
+    "electron-reload": "^2.0.0-alpha.1"
   },
   "dependencies": {
     "bootstrap-icons": "^1.10.5",
     "dotenv": "^16.0.3",
-    "electron-reload": "^2.0.0-alpha.1",
+    "dotenv-expand": "^10.0.0",
     "mime-types": "^2.1.35"
   }
 }

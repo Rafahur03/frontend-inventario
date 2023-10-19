@@ -1,6 +1,5 @@
 const { ipcRenderer } = require('electron')
 import { modalEleccion, modalMensaje } from '../helpers/modalEleccion.js'
-import { mostarSpinner, cerrarSpinner } from '../helpers/modalSpinner.js'
 
 const guardarEditarActivo = async e => {
     const tagName = e.target.tagName.toLowerCase()

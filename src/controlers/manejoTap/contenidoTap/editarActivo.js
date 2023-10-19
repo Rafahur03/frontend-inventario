@@ -4,19 +4,19 @@ import { rotarImg } from '../../helpers/activos/rotarImg.js';
 import { eliminarImgActivo } from '../../helpers/eliminarImg.js';
 import { imprimirActivo } from '../../activos/ImprimirActivo.js';
 import { solicitarMttoActivo } from '../../activos/solicitarMttoActivo.js';
-import { guardarEditarActivo } from '../../activos/editarActivo.js';
+import { guardarEditarActivo } from '../../activos/guardarEditarActivo.js';
 import { imprimirListadoMtoActivo } from '../../activos/ImprimirListadoMtto.js';
 import { agregarComponente } from '../../componentes/agregarLineaComponente.js';
 import { eliminarActivo } from '../../activos/eliminarActivo.js';
 import { eliminarComponente } from '../../componentes/eliminarComponente.js';
 import { nuevaImagen } from '../../helpers/activos/cargarNuevaImagenCarrusel.js';
-import { descargarDocumento } from '../../helpers/documentacion/descargardocumento.js';
+import { descargarDocumento } from '../../helpers/documentacion/descargarDocumentoActivo.js';
 import { cargarDocumento } from '../../helpers/documentacion/cargarDocumento.js';
 import { opcionId } from '../../helpers/activos/listasId.js';
 import { modalMensaje } from '../../helpers/modalEleccion.js';
 import { cargarTapContenido } from '../cargarTapContenido.js';
 import { listadoActivos } from './listadoActivos.js';
-import { eliminarDocumento } from '../../helpers/documentacion/eliminardocumento.js';
+import { eliminarDocumento } from '../../helpers/documentacion/eliminardocumentoActivo.js';
 
 
 const editarActivo = (id) => {

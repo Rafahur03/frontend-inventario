@@ -87,7 +87,7 @@ const cargarNuevaVista = (id, dato) => {
         'consultarReporte': editarReporte,
     }
 
-    const contenidoTap = agregarTap(document.querySelector('#nueva-tap'))
+    const contenidoTap = agregarTap(document.querySelector('#nueva-tap'), id)
     const atribute = document.createAttribute('tipoVista')
     atribute.value = id
     contenidoTap.setAttributeNode(atribute)

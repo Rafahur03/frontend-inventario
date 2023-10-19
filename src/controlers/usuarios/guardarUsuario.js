@@ -95,7 +95,6 @@ const guardarUsuario = (nodo) => {
 
     }
 
-    console.log(data)
     const usuario = ipcRenderer.sendSync('crearNuevoUsuario', data);
     if(usuario.msg) return modalMensaje({titulo: 'ERROR',mensaje:usuario.msg})
 

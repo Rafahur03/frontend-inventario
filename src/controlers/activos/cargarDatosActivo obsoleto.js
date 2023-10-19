@@ -17,7 +17,7 @@ import { modalMensaje } from '../helpers/modalEleccion.js'
 import { cargarTapContenido } from '../manejoTap/cargarTapContenido.js'
 
 const cargarDatosActiv0o = (id, nodo) => {
-    console.log(nodo)
+
     const data = ipcRenderer.sendSync('consultarActivo', id)
     if(data.msg) return modalMensaje({title: 'ERROR', message: data.msg})
 

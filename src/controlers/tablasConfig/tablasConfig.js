@@ -1,7 +1,4 @@
-require('dotenv').config()
 const urlbase = process.env.API_URL
-
-
 
 const consultarListasCofigActivos = async token => {
     const options = {

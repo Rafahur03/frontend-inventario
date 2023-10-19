@@ -1,5 +1,4 @@
-﻿require('dotenv').config()
-const urlbase = process.env.API_URL
+﻿const urlbase = process.env.API_URL
 const { validarDatosSolicitud } = require('./validarSolicitud.js')
 const { validarImagenes } = require('../helpers/validarImagenes.js')
 

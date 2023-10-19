@@ -22,7 +22,6 @@ const editarArea = e => {
     if (estado.length <= 1) return modalMensaje({ titulo: 'ERROR', mensaje: 'el Estado del Area no es valido' })
     if (estado.trim() == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El estado del Area no es valido'})
     const data = { id: 'area', area: nombre, idArea, estado}
-    console.log(data)
     const respuesta = ipcRenderer.sendSync('editarConfig', data)
     if (respuesta.msg) return modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
     modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })

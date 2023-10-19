@@ -1,4 +1,4 @@
-require('dotenv').config()
+
 const urlbase = process.env.API_URL
 
 const descargaCronograma = async (datos, token) => {

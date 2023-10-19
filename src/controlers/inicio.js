@@ -1,16 +1,9 @@
-const { ipcRenderer } = require("electron");
 
 import { modalMensaje } from "./helpers/modalEleccion.js";
-
+const { ipcRenderer } = require("electron");
 const form = document.querySelector("form");
 const user = document.querySelector("#idUsuario");
 const password = document.querySelector("#password");
-const divform = document.querySelector(".form");
-
-window.addEventListener("DOMContentLoaded", (e) => {
-	user.value = 1102849823;
-	password.value = "Anakarina5";
-});
 
 // solicita salior de la aplicacion
 form.addEventListener("reset", async (e) => {
@@ -38,6 +31,10 @@ form.addEventListener("submit", async (e) => {
 
 	ipcRenderer.on('error', (event, data) => {
 		modalMensaje({titulo:'ERROR', mensaje: data.msg})
+	})
+
+	ipcRenderer.on('errorOtro', (event, data) => {
+		modalMensaje({titulo:'ERROR', mensaje: 'No fue posible iniciarla sesiion, no se pudo conectar con el servidor'})
 	})
 
   	

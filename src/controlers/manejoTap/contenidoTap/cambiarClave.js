@@ -52,7 +52,6 @@ const cambiarClave = () => {
             claveActual
         }
 
-        console.log(data)
         const cambiar = ipcRenderer.sendSync('cambiarContraseña', data)
         if (cambiar.msg) return modalMensaje({ titulo: 'ERROR', mensaje: cambiar.msg })
         modalMensaje({ titulo: 'EXITO', mensaje: cambiar.exito })
