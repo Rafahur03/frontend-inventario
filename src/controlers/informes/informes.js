@@ -100,7 +100,7 @@ const descargarIfoActCosteado = async (datos, token) => {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({data:datos})
     }
 
     try {

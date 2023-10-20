@@ -31,12 +31,11 @@ const descargarCronograma = (e, seccion) =>{
    
     const descarga = ipcRenderer.sendSync('descargaCronograma', data);
     if(descarga.msg) return modalMensaje({titulo:'error', mensaje:descarga.msg});
-    
-    // Crear un enlace temporal
+
+    // Crear un enlace temporal 
     const link = document.createElement('a');
     link.href = descarga.reportePDF;
     link.download = descarga.nombre;
-
     // Simular un clic en el enlace para abrir el administrador de archivos
     link.click();
   
