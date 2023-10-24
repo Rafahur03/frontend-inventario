@@ -33,6 +33,7 @@ const informelistadoAct = async (datos, token) => {
 
     if(datos.tipo !=='pdf' && datos.tipo !=='excel') return { msg: 'No se pudo validar el tipo de archivo'}
     if(datos.filtros.every(item => item.valor === false))return {msg: 'Debe escoger una Clasificacion de Activo'}
+    if(typeof datos.estado !== 'boolean') return {msg: 'Debe Selecconar un filtro de estado valido'}
 
 
     const options = {   
@@ -59,6 +60,7 @@ const informelistadoAct = async (datos, token) => {
 const informelistadoActCost = async (datos, token) => {
     if(datos.tipo !== 'pdf' && datos.tipo !== 'excel') return { msg: 'No se pudo validar el tipo de archivo'}
     if(datos.filtros.every(item => item.valor === false))return {msg: 'Debe escoger una Clasificacion de Activo'}
+    if(typeof datos.estado !== 'boolean') return {msg: 'Debe Selecconar un filtro de estado valido'}
 
     const options = {
         method: 'POST',
@@ -83,16 +85,9 @@ const informelistadoActCost = async (datos, token) => {
 
 const descargarIfoActCosteado = async (datos, token) => {
 
-    if(datos.tipo !=='pdf' && datos.tipo !=='excel') return { msg: 'No se pudo validar el tipo de archivo'}
     if(datos.activo.length == 0 || datos.codigo.length == 0) return {msg: 'Debe escoger un  activo de la lista'}
     if(datos.activo.trim().length == 0 || datos.codigo.trim().length == 0) return {msg: 'Debe escoger un  activo de la lista'}
     if(isNaN(parseInt(datos.activo.split('-')[1]))) return {msg: 'Activo no valido escoja un Activo de la lista'}
-
-    const data = {
-        id: datos.activo.split('-')[1],
-        codigo:datos.codigo,
-        tipo:datos.tipo
-    }
 
     const options = {
         method: 'POST',

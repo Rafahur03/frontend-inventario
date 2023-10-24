@@ -9,9 +9,10 @@ const descargarlistadoActivoInfomeCosteado = (e, seccion) =>{
     } else {
         boton = e.target
     }   
-    const tipo = boton.getAttribute('tipo')
+    const tipo = boton.getAttribute('tipo') 
     const clasificacion = seccion.querySelector('.clasificacion')
     const input = clasificacion.querySelectorAll('input')
+    const dadoBaja = seccion.querySelector('.checkDadosbaja')
     const inputs = Array.from(input)
 
     if(tipo !='pdf' && tipo !='excel') return  modalMensaje({titulo: 'ERROR', mensaje: 'No se pudo validar el tipo de archivo'})
@@ -22,18 +23,34 @@ const descargarlistadoActivoInfomeCosteado = (e, seccion) =>{
     const data = {
         tipo,
         filtros,
-    }   
+        estado: dadoBaja.checked ? true : false
+    }
+
 
     const descarga = ipcRenderer.sendSync('informelistadoActCost', data);
     if(descarga.msg) return modalMensaje({titulo:'error', mensaje:descarga.msg});
     
     // Crear un enlace temporal
-    const link = document.createElement('a');
-    link.href = descarga.reportePDF;
-    link.download = descarga.nombre;
-
-    // Simular un clic en el enlace para abrir el administrador de archivos
-    link.click();
+    if (tipo === 'pdf') {
+        const link = document.createElement('a');
+        link.href = descarga.reportePDF; 
+        link.download = descarga.nombre;
+        // Simular un clic en el enlace para abrir el administrador de archivos
+        link.click();
+    } else {
+        const byteCharacters = atob(descarga.reportePDF);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = descarga.nombre;
+        // Simular un clic en el enlace para abrir el administrador de archivos
+        link.click();
+    }
       
 }
 

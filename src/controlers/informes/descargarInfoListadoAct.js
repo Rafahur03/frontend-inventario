@@ -12,6 +12,7 @@ const descargarInfListadoAct = (e, seccion) =>{
     const tipo = boton.getAttribute('tipo')
     const clasificacion = seccion.querySelector('.clasificacion')
     const input = clasificacion.querySelectorAll('input')
+    const dadoBaja = seccion.querySelector('.checkDadosbaja')
     const inputs = Array.from(input)
 
     if(tipo !='pdf' && tipo !='excel') return  modalMensaje({titulo: 'ERROR', mensaje: 'No se pudo validar el tipo de archivo'})
@@ -23,6 +24,7 @@ const descargarInfListadoAct = (e, seccion) =>{
     const data = {
         tipo,
         filtros,
+        estado: dadoBaja.checked ? true : false
     }   
  
     const descarga = ipcRenderer.sendSync('informelistadoAct', data);

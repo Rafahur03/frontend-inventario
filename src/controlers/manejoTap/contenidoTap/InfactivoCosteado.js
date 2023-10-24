@@ -55,10 +55,6 @@ const InfactivoCosteado = () => {
                                 <button type="button" class="btn mt-0 mx-5 pt-0 informePdf" title="Cronograma en PDF" tipo="pdf"> 
                                      <i class="bi bi-file-earmark-pdf-fill fs-1 text-primary">PDF</i>
                                 </button>
-
-                                <button type="button" class="btn mt-0 mx-5 pt-0 informeExcel" title="Cronograma en EXCEL"  tipo="excel">
-                                    <i class="bi bi-file-earmark-spreadsheet-fill fs-1 text-success"> EXCEL</i> 
-                                </button>
                             </div>    
                         </div>                                            
                     </div>
@@ -167,9 +163,7 @@ const InfactivoCosteado = () => {
 
     
     const informeActivoPdf = seccion.querySelector('.informePdf')
-    const informeActivoExcel = seccion.querySelector('.informeExcel')
     informeActivoPdf.onclick = e  => descargarInfActCosteado(e, seccion)
-    informeActivoExcel.onclick = e  => descargarInfActCosteado(e, seccion)
 
     return seccion
 }

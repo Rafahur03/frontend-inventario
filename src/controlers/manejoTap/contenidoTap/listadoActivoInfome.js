@@ -8,17 +8,23 @@ const listadoActivoInfome = () => {
             <form class="w-100 d-flex flex-column">                          
                 <div class="row  justify-content-center mx-2 contenedorfiltros">
                     <h3 class="text-center mt-1 mb-3 fw-bold">Informe Listado de Activos</h3>
-                    <h4 class="text-center mt-1 mb-3 fw-bold">Seleccione los Activos Que Desee</h4>
-                                       
                     <div class="col-6">
-                        <h5 class="text-center mt-1 mb-3 fw-bold">Clasificacion Activos</h5> 
-                        <div class="d-flex flex-column justify-content-center align-items-center">
-                            <div class="d-inline clasificacion">
+                     <h4 class="text-center mt-1 mb-3 fw-bold">Seleccione los Activos Que Desee</h4>                  
+                        <div class="row">
+                            <div class="d-inline clasificacion col-9">
+                                <h5 class="text-center mt-1 mb-3 fw-bold">Clasificacion Activos</h5> 
                                 <div class="form-check form-switch my-2">
-                                    <input class="form-check-input checkTodosClasificacion" type="checkbox">
+                                    <input class="form-check-input checkTodosClasificacion" type="checkbox" id="TD">
                                     <label class="form-check-label" for="checkTodosClasificacion">Incluir todos</label>
                                 </div>
-                            </div>    
+                            </div>
+                            <div class="d-inline AñoClasificacion col-3">
+                                <h5 class="text-center mt-1 mb-3 fw-bold">Estados</h5> 
+                                <div class="form-check form-switch my-2">
+                                    <input class="form-check-input checkDadosbaja" type="checkbox" id="DB">
+                                    <label class="form-check-label" for="checkDadosBaja">Incluir Activos Dados de Baja</label>
+                                </div>      
+                            </div>                           
                         </div>
                     </div>
                         
@@ -95,6 +101,7 @@ const listadoActivoInfome = () => {
 
     return seccion
 }
+
 
 export {
     listadoActivoInfome,
