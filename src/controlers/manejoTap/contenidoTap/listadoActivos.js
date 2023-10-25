@@ -1,20 +1,37 @@
 const { ipcRenderer } = require('electron')
-import { filtroBusqueda } from "../../helpers/filtroBusqueda.js";
-import { abrirDatos } from "../../helpers/abrirDatos.js"
+import { cargarListadoActivo } from "../../activos/cargarListadoActivos.js";
+import { modalMensaje } from "../../helpers/modalEleccion.js";
 
 const listadoActivos = () => {
     
-    const listado = ipcRenderer.sendSync('listadoActivo');
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
         <h2 class="text-center mt-1">Listado Activos</h2>
         <div class="w-100 bg-light p-2">
-            <form class="w-50 mb-1">
+            <div class="m-1 ">
                 <h2>Filtrar por:</h2>
+                <p>Selecciones los filtros y luego presione en los binoculares Si no escoge todos los activos la bsuqueda puede tardar un poco</p>
+                <h5>TIPO DE ACTIVO</h5>
+                <div class ="d-flex flex-nowrap justify-content-around clasificacion">
+                    <div class="form-check form-switch my-2">
+                        <input class="form-check-input checkDadosbaja" type="checkbox" id="DB">
+                        <label class="form-check-label" for="checkDadosBaja">Incluir Activos Dados de Baja</label>
+                    </div>
+                </div>
+                <div class ="d-flex flex-nowrap justify-content-end">
+                    <div class=" ms-5 b border rounded  border-dark">
+                        <button type="button" class="btn mt-0 pt-0  busquedaActivos" title="Consultar Activos">
+                            <i class="bi bi-binoculars-fill fs-1 text-success"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="w-50 mb-1">
+                <h2>Consultar por:</h2>
                 <p>Escriba cuaquiera de estos datos: id equipo, marca, modelo, serie, ubicacion, responsable</p>
                 <input class="form-control inputFiltro" type="text" placeholder="Buscar...">
-            </form>
+            </div>
         </div>
         <div class="w-100 p-1">
             <table class="table W-100 table-striped table-hover table-responsive">
@@ -35,44 +52,29 @@ const listadoActivos = () => {
             </table>
         </div>
     `
-    const tbody = seccion.querySelector('tbody')
-    listado.forEach(element => {
-        const tr = document.createElement('tr')
-        const tdcodigo = document.createElement('td')
-        const tdnombreActivo = document.createElement('td')
-        const tdmarca = document.createElement('td')
-        const tdmodelo = document.createElement('td')
-        const tdserie = document.createElement('td')
-        const tdubicacion = document.createElement('td')
-        const tdnombreResponsable = document.createElement('td')
-        const tdestado = document.createElement('td')
-        tr.id = `Act-${element.id}`
-        tdcodigo.textContent = element.codigoInterno
-        tdnombreActivo.textContent = element.nombreActivo
-        tdmarca.textContent = element.marca
-        tdmodelo.textContent = element.modelo
-        tdserie.textContent = element.serie
-        tdubicacion.textContent = element.ubicacion
-        tdnombreResponsable.textContent = element.nombreResponsable
-        tdestado.textContent = element.estado
-        tr.appendChild(tdcodigo)
-        tr.appendChild(tdnombreActivo)
-        tr.appendChild(tdmarca)
-        tr.appendChild(tdmodelo)
-        tr.appendChild(tdserie)
-        tr.appendChild(tdubicacion)
-        tr.appendChild(tdnombreResponsable)
-        tr.appendChild(tdestado)
-        tbody.appendChild(tr)
-        tr.ondblclick = e => {abrirDatos(e)}
+    const listadoClasificacion = ipcRenderer.sendSync('datalist', 'clasificacionActivos')
+    if (listadoClasificacion.msg) return modalMensaje({ titulo: 'ERROR', mensaje: 'No se pudo consultar el listado de filtros' })
+    
+    const clasificacion = seccion.querySelector('.clasificacion')
+    listadoClasificacion.forEach((element, index) => {
+        const contenedor = document.createElement('div')
+        contenedor.classList.add('form-check', 'form-switch', 'm-2')
+        const inputcheck = document.createElement('input')
+        inputcheck.classList.add('form-check-input')
+        inputcheck.type = 'checkbox'
+        inputcheck.id = element.siglas
+        inputcheck.checked = false      
+        const label = document.createElement('label')
+        label.classList.add('orm-check-label')
+        label.textContent = element.siglas + ' - ' + element.nombre
+        contenedor.appendChild(inputcheck)
+        contenedor.appendChild(label)
+        clasificacion.appendChild(contenedor)
     });
 
-    const filtro = seccion.querySelector('.inputFiltro')
-    filtro.oninput = e => { filtroBusqueda(e) }
-    filtro.onkeyup = e => {
-        e.preventDefault()
-        if (e.keyCode === 13) return
-    }
+    const busquedaActivos= seccion.querySelector('.busquedaActivos')
+    busquedaActivos.onclick = () => {cargarListadoActivo(seccion) }
+    
 
     return seccion
 }

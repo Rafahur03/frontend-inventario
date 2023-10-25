@@ -9,10 +9,12 @@ ipcRenderer.on('sesion', (e, sesion) => {
     mostrarFrase(sesion.motivacion)
 })
 
+
 const nuevaTap = document.querySelector('#nueva-tap')
 const cerrarmenu = document.querySelector('#cerrarNavBar')
 const itemsNavbar = document.querySelectorAll('.item-nav-bar')
 const itemsNavbararray = Array.from(itemsNavbar)
+
 itemsNavbararray.forEach(item => {
     item.onclick = e => {
         agregarTap(nuevaTap, e.target.id)
@@ -22,14 +24,14 @@ itemsNavbararray.forEach(item => {
 })
 
 const salir = document.querySelector('#SalirAplicacion')
-salir.onclick = () =>{
-	ipcRenderer.send("salir");
+salir.onclick = () => {
+    ipcRenderer.send("salir");
 };
 
 
 const cerrarSesion = document.querySelector('#cerrarSesion')
-cerrarSesion.onclick = () =>{
-    
-	ipcRenderer.send("cerrarSesion");
+cerrarSesion.onclick = () => {
+
+    ipcRenderer.send("cerrarSesion");
 };
 

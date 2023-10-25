@@ -4,13 +4,23 @@ const { validarDatosReporte, validarDatosReportePrev } = require('./validarDatos
 const { validarImagenes } = require('../helpers/validarImagenes.js')
 const { validarDocumentos } = require('../helpers/validarDocumentos.js')
 
-const consultarListadoReportes = async token => {
+const consultarListadoReportes = async (data, token) => {
+    for (let i = 0; i < data.filtros.length; i++) {
+        if(typeof data.filtros[i].id != 'string' ||  typeof data.filtros[i].valor != 'boolean') return {msg: 'Debe escoger una Clasificacion de Activo valida'}
+    }
+
+    if(data.filtros.every(item => item.valor === false)) return {msg: 'Debe escoger una Clasificacion de Activo'}
+    const patrondefecha = /^\d{4}-\d{2}-\d{2}$/
+    if(data.fechaInicialReporte != '') if(!patrondefecha.test(data.fechaInicialReporte)) return {msg: 'La fecha de inicio no es valida'}
+    if(data.fechaFinalReporte != '') if(!patrondefecha.test(data.fechaFinalReporte)) return {msg: 'La fecha de Final no es valida'}
+
     const options = {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
+        body: JSON.stringify({datos:data})
 
     }
 

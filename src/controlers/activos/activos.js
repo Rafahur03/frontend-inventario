@@ -6,13 +6,21 @@ const { validarDocumentos } = require('../helpers/validarDocumentos.js')
 
 const urlbase = process.env.API_URL
 
-const consultarListadoActivos = async token => {
+const consultarListadoActivos = async (data, token) => {
+
+    for (let i = 0; i < data.filtros.length; i++) {
+        if(typeof data.filtros[i].id != 'string' ||  typeof data.filtros[i].valor != 'boolean') return {msg: 'Debe escoger una Clasificacion de Activo valida'}
+    }
+
+    if(data.filtros.every(item => item.valor === false)) return {msg: 'Debe escoger una Clasificacion de Activo'}
+
     const options = {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
-        }
+        },
+        body: JSON.stringify({data})
     }
     try {
         const url = urlbase + '/consultarActivosTodos'

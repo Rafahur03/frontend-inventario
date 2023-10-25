@@ -5,6 +5,12 @@ const form = document.querySelector("form");
 const user = document.querySelector("#idUsuario");
 const password = document.querySelector("#password");
 
+window.addEventListener("DOMContentLoaded", (e) => {
+    user.value = 1102849823;
+    password.value = "Anakarina5";
+}); 
+
+
 // solicita salior de la aplicacion
 form.addEventListener("reset", async (e) => {
 	ipcRenderer.send("salir");

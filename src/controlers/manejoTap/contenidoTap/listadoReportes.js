@@ -1,21 +1,47 @@
 const { ipcRenderer } = require('electron')
-import { filtroBusqueda } from "../../helpers/filtroBusqueda.js";
-import { abrirDatos } from "../../helpers/abrirDatos.js"
+import { cargarListadoReporte } from "../../reportes/cargarListadoReportes.js";
+import { modalMensaje } from "../../helpers/modalEleccion.js";
 
 const listadoReportes = () => {
-    const listado = ipcRenderer.sendSync('listadoReportes');
+
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
     <h2 class="text-center mt-1">Listado Reportes</h2>
-        <div class="w-100 bg-light my-2 p-2">
-            <form class="w-50 mb-4">
-                <h2>Filtrar por:</h2>
-                <p>Escriba cuaquiera de estos datos: id equipo, Id Reporte, Nombre del activo marca, modelo, serie, ubicacion, responsable</p>
-                <input class="form-control inputFiltro" type="text" placeholder="Buscar...">
-            </form>
+        <div class="w-100 bg-light">
+            <div class=" mb-4">
+                <div class=" ">
+                    <h2>Filtrar por:</h2>
+                    <p>Selecciones los filtros y luego presione en los binoculares Si no escoge una fecha la consulta puede tardar, el rango de fecha maximo es de 6 meses</p>
+                    <h5>FECHA</h5>
+                    <div class ="container-fluid w-100 d-flex">
+                        <div class= "mr-2">
+                            <label for="fechaInicialReporte">Fecha Inical Mtto</label>
+                            <input type="date" class="form-control my-1 fechaInicialReporte">
+                        </div>
+                        <div class= "ms-2">
+                            <label for="fechaFinalReporte">Fecha Final</label>
+                            <input type="date" class="form-control my-1 fechaFinalReporte">
+                        </div>
+                        <div class=" ms-auto b border rounded  border-dark">
+                            <button type="button" class="btn mt-0 pt-0  busquedaReporte" title="Consultar Reportes">
+                                <i class="bi bi-binoculars-fill fs-1 text-success"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <h5>TIPO DE ACTIVO</h5>
+                    <div class ="d-flex flex-nowrap justify-content-around clasificacion">
+                       
+                    </div>
+                </div>
+                <div class="w-50">
+                    <h2>Consultar por:</h2>
+                    <p>Escriba cuaquiera de estos datos: id equipo, Id Reporte, Nombre del activo marca, modelo, serie, ubicacion, responsable</p>
+                    <input class="form-control inputFiltro" type="text" placeholder="Buscar...">
+                </div>
+            </div>
         </div>
-        <div class="w-100 p-3">
+        <div class="w-100">
             <table class="table W-100 table-striped table-hover table-responsive">
                 <thead>
                     <tr class="text-uppercase text-center">
@@ -36,46 +62,28 @@ const listadoReportes = () => {
             </table>
         </div>        
     `
-    const tbody = seccion.querySelector('tbody')
-    listado.forEach(element => {
-        const tr = document.createElement('tr')
-        const tdIdReporte= document.createElement('td')
-        const tdIdSolicitud = document.createElement('td')
-        const tdcodigo = document.createElement('td')
-        const tdnombreActivo = document.createElement('td')
-        const tdmarca = document.createElement('td')
-        const tdmodelo = document.createElement('td')
-        const tdubicacion = document.createElement('td')
-        const tdnombreResponsable = document.createElement('td')
-        const tdFechaReporte = document.createElement('td')
-        const tdestado = document.createElement('td')
-        tr.id = `Rep-${element.idReporte}`
-        tdIdReporte.textContent = element.idReporte
-        tdIdSolicitud.textContent = element.idSolicitud
-        tdcodigo.textContent = element.codigoInterno
-        tdnombreActivo.textContent = element.nombreACtivo
-        tdmarca.textContent = element.marca
-        tdmodelo.textContent = element.modelo
-        tdubicacion.textContent = element.ubicacion
-        tdnombreResponsable.textContent = element.solicitante
-        tdFechaReporte.textContent = element.fechareporte
-        tdestado.textContent = element.estado
-        tr.appendChild(tdIdReporte)
-        tr.appendChild(tdIdSolicitud)
-        tr.appendChild(tdcodigo)
-        tr.appendChild(tdnombreActivo)
-        tr.appendChild(tdmarca)
-        tr.appendChild(tdmodelo)
-        tr.appendChild(tdubicacion)
-        tr.appendChild(tdnombreResponsable)
-        tr.appendChild(tdFechaReporte)
-        tr.appendChild(tdestado)
-        tbody.appendChild(tr)
-        tr.ondblclick = e => {abrirDatos(e)}
+    const listadoClasificacion = ipcRenderer.sendSync('datalist', 'clasificacionActivos')
+    if (listadoClasificacion.msg) return modalMensaje({ titulo: 'ERROR', mensaje: 'No se pudo consultar el listado de filtros' })
+
+    const clasificacion = seccion.querySelector('.clasificacion')
+    listadoClasificacion.forEach((element, index) => {
+        const contenedor = document.createElement('div')
+        contenedor.classList.add('form-check', 'form-switch', 'm-2')
+        const inputcheck = document.createElement('input')
+        inputcheck.classList.add('form-check-input')
+        inputcheck.type = 'checkbox'
+        inputcheck.id = element.siglas
+        inputcheck.checked = false
+        const label = document.createElement('label')
+        label.classList.add('orm-check-label')
+        label.textContent = element.siglas + ' - ' + element.nombre
+        contenedor.appendChild(inputcheck)
+        contenedor.appendChild(label)
+        clasificacion.appendChild(contenedor)
     });
 
-    const filtro = seccion.querySelector('.inputFiltro')
-    filtro.oninput = e => { filtroBusqueda(e) }
+    const busquedaReporte = seccion.querySelector('.busquedaReporte')
+    busquedaReporte.onclick = () => cargarListadoReporte(seccion) 
 
     return seccion
 }

@@ -74,7 +74,7 @@ const menu = (vector) => {
                     cerrarmenu.click()
                     cargarTapContenido(e.target.id)
                 }
-                divActivo[0].parentElement.insertBefore(aCrear, divActivo[0])
+                divActivo[0].parentElement.appendChild(aCrear)
                 break;
             case 6:
                 const rCrear = document.createElement('a')

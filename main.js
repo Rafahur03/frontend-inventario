@@ -211,9 +211,9 @@ ipcMain.on('consultarUsuario', async (e, id) => {
 /////////////////activos ///////////////////////////////
 
 // consultar el listado de activos
-ipcMain.on('listadoActivo', async (e) => {
+ipcMain.on('listadoActivo', async (e, data) => {
     const token = dataUsuarioSesion.token
-    const listado = await consultarListadoActivos(token)
+    const listado = await consultarListadoActivos(data, token)
     e.returnValue = listado;
 })
 
@@ -315,9 +315,9 @@ ipcMain.on('consultarDatosActivoReportePrev', async (e, id) => {
 /////////////////////////////////solicitudes////////////////////////////
 
 // consultar el listado de solicitud
-ipcMain.on('listadoSolicitud', async (e) => {
+ipcMain.on('listadoSolicitud', async (e, data) => {
     const token = dataUsuarioSesion.token
-    const listado = await consultarListadoSolicitudes(token)
+    const listado = await consultarListadoSolicitudes(data, token)
     e.returnValue = listado;
 })
 
@@ -374,9 +374,9 @@ ipcMain.on('eliminarImagenSolicitud', async (e, data) => {
 
 // listado reportes
 
-ipcMain.on('listadoReportes', async (e) => {
+ipcMain.on('listadoReportes', async (e, data) => {
     const token = dataUsuarioSesion.token
-    const listado = await consultarListadoReportes(token)
+    const listado = await consultarListadoReportes(data, token)
     e.returnValue = listado;
 })
 

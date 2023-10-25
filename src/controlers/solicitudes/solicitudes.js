@@ -2,14 +2,25 @@
 const { validarDatosSolicitud } = require('./validarSolicitud.js')
 const { validarImagenes } = require('../helpers/validarImagenes.js')
 
-const consultarListadoSolicitudes = async token => {
+const consultarListadoSolicitudes = async (data, token) => {
+    
+    for (let i = 0; i < data.filtros.length; i++) {
+        if(typeof data.filtros[i].id != 'string' ||  typeof data.filtros[i].valor != 'boolean') return {msg: 'Debe escoger una Clasificacion de Activo valida'}
+    }
+
+    if(data.filtros.every(item => item.valor === false)) return {msg: 'Debe escoger una Clasificacion de Activo'}
+    const patrondefecha = /^\d{4}-\d{2}-\d{2}$/
+    if(data.fechaInicialSolicitud != '') if(!patrondefecha.test(data.fechaInicialSolicitud)) return {msg: 'La fecha de inicio no es valida'}
+    if(data.fechaFinalSolicitud != '') if(!patrondefecha.test(data.fechaFinalSolicitud)) return {msg: 'La fecha de Final no es valida'}
+
+
     const options = {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-
+        body: JSON.stringify({datos:data})
     }
 
     try {
