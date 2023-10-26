@@ -20,7 +20,7 @@ const consultarListadoReportes = async (data, token) => {
             'Content-Type': 'application/json',
             'authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({datos:data})
+        body: JSON.stringify({data})
 
     }
 

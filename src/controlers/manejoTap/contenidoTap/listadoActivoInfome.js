@@ -62,7 +62,7 @@ const listadoActivoInfome = () => {
         const inputcheck = document.createElement('input')
         inputcheck.classList.add('form-check-input')
         inputcheck.type = 'checkbox'
-        inputcheck.id = element.siglas
+        inputcheck.setAttribute('siglas', element.siglas)
         inputcheck.checked = false
         estadoClasificacion[index] = false
         inputcheck.onchange = e => {

@@ -79,7 +79,9 @@ const { consultarTablasConfig,
 const { descargaCronograma,
     informelistadoAct,
     informelistadoActCost,
-    descargarIfoActCosteado
+    descargarIfoActCosteado,
+    informelistadoReportes,
+    informelistadoSolicitudes
 } = require('./src/controlers/informes/informes.js')
 
 require('electron-reload')(__dirname, {
@@ -142,7 +144,7 @@ ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
     } catch (error) {
         console.log(error)
 
-        win.webContents.send('errorOtro','error')
+        win.webContents.send('errorOtro', 'error')
 
     }
 
@@ -537,5 +539,19 @@ ipcMain.on('descargarIfoActCosteado', async (e, data) => {
     const token = dataUsuarioSesion.token
 
     const resultado = await descargarIfoActCosteado(data, token)
+    e.returnValue = resultado;
+})
+
+ipcMain.on('descargarIfolistadoreportes', async (e, data) => {
+    const token = dataUsuarioSesion.token
+
+    const resultado = await informelistadoReportes(data, token)
+    e.returnValue = resultado;
+})
+
+ipcMain.on('descargarIfolistadoSolicitudes', async (e, data) => {
+    const token = dataUsuarioSesion.token
+
+    const resultado = await informelistadoSolicitudes(data, token)
     e.returnValue = resultado;
 })

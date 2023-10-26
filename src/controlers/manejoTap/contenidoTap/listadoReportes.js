@@ -12,7 +12,7 @@ const listadoReportes = () => {
             <div class=" mb-4">
                 <div class=" ">
                     <h2>Filtrar por:</h2>
-                    <p>Selecciones los filtros y luego presione en los binoculares Si no escoge una fecha la consulta puede tardar, el rango de fecha maximo es de 6 meses</p>
+                    <p>Selecciones los filtros y luego presione en los binoculares Si no escoge una fecha la consulta puede tardar, el rango de fecha maximo es de 12 meses</p>
                     <h5>FECHA</h5>
                     <div class ="container-fluid w-100 d-flex">
                         <div class= "mr-2">
@@ -72,7 +72,7 @@ const listadoReportes = () => {
         const inputcheck = document.createElement('input')
         inputcheck.classList.add('form-check-input')
         inputcheck.type = 'checkbox'
-        inputcheck.id = element.siglas
+        inputcheck.setAttribute('siglas', element.siglas)
         inputcheck.checked = false
         const label = document.createElement('label')
         label.classList.add('orm-check-label')

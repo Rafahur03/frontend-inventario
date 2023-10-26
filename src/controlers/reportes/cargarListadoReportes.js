@@ -4,20 +4,20 @@ import { abrirDatos } from "../helpers/abrirDatos.js"
 import { filtroBusqueda } from "../helpers/filtroBusqueda.js"
 
 
-const cargarListadoReporte = async seccion =>{
+const cargarListadoReporte = async seccion => {
     const clasificacion = seccion.querySelector('.clasificacion')
     const input = clasificacion.querySelectorAll('input')
     const inputs = Array.from(input)
 
     const filtros = inputs.map(element => {
-        return { id: element.id, valor: element.checked ? true : false }
+        return { id: element.getAttribute('siglas'), valor: element.checked ? true : false }
     })
     if (filtros.every(item => item.valor === false)) return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe escoger una Clasificacion de Activo' })
     const fechaInicialReporte = seccion.querySelector('.fechaInicialReporte').value
     const fechaFinalReporte = seccion.querySelector('.fechaFinalReporte').value
-    if(fechaInicialReporte =='' || fechaFinalReporte=='') {
-        const respuesta = await modalEleccion({titulo: 'Advertencia',mensaje: 'Falta una de las fechas de inicio o final o ambas, si continua se consultaran los datos de los ultimos seis meses o los seis meses anteriores o posteriores acorde a una de las fechas Ingresada'})
-        if(!respuesta) return
+    if (fechaInicialReporte == '' || fechaFinalReporte == '') {
+        const respuesta = await modalEleccion({ titulo: 'Advertencia', mensaje: 'Falta una de las fechas de inicio o final o ambas, si continua se consultaran los datos de los ultimos seis meses o los seis meses anteriores o posteriores acorde a una de las fechas Ingresada' })
+        if (!respuesta) return
     }
     const data = {
         filtros,
@@ -26,9 +26,12 @@ const cargarListadoReporte = async seccion =>{
     }
 
     const listado = ipcRenderer.sendSync('listadoReportes', data);
-    if (listado.msg) return modalMensaje({ titulo: 'ERROR', mensaje: 'No se pudo consultar el listado de reportes' })
+    if (listado.msg) return modalMensaje({ titulo: 'ERROR', mensaje: listado.msg})
 
     const tbody = seccion.querySelector('tbody')
+    while (tbody.firstChild) {
+        tbody.removeChild(tbody.firstChild);
+    }
     listado.forEach(element => {
         const tr = document.createElement('tr')
         const tdIdReporte = document.createElement('td')

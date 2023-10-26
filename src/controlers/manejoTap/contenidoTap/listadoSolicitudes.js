@@ -71,7 +71,7 @@ const listadoSolicitudes = () => {
         const inputcheck = document.createElement('input')
         inputcheck.classList.add('form-check-input')
         inputcheck.type = 'checkbox'
-        inputcheck.id = element.siglas
+        inputcheck.setAttribute('siglas', element.siglas)
         inputcheck.checked = false      
         const label = document.createElement('label')
         label.classList.add('orm-check-label')

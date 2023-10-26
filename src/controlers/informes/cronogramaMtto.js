@@ -16,7 +16,7 @@ const descargarCronograma = (e, seccion) => {
 
     if (tipo != 'pdf' && tipo != 'excel') return modalMensaje({ titulo: 'ERROR', mensaje: 'No se pudo validar el tipo de archivo' })
     const filtros = inputs.map(element => {
-        return { id: element.id, valor: element.checked ? true : false }
+        return { id: element.getAttribute('siglas'), valor: element.checked ? true : false }
     })
     if (filtros.every(item => item.valor === false)) return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe escoger una Clasificacion de Activo' })
 

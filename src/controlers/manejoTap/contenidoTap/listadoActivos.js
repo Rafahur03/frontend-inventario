@@ -3,7 +3,7 @@ import { cargarListadoActivo } from "../../activos/cargarListadoActivos.js";
 import { modalMensaje } from "../../helpers/modalEleccion.js";
 
 const listadoActivos = () => {
-    
+
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
@@ -11,16 +11,18 @@ const listadoActivos = () => {
         <div class="w-100 bg-light p-2">
             <div class="m-1 ">
                 <h2>Filtrar por:</h2>
-                <p>Selecciones los filtros y luego presione en los binoculares Si no escoge todos los activos la bsuqueda puede tardar un poco</p>
+                <p>Selecciones los filtros y luego presione en los binoculares Si no escoge todos los activos la busqueda puede tardar un poco</p>
                 <h5>TIPO DE ACTIVO</h5>
+                
                 <div class ="d-flex flex-nowrap justify-content-around clasificacion">
+                    
+                </div>
+                <div class ="d-flex">
                     <div class="form-check form-switch my-2">
                         <input class="form-check-input checkDadosbaja" type="checkbox" id="DB">
                         <label class="form-check-label" for="checkDadosBaja">Incluir Activos Dados de Baja</label>
                     </div>
-                </div>
-                <div class ="d-flex flex-nowrap justify-content-end">
-                    <div class=" ms-5 b border rounded  border-dark">
+                    <div class=" ms-auto b border rounded  border-dark">
                         <button type="button" class="btn mt-0 pt-0  busquedaActivos" title="Consultar Activos">
                             <i class="bi bi-binoculars-fill fs-1 text-success"></i>
                         </button>
@@ -54,7 +56,7 @@ const listadoActivos = () => {
     `
     const listadoClasificacion = ipcRenderer.sendSync('datalist', 'clasificacionActivos')
     if (listadoClasificacion.msg) return modalMensaje({ titulo: 'ERROR', mensaje: 'No se pudo consultar el listado de filtros' })
-    
+
     const clasificacion = seccion.querySelector('.clasificacion')
     listadoClasificacion.forEach((element, index) => {
         const contenedor = document.createElement('div')
@@ -62,8 +64,8 @@ const listadoActivos = () => {
         const inputcheck = document.createElement('input')
         inputcheck.classList.add('form-check-input')
         inputcheck.type = 'checkbox'
-        inputcheck.id = element.siglas
-        inputcheck.checked = false      
+        inputcheck.setAttribute('siglas', element.siglas)
+        inputcheck.checked = false
         const label = document.createElement('label')
         label.classList.add('orm-check-label')
         label.textContent = element.siglas + ' - ' + element.nombre
@@ -72,9 +74,9 @@ const listadoActivos = () => {
         clasificacion.appendChild(contenedor)
     });
 
-    const busquedaActivos= seccion.querySelector('.busquedaActivos')
-    busquedaActivos.onclick = () => {cargarListadoActivo(seccion) }
-    
+    const busquedaActivos = seccion.querySelector('.busquedaActivos')
+    busquedaActivos.onclick = () => { cargarListadoActivo(seccion) }
+
 
     return seccion
 }

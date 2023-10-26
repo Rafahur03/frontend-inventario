@@ -9,18 +9,21 @@ const cargarListadoActivo = seccion => {
     const input = clasificacion.querySelectorAll('input')
     const inputs = Array.from(input)
 
-    const filtros = inputs.map(element =>{
-        return {id: element.id, valor:element.checked ? true : false }
+    const filtros = inputs.map(element => {
+        return { id: element.getAttribute('siglas'), valor: element.checked ? true : false }
     })
-    
-    if(filtros.every(item => item.valor === false)) return modalMensaje({titulo: 'ERROR', mensaje: 'Debe escoger una Clasificacion de Activo'})
-    
-    const data = {filtros}   
 
-    console.log(data)
+    if (filtros.every(item => item.valor === false)) return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe escoger una Clasificacion de Activo' })
+    const DeBaja = seccion.querySelector('.checkDadosbaja')
+    const data = { filtros, dadoBaja: DeBaja.checked ? true : false }
+
+
     const listado = ipcRenderer.sendSync('listadoActivo', data);
-    if (listado.msg) return modalMensaje({ titulo: 'ERROR', mensaje: 'No se pudo consultar el listado de activos' })
+    if (listado.msg) return modalMensaje({ titulo: 'ERROR', mensaje: listado.msg })
     const tbody = seccion.querySelector('tbody')
+    while (tbody.firstChild) {
+        tbody.removeChild(tbody.firstChild);
+    }
     listado.forEach(element => {
         const tr = document.createElement('tr')
         const tdcodigo = document.createElement('td')

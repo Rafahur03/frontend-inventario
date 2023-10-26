@@ -11,7 +11,7 @@ const consultarListadoActivos = async (data, token) => {
     for (let i = 0; i < data.filtros.length; i++) {
         if(typeof data.filtros[i].id != 'string' ||  typeof data.filtros[i].valor != 'boolean') return {msg: 'Debe escoger una Clasificacion de Activo valida'}
     }
-
+    if(typeof data.dadoBaja != 'boolean') return {msg:'El checkbox dado de baja no es valido'}
     if(data.filtros.every(item => item.valor === false)) return {msg: 'Debe escoger una Clasificacion de Activo'}
 
     const options = {

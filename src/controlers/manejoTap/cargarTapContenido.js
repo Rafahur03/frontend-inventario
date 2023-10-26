@@ -18,6 +18,9 @@ import { cronogramaMantenimiento } from "./contenidoTap/cronogramaMantenimeinto.
 import { listadoActivoInfome } from "./contenidoTap/listadoActivoInfome.js"
 import { listadoActivoInfomeCosteado } from "./contenidoTap/listadoActivoInfomeCosteado.js"
 import { InfactivoCosteado } from "./contenidoTap/InfactivoCosteado.js"
+import { InformeSolicitudes } from "./contenidoTap/InformeSolicitudes.js"
+import { InformeReportesMtto } from "./contenidoTap/InformeReportesMtto.js"
+
 
 
 // carga las vistas en un nodo de contenido existente.
@@ -42,8 +45,12 @@ const cargarTapContenido = async (id, dato) => {
         'cronogramaMantenimiento':cronogramaMantenimiento,
         'informetodosActivos': listadoActivoInfome,
         'listadoCosteado': listadoActivoInfomeCosteado,
-        'activoCosteado': InfactivoCosteado
+        'activoCosteado': InfactivoCosteado,
+        'InformeSolicitudes': InformeSolicitudes,
+        'InformeReportesMtto': InformeReportesMtto,
     }
+    
+
    
     const bodyTap = document.querySelector('#bodyTap')
     if (bodyTap.querySelectorAll('.tab-pane').length == 0) {

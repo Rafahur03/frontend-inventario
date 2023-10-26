@@ -10,7 +10,7 @@ const cargarListadoSolicitud = async seccion => {
     const inputs = Array.from(input)
 
     const filtros = inputs.map(element => {
-        return { id: element.id, valor: element.checked ? true : false }
+        return { id: element.getAttribute('siglas'), valor: element.checked ? true : false }
     })
     if (filtros.every(item => item.valor === false)) return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe escoger una Clasificacion de Activo' })
     const fechaInicialSolicitud = seccion.querySelector('.fechaInicialSolicitud').value
@@ -30,6 +30,9 @@ const cargarListadoSolicitud = async seccion => {
     if (listado.msg) return modalMensaje({ titulo: 'ERROR', mensaje: listado.msg })
 
     const tbody = seccion.querySelector('tbody')
+    while (tbody.firstChild) {
+        tbody.removeChild(tbody.firstChild);
+    }
     listado.forEach(element => {
         const tr = document.createElement('tr')
 
@@ -67,4 +70,4 @@ const cargarListadoSolicitud = async seccion => {
 
 }
 
-export {cargarListadoSolicitud}
+export { cargarListadoSolicitud }

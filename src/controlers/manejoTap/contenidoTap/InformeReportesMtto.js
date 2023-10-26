@@ -1,42 +1,43 @@
 const { ipcRenderer } = require('electron')
-import { descargarlistadoActivoInfomeCosteado } from '../../informes/descargarInfoListadoActCost.js';
-const listadoActivoInfomeCosteado = () => {
+import { modalMensaje } from "../../helpers/modalEleccion.js";
+import { descargarInformeReporteMtto } from "../../informes/descargarInformeReportesMtto.js";
+const InformeReportesMtto = () => {
+
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
         <div class="container-fluid d-flex w-100 m-0 p-0 mb-4">
             <form class="w-100 d-flex flex-column">                          
                 <div class="row  justify-content-center mx-2 contenedorfiltros">
-                    <h3 class="text-center mt-1 mb-3 fw-bold">Informe Listado de Activos Con Costos</h3>
-                     <div class="col-6">
+                    <h3 class="text-center mt-1 mb-3 fw-bold">Informe Reportes De Mantenimiento</h3>
+                     <div class="col-8">
                      <h4 class="text-center mt-1 mb-3 fw-bold">Seleccione los Activos Que Desee</h4>                  
                         <div class="row">
-                            <div class="d-inline clasificacion col-9">
+                            <div class="d-inline clasificacion col-7">
                                 <h5 class="text-center mt-1 mb-3 fw-bold">Clasificacion Activos</h5> 
                                 <div class="form-check form-switch my-2">
-                                    <input class="form-check-input checkTodosClasificacion" type="checkbox" id="TD">
+                                    <input class="form-check-input checkTodosClasificacion" type="checkbox" siglas="TD">
                                     <label class="form-check-label" for="checkTodosClasificacion">Incluir todos</label>
                                 </div>
                             </div>
-                            <div class="d-inline AñoClasificacion col-3">
-                                <h5 class="text-center mt-1 mb-3 fw-bold">Estados</h5> 
-                                <div class="form-check form-switch my-2">
-                                    <input class="form-check-input checkDadosbaja" type="checkbox" id="DB">
-                                    <label class="form-check-label" for="checkDadosBaja">Incluir Activos Dados de Baja</label>
+                            <div class="d-inline AñoClasificacion col-5">
+                                <h5 class="text-center mt-1 mb-3 fw-bold">Periodo</h5> 
+                                <div class= "mr-2">
+                                    <label for="fechaInicialReporte">Fecha Inical Mtto</label>
+                                    <input type="date" class="form-control my-1 fechaInicialReporte">
+                                </div>
+                                <div class= "ms-2">
+                                    <label for="fechaFinalReporte">Fecha Final</label>
+                                    <input type="date" class="form-control my-1 fechaFinalReporte">
                                 </div>      
                             </div>                           
                         </div>
                     </div>
-                    <div class=" col-6">
+                    <div class=" col-4">
                         <h5 class="text-center mt-1 mb-3 fw-bold">Generar informe</h5> 
                         <div class="d-flex flex-row justify-content-center align-items-center">
-                            <div class="d-inline tipoActivos">
-                           
-                                <button type="button" class="btn mt-0 mx-5 pt-0 informeActivoPdf" title="Cronograma en PDF" tipo="pdf"> 
-                                     <i class="bi bi-file-earmark-pdf-fill fs-1 text-primary">PDF</i>
-                                </button>
-
-                                <button type="button" class="btn mt-0 mx-5 pt-0 informeActivoExcel" title="Cronograma en EXCEL" tipo="excel">
+                            <div class="d-inline">
+                                <button type="button" class="btn mt-0 mx-5 pt-0 informeReportesExcel" title="Informe Reporte de Mtto en EXCEL" tipo="excel">
                                     <i class="bi bi-file-earmark-spreadsheet-fill fs-1 text-success"> EXCEL</i> 
                                 </button>
                             </div>    
@@ -91,15 +92,14 @@ const listadoActivoInfomeCosteado = () => {
 
     }
 
-    const informeActivoPdf = seccion.querySelector('.informeActivoPdf')
-    const informeActivoExcel = seccion.querySelector('.informeActivoExcel')
-    informeActivoPdf.onclick = e  => descargarlistadoActivoInfomeCosteado(e, seccion)
-    informeActivoExcel.onclick = e  => descargarlistadoActivoInfomeCosteado(e, seccion)
+    const informeReportesExcel = seccion.querySelector('.informeReportesExcel')
+    informeReportesExcel.onclick = e => descargarInformeReporteMtto(seccion)
 
 
     return seccion
-} 
+
+}
 
 export {
-    listadoActivoInfomeCosteado,
+    InformeReportesMtto,
 }
