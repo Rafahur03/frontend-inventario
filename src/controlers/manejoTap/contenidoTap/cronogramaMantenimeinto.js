@@ -14,7 +14,7 @@ const cronogramaMantenimiento = () => {
                             <div class="d-inline clasificacion col-9">
                                 <h5 class="text-center mt-1 mb-3 fw-bold">Clasificacion Activos</h5> 
                                 <div class="form-check form-switch my-2">
-                                    <input class="form-check-input checkTodosClasificacion" type="checkbox" id="TD">
+                                    <input class="form-check-input checkTodosClasificacion" type="checkbox" siglas="TD">
                                     <label class="form-check-label" for="checkTodosClasificacion">Incluir todos</label>
                                 </div>
                             </div>

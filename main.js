@@ -34,7 +34,8 @@ const {
     consultarDatosActivoSolicitud,
     consultarDatosActivoReportePrev,
     consultarActivoCambiarClasificacion,
-    modificarClasificacion
+    modificarClasificacion,
+    consultarlistadoActivoFiltrado
 
 } = require('./src/controlers/activos/activos.js')
 
@@ -213,9 +214,15 @@ ipcMain.on('consultarUsuario', async (e, id) => {
 /////////////////activos ///////////////////////////////
 
 // consultar el listado de activos
-ipcMain.on('listadoActivo', async (e, data) => {
+ipcMain.on('listadoActivo', async (e) => {
     const token = dataUsuarioSesion.token
-    const listado = await consultarListadoActivos(data, token)
+    const listado = await consultarListadoActivos(token)
+    e.returnValue = listado;
+})
+
+ipcMain.on('listadoActivoFiltrado', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const listado = await consultarlistadoActivoFiltrado(data, token)
     e.returnValue = listado;
 })
 

@@ -6,7 +6,27 @@ const { validarDocumentos } = require('../helpers/validarDocumentos.js')
 
 const urlbase = process.env.API_URL
 
-const consultarListadoActivos = async (data, token) => {
+const consultarListadoActivos = async (token) => {
+
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+    }
+    try {
+        const url = urlbase + '/consultarActivosTodos'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
+const consultarlistadoActivoFiltrado = async (data, token) => {
 
     for (let i = 0; i < data.filtros.length; i++) {
         if(typeof data.filtros[i].id != 'string' ||  typeof data.filtros[i].valor != 'boolean') return {msg: 'Debe escoger una Clasificacion de Activo valida'}
@@ -23,7 +43,7 @@ const consultarListadoActivos = async (data, token) => {
         body: JSON.stringify({data})
     }
     try {
-        const url = urlbase + '/consultarActivosTodos'
+        const url = urlbase + '/consultarlistadoActivoFiltrado'
         const response = await fetch(url, options);
         const json = await response.json();
         return (json)
@@ -32,6 +52,7 @@ const consultarListadoActivos = async (data, token) => {
     }
 
 }
+
 
 const actualizarDatosActivos = async (datos, token) => {
 
@@ -76,7 +97,7 @@ const crearActivo = async (data, token) => {
             if (validacionImagen.msg) return validacionImagen
         }
     } else {
-        return { msg: 'El activo debe tener almenos una Imagen' }
+        return { msg: 'El activo debe tener al menos una Imagen' }
     }
 
     if (documentos.length > 0) {
@@ -466,5 +487,6 @@ module.exports = {
     consultarDatosActivoSolicitud,
     consultarDatosActivoReportePrev,
     consultarActivoCambiarClasificacion,
-    modificarClasificacion
+    modificarClasificacion,
+    consultarlistadoActivoFiltrado
 }

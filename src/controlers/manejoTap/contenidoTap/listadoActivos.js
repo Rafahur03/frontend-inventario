@@ -19,7 +19,7 @@ const listadoActivos = () => {
                 </div>
                 <div class ="d-flex">
                     <div class="form-check form-switch my-2">
-                        <input class="form-check-input checkDadosbaja" type="checkbox" id="DB">
+                        <input class="form-check-input checkDadosbaja" type="checkbox" siglas="DB">
                         <label class="form-check-label" for="checkDadosBaja">Incluir Activos Dados de Baja</label>
                     </div>
                     <div class=" ms-auto b border rounded  border-dark">

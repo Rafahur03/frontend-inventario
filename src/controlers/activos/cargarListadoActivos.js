@@ -18,7 +18,7 @@ const cargarListadoActivo = seccion => {
     const data = { filtros, dadoBaja: DeBaja.checked ? true : false }
 
 
-    const listado = ipcRenderer.sendSync('listadoActivo', data);
+    const listado = ipcRenderer.sendSync('listadoActivoFiltrado', data);
     if (listado.msg) return modalMensaje({ titulo: 'ERROR', mensaje: listado.msg })
     const tbody = seccion.querySelector('tbody')
     while (tbody.firstChild) {
