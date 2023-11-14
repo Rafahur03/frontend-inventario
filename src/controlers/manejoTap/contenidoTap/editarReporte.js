@@ -120,7 +120,7 @@ const editarReporte = id => {
 
                     <div class="form-group col-2">
                         <label for="fechaSolicitud">Fecha de solicitud</label>
-                        <input type="datetime" class="form-control my-1 fechaSolicitud" id="" readonly>
+                        <input type="date" class="form-control my-1 fechaSolicitud" id="" readonly>
                     </div>
 
                     <div class="form-group col-2">

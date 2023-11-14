@@ -31,13 +31,6 @@ const agregarTap = (nodo, nombre) => {
         eliminarTap(e)}
     button.appendChild(span)
     nuevaTap.appendChild(button)
-    
-    // nuevaTap.innerHTML = `         
-    //             <button class="nav-link active" id="${id}-tab" data-bs-toggle="tab" data-bs-target="#${id}"
-    //             type="button" role="tab" aria-controls="${id}" aria-selected="false">new Tap <span class="fw-bold text-danger ms-2 cerrar-tap" id="${id}-cerrar" data-bs-dismiss="tab" aria-label="Close"> X</span></button>
-    // `
-
-    // creamos el contenedor del contenido de la nueva pestaña vacia sera llenado despues al seleccioanr el menu
     const contenidoTAP = document.createElement('div')
     contenidoTAP.classList.add('tab-pane', 'fade', 'show', 'active')
     contenidoTAP.id = id

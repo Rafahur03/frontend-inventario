@@ -8,38 +8,36 @@ const listadoReportes = () => {
     seccion.classList.add('d-block', 'mt-1')
     seccion.innerHTML = `
     <h2 class="text-center mt-1">Listado Reportes</h2>
-        <div class="w-100 bg-light">
-            <div class=" mb-4">
-                <div class=" ">
-                    <h2>Filtrar por:</h2>
-                    <p>Selecciones los filtros y luego presione en los binoculares Si no escoge una fecha la consulta puede tardar, el rango de fecha maximo es de 12 meses</p>
-                    <h5>FECHA</h5>
-                    <div class ="container-fluid w-100 d-flex">
-                        <div class= "mr-2">
-                            <label for="fechaInicialReporte">Fecha Inical Mtto</label>
-                            <input type="date" class="form-control my-1 fechaInicialReporte">
-                        </div>
-                        <div class= "ms-2">
-                            <label for="fechaFinalReporte">Fecha Final</label>
-                            <input type="date" class="form-control my-1 fechaFinalReporte">
-                        </div>
-                        <div class=" ms-auto b border rounded  border-dark">
-                            <button type="button" class="btn mt-0 pt-0  busquedaReporte" title="Consultar Reportes">
-                                <i class="bi bi-binoculars-fill fs-1 text-success"></i>
-                            </button>
-                        </div>
+        <div class="w-100 bg-light">         
+            <div class="m-1">
+                <h2>Filtrar por:</h2>
+                <p>Selecciones los filtros y luego presione en los binoculares Si no escoge una fecha la consulta puede tardar, el rango de fecha maximo es de 12 meses</p>
+                <h5>FECHA</h5>
+                <div class ="container-fluid w-100 d-flex">
+                    <div class= "mr-2">
+                        <label for="fechaInicialReporte">Fecha Inical Mtto</label>
+                        <input type="date" class="form-control my-1 fechaInicialReporte">
                     </div>
-                    <h5>TIPO DE ACTIVO</h5>
-                    <div class ="d-flex flex-nowrap justify-content-around clasificacion">
-                       
+                    <div class= "ms-2">
+                        <label for="fechaFinalReporte">Fecha Final</label>
+                        <input type="date" class="form-control my-1 fechaFinalReporte">
+                    </div>
+                    <div class=" ms-auto b border rounded  border-dark">
+                        <button type="button" class="btn mt-0 pt-0  busquedaReporte" title="Consultar Reportes">
+                            <i class="bi bi-binoculars-fill fs-1 text-success"></i>
+                        </button>
                     </div>
                 </div>
-                <div class="w-50">
-                    <h2>Consultar por:</h2>
-                    <p>Escriba cuaquiera de estos datos: id equipo, Id Reporte, Nombre del activo marca, modelo, serie, ubicacion, responsable</p>
-                    <input class="form-control inputFiltro" type="text" placeholder="Buscar...">
+                <h5>TIPO DE ACTIVO</h5>
+                <div class ="d-flex flex-nowrap justify-content-around clasificacion">
+                    
                 </div>
             </div>
+            <div class="w-50">
+                <h2>Consultar por:</h2>
+                <p>Escriba cuaquiera de estos datos: id equipo, Id Reporte, Nombre del activo marca, modelo, serie, ubicacion, responsable</p>
+                <input class="form-control inputFiltro" type="text" placeholder="Buscar...">
+            </div>          
         </div>
         <div class="w-100">
             <table class="table W-100 table-striped table-hover table-responsive">

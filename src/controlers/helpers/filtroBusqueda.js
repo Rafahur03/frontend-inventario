@@ -3,8 +3,9 @@ import { editarProveedor } from "../tablasConfig/editarConfig.js"
 
 const filtroBusqueda = (e) => {
     const searchTerm = e.target.value.trim().toLowerCase();
-    const tapActiva = document.querySelector('#TabContent').querySelector('.active');
-    const tabla = tapActiva.querySelector('tbody');
+    const nodoPadre = e.target.parentNode.parentNode
+    const contenedorTabla = nodoPadre.nextSibling.nextSibling
+    const tabla = contenedorTabla.querySelector('tbody');
     const tablaTr = tabla.querySelectorAll('tr');
 
     tablaTr.forEach(tr => {

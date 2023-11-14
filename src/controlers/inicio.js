@@ -5,10 +5,6 @@ const form = document.querySelector("form");
 const user = document.querySelector("#idUsuario");
 const password = document.querySelector("#password");
 
-window.addEventListener("DOMContentLoaded", (e) => {
-    user.value = 1102849823;
-    password.value = "Anakarina5";
-}); 
 
 
 // solicita salior de la aplicacion
@@ -40,7 +36,7 @@ form.addEventListener("submit", async (e) => {
 	})
 
 	ipcRenderer.on('errorOtro', (event, data) => {
-		modalMensaje({titulo:'ERROR', mensaje: 'No fue posible iniciarla sesiion, no se pudo conectar con el servidor'})
+		modalMensaje({titulo:'ERROR', mensaje: 'No fue posible iniciarla sesion, no se pudo conectar con el servidor'})
 	})
 
   	

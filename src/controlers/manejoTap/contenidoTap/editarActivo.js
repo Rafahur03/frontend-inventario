@@ -17,6 +17,7 @@ import { modalMensaje } from '../../helpers/modalEleccion.js';
 import { cargarTapContenido } from '../cargarTapContenido.js';
 import { listadoActivos } from './listadoActivos.js';
 import { eliminarDocumento } from '../../helpers/documentacion/eliminardocumentoActivo.js';
+import { abrirDatos } from '../../helpers/abrirDatos.js';
 
 
 const editarActivo = (id) => {
@@ -828,7 +829,9 @@ const editarActivo = (id) => {
         tr.appendChild(tdProximoMtto)
         tr.appendChild(tdtipoMantenimeinto)
         historialMantenimiento.appendChild(tr)
+        tr.ondblclick = e => { abrirDatos(e) }
     });
+
     imprimirlistadomtto.setAttribute('activo', `Act-${activo.id}`)
     imprimirlistadomtto.onclick = e => imprimirListadoMtoActivo(e)
 

@@ -219,11 +219,11 @@ const validarDatosActivo = async (datos, token, crear = null) => {
     if (datos.estadoId) {
         if (datos.estadoId.split('-')[1] != 2) {
             if (datos.proximoMtto == '') return { msg: 'El campo fecha de proximo mantenimiento es obligatorio' }
-            if (datos.proximoMtto < fechaActual) return { msg: 'la fecha del proximo mantenimeinto no puede ser inferior a el dia de hoy' }
+            if (datos.proximoMtto < fechaActual) return { msg: 'la fecha del proximo mantenimiento no puede ser inferior a el dia de hoy' }
         }
     } else {
         if (datos.proximoMtto == '') return { msg: 'El campo fecha de proximo mantenimiento es obligatorio' }
-        if (datos.proximoMtto < fechaActual) return { msg: 'la fecha del proximo mantenimeinto no puede ser inferior a el dia de hoy' }
+        if (datos.proximoMtto < fechaActual) return { msg: 'la fecha del proximo mantenimiento no puede ser inferior a el dia de hoy' }
 
     }
     if (crear !== null) if (datos.ingresoActivo !== fechaActual) return { msg: 'La fecha de ingreso no puede ser diferente del dia de hoy' }

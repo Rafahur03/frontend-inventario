@@ -37,7 +37,7 @@ const guardarSoporteExterno = async (e, nodo) => {
     btnEliminar.setAttribute('reporte', reporte)
     btnGuardar.setAttribute('reporte', reporte)
     btnEliminar.onclick = e =>eliminarSoporteExtReporte(e, nodo)
-    btnGuardar.onclick = e =>descargarReporteExterno(e,nodo)
+    btnGuardar.onclick = e =>descargarReporteExterno(e, reporte.split('-')[1])
     iGuardar.classList.remove('text-primary')
     iGuardar.classList.add('text-success')
 

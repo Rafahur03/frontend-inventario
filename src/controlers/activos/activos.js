@@ -53,7 +53,6 @@ const consultarlistadoActivoFiltrado = async (data, token) => {
 
 }
 
-
 const actualizarDatosActivos = async (datos, token) => {
 
     const validacion = await validarDatosActivo(datos, token)
@@ -78,17 +77,11 @@ const actualizarDatosActivos = async (datos, token) => {
 
 }
 
-const crearActivo = async (data, token) => {
+const crearActivo = async (datos, token) => {
 
-    const imagenes = data.imagenes
-    const componentes = data.componentes
-    const documentos = data.documentos
-    const campos = data
-    delete campos.imagenes
-    delete campos.componentes
-    delete campos.documentos
-
-    const validacionCampos = await validarDatosActivo(campos, token, 'crear')
+    const { imagenes, documentos, componentes, ...datosActivos } = datos
+    console.log(documentos)
+    const validacionCampos = await validarDatosActivo(datosActivos, token, 'crear')
     if (validacionCampos.msg) return validacionCampos
 
     if (imagenes.length > 0) {
@@ -115,12 +108,6 @@ const crearActivo = async (data, token) => {
             if (validacionComponente.msg) return validacionComponente
         }
     }
-
-    const datos = campos
-    datos.imagenes = imagenes
-    datos.documentos = documentos
-    datos.componentes = componentes
-
 
     const options = {
         method: 'POST',
@@ -422,7 +409,6 @@ const consultarDatosActivoReportePrev = async (id, token) => {
     }
 
 }
-
 
 const consultarActivoCambiarClasificacion = async (id, token) => {
     if(parseInt(id) === NaN) return {msg: 'El ID del activo no es valido'}

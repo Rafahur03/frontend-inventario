@@ -79,12 +79,12 @@ const nuevoActivo = async nodo => {
     if (data.ingresoActivo !== fechaActual) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha de ingreso no puede ser diferente del dia de hoy' })
     if (data.fechaCompra > fechaActual) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha de compra no puede ser superior al dia de hoy' })
     if (data.garantiaActivo < data.fechaCompra) return modalMensaje({ titulo: 'ERROR', mensaje: 'la fecha de vencimiento de la garantia no puede ser menor a la fecha de compra' })
-    if (data.proximoMtto < fechaActual) return modalMensaje({ titulo: 'ERROR', mensaje: 'la fecha del proximo mantenimeinto no puede ser inferior a el dia de hoy' })
+    if (data.proximoMtto < fechaActual) return modalMensaje({ titulo: 'ERROR', mensaje: 'la fecha del proximo mantenimiento no puede ser inferior a el dia de hoy' })
 
     const keys = Object.keys(data);
 
     for (let key of keys) {
-        if (key !== 'observacionActivo' && key !== 'descricaoActivo' && key !== 'recomendaActivo'&& key !== 'registroActivo') {
+        if (key !== 'observacionActivo' && key !== 'descricaoActivo' && key !== 'recomendaActivo' && key !== 'registroActivo') {
             if (data[key] == '') {
                 if (key.includes('Id')) {
                     return modalMensaje({ titulo: 'ERROR', mensaje: ` EL campo '${key.replace('Id', '').toUpperCase()} debe escoger un item de la lista` })
@@ -107,12 +107,30 @@ const nuevoActivo = async nodo => {
         if (element.src.includes('data:image/')) data.imagenes.push(element.src)
     });
 
-    const documentos = containerDocumentacion.querySelectorAll('embed')
-    documentos.forEach(element => {
-        const tipo = element.getAttribute('tipo')
-        if (element.src.includes('application/pdf;base64')) data.documentos[tipo] = element.src
-    });
+    const documentosFile = Array.from(containerDocumentacion.querySelectorAll('embed'))
+    const documentosCaragados = documentosFile.filter(element => element.src.includes('blob:file'))
+    
+    if (documentosFile.length > 0) {
+        const promises = documentosCaragados.map(async element => {
+            const tipo = element.getAttribute('tipo');
+            const response = await fetch(element.src);
 
+            try {
+                const blob = await response.blob();
+                const file = await readBlobAsBase64(blob);
+                return { tipo, file };
+            } catch (error) {
+                console.error(`Error al procesar el documento ${tipo}:`, error);
+                return null; // o manejar el error según sea necesario
+            }
+        });
+
+        const documentosResueltos = await Promise.all(promises.filter(documento => documento !== null)); // Filtrar documentos nulos
+        documentosResueltos.forEach(({ tipo, file }) => {
+            data.documentos[tipo] = file;
+        });
+
+    }
 
     const componentes = componentesbody.querySelectorAll('tr')
     if (componentes.length > 0) {
@@ -134,7 +152,6 @@ const nuevoActivo = async nodo => {
     }
 
     const guardar = ipcRenderer.sendSync('crearActivo', data)
-
     if (guardar.msg) return modalMensaje({ titulo: 'error', mensaje: guardar.msg })
     cargarTapContenido('editarActivo', guardar.id)
 
@@ -142,4 +159,15 @@ const nuevoActivo = async nodo => {
 
 export {
     nuevoActivo
+}
+
+function readBlobAsBase64(blob) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            resolve(reader.result);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+    });
 }

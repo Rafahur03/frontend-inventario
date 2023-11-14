@@ -22,7 +22,7 @@ const guardarUsuario = (nodo) => {
     const checkReportes = nodo.querySelector('.checkReportes')
     const checkConfguraciones = nodo.querySelector('.checkConfguraciones')
     const checkclasificacion = nodo.querySelector('.checkclasificacion')
-    const checkInformes = seccion.querySelector('.checkInformes')
+    const checkInformes = nodo.querySelector('.checkInformes')
     const imageneFirma = nodo.querySelector('.imageneFirma')
     const imagen = imageneFirma.querySelector('img')
 
@@ -72,7 +72,7 @@ const guardarUsuario = (nodo) => {
         const td = item.querySelector('td')
         return td.textContent
     })
-    
+
     const data = {
         tipoId,//
         primerNombre,//

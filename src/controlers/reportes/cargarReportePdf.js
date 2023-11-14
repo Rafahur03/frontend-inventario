@@ -19,7 +19,7 @@ const cargarReportePdf = async (e, nodo) => {
     const file = files[0]
 
 
-    if (mime.extension(file.type) != 'pdf' || file.size > 6291456) return modalMensaje({ titulo: 'ERROR', mensaje: ' Solo se permiten archivos PDF menores de 6MB' })
+    if (mime.extension(file.type) != 'pdf' || file.size > 15000000 ) return modalMensaje({ titulo: 'ERROR', mensaje: ' Solo se permiten archivos PDF menores de 15 MB' })
 
     const nombre = generateRandomId()
     const reader = new FileReader()
