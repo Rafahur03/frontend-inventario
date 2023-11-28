@@ -2,11 +2,10 @@ const dotenvExpand = require("dotenv-expand");
 const dotenv = require("dotenv");
 const path = require("path");
 
-// if (process.resourcesPath) {
-//     dotenvExpand.expand(dotenv.config({ path: path.join(process.resourcesPath, ".env") }));
-// }
-
-dotenv.config()
+if (process.resourcesPath) {
+    dotenvExpand.expand(dotenv.config({ path: path.join(process.resourcesPath, ".env") }));
+}
+// dotenv.config()
 const { app, BrowserWindow, screen, ipcMain } = require('electron')
 
 const { iniciarSesion,
@@ -85,9 +84,9 @@ const { descargaCronograma,
     informelistadoSolicitudes
 } = require('./src/controlers/informes/informes.js')
 
-require('electron-reload')(__dirname, {
-    electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
-})
+// require('electron-reload')(__dirname, {
+//     electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+// })
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
@@ -202,12 +201,13 @@ ipcMain.on('cambiarContraseña', async (e, data) => {
 })
 
 ipcMain.on('consultarUsuario', async (e, id) => {
-    if (id == null || parseInt(id) == NaN) {
-        id = dataUsuarioSesion.data.id
-    }
 
+    const data = {
+        id,
+        idSesion: dataUsuarioSesion.data.id
+    }
     const token = dataUsuarioSesion.token
-    const guardar = await consultarUsuario(id, token)
+    const guardar = await consultarUsuario(data, token)
     e.returnValue = guardar;
 })
 

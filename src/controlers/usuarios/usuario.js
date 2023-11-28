@@ -46,7 +46,15 @@ const crearNuevoUsuario = async (data, token) => {
 
 }
 
-const consultarUsuario = async (id, token) => {
+const consultarUsuario = async (data, token) => {
+    let id
+    if (data.id == null || parseInt(data.id) == NaN) {
+        id = data.idSesion
+    }else{
+        id = data.id
+    }
+
+    console.log(id, data)
 
     if (parseInt(id) == NaN) return { msg: 'El ID del usuario es invalido' }
 
@@ -61,6 +69,7 @@ const consultarUsuario = async (id, token) => {
 
     try {
         const url = urlbase + '/consultarUsuario'
+
         const response = await fetch(url, options);
         const json = await response.json();
         return (json)

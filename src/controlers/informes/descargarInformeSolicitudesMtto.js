@@ -22,7 +22,6 @@ const descargarInformeSolicitudesMtto = async seccion => {
         fechaFinalSolicitud
     }
 
-    console.log(data, 'solicitud')
     const descarga = ipcRenderer.sendSync('descargarIfolistadoSolicitudes', data);
     if (descarga.msg) return modalMensaje({ titulo: 'error', mensaje: descarga.msg })
 

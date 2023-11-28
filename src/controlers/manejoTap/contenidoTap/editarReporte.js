@@ -243,7 +243,7 @@ const editarReporte = id => {
             </form>
         </div>        
     `
-    
+
     const reporte = ipcRenderer.sendSync('consultarReporte', id);
     if (reporte.msg) return modalMensaje({ titulo: 'ERROR', mensaje: reporte.msg })
 
@@ -418,14 +418,17 @@ const editarReporte = id => {
                 botonImagenes.textContent = `Selecione ${4 - reporte.imgReporte.length} imagenes`
                 contendorInput.classList.remove('d-none')
             }
-        }else{
+        } else {
             const botonImagenes = seccion.querySelector('.imagenesSoporte')
-                const contendorInput = seccion.querySelector('.contendorInput')
-                const input = contendorInput.querySelector('input')
-                input.onchange = e => cargarImagenGridReporte(e, seccion)
-                botonImagenes.textContent = `Selecione 4 imagenes`
-                contendorInput.classList.remove('d-none')
+            const contendorInput = seccion.querySelector('.contendorInput')
+            const input = contendorInput.querySelector('input')
+            input.onchange = e => cargarImagenGridReporte(e, seccion)
+            botonImagenes.textContent = `Selecione 4 imagenes`
+            contendorInput.classList.remove('d-none')
         }
+
+        costoMo.readOnly = false
+        costoMp.readOnly = false
 
         const idlista = generateRandomId()
         const listEstadoActivo = seccion.querySelector('#listEstadoActivo')

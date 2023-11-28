@@ -81,7 +81,7 @@ const nuevoReporte = async (e, nodo) => {
     const fecha = new Date
  
     if (fechaReporte == fecha.toJSON().slice(0, 10)) {
-        const eleccion = await modalEleccion({ titulo: 'Advertencia', mensaje: 'La fecha del reporte será tomada como el ' + fechaReporte +' y la del proximo Mantenimeinto el '+ fechaproximoMtto + ' ya se que no se ha seleccionado otra' })
+        const eleccion = await modalEleccion({ titulo: 'Advertencia', mensaje: 'La fecha del reporte será tomada como el ' + fechaReporte +' y la del proximo mantenimiento el '+ fechaproximoMtto + ' ya se que no se ha seleccionado otra' })
         if(!eleccion) return
     }  
 
@@ -89,7 +89,7 @@ const nuevoReporte = async (e, nodo) => {
 
     if (fechaReporte < fechaSolicitud) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha del reporte no puede ser menor a la fecha de solicitud' })
 
-    if (fechaproximoMtto < fechaReporte) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha del proximo mantenimeinto no puede ser menor a la fecha de reporte' })
+    if (fechaproximoMtto < fechaReporte) return modalMensaje({ titulo: 'ERROR', mensaje: 'La fecha del proximo mantenimiento no puede ser menor a la fecha de reporte' })
 
 
     let imagenes = []

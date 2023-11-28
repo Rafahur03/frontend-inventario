@@ -80,7 +80,6 @@ const actualizarDatosActivos = async (datos, token) => {
 const crearActivo = async (datos, token) => {
 
     const { imagenes, documentos, componentes, ...datosActivos } = datos
-    console.log(documentos)
     const validacionCampos = await validarDatosActivo(datosActivos, token, 'crear')
     if (validacionCampos.msg) return validacionCampos
 
