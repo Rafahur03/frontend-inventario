@@ -2,7 +2,7 @@ import { generateRandomId } from "../helpers/nombreRandon.js"
 import { eliminarTap } from "./eliminarTap.js"
 
 // crea una nueva ventana con un contenedor diferente devuelve el nodo del contendo para cargar el contenido deseado. 
-const agregarTap = (nodo, nombre) => {
+const agregarTap = async (nodo, nombre) => {
 
     // creamos un nombre aleatorio para el tap
     const id = generateRandomId()

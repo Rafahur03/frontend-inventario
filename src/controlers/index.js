@@ -16,10 +16,10 @@ const itemsNavbar = document.querySelectorAll('.item-nav-bar')
 const itemsNavbararray = Array.from(itemsNavbar)
 
 itemsNavbararray.forEach(item => {
-    item.onclick = e => {
-        agregarTap(nuevaTap, e.target.id)
+    item.onclick = async e => {
+        await agregarTap(nuevaTap, e.target.id)
         cerrarmenu.click()
-        cargarTapContenido(e.target.id)
+        await cargarTapContenido(e.target.id)
     }
 })
 
