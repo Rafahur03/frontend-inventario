@@ -331,8 +331,8 @@ const editarUsuario = async (id = null) => {
         seleccionarUsuario.onblur = e => {
             const id = e.target.value
             if (logicaEjecutada) return
-            if (!id.includes('-')) return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe selcionar un usuario valido' })
-            if (parseInt(id.split('-')[1]) == NaN) return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe selcionar un usuario valido' })
+            if (!id.includes('-')) return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe seleccionar un usuario valido' })
+            if (parseInt(id.split('-')[1]) == NaN) return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe seleccionar un usuario valido' })
             logicaEjecutada = false
             cargarTapContenido('editarUsuario', id.split('-')[1])
         }
@@ -341,8 +341,8 @@ const editarUsuario = async (id = null) => {
             e.preventDefault();
             if (e.key === 'Enter') {
                 const id = e.target.value
-                if (!id.includes('-')) return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe selcionar un usuario valido' })
-                if (parseInt(id.split('-')[1]) == NaN) return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe selcionar un usuario valido' })
+                if (!id.includes('-')) return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe seleccionar un usuario valido' })
+                if (parseInt(id.split('-')[1]) == NaN) return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe seleccionar un usuario valido' })
                 logicaEjecutada = true
                 cargarTapContenido('editarUsuario', id.split('-')[1])
 

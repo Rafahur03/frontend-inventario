@@ -84,7 +84,7 @@ const cargarTapContenido = async (id, dato) => {
 
 
 // carga el contenido de una vista pero agregando una nueva pestaña y con un nueco content.
-const cargarNuevaVista = (id, dato) => {
+const cargarNuevaVista = async (id, dato) => {
 
     const contenido = {
         'editarActivo': editarActivo,
@@ -94,10 +94,8 @@ const cargarNuevaVista = (id, dato) => {
         'consultarReporte': editarReporte,
     }
 
-    const contenidoTap = agregarTap(document.querySelector('#nueva-tap'), id)
-    const atribute = document.createAttribute('tipoVista')
-    atribute.value = id
-    contenidoTap.setAttributeNode(atribute)
+    const contenidoTap = await agregarTap(document.querySelector('#nueva-tap'), id)
+    contenidoTap.setAttribute('tipoVista', id)
     contenidoTap.appendChild(contenido[id](dato));
     return contenidoTap
 }
