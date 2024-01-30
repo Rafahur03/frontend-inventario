@@ -2,11 +2,11 @@ const dotenvExpand = require("dotenv-expand");
 const dotenv = require("dotenv");
 const path = require("path");
 
-if (process.resourcesPath) {
-    dotenvExpand.expand(dotenv.config({ path: path.join(process.resourcesPath, ".env") }));
-}
+// if (process.resourcesPath) {
+//     dotenvExpand.expand(dotenv.config({ path: path.join(process.resourcesPath, ".env") }));
+// }
 
-//dotenv.config()
+dotenv.config()
 const { app, BrowserWindow, screen, ipcMain } = require('electron')
 
 const { iniciarSesion,
@@ -85,9 +85,9 @@ const { descargaCronograma,
     informelistadoSolicitudes
 } = require('./src/controlers/informes/informes.js')
 
-// require('electron-reload')(__dirname, {
-//     electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
-// })
+require('electron-reload')(__dirname, {
+    electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+})
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 

@@ -20,6 +20,8 @@ import { listadoActivoInfomeCosteado } from "./contenidoTap/listadoActivoInfomeC
 import { InfactivoCosteado } from "./contenidoTap/InfactivoCosteado.js"
 import { InformeSolicitudes } from "./contenidoTap/InformeSolicitudes.js"
 import { InformeReportesMtto } from "./contenidoTap/InformeReportesMtto.js"
+import { listadoBodegaInsumos } from "./contenidoTap/listadoBodegaInsumos.js"
+import {ingresoInicalBodega} from "./contenidoTap/ingresoInicalBodega.js"
 
 
 
@@ -48,6 +50,8 @@ const cargarTapContenido = async (id, dato) => {
         'activoCosteado': InfactivoCosteado,
         'InformeSolicitudes': InformeSolicitudes,
         'InformeReportesMtto': InformeReportesMtto,
+        'abrirBodegaInsumos': listadoBodegaInsumos,
+        'ingresoBodegaInsumos': ingresoInicalBodega
     }
     
 

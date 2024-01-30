@@ -89,6 +89,58 @@ const menu = (vector) => {
                 }
                 divReporte[0].parentElement.insertBefore(rCrear, divReporte[1])
                 break;
+            case 7:
+                const divBodagaInsumos = document.createElement('div')
+                divBodagaInsumos.classList.add('nav-item', 'p-3', 'py-md-1')
+                const aBodagaInsumos = document.createElement('a')
+                aBodagaInsumos.classList.add('nav-link')
+                aBodagaInsumos.setAttribute('data-bs-toggle','collapse')
+                aBodagaInsumos.setAttribute('role','button')
+                aBodagaInsumos.setAttribute('aria-expanded','false')
+                aBodagaInsumos.setAttribute('aria-controls','collapseBodegaInsumos')
+                aBodagaInsumos.href= '#collapseBodegaInsumos'
+                aBodagaInsumos.textContent= 'INSUMOS'
+
+                const divBodagaInsumosItem = document.createElement('div')
+                divBodagaInsumosItem.classList.add('collapse')
+                divBodagaInsumosItem.id= 'collapseBodegaInsumos'
+                const aAbrirBodega = document.createElement('a')
+                aAbrirBodega.classList.add('nav-link1')
+                aAbrirBodega.href='#'
+                aAbrirBodega.classList.add('nav-link', 'ms-3', 'item-nav-bar')
+                aAbrirBodega.id='abrirBodegaInsumos'
+                aAbrirBodega.textContent= 'Bodega Insumos'
+
+                const aIngresoBodega = document.createElement('a')
+                aIngresoBodega.classList.add('nav-link1')
+                aIngresoBodega.href='#'
+                aIngresoBodega.classList.add('nav-link', 'ms-3', 'item-nav-bar')
+                aIngresoBodega.id='ingresoBodegaInsumos'
+                aIngresoBodega.textContent= 'Ingreso Inicial Insumo'
+
+                divBodagaInsumosItem.appendChild(aAbrirBodega)
+                divBodagaInsumosItem.appendChild(aIngresoBodega)
+                divBodagaInsumos.appendChild(aBodagaInsumos)
+                divBodagaInsumos.appendChild(divBodagaInsumosItem)
+
+                const padrereportes = collapseReporte.parentElement
+                padrereportes.insertAdjacentElement('afterend',divBodagaInsumos)
+
+                
+            
+                aAbrirBodega.onclick = async e => {
+                    await agregarTap(nuevaTap, e.target.id)
+                    cerrarmenu.click()
+                    await cargarTapContenido(e.target.id)
+                }
+
+                aIngresoBodega.onclick = async e => {
+                    await agregarTap(nuevaTap, e.target.id)
+                    cerrarmenu.click()
+                    await cargarTapContenido(e.target.id)
+                }
+             
+                break;
             default:
                 break;
         }
