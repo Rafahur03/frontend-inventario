@@ -4,21 +4,27 @@ import { agregarLinea, habilitarNuevoProveedor } from "../../helpers/configuraci
 import { generateRandomId } from "../../helpers/nombreRandon.js";
 import { opcionId } from "../../helpers/activos/listasId.js";
 import { filtroBusquedaTablas, filtroBusquedaProveedor } from "../../helpers/filtroBusqueda.js"
-import { guardarArea,
+import {
+    guardarArea,
     guardarMarca,
     guardarTiposActivo,
     guardaComponente,
     guardarFrecuencia,
     guardaProceso,
     guardarclasificacionAcivo,
-    guardarProveedor } from "../../tablasConfig/guardarConfig.js";
-import { editarArea,
+    guardarProveedor,
+    guardarInsumo
+} from "../../tablasConfig/guardarConfig.js";
+import {
+    editarArea,
     editarMarca,
     editarTiposActivo,
     editarComponente,
     editarFrecuencia,
     editarProceso,
-    editarclasificacionAcivo} from "../../tablasConfig/editarConfig.js";
+    editarclasificacionAcivo,
+    editarInsumo
+} from "../../tablasConfig/editarConfig.js";
 const configuracionVista = () => {
     const seccion = document.createElement('section');
     seccion.classList.add('d-block', 'mt-1')
@@ -66,6 +72,12 @@ const configuracionVista = () => {
                     <button class="nav-link" id="proveedores-tab" data-bs-toggle="tab"
                         data-bs-target="#proveedores" type="button" role="tab"
                         aria-controls="proveedores" aria-selected="true">Proveedores</button>
+                </li>
+
+                <li class="nav-item  mx-2 insumos" role="presentation">
+                <button class="nav-link" id="insumos-tab" data-bs-toggle="tab"
+                    data-bs-target="#insumos" type="button" role="tab"
+                    aria-controls="insumos" aria-selected="true">Insumos</button>
                 </li>
             </ul>
             <div class="tab-content" id="TabContentConfig">
@@ -305,6 +317,31 @@ const configuracionVista = () => {
                         </div>                         
                     </div>
                 </div>
+                <div class="tab-pane fade mt-4"id="insumos" role="tabpanel"
+                    aria-labelledby="insumostab">
+                    <h3 class="fw-bold text-center my-2">INSUMOS</h3>
+                    <label for="estadoInsumos" class="fw-bold text-center ">Buscar insumos</label>
+                    <input type="text" class="form-control my-3 w-50 buscarInsumos" tabla="tablaInsumos">
+                    <div class="container-fluid table-responsive m-0 p-0 mb-4 ">
+                        <div class="p-1  d-flex flex-row-reverse">
+                            <button type="button" class="btn d-none nuevoinsumos" nombre="insumos" >
+                                <i class="bi bi-plus-square-fill fs-2"></i>
+                            </button>
+                        </div>
+                        <table class="table table-borderless table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">INSUMOS</th>
+                                    <th scope="col">ESTADO</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaInsumos">                                
+                            </tbody>
+                        </table>                        
+                    </div>
+                </div>
             </div>
         </div>
     `
@@ -368,11 +405,11 @@ const configuracionVista = () => {
             const iCrear = document.createElement('i')
             iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
             botonEditar.appendChild(iCrear)
-            botonEditar.onclick = e=>{ editarArea(e)}
+            botonEditar.onclick = e => { editarArea(e) }
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
-            tr.id= idTr
+            tr.id = idTr
             botonEditar.setAttribute("idTr", idTr)
         }
 
@@ -438,11 +475,11 @@ const configuracionVista = () => {
             const iCrear = document.createElement('i')
             iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
             botonEditar.appendChild(iCrear)
-            botonEditar.onclick = e=>{ editarMarca(e)}
+            botonEditar.onclick = e => { editarMarca(e) }
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
-            tr.id= idTr
+            tr.id = idTr
             botonEditar.setAttribute("idTr", idTr)
         }
 
@@ -510,11 +547,11 @@ const configuracionVista = () => {
             const iCrear = document.createElement('i')
             iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
             botonEditar.appendChild(iCrear)
-            botonEditar.onclick = e=>{ editarTiposActivo(e)}
+            botonEditar.onclick = e => { editarTiposActivo(e) }
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
-            tr.id= idTr
+            tr.id = idTr
             botonEditar.setAttribute("idTr", idTr)
         }
 
@@ -581,11 +618,11 @@ const configuracionVista = () => {
             const iCrear = document.createElement('i')
             iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
             botonEditar.appendChild(iCrear)
-            botonEditar.onclick = e=>{ editarComponente(e)}
+            botonEditar.onclick = e => { editarComponente(e) }
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
-            tr.id= idTr
+            tr.id = idTr
             botonEditar.setAttribute("idTr", idTr)
         }
 
@@ -661,11 +698,11 @@ const configuracionVista = () => {
             const iCrear = document.createElement('i')
             iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
             botonEditar.appendChild(iCrear)
-            botonEditar.onclick = e=>{ editarFrecuencia(e)}
+            botonEditar.onclick = e => { editarFrecuencia(e) }
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
-            tr.id= idTr
+            tr.id = idTr
             botonEditar.setAttribute("idTr", idTr)
         }
 
@@ -741,11 +778,11 @@ const configuracionVista = () => {
             const iCrear = document.createElement('i')
             iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
             botonEditar.appendChild(iCrear)
-            botonEditar.onclick = e=>{ editarProceso(e)}
+            botonEditar.onclick = e => { editarProceso(e) }
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
-            tr.id= idTr
+            tr.id = idTr
             botonEditar.setAttribute("idTr", idTr)
         }
 
@@ -821,16 +858,88 @@ const configuracionVista = () => {
             const iCrear = document.createElement('i')
             iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
             botonEditar.appendChild(iCrear)
-            botonEditar.onclick = e=> { editarclasificacionAcivo(e)}
+            botonEditar.onclick = e => { editarclasificacionAcivo(e) }
             contenedorBotones.appendChild(botonEditar)
             tdBotones.appendChild(contenedorBotones)
             tr.appendChild(tdBotones)
-            tr.id= idTr
+            tr.id = idTr
             botonEditar.setAttribute("idTr", idTr)
         }
 
         tbodyClasificacionActivos.appendChild(tr)
     })
+    ////////////////////////////////////////////////////
+    const tbodyinsumos = seccion.querySelector('#tablaInsumos')
+    listados.insumos.forEach(element => {
+        const tr = document.createElement('tr')
+        const tdId = document.createElement('td')
+        const inputId = document.createElement('input')
+        inputId.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'idInsumo')
+        inputId.type = 'text'
+        inputId.readOnly = true
+        inputId.value = 'Ins-' + element.id
+        tdId.appendChild(inputId)
+        const tdNombre = document.createElement('td')
+        const inputNombre = document.createElement('input')
+        inputNombre.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'nombreInsumo')
+        inputNombre.type = 'text'
+        inputNombre.readOnly = true
+        inputNombre.value = element.nombre
+        tdNombre.appendChild(inputNombre)
+        const tdEstado = document.createElement('td')
+        const inputEstado = document.createElement('input')
+        inputEstado.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'estadoInsumo')
+        inputEstado.readOnly = true
+        inputEstado.type = 'text'
+        inputEstado.value = element.estado
+        tdEstado.appendChild(inputEstado)
+
+        tr.appendChild(tdId)
+        tr.appendChild(tdNombre)
+        tr.appendChild(tdEstado)
+
+
+        if (listados.editar) {
+            const ramndonId = generateRandomId()
+            const datalistEstado = document.createElement('datalist')
+            datalistEstado.id = ramndonId
+            inputEstado.setAttribute('List', ramndonId)
+            inputEstado.readOnly = false
+            inputEstado.setAttribute('opcionId', element.estadoId)
+            inputEstado.onblur = e => opcionId(e)
+            inputNombre.readOnly = false
+            tdEstado.appendChild(datalistEstado)
+            listados.estado.forEach(item => {
+                const option = document.createElement('option')
+                option.value = item.estado
+                option.textContent = item.id
+                datalistEstado.appendChild(option)
+            })
+            const idTr = generateRandomId()
+            const tdBotones = document.createElement('td')
+            const contenedorBotones = document.createElement('div')
+            contenedorBotones.classList.add('d-flex', 'justify-content-center')
+            const botonEditar = document.createElement('button')
+            botonEditar.classList.add('btn', 'mt-0', 'pt-0')
+            botonEditar.type = 'button'
+            botonEditar.title = 'Editar Insumo'
+            const iCrear = document.createElement('i')
+            iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
+            botonEditar.appendChild(iCrear)
+            botonEditar.onclick = e => { editarInsumo(e) }
+            contenedorBotones.appendChild(botonEditar)
+            tdBotones.appendChild(contenedorBotones)
+            tr.appendChild(tdBotones)
+            tr.id = idTr
+            botonEditar.setAttribute("idTr", idTr)
+        }
+
+        tbodyinsumos.appendChild(tr)
+    })
+    const insumosFiltro = seccion.querySelector('.buscarInsumos')
+    insumosFiltro.oninput = e => { filtroBusquedaTablas(e) }
+
+    ////////////////////////////////
 
     const clasificacionFiltro = seccion.querySelector('.buscarclasificacion')
     clasificacionFiltro.oninput = e => { filtroBusquedaTablas(e) }
@@ -849,7 +958,7 @@ const configuracionVista = () => {
         option.value = item.estado
         option.textContent = item.id
         listEstadoProveedor.appendChild(option)
-    }) 
+    })
 
     const proveedoreFiltro = seccion.querySelector('.buscarProveedor')
     proveedoreFiltro.oninput = e => { filtroBusquedaProveedor(e) }
@@ -862,6 +971,8 @@ const configuracionVista = () => {
     const nuevaProceso = seccion.querySelector('.nuevaProceso')
     const nuevaClasificacionActivos = seccion.querySelector('.nuevaClasificacionActivo')
     const nuevoProveedor = seccion.querySelector('.nuevaProveedor')
+    const nuevoinsumos = seccion.querySelector('.nuevoinsumos')
+
     if (listados.editar) {
         nuevaArea.classList.remove('d-none')
         nuevaMarca.classList.remove('d-none')
@@ -871,53 +982,61 @@ const configuracionVista = () => {
         nuevaProceso.classList.remove('d-none')
         nuevaClasificacionActivos.classList.remove('d-none')
         nuevoProveedor.classList.remove('d-none')
+        nuevoinsumos.classList.remove('d-none')
 
         nuevaArea.onclick = e => {
             e.preventDefault()
             const boton = agregarLinea(e)
-            boton.onclick = e =>{guardarArea(e)}
+            boton.onclick = e => { guardarArea(e) }
         }
+
 
         nuevaMarca.onclick = e => {
             e.preventDefault()
             const boton = agregarLinea(e)
-            boton.onclick = e =>{guardarMarca(e)}
+            boton.onclick = e => { guardarMarca(e) }
         }
 
         nuevaTipoActivo.onclick = e => {
             e.preventDefault()
             const boton = agregarLinea(e)
-            boton.onclick = e =>{guardarTiposActivo(e)}
+            boton.onclick = e => { guardarTiposActivo(e) }
         }
 
         nuevaComponente.onclick = e => {
             e.preventDefault()
             const boton = agregarLinea(e)
-            boton.onclick = e =>{guardaComponente(e)}
+            boton.onclick = e => { guardaComponente(e) }
         }
 
         nuevaFrecuencia.onclick = e => {
             e.preventDefault()
             const boton = agregarLinea(e)
-            boton.onclick = e =>{guardarFrecuencia(e)}
+            boton.onclick = e => { guardarFrecuencia(e) }
         }
 
         nuevaProceso.onclick = e => {
             e.preventDefault()
             const boton = agregarLinea(e)
-            boton.onclick = e =>{guardaProceso(e)}
+            boton.onclick = e => { guardaProceso(e) }
         }
 
         nuevaClasificacionActivos.onclick = e => {
             e.preventDefault()
             const boton = agregarLinea(e)
-            boton.onclick = e =>{guardarclasificacionAcivo(e)}
+            boton.onclick = e => { guardarclasificacionAcivo(e) }
         }
 
         nuevoProveedor.onclick = e => {
             e.preventDefault()
             const boton = habilitarNuevoProveedor(e)
-            boton.onclick = e =>{guardarProveedor(e)}
+            boton.onclick = e => { guardarProveedor(e) }
+        }
+
+        nuevoinsumos.onclick = e => {
+            e.preventDefault()
+            const boton = agregarLinea(e)
+            boton.onclick = e => { guardarInsumo(e) }
         }
 
     }

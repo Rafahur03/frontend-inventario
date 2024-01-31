@@ -264,7 +264,31 @@ const editarProveedor = e => {
     modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito }) 
 }
 
-
+const editarInsumo = e => {
+    let boton
+    const tagName = e.target.tagName.toLowerCase()
+    if (tagName === 'i') {
+        boton = e.target.parentNode
+    } else {
+        boton = e.target
+    }
+    const idTr = boton.getAttribute('idTr');
+    const tr = document.querySelector('#' + idTr)
+    const nombre = tr.querySelector('.nombreInsumo').value
+    if (nombre.length <= 1) return modalMensaje({ titulo: 'ERROR', mensaje: ' el campo nombre del insumo es obligatorio' })
+    if (nombre.trim() == '') return modalMensaje({ titulo: 'ERROR', mensaje: ' el campo nombre del insumo es obligatorio' })
+    const idInsumo = tr.querySelector('.idInsumo').value
+    if (idInsumo.length <= 1) return modalMensaje({ titulo: 'ERROR', mensaje: 'Id  del insumo no valido' })
+    if (idInsumo.trim() == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'Id del insumo no valido'})
+    const estadoInsumo = tr.querySelector('.estadoInsumo')
+    const estado = estadoInsumo.getAttribute('opcionId')
+    if (estado.length <= 1) return modalMensaje({ titulo: 'ERROR', mensaje: 'el Estado del insumo no es valido' })
+    if (estado.trim() == '') return modalMensaje({ titulo: 'ERROR', mensaje: 'El estado del insumo no es valido'})
+    const data = { id: 'insumo', insumo: nombre, idInsumo, estado}
+    const respuesta = ipcRenderer.sendSync('editarConfig', data)
+    if (respuesta.msg) return modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
+    modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
+}
 
 
 export {
@@ -275,5 +299,6 @@ export {
     editarFrecuencia,
     editarProceso,
     editarclasificacionAcivo,
-    editarProveedor
+    editarProveedor,
+    editarInsumo
 }

@@ -9,7 +9,8 @@ import {
     editarFrecuencia,
     editarProceso,
     editarclasificacionAcivo,
-    editarProveedor
+    editarProveedor,
+    editarInsumo
 } from "./editarConfig.js"
 
 const guardarArea = e => {
@@ -39,9 +40,9 @@ const guardarArea = e => {
     tbody.removeChild(tr)
     tbody.appendChild(tr)
     const estado = tr.querySelector('.estadoArea')
-    estado.onblur= e=>{opcionId(e)}
+    estado.onblur = e => { opcionId(e) }
     estado.readOnly = false
-    estado.setAttribute('opcionId',' Es-1')
+    estado.setAttribute('opcionId', ' Es-1')
     modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
 
 }
@@ -63,7 +64,7 @@ const guardarMarca = e => {
     const respuesta = ipcRenderer.sendSync('nuevaConfig', data)
     if (respuesta.msg) return modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
     const idMarca = tr.querySelector('.idMarca')
-    idMarca.value =  'Ma-'+ respuesta.id
+    idMarca.value = 'Ma-' + respuesta.id
     const i = boton.firstElementChild
     i.className = ''
     i.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
@@ -72,9 +73,9 @@ const guardarMarca = e => {
     tbody.removeChild(tr)
     tbody.appendChild(tr)
     const estado = tr.querySelector('.estadoMarca')
-    estado.onblur= e=>{opcionId(e)}
+    estado.onblur = e => { opcionId(e) }
     estado.readOnly = false
-    estado.setAttribute('opcionId',' Es-1')
+    estado.setAttribute('opcionId', ' Es-1')
     modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
 }
 
@@ -95,7 +96,7 @@ const guardarTiposActivo = e => {
     const respuesta = ipcRenderer.sendSync('nuevaConfig', data)
     if (respuesta.msg) return modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
     const idTipoActivo = tr.querySelector('.idTipoActivo')
-    idTipoActivo.value =  'Ta-'+ respuesta.id
+    idTipoActivo.value = 'Ta-' + respuesta.id
     const i = boton.firstElementChild
     i.className = ''
     i.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
@@ -104,9 +105,9 @@ const guardarTiposActivo = e => {
     tbody.removeChild(tr)
     tbody.appendChild(tr)
     const estado = tr.querySelector('.estadoMarca')
-    estado.onblur= e=>{opcionId(e)}
+    estado.onblur = e => { opcionId(e) }
     estado.readOnly = false
-    estado.setAttribute('opcionId',' Es-1')
+    estado.setAttribute('opcionId', ' Es-1')
     modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
 }
 
@@ -127,7 +128,7 @@ const guardaComponente = e => {
     const respuesta = ipcRenderer.sendSync('nuevaConfig', data)
     if (respuesta.msg) return modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
     const idComponente = tr.querySelector('.idComponente')
-    idComponente.value =  'Com-'+ respuesta.id
+    idComponente.value = 'Com-' + respuesta.id
     const i = boton.firstElementChild
     i.className = ''
     i.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
@@ -136,9 +137,9 @@ const guardaComponente = e => {
     tbody.removeChild(tr)
     tbody.appendChild(tr)
     const estado = tr.querySelector('.estadoMarca')
-    estado.onblur= e=>{opcionId(e)}
+    estado.onblur = e => { opcionId(e) }
     estado.readOnly = false
-    estado.setAttribute('opcionId',' Es-1')
+    estado.setAttribute('opcionId', ' Es-1')
     modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
 }
 
@@ -162,7 +163,7 @@ const guardarFrecuencia = e => {
     const respuesta = ipcRenderer.sendSync('nuevaConfig', data)
     if (respuesta.msg) return modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
     const idFrecuencia = tr.querySelector('.idFrecuencia')
-    idFrecuencia.value =  'Fre-'+ respuesta.id
+    idFrecuencia.value = 'Fre-' + respuesta.id
     const i = boton.firstElementChild
     i.className = ''
     i.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
@@ -171,9 +172,9 @@ const guardarFrecuencia = e => {
     tbody.removeChild(tr)
     tbody.appendChild(tr)
     const estado = tr.querySelector('.estadoMarca')
-    estado.onblur= e=>{opcionId(e)}
+    estado.onblur = e => { opcionId(e) }
     estado.readOnly = false
-    estado.setAttribute('opcionId',' Es-1')
+    estado.setAttribute('opcionId', ' Es-1')
     modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
 }
 
@@ -197,7 +198,7 @@ const guardaProceso = e => {
     const respuesta = ipcRenderer.sendSync('nuevaConfig', data)
     if (respuesta.msg) return modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
     const idProceso = tr.querySelector('.idProceso')
-    idProceso.value =  'Proc-'+ respuesta.id
+    idProceso.value = 'Proc-' + respuesta.id
     const i = boton.firstElementChild
     i.className = ''
     i.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
@@ -206,9 +207,9 @@ const guardaProceso = e => {
     tbody.removeChild(tr)
     tbody.appendChild(tr)
     const estado = tr.querySelector('.estadoMarca')
-    estado.onblur= e=>{opcionId(e)}
+    estado.onblur = e => { opcionId(e) }
     estado.readOnly = false
-    estado.setAttribute('opcionId',' Es-1')
+    estado.setAttribute('opcionId', ' Es-1')
     modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
 }
 
@@ -232,7 +233,7 @@ const guardarclasificacionAcivo = e => {
     const respuesta = ipcRenderer.sendSync('nuevaConfig', data)
     if (respuesta.msg) return modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
     const idClasificacionActivo = tr.querySelector('.idClasificacionActivo')
-    idClasificacionActivo.value = 'Cla-'+ respuesta.id
+    idClasificacionActivo.value = 'Cla-' + respuesta.id
     const i = boton.firstElementChild
     i.className = ''
     i.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
@@ -241,9 +242,9 @@ const guardarclasificacionAcivo = e => {
     tbody.removeChild(tr)
     tbody.appendChild(tr)
     const estado = tr.querySelector('.estadoMarca')
-    estado.onblur= e=>{opcionId(e)}
+    estado.onblur = e => { opcionId(e) }
     estado.readOnly = false
-    estado.setAttribute('opcionId',' Es-1')
+    estado.setAttribute('opcionId', ' Es-1')
     modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
 }
 
@@ -322,7 +323,7 @@ const guardarProveedor = e => {
     const dataList = document.querySelector('#listbuscarProveedor')
     const option = document.createElement('option')
     option.value = 'Pro-' + respuesta.id + '--' + nombreProveedor.trim() + '--' + razonProveedor.trim() + '--' + nitProveedor.trim() + '--' + dvProveedor.trim() + '--' + contactoProveedor.trim() + '--' + telefonosProveedor.trim() + '--' + direccionProveedor.trim() + '--' + descripcionProveedor.trim() + '--' + 'Activo'
-    option.textContent = respuesta.id   
+    option.textContent = respuesta.id
     dataList.appendChild(option)
 
     datosProveedor.querySelector('.estadoProveedor')
@@ -330,7 +331,40 @@ const guardarProveedor = e => {
     modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
 }
 
+const guardarInsumo = e => {
+    let boton
+    const tagName = e.target.tagName.toLowerCase()
+    if (tagName === 'i') {
+        boton = e.target.parentNode
+    } else {
+        boton = e.target
+    }
 
+    const idTr = boton.getAttribute('idtr');
+    const tr = document.querySelector('#' + idTr)
+    const nombre = tr.querySelector('.nombreinsumos').value
+    if (nombre.length <= 1) return modalMensaje({ titulo: 'ERROR', mensaje: ' el campo del insumo es obligatorio' })
+    if (nombre.trim() == '') return modalMensaje({ titulo: 'ERROR', mensaje: ' el campo del insumo es obligatorio' })
+    const data = { id: 'insumo', insumo: nombre }
+    const respuesta = ipcRenderer.sendSync('nuevaConfig', data)
+    if (respuesta.msg) return modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
+
+    const idInsumo = tr.querySelector('.idinsumos')
+    idInsumo.value = 'Ins-' + respuesta.id
+    const i = boton.firstElementChild
+    i.className = ''
+    i.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
+    boton.onclick = e => { editarInsumo(e) }
+    const tbody = tr.parentNode
+    tbody.removeChild(tr)
+    tbody.appendChild(tr)
+    const estado = tr.querySelector('.estadoinsumos')
+    estado.onblur = e => { opcionId(e) }
+    estado.readOnly = false
+    estado.setAttribute('opcionId', ' Es-1')
+    modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
+
+}
 
 
 export {
@@ -341,5 +375,6 @@ export {
     guardarFrecuencia,
     guardaProceso,
     guardarclasificacionAcivo,
-    guardarProveedor
+    guardarProveedor,
+    guardarInsumo
 }

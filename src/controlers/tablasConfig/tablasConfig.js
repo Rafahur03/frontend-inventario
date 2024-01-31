@@ -173,8 +173,15 @@ const crearConfig = async (data, token) => {
             if (validarCaracteres(data.descripcionProveedor)) return { msg: ' el campo Descripcion del Proveedor no debe llevar palabras reservadas como [], {},()' }
             data.id = 8
             break
+        case 'insumo':
+            if (!data.insumo) return { msg: ' el campo Nombre del insumo es obligatorio' }
+            if (validarVacios(data.insumo)) return { msg: ' el campo Nombre del insumo es obligatorio' }
+            if (validarPalabras(data.insumo)) return { msg: ' el campo Nombre del area no debe llevar palabras reservadas como SELECT, FROM WHERE' }
+            if (validarCaracteres(data.insumo)) return { msg: ' el campo Nombre del insumo no debe llevar palabras reservadas como [], {},()' }
+            data.id = 9
+            break
         default:
-            return res.json({ msg: 'Su solicitud no pudo ser procesada o es invalida' })
+            return ({ msg: 'Su solicitud no pudo ser procesada o es invalida' })
     }
 
     const options = {
@@ -332,8 +339,19 @@ const actualizarConfig = async (data, token) => {
 
             data.id = 8
             break
+        case 'insumo':
+            if (!data.idInsumo) return { msg: 'Solicitud no valida, actualice la pagina e intente de nuevo' }
+            if (validarId(data.idInsumo)) return { msg: 'Solicitud no valida, actualice la pagina e intente de nuevo' }
+            if (!data.insumo) return { msg: ' El campo Nombre del insumo es obligatorio' }
+            if (validarVacios(data.insumo)) return { msg: ' El campo Nombre del insumo es obligatorio' }
+            if (validarPalabras(data.insumo)) return { msg: ' El campo Nombre del insumo no debe llevar palabras reservadas como SELECT, FROM WHERE' }
+            if (validarCaracteres(data.insumo)) return { msg: ' El campo Nombre del insumo no debe llevar palabras reservadas como [], {},()' }
+            if (!data.estado) return { msg: 'El Campo estado del insumo no es valido, Escoja un estado de la lista' }
+            if (validarId(data.estado)) return { msg: 'El Campo estado del insumo no es valido, Escoja un estado de la lista' }
+            data.id = 9
+            break
         default:
-            return res.json({ msg: 'Su solicitud no pudo ser procesada o es invalida' })
+            return ({ msg: 'Su solicitud no pudo ser procesada o es invalida' })
     }
 
     const options = {
