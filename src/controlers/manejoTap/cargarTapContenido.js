@@ -22,6 +22,7 @@ import { InformeSolicitudes } from "./contenidoTap/InformeSolicitudes.js"
 import { InformeReportesMtto } from "./contenidoTap/InformeReportesMtto.js"
 import { listadoBodegaInsumos } from "./contenidoTap/listadoBodegaInsumos.js"
 import {ingresoInicalBodega} from "./contenidoTap/ingresoInicalBodega.js"
+import { movimientoInsumoBodega } from "./contenidoTap/movimientoInsumoBodega.js"
 
 
 
@@ -53,9 +54,7 @@ const cargarTapContenido = async (id, dato) => {
         'abrirBodegaInsumos': listadoBodegaInsumos,
         'ingresoBodegaInsumos': ingresoInicalBodega
     }
-    
-
-   
+      
     const bodyTap = document.querySelector('#bodyTap')
     if (bodyTap.querySelectorAll('.tab-pane').length == 0) {
         const contenidoTap = agregarTap(document.querySelector('#nueva-tap'))
@@ -96,6 +95,8 @@ const cargarNuevaVista = async (id, dato) => {
         'consultarSolicitud': editarSolicitud,
         'crearReporte': crearReporte,
         'consultarReporte': editarReporte,
+        'consultarInsumo': movimientoInsumoBodega,
+
     }
 
     const contenidoTap = await agregarTap(document.querySelector('#nueva-tap'), id)

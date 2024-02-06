@@ -1,6 +1,6 @@
 const { ipcRenderer } = require('electron')
-import { cargarListadoActivo } from "../../activos/cargarListadoActivos.js";
 import { modalMensaje } from "../../helpers/modalEleccion.js";
+import { abrirDatos } from "../../helpers/abrirDatos.js"
 
 const listadoBodegaInsumos = () => {
 
@@ -24,17 +24,51 @@ const listadoBodegaInsumos = () => {
                         <th scope="col">Marca</th>
                         <th scope="col">Modelo</th>
                         <th scope="col">Serie</th>
-                        <th scope="col">Ubicacion</th>
+                        <th scope="col">Area</th>
                         <th scope="col">Cantidad</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="tbody-insumos text-center">
                 </tbody>
             </table>
         </div>
     `
 
-    
+    const insumos = ipcRenderer.sendSync('listadoInsumos', 'Insumos')
+    if (insumos.msg) {
+        modalMensaje({ titulo: 'ERROR', mensaje: 'No se pudo consultar el listado de insumos' })
+    } else {
+        const tbodyinsumos = seccion.querySelector('.tbody-insumos')
+        insumos.forEach(element => {
+            const tr = document.createElement('tr')
+            const tdId = document.createElement('td')
+            const tdnombre = document.createElement('td')
+            const tdmarca = document.createElement('td')
+            const tdmodelo = document.createElement('td')
+            const tdserie = document.createElement('td')
+            const tdubicacion = document.createElement('td')
+            const tdCantidad = document.createElement('td')
+
+            tr.id = element.id
+            tdId.textContent = element.id
+            tdnombre.textContent = element.nombre
+            tdmarca.textContent = element.marca
+            tdmodelo.textContent = element.modelo
+            tdserie.textContent = element.serie
+            tdubicacion.textContent = element.area
+            tdCantidad.textContent = element.cantidad
+            tr.appendChild(tdId)
+            tr.appendChild(tdnombre)
+            tr.appendChild(tdmarca)
+            tr.appendChild(tdmodelo)
+            tr.appendChild(tdserie)
+            tr.appendChild(tdubicacion)
+            tr.appendChild(tdCantidad)
+            tbodyinsumos.appendChild(tr)
+            tr.ondblclick = e => { abrirDatos(e) }
+
+        });
+    }
 
 
     return seccion

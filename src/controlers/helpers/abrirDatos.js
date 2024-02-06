@@ -6,7 +6,8 @@ const abrirDatos =  (e) => {
     const vista = {
         Act: 'editarActivo',
         Sol: 'consultarSolicitud',
-        Rep: 'consultarReporte'
+        Rep: 'consultarReporte',
+        Ins: 'consultarInsumo'
     }
     const nodo = e.target
     let tr

@@ -85,6 +85,16 @@ const { descargaCronograma,
     informelistadoSolicitudes
 } = require('./src/controlers/informes/informes.js')
 
+const {consultarListadoInsumos,
+    consultarUnInsumo,
+    movimientoInsumo,
+    actualizarInsumosBodega,
+    eliminarFactInsumo,
+    guardarFactInsumo,
+    descargarFactInsumo,
+    eliminarImagInsumo,
+    guardarImagInsumo} = require('./src/controlers/insumos/insumos.js')
+
 require('electron-reload')(__dirname, {
     electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
 })
@@ -285,7 +295,7 @@ ipcMain.on('CambiarClasificacion', async (e, data) => {
 })
 
 
-//eliminar un docuemnto del activo
+//eliminar un docuemnto del activo--------------------------------------------
 ipcMain.on('eliminarDocumento', async (e, data) => {
     const token = dataUsuarioSesion.token
     const documentoEliminado = await eliminarDocumento(data, token)
@@ -502,7 +512,7 @@ ipcMain.on('consultarTablasCofig', async (e) => {
     e.returnValue = resultado;
 })
 
-// configuraciones 
+// configuraciones //////////////////-----------------------------------
 
 ipcMain.on('nuevaConfig', async (e, data) => {
     const token = dataUsuarioSesion.token
@@ -519,7 +529,7 @@ ipcMain.on('editarConfig', async (e, data) => {
 })
 
 
-// informes 
+// informes /////////////////////////////////////////
 
 ipcMain.on('descargaCronograma', async (e, data) => {
     const token = dataUsuarioSesion.token
@@ -562,4 +572,76 @@ ipcMain.on('descargarIfolistadoSolicitudes', async (e, data) => {
 
     const resultado = await informelistadoSolicitudes(data, token)
     e.returnValue = resultado;
+})
+
+
+ipcMain.on('listadoInsumos', async (e) => {
+    const token = dataUsuarioSesion.token
+
+    const resultado = await consultarListadoInsumos(token)
+    e.returnValue = resultado;
+})
+
+ipcMain.on('consultarUnInsumo', async (e, id) => {
+    const token = dataUsuarioSesion.token
+    const insumo = await consultarUnInsumo(id, token)
+    e.returnValue = insumo;
+})
+
+ipcMain.on('actualizarInsumo', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const insumo = await actualizarInsumosBodega(data, token)
+    e.returnValue = insumo;
+})
+
+ipcMain.on('salidaInsumo', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    data.tipo = 2
+    const insumo = await movimientoInsumo(data, token)
+    e.returnValue = insumo;
+})
+
+ipcMain.on('entradaInsumo', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    data.tipo = 1
+    const insumo = await movimientoInsumo(data, token)
+    e.returnValue = insumo;
+})
+
+ipcMain.on('arqueoInsumo', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    data.tipo = 3
+    const insumo = await movimientoInsumo(data, token)
+    e.returnValue = insumo;
+})
+
+ipcMain.on('eliminarFacturaInsumo', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const insumo = await eliminarFactInsumo(data, token)
+    e.returnValue = insumo;
+})
+
+ipcMain.on('guardarDocumentoInsumo', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const insumo = await guardarFactInsumo(data, token)
+    e.returnValue = insumo;
+})
+
+ipcMain.on('descargarFacturaInsumo', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const insumo = await descargarFactInsumo(data, token)
+    e.returnValue = insumo;
+})
+
+ipcMain.on('elimnarImagenInsumo', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const insumo = await eliminarImagInsumo(data, token)
+    e.returnValue = insumo;
+})
+
+    
+ipcMain.on('guardarimagenInsumo', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const insumo = await guardarImagInsumo(data, token)
+    e.returnValue = insumo;
 })
