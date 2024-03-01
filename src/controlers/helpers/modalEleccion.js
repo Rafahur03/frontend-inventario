@@ -34,6 +34,7 @@ const modalEleccion = async data => {
 }
 
 const modalMensaje = data => {
+   
     setTimeout(() => {
         if (data.titulo.toUpperCase() == 'ERROR') {
             if (contentModal.classList.contains('border-success')) contentModal.classList.remove('border-success')

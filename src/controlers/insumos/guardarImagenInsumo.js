@@ -2,7 +2,7 @@ const { ipcRenderer } = require('electron')
 import { modalMensaje } from "../helpers/modalEleccion.js"
 import { EliminarImagenInsumo } from "./EliminarImagenInsumo.js"
 
-const guardarImagenInsumo = e => {
+const guardarImagenInsumo = (e, nodo) => {
     const tagName = e.target.tagName.toLowerCase()
     let boton
     if (tagName === 'i') {
@@ -24,35 +24,29 @@ const guardarImagenInsumo = e => {
     }
 
     const imagenInsumo = ipcRenderer.sendSync('guardarimagenInsumo', data);
-    if (imagenInsumo.msg) {
-        const mensaje = {
-            titulo: 'ERROR',
-            mensaje: imagenInsumo.msg
-        }
-        return modalMensaje(mensaje)
-        
-    }
+
+    if (imagenInsumo.msg) return modalMensaje({titulo: 'ERROR', mensaje: imagenInsumo.msg})
+
     
-    const mensaje = {
+
+    modalMensaje({
         titulo: 'EXITO',
         mensaje: imagenInsumo.exito
-    }
-    modalMensaje(mensaje)
-
+    })
+    
     const botonEliminar = contenedorBotones.firstChild
     const carruselItem = imagen.parentNode.parentNode
     carruselItem.setAttribute('nombre', `Img-${imagenInsumo.nombre}`)
-    carruselItem.classList.add( `Img-${imagenInsumo.nombre}`)
+    carruselItem.classList.add(`Img-${imagenInsumo.nombre}`)
     botonEliminar.setAttribute('nombre', `Img-${imagenInsumo.nombre}`)
     botonEliminar.classList.add('m-0')
     botonEliminar.classList.remove('m-3')
-    botonEliminar.onclick = e => EliminarImagenInsumo(e)
+    botonEliminar.onclick = e => EliminarImagenInsumo(e, nodo)
     imagen.classList.remove(nombre)
     imagen.classList.add(imagenInsumo.nombre)
-    imagen.src = imagenInsumo.imagen
     contenedorBotones.removeChild(boton)
 }
 
 export {
-    guardarImagenInsumo    
+    guardarImagenInsumo
 }

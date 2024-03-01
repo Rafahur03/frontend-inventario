@@ -29,9 +29,4 @@ salir.onclick = () => {
 };
 
 
-const cerrarSesion = document.querySelector('#cerrarSesion')
-cerrarSesion.onclick = () => {
-
-    ipcRenderer.send("cerrarSesion");
-};
 

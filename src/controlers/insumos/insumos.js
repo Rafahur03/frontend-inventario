@@ -46,9 +46,8 @@ const movimientoInsumo = async (data, token) => {
     const id = parseInt(data.cantidad)
     if (id == NaN) return { msg: 'El campo cantidad debe ser numerico' }
     console.log(data)
-    if (data.insumo !== data.idInsumno) return { msg: 'El No es posible validar el insumo ingrese nuevamnete e intentelo de niuevo' }
+    if (data.insumo !== data.idInsumno) return { msg: 'No es posible validar el insumo ingrese nuevamnete e intentelo de niuevo' }
     
-    return { msg: 'desde main actualizar insumo' }
     const options = {
         method: 'post',
         headers: {
@@ -72,13 +71,8 @@ const movimientoInsumo = async (data, token) => {
 
 const actualizarInsumosBodega = async (data, token) => {
 
-    const id = parseInt(data.cantidad)
-    if (id == NaN) return { msg: 'El campo cantidad debe ser numerico' }
-
-    if (data.insumo !== data.idInsumno) return { msg: 'El No es posible validar el insumo ingrese nuevamnete e intentelo de niuevo' }
+    if (data.insumo !== data.idInsumo) return { msg: 'No es posible validar el insumo ingrese nuevamnete e intentelo de nuevo' }
     console.log(data)
-
-    return { msg: 'desde main actualizar insumo' }
 
     const options = {
         method: 'post',
@@ -88,7 +82,6 @@ const actualizarInsumosBodega = async (data, token) => {
         },
         body: JSON.stringify(data)
     }
-
 
     try {
         const url = urlbase + '/actualizarInsumo'
@@ -103,13 +96,8 @@ const actualizarInsumosBodega = async (data, token) => {
 
 const eliminarFactInsumo = async (data, token) => {
 
-    console.log(data)
-
-    if (data.insumo !== data.idInsumno) return { msg: 'El No es posible validar el insumo ingrese nuevamnete e intentelo de niuevo' }
-
-
-    return { msg: 'eliminar main factura insumo' }
-
+    if(!data.insumo || !data.nombre) return {msg: 'No fue posible validar los datos de la solicitu'}
+    if(isNaN(parseInt(data.insumo.split('-')[1]))) return {msg: 'Insumo Invalido recargue e intente mas tarde'}
     const options = {
         method: 'post',
         headers: {
@@ -119,9 +107,8 @@ const eliminarFactInsumo = async (data, token) => {
         body: JSON.stringify(data)
     }
 
-
     try {
-        const url = urlbase + '/actualizarInsumo'
+        const url = urlbase + '/eliminarFactInsumo'
         const response = await fetch(url, options);
         const json = await response.json();
         return (json)
@@ -130,14 +117,10 @@ const eliminarFactInsumo = async (data, token) => {
     }
 
 }
+
 const guardarFactInsumo = async (data, token) => {
 
-    console.log(data)
-
-    if (data.insumo !== data.idInsumno) return { msg: 'El No es posible validar el insumo ingrese nuevamnete e intentelo de niuevo' }
-
-
-    return { msg: 'guardar main factura insumo' }
+    if(data.insumo !== data.idInsumo) return { msg: 'No es posible validar el insumo ingrese nuevamnete e intentelo de niuevo' }
 
     const options = {
         method: 'post',
@@ -148,9 +131,8 @@ const guardarFactInsumo = async (data, token) => {
         body: JSON.stringify(data)
     }
 
-
     try {
-        const url = urlbase + '/actualizarInsumo'
+        const url = urlbase + '/actualizarFactInsumo'
         const response = await fetch(url, options);
         const json = await response.json();
         return (json)
@@ -162,13 +144,7 @@ const guardarFactInsumo = async (data, token) => {
 
 const descargarFactInsumo = async (data, token) => {
 
-    console.log(data)
-
-    if (data.insumo !== data.idInsumno) return { msg: 'El No es posible validar el insumo ingrese nuevamnete e intentelo de niuevo' }
-
-
-    return { msg: 'descargar main factura insumo' }
-
+    if (data.insumo !== data.idInsumo) return { msg: 'No es posible validar el insumo ingrese nuevamnete e intentelo de niuevo' }
     const options = {
         method: 'post',
         headers: {
@@ -178,9 +154,8 @@ const descargarFactInsumo = async (data, token) => {
         body: JSON.stringify(data)
     }
 
-
     try {
-        const url = urlbase + '/actualizarInsumo'
+        const url = urlbase + '/descargarFactInsumo'
         const response = await fetch(url, options);
         const json = await response.json();
         return (json)
@@ -192,14 +167,9 @@ const descargarFactInsumo = async (data, token) => {
 
 const eliminarImagInsumo = async (data, token) => {
 
-    console.log(data)
-
-
-    if (data.insumo !== data.idInsumno) return { msg: 'El No es posible validar el insumo ingrese nuevamnete e intentelo de niuevo' }
-
-
-    return { msg: 'eliminar main Imagen insumo' }
-
+    const id = parseInt(data.insumo.split('-')[1])
+    if (id == NaN) return { msg: 'Insumo invalido' }
+       
     const options = {
         method: 'post',
         headers: {
@@ -211,7 +181,7 @@ const eliminarImagInsumo = async (data, token) => {
 
 
     try {
-        const url = urlbase + '/actualizarInsumo'
+        const url = urlbase + '/eliminarImagInsumo'
         const response = await fetch(url, options);
         const json = await response.json();
         return (json)
@@ -223,9 +193,9 @@ const eliminarImagInsumo = async (data, token) => {
 
 const guardarImagInsumo = async (data, token) => {
 
-    console.log(data)
-    return { msg: 'guardar main imagen insumo' }
-
+    const id = parseInt(data.insumo.split('-')[1])
+    if (id == NaN) return { msg: 'Insumo invalido' }
+   
     const options = {
         method: 'post',
         headers: {
@@ -237,7 +207,7 @@ const guardarImagInsumo = async (data, token) => {
 
 
     try {
-        const url = urlbase + '/actualizarInsumo'
+        const url = urlbase + '/guardarImagInsumo'
         const response = await fetch(url, options);
         const json = await response.json();
         return (json)

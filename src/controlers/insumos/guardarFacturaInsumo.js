@@ -17,24 +17,27 @@ const guardarDocumentoInsumo = async (e, nodo) => {
 
     const insumo = boton.getAttribute('insumo')
     const idInsumo = nodo.querySelector('.insumo').getAttribute('insumo')
+    const factura = nodo.querySelector('.facturaInsumo').value
 
 
     const data = {
         insumo,
         idInsumo,
-        soportePDF
+        soportePDF,
+        factura
     }
 
     const guardado = ipcRenderer.sendSync('guardarDocumentoInsumo', data);
     if (guardado.msg) return modalMensaje({ titulo: 'ERROR', mensaje: guardado.msg })
-    
     const contendorpdFactura = nodo.querySelector('.contendorpdFactura')
     const contenedorbotones  = contendorpdFactura.querySelector('.contenedorbotones')
     const btnEliminar  = contenedorbotones.querySelector('.eliminar')
     const btnGuardar  = contenedorbotones.querySelector('.guardar')
     const iGuardar  = btnGuardar.querySelector('i')
     btnEliminar.setAttribute('insumo', insumo)
+    btnEliminar.setAttribute('nombre', guardado.nombre)
     btnGuardar.setAttribute('insumo', insumo)
+    btnGuardar.setAttribute('nombre', guardado.nombre)
     btnEliminar.onclick = e =>eliminarDocumentoInsumo(e, nodo)
     btnGuardar.onclick = e =>descargarFacturaInsumo(e, nodo)
     iGuardar.classList.remove('text-primary')
@@ -48,4 +51,3 @@ const guardarDocumentoInsumo = async (e, nodo) => {
 export {
     guardarDocumentoInsumo
 }
-

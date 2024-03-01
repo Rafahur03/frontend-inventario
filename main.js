@@ -82,7 +82,8 @@ const { descargaCronograma,
     informelistadoActCost,
     descargarIfoActCosteado,
     informelistadoReportes,
-    informelistadoSolicitudes
+    informelistadoSolicitudes,
+    informeMovimientoInsumos
 } = require('./src/controlers/informes/informes.js')
 
 const {consultarListadoInsumos,
@@ -159,11 +160,6 @@ ipcMain.on('iniciarSesion', async (e, datosInicioSesion) => {
 
     }
 
-})
-
-ipcMain.on('cerrarSesion', (e) => {
-    win.loadFile('src/view/inicio.html')
-    dataUsuarioSesion = null
 })
 
 ipcMain.on('crearNuevoUsuario', async (e, data) => {
@@ -574,7 +570,13 @@ ipcMain.on('descargarIfolistadoSolicitudes', async (e, data) => {
     e.returnValue = resultado;
 })
 
+ipcMain.on('descargarMovimientoInsumo', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const insumo = await informeMovimientoInsumos(data, token)
+    e.returnValue = insumo;
+})
 
+// insumos -------------------------------------
 ipcMain.on('listadoInsumos', async (e) => {
     const token = dataUsuarioSesion.token
 
@@ -645,3 +647,4 @@ ipcMain.on('guardarimagenInsumo', async (e, data) => {
     const insumo = await guardarImagInsumo(data, token)
     e.returnValue = insumo;
 })
+

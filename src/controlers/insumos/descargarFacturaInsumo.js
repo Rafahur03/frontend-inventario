@@ -23,7 +23,7 @@ const descargarFacturaInsumo = (e, nodo) =>{
     // Crear un enlace temporal
     const link = document.createElement('a');
     link.href = descarga.facturaInsumo;
-    link.download = `${descarga.nombre}.pdf`;
+    link.download = descarga.nombre;
 
     // Simular un clic en el enlace para abrir el administrador de archivos
     link.click();

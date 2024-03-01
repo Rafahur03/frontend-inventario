@@ -36,7 +36,7 @@ const listadoBodegaInsumos = () => {
 
     const insumos = ipcRenderer.sendSync('listadoInsumos', 'Insumos')
     if (insumos.msg) {
-        modalMensaje({ titulo: 'ERROR', mensaje: 'No se pudo consultar el listado de insumos' })
+        modalMensaje({ titulo: 'ERROR', mensaje: insumos.msg })
     } else {
         const tbodyinsumos = seccion.querySelector('.tbody-insumos')
         insumos.forEach(element => {

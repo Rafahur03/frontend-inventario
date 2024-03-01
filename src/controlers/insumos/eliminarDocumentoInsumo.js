@@ -11,18 +11,18 @@ const eliminarDocumentoInsumo = async (e, nodo) => {
     } else {
         boton = e.target
     }
-
     
     const eleccion = await modalEleccion({ titulo: 'ELIMINAR FACTURA INSUMO', mensaje: `Esta seguro(a) de eliminar La FActura, esta accion es irreversible` })
 
     if (!eleccion) return
 
     const insumo = boton.getAttribute('insumo')
-    const idinsumo = nodo.querySelector('.insumo').getAttribute('insumo')
+    const nombre = boton.getAttribute('nombre')
+ 
 
     const data = {
         insumo,
-        idinsumo
+        nombre
     }
 
     const eliminar = ipcRenderer.sendSync('eliminarFacturaInsumo', data);

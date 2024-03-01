@@ -175,11 +175,41 @@ const informelistadoSolicitudes = async (datos, token) => {
 
 }
 
+const informeMovimientoInsumos = async (datos, token) => {
+
+   console.log(datos)
+
+   const id = parseInt(datos.insumo.split('-')[1])
+   if (id == NaN) return { msg: 'Insumo invalido' }
+  
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ data: datos })
+    }
+
+    try {
+        const url = urlbase + '/informeMovimientoInsumos'
+        const response = await fetch(url, options);
+        const json = await response.json();
+        return (json)
+    } catch (error) {
+        console.error(error);
+        return ({ msg: 'ocurrio un error durante la solicitud intente mas tarde' })
+    }
+
+}
+
+
 module.exports = {
     descargaCronograma,
     informelistadoAct,
     informelistadoActCost,
     descargarIfoActCosteado,
     informelistadoReportes,
-    informelistadoSolicitudes
+    informelistadoSolicitudes,
+    informeMovimientoInsumos
 }

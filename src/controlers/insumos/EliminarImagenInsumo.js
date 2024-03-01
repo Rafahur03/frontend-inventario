@@ -31,13 +31,13 @@ const EliminarImagenInsumo = async e => {
     }
     
     const padreCarruseInner = carruseInner.parentNode.parentNode
-    const divInputImagen = padreCarruseInner.nextSibling.nextSibling
+    const divInputImagen = padreCarruseInner.querySelector('.contendorInputImagenesinsumo')
     divInputImagen.classList.remove('d-none')  
     const inputImagenInsumo = divInputImagen.querySelector('input')
     inputImagenInsumo.onchange = e => nuevaImagenInsumo(e)
 
     modalMensaje({ titulo: 'EXITO', mensaje: eliminarImagen.exito })
-
+ 
 }
 
 export {EliminarImagenInsumo}

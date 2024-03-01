@@ -1,7 +1,7 @@
 const { ipcRenderer } = require('electron')
-import { modalMensaje } from '../helpers/modalEleccion.js'
+import { modalMensaje, modalEleccion } from '../helpers/modalEleccion.js'
 
-const salidaInsumo = (e, nodo) => {
+const salidaInsumo = async (e, nodo) => {
 
     const tagName = e.target.tagName.toLowerCase()
     let boton
@@ -15,14 +15,25 @@ const salidaInsumo = (e, nodo) => {
 
     const nombreInsumo = nodo.querySelector('.insumo')
     const idInsumno = nombreInsumo.getAttribute('insumo')
-    const cantidad = nodo.querySelector('.cantidadMover').value
-    const ObservacionesInsumo = nodo.querySelector('.ObservacionesInsumo').value
+    const cantidad = nodo.querySelector('.cantidadMover')
+    const ObservacionesInsumo = nodo.querySelector('.ObservacionesInsumo')
+    const cantidadActual = nodo.querySelector('.CantidadActualInsumo').value
+    const usuario = nodo.querySelector('.usuarioDestino')
+    const usuarioDestino = usuario.getAttribute('opcionId')
+    if(cantidad.value == '' || isNaN(parseFloat(cantidad.value))) return modalMensaje({titulo:'ERROR', mensaje:'El campo cantidad no puede estar vacio y debe ser un numero'})
+    if(ObservacionesInsumo.value == '') return modalMensaje({titulo:'ERROR', mensaje:'El campo observación no puede estar vacio'})
+    if(parseFloat(cantidad.value) > parseFloat(cantidadActual)) return  modalMensaje({titulo:'ERROR', mensaje:'La cantidad a mover no puede ser mayor a la cantidad actual en inventario'})
+    if(usuarioDestino == 'Us--0') return modalMensaje({titulo:'ERROR', mensaje: 'El campo usuario es obligatorio'})
 
+    const eleccion = await  modalEleccion({titulo:'SALIDA INSUMO', mensaje:`Esta seguro(a) de realizar la Salida del insumo por ${cantidad.value} Unidades`})
+
+    if (!eleccion) return
     const salida = {
         insumo,
         idInsumno,
-        cantidad,
-        ObservacionesInsumo
+        cantidad:cantidad.value,
+        ObservacionesInsumo:ObservacionesInsumo.value,
+        usuarioDestino
     }
 
     const respuesta = ipcRenderer.sendSync('salidaInsumo', salida)
@@ -30,30 +41,36 @@ const salidaInsumo = (e, nodo) => {
 
     modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
 
-    cantidad.value = ''
+    cantidad.value = null
     ObservacionesInsumo.value = ''
+    usuario.value =''
+    usuario.setAttribute('opcionId','us--0')
 
     const cantidadActualInsumo = nodo.querySelector('.CantidadActualInsumo')
     cantidadActualInsumo.value = respuesta.cantidadActual
 
-    const tbodyMovimiento = nodo.querySelector('.tbody-histroial')
+    const tbodyMovimiento = nodo.querySelector('.tbody-historial')
     const trMoviento = document.createElement('tr')
     const tdId = document.createElement('td')
     const tdFecha = document.createElement('td')
     const tdCantidad = document.createElement('td')
     const tdMovimiento = document.createElement('td')
+    const tdUsuario = document.createElement('td')
     const tdObservacion = document.createElement('td')
     
-    tdId.value = respuesta.idMovimiento
-    tdFecha.value = respuesta.fechaMovimiento
-    tdCantidad.value = respuesta.cantidadMovimiento
-    tdMovimiento.value = respuesta.tipoMovimiento
-    tdObservacion.value = respuesta.observacionMovimiento
+    tdId.textContent = respuesta.idMovimiento
+    tdFecha.textContent = respuesta.fechaMovimiento
+    tdCantidad.textContent = respuesta.cantidadMovimiento
+    tdCantidad.classList.add('text-danger')
+    tdMovimiento.textContent = respuesta.tipoMovimiento
+    tdUsuario.textContent = respuesta.usuarioDestino
+    tdObservacion.textContent = respuesta.observacionMovimiento
 
     trMoviento.appendChild(tdId)
     trMoviento.appendChild(tdFecha)
     trMoviento.appendChild(tdCantidad)
     trMoviento.appendChild(tdMovimiento)
+    trMoviento.appendChild(tdUsuario)
     trMoviento.appendChild(tdObservacion)
 
     tbodyMovimiento.insertBefore(trMoviento, tbodyMovimiento.firstChild)

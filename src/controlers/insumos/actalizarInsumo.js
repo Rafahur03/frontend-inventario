@@ -14,11 +14,11 @@ const actualizarInsumoBodega = (e, nodo) => {
     const insumo = boton.getAttribute('insumo')
 
     const nombreInsumo = nodo.querySelector('.insumo')
-    const idInsumno = nombreInsumo.getAttribute('insumo')
+    const idInsumo = nombreInsumo.getAttribute('insumo')
     const modeloInsumo = nodo.querySelector('.modeloInsumo').value
     const areaInsumo = nodo.querySelector('.areaInsumo')
     const marcaInsumo = nodo.querySelector('.marcaInsumo')
-    const sereiInsumo = nodo.querySelector('.serieInsumo').value
+    const serieInsumo = nodo.querySelector('.serieInsumo').value
     const facturaInsumo = nodo.querySelector('.facturaInsumo').value
     const costoInsumo = nodo.querySelector('.costoInsumo').value
     const fechaCompraInsumo = nodo.querySelector('.fechaCompraInsumo').value
@@ -29,9 +29,9 @@ const actualizarInsumoBodega = (e, nodo) => {
 
     const data = {
         insumo,
-        idInsumno,
+        idInsumo,
         modeloInsumo,
-        sereiInsumo,
+        serieInsumo,
         facturaInsumo,
         costoInsumo,
         fechaCompraInsumo,
