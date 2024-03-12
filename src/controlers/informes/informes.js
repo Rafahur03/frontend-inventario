@@ -177,8 +177,6 @@ const informelistadoSolicitudes = async (datos, token) => {
 
 const informeMovimientoInsumos = async (datos, token) => {
 
-   console.log(datos)
-
    const id = parseInt(datos.insumo.split('-')[1])
    if (id == NaN) return { msg: 'Insumo invalido' }
   

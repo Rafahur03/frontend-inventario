@@ -21,7 +21,7 @@ import { InfactivoCosteado } from "./contenidoTap/InfactivoCosteado.js"
 import { InformeSolicitudes } from "./contenidoTap/InformeSolicitudes.js"
 import { InformeReportesMtto } from "./contenidoTap/InformeReportesMtto.js"
 import { listadoBodegaInsumos } from "./contenidoTap/listadoBodegaInsumos.js"
-import {ingresoInicalBodega} from "./contenidoTap/ingresoInicalBodega.js"
+import { ingresoInicalBodega } from "./contenidoTap/ingresoInicalBodega.js"
 import { movimientoInsumoBodega } from "./contenidoTap/movimientoInsumoBodega.js"
 
 
@@ -45,30 +45,31 @@ const cargarTapContenido = async (id, dato) => {
         'crearReporteMttoPreventivo': crearReporteMttoPreventivo, // abrre ventana de crearReporte
         'consultarReporte': editarReporte, //abre ventana de consultar o editar un reporte
         'configuracion': configuracionVista, //abre ventana de configuracion,
-        'cronogramaMantenimiento':cronogramaMantenimiento,
+        'cronogramaMantenimiento': cronogramaMantenimiento,
         'informetodosActivos': listadoActivoInfome,
         'listadoCosteado': listadoActivoInfomeCosteado,
         'activoCosteado': InfactivoCosteado,
         'InformeSolicitudes': InformeSolicitudes,
         'InformeReportesMtto': InformeReportesMtto,
         'abrirBodegaInsumos': listadoBodegaInsumos,
-        'ingresoBodegaInsumos': ingresoInicalBodega
+        'ingresoBodegaInsumos': ingresoInicalBodega,
+        'consultarInsumo': movimientoInsumoBodega
     }
-      
+
     const bodyTap = document.querySelector('#bodyTap')
     if (bodyTap.querySelectorAll('.tab-pane').length == 0) {
         const contenidoTap = agregarTap(document.querySelector('#nueva-tap'))
         const atribute = document.createAttribute('tipoVista')
         atribute.value = id
         contenidoTap.setAttributeNode(atribute)
-    
+
         contenidoTap.appendChild(contenido[id]());
         return
     }
     const taps = bodyTap.querySelector('#containerTap')
     const tapActiva = taps.querySelector('.active')
     const idconten = tapActiva.id.split('-')[0]
-    const contenedor = bodyTap.querySelector('#'+ idconten)
+    const contenedor = bodyTap.querySelector('#' + idconten)
 
     if (contenedor.firstChild !== null) {
         while (contenedor.firstChild) {

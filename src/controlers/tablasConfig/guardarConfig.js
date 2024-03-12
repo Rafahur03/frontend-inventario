@@ -10,7 +10,8 @@ import {
     editarProceso,
     editarclasificacionAcivo,
     editarProveedor,
-    editarInsumo
+    editarInsumo,
+    editarBodega
 } from "./editarConfig.js"
 
 const guardarArea = e => {
@@ -365,6 +366,39 @@ const guardarInsumo = e => {
     modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
 
 }
+const guardarBodega = e => {
+    let boton
+    const tagName = e.target.tagName.toLowerCase()
+    if (tagName === 'i') {
+        boton = e.target.parentNode
+    } else {
+        boton = e.target
+    }
+
+    const idTr = boton.getAttribute('idtr');
+    const tr = document.querySelector('#' + idTr)
+    const nombre = tr.querySelector('.nombreBodegas').value
+    if (nombre.length <= 1) return modalMensaje({ titulo: 'ERROR', mensaje: ' el campo del BODEGA es obligatorio' })
+    if (nombre.trim() == '') return modalMensaje({ titulo: 'ERROR', mensaje: ' el campo del BODEGA es obligatorio' })
+    const data = { id: 'bodega', bodega: nombre }
+    const respuesta = ipcRenderer.sendSync('nuevaConfig', data)
+    if (respuesta.msg) return modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
+
+    const idInsumo = tr.querySelector('.idBodegas')
+    idInsumo.value = 'Bo-' + respuesta.id
+    const i = boton.firstElementChild
+    i.className = ''
+    i.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
+    boton.onclick = e => { editarBodega(e) }
+    const tbody = tr.parentNode
+    tbody.removeChild(tr)
+    tbody.appendChild(tr)
+    const estado = tr.querySelector('.estadoBodegas')
+    estado.onblur = e => { opcionId(e) }
+    estado.readOnly = false
+    estado.setAttribute('opcionId', ' Es-1')
+    modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
+}
 
 
 export {
@@ -376,5 +410,6 @@ export {
     guardaProceso,
     guardarclasificacionAcivo,
     guardarProveedor,
-    guardarInsumo
+    guardarInsumo,
+    guardarBodega
 }

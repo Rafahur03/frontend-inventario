@@ -34,7 +34,7 @@ const arqueoInsumo = async (e, nodo) => {
     if (respuesta.msg) return modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
 
     modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
-
+    console.log(respuesta)
     cantidad.value = ''
     ObservacionesInsumo.value = ''
 

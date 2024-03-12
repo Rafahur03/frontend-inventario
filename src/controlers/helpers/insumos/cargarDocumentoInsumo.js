@@ -1,11 +1,11 @@
 const mime = require('mime-types')
 import { modalMensaje } from "../modalEleccion.js"
-import { generateRandomId} from "../nombreRandon.js"
+import { generateRandomId } from "../nombreRandon.js"
 import { eliminarFacturaInsumo } from "./eliminarDocumentoInsumo.js"
 import { guardarDocumentoInsumo } from "../../insumos/guardarFacturaInsumo.js"
 //import { guardarSoporteExterno } from "./guardarSoporteExterno.js"
 
-const cargarDocumentoInsumo = async (e, nodo) => {
+const cargarDocumentoInsumo = async (e, nodo, crear = null) => {
 
     const files = e.target.files
 
@@ -41,35 +41,39 @@ const cargarDocumentoInsumo = async (e, nodo) => {
     reader.readAsDataURL(file)
 
     const contenedorBotones = document.createElement('div')
-    contenedorBotones.classList.add('contenedorbotones', 'd-flex', 'justify-content-center', 'p-0', 'm-0')
+        contenedorBotones.classList.add('contenedorbotones', 'd-flex', 'justify-content-center', 'p-0', 'm-0')
 
-    const iEliminar = document.createElement('i')
-    iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-3', 'fw-bold', 'text-danger', 'p-0')
-    const btnEliminar = document.createElement('button')
-    btnEliminar.setAttribute('iframepdf', nombre)
-    btnEliminar.classList.add('btn', 'text-center', 'm-1', 'p-0', 'eliminar')
-    btnEliminar.appendChild(iEliminar)
-    btnEliminar.onclick = e => {
-        e.preventDefault();
-        eliminarFacturaInsumo(nodo)
+
+        const iEliminar = document.createElement('i')
+        iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-3', 'fw-bold', 'text-danger', 'p-0')
+        const btnEliminar = document.createElement('button')
+        btnEliminar.setAttribute('iframepdf', nombre)
+        btnEliminar.classList.add('btn', 'text-center', 'm-1', 'p-0', 'eliminar')
+        btnEliminar.appendChild(iEliminar)
+        btnEliminar.onclick = e => {
+            e.preventDefault();
+            eliminarFacturaInsumo(nodo)
+        }
+        contenedorBotones.appendChild(btnEliminar)
+    
+
+    if (crear === null) {      
+        const insumo = nodo.querySelector('.insumo')
+        const idInsumo = insumo.getAttribute('insumo')
+
+        const iGuardar = document.createElement('i')
+        iGuardar.classList.add('bi', 'bi-save2-fill', 'fs-3', 'fw-bold', 'text-primary', 'p-0')
+        const btnGuardar = document.createElement('button')
+        btnGuardar.setAttribute('iframepdf', nombre)
+        btnGuardar.setAttribute('insumo', idInsumo)
+        btnGuardar.classList.add('btn', 'text-center', 'm-1', 'p-0', 'guardar')
+        btnGuardar.appendChild(iGuardar)
+        btnGuardar.onclick = e => guardarDocumentoInsumo(e, nodo)
+        contenedorBotones.appendChild(btnGuardar)        
     }
-    contenedorBotones.appendChild(btnEliminar)
-
-    const insumo = nodo.querySelector('.insumo')
-    const idInsumo= insumo.getAttribute('insumo')
-
-    const iGuardar = document.createElement('i')
-    iGuardar.classList.add('bi', 'bi-save2-fill', 'fs-3', 'fw-bold', 'text-primary', 'p-0')
-    const btnGuardar = document.createElement('button')
-    btnGuardar.setAttribute('iframepdf', nombre)
-    btnGuardar.setAttribute('insumo', idInsumo)
-    btnGuardar.classList.add('btn', 'text-center', 'm-1', 'p-0', 'guardar')
-    btnGuardar.appendChild(iGuardar)
-    btnGuardar.onclick = e => guardarDocumentoInsumo(e,nodo)
-    contenedorBotones.appendChild(btnGuardar)
 
 
-    contenedorpdf.appendChild(iframepdf)
+
     contenedorpdf.appendChild(contenedorBotones)
     contenedorReporte.appendChild(contenedorpdf)
 

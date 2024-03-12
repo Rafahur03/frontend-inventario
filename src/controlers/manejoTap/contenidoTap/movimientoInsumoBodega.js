@@ -63,9 +63,9 @@ const movimientoInsumoBodega = (id) => {
                         <label class="fw-bold" for="modeloInsumo">Modelo <span class="m-0 p-0 text-danger"> *</span> </label>
                         <input type="text" class="form-control my-1 modeloInsumo" readOnly>
 
-                        <label class="fw-bold" for="areaActivo">Area <span class="m-0 p-0 text-danger"> *</span> </label>
-                        <input type="text" class="form-control my-1 areaInsumo" list="listaAreas" opcionId="Ar--0" readOnly>
-                        <datalist id="listaAreas"></datalist>
+                        <label class="fw-bold" for="bodegaActivo">Bodega<span class="m-0 p-0 text-danger"> *</span> </label>
+                        <input type="text" class="form-control my-1 bodegaInsumo" readOnly>
+                     
 
                     </div>
                     <div class="form-group col-2">
@@ -102,12 +102,17 @@ const movimientoInsumoBodega = (id) => {
                         <label class="fw-bold" for="ubicacionActivo">Cantidad A Mover<span class="m-0 p-0 text-danger"> *</span> </label>
                         <input type="number" class="form-control my-1 cantidadMover">
                     </div>
-                    <div class="form-group col-4">
-                        <label class="fw-bold" for="usuarioDestino">Usuario Destino<span class="m-0 p-0 text-danger"> *</span></label>
+                    <div class="form-group col-3">
+                        <label class="fw-bold" for="usuarioDestino">Usuario Origen/Destino<span class="m-0 p-0 text-danger"> *</span></label>
                         <input type="text" class="form-control my-1 usuarioDestino"  list="listaUsuarios"  opcionId="Us--0">
                         <datalist id="listaUsuarios"></datalist>
                     </div>
-                    <div class="form-group col-8">
+                    <div class="form-group col-3">
+                        <label class="fw-bold" for="bodegaDestino">Bodega Destino<span class="m-0 p-0 text-danger"> *</span></label>
+                        <input type="text" class="form-control my-1 bodegaDestino"  list="listaBodegas"  opcionId="Bo--0">
+                        <datalist id="listaBodegas"></datalist>
+                    </div>
+                    <div class="form-group col-6">
                         <label class="fw-bold" for="ObservacionesInsumo">Observacion Del Movimiento <span class="m-0 p-0 text-danger"> *</span></label>
                         <p class="m-0" id="caracteresRecomendacion">Maximo 250 caracteres</p>
                         <textarea class="form-control m-1 ObservacionesInsumo" id=""
@@ -143,12 +148,12 @@ const movimientoInsumoBodega = (id) => {
             <div class="p-1 d-flex flex-row-reverse">
                 <div>
                     <button type="button" class="btn exportarHistorialMovimientoExcel" title="Exportar Historial Excel" tipo="excel">
-                        <i class="bi bi-printer-fill fs-2 text-primary"></i>
+                    <i class="bi bi-file-earmark-spreadsheet-fill fs-2 text-success"></i>
                     </button>
                 </div>
                 <div>
-                    <button type="button" class="btn exportarHistorialMovimientopdf" title="Exportar Histroial PDF" tipo="pdf">
-                        <i class="bi bi-file-earmark-spreadsheet-fill fs-2 text-success"></i>
+                    <button type="button" class="btn exportarHistorialMovimientopdf" title="Exportar Histroial PDF" tipo="pdf">                        
+                        <i class="bi bi-file-pdf-fill fs-2 text-primary"></i>
                     </button>
                 </div>
             </div>
@@ -159,7 +164,9 @@ const movimientoInsumoBodega = (id) => {
                         <th scope="col">Fecha</th>
                         <th scope="col">Cantidad</th>
                         <th scope="col">Movimiento</th>
-                        <th scope="col">Recibido</th>
+                        <th scope="col">Bodega Origen/Destino</th>
+                        <th scope="col">Usuario Origen/Destino</th>
+                        <th scope="col">Responsable Mov</th>
                         <th scope="col">Observacion</th>
                     </tr>
                 </thead>
@@ -188,7 +195,7 @@ const movimientoInsumoBodega = (id) => {
     `
 
     const data = ipcRenderer.sendSync('consultarUnInsumo', id)
-    
+
     if (data.msg) {
         modalMensaje({ titulo: 'ERROR', mensaje: data.msg })
     } else {
@@ -196,7 +203,7 @@ const movimientoInsumoBodega = (id) => {
         const nombreInsumo = seccion.querySelector('.insumo')
         nombreInsumo.setAttribute('insumo', insumo.id)
         const modeloInsumo = seccion.querySelector('.modeloInsumo')
-        const areaInsumo = seccion.querySelector('.areaInsumo')
+        const bodegaInsumo = seccion.querySelector('.bodegaInsumo')
         const marcaInsumo = seccion.querySelector('.marcaInsumo')
         const sereiInsumo = seccion.querySelector('.serieInsumo')
         const CantidadActualInsumo = seccion.querySelector('.CantidadActualInsumo')
@@ -213,7 +220,7 @@ const movimientoInsumoBodega = (id) => {
 
         nombreInsumo.value = insumo.nombre
         modeloInsumo.value = insumo.modelo
-        areaInsumo.value = insumo.area
+        bodegaInsumo.value = insumo.bodega
         marcaInsumo.value = insumo.marca
         sereiInsumo.value = insumo.serie
         CantidadActualInsumo.value = insumo.cantidad
@@ -240,6 +247,21 @@ const movimientoInsumoBodega = (id) => {
             option.textContent = element.id
             listaUsuarios.appendChild(option)
         })
+
+        const bodegaDestino = seccion.querySelector('.bodegaDestino')
+        const listaBodegas = seccion.querySelector('#listaBodegas')
+        listaBodegas.id = `${listaBodegas.id}${generateRandomId()}`
+        bodegaDestino.setAttribute('list', listaBodegas.id)
+        bodegaDestino.onblur = e => opcionId(e)
+        data.bodegas.forEach(element => {
+            const option = document.createElement('option')
+            option.value = element.bodega
+            option.textContent = element.id
+            listaBodegas.appendChild(option)
+        })
+
+        
+
 
         if (!insumo.imagen) {
             if (!insumo.editar) {
@@ -290,7 +312,9 @@ const movimientoInsumoBodega = (id) => {
                 const tdFecha = document.createElement('td')
                 const tdCantidad = document.createElement('td')
                 const tdMovimiento = document.createElement('td')
+                const tdbodegaDestino = document.createElement('td')
                 const tdRecibido = document.createElement('td')
+                const tdresponsable = document.createElement('td')
                 const tdObservacion = document.createElement('td')
 
                 tdId.textContent = movimiento.idMovimiento
@@ -302,7 +326,9 @@ const movimientoInsumoBodega = (id) => {
                 } else if (movimiento.tipoMovimiento === 'Entrada') {
                     tdCantidad.classList.add('text-success')
                 }
+                tdbodegaDestino.textContent = movimiento.bodegaDestino
                 tdRecibido.textContent = movimiento.usuarioDestino
+                tdresponsable.textContent = movimiento.usuarioResponsable
                 tdObservacion.textContent = movimiento.observacionMovimiento
 
 
@@ -310,7 +336,9 @@ const movimientoInsumoBodega = (id) => {
                 trMoviento.appendChild(tdFecha)
                 trMoviento.appendChild(tdCantidad)
                 trMoviento.appendChild(tdMovimiento)
+                trMoviento.appendChild(tdbodegaDestino)
                 trMoviento.appendChild(tdRecibido)
+                trMoviento.appendChild(tdresponsable)
                 trMoviento.appendChild(tdObservacion)
 
                 historialMovimiento.appendChild(trMoviento)
@@ -319,105 +347,93 @@ const movimientoInsumoBodega = (id) => {
 
         if (data.editar) {
 
-            const listados = ipcRenderer.sendSync('consultarListasCofigActivos')
-            const idlista = generateRandomId()
-
-            areaInsumo.removeAttribute('readonly')
-            const listaAreas = seccion.querySelector('#listaAreas')
-            listaAreas.id = `${listaAreas.id}${idlista}`
-            areaInsumo.setAttribute('list', listaAreas.id)
-            areaInsumo.onblur = e => opcionId(e)
-            listados[3].forEach(element => {
-                const option = document.createElement('option')
-                option.value = element.area
-                option.textContent = element.id
-                listaAreas.appendChild(option)
-            })
-
-            marcaInsumo.removeAttribute('readonly')
-            const listaMarca = seccion.querySelector('#listMarcas')
-            listaMarca.id = `${listaMarca.id}${idlista}`
-            marcaInsumo.setAttribute('list', listaMarca.id)
-            marcaInsumo.onblur = e => opcionId(e)
-            listados[1].forEach(element => {
-                const option = document.createElement('option')
-                option.value = element.marca
-                option.textContent = element.id
-                listaMarca.appendChild(option)
-            })
-
-            proveedorInsumo.removeAttribute('readonly')
-            const listaProveedores = seccion.querySelector('#listaProveedores')
-            listaProveedores.id = `${listaProveedores.id}${idlista}`
-            proveedorInsumo.setAttribute('list', listaProveedores.id)
-            proveedorInsumo.onblur = e => opcionId(e)
-            listados[4].forEach(element => {
-                const option = document.createElement('option')
-                option.value = `${element.nombre_comercial} -- ${element.razon_social} -- ${element.nit}`
-                option.textContent = element.id
-                listaProveedores.appendChild(option)
-            })
-
-
-            const guardarEdicion = seccion.querySelector('.guardarEdicion')
-            guardarEdicion.setAttribute('insumo', insumo.id)
-            guardarEdicion.onclick = e => actualizarInsumoBodega(e, seccion)
-            guardarEdicion.classList.remove('d-none')
-
-            if (!insumo.FacturaPdf) {
-                const contendorInputpdf = seccion.querySelector('.contendorInputpdf')
-                const inputpdf = contendorInputpdf.querySelector('input')
-                inputpdf.onchange = e => cargarDocumentoInsumo(e, seccion)
-                contendorInputpdf.classList.remove('d-none')
+            const listados = ipcRenderer.sendSync('consultartablasInsumo')
+            if (listados.msg) {
+                modalMensaje({ titulo: 'ERROR', mensaje: listados.msg })
             } else {
-                const contenedorFactura = seccion.querySelector('.contendorpdFactura')
-                const contenedorpdf = document.createElement('div')
-                contenedorpdf.classList.add('m-2', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center', 'embed-responsive')
-                const iframepdf = document.createElement('iframe')
-                iframepdf.classList.add('embed-responsive-item', 'w-75', 'mh-50')
-                iframepdf.style.height = '400px'
-                iframepdf.src = insumo.bufferFactura
-                const contenedorBotones = document.createElement('div')
-                contenedorBotones.classList.add('contenedorbotones', 'd-flex', 'justify-content-center', 'p-0', 'm-0')
+                const idlista = generateRandomId()
 
-                if(data.editar) {                    
-                    const iEliminar = document.createElement('i')
-                    iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-3', 'fw-bold', 'text-danger', 'p-0')
-                    const btnEliminar = document.createElement('button')
-                    btnEliminar.setAttribute('insumo', insumo.id)
-                    btnEliminar.setAttribute('nombre', insumo.FacturaPdf)
-                    btnEliminar.classList.add('btn', 'text-center', 'm-1', 'p-0', 'eliminar')
-                    btnEliminar.appendChild(iEliminar)
-                    btnEliminar.onclick = e => eliminarDocumentoInsumo(e, seccion)
-                    contenedorBotones.appendChild(btnEliminar)
+                marcaInsumo.removeAttribute('readonly')
+                const listaMarca = seccion.querySelector('#listMarcas')
+                listaMarca.id = `${listaMarca.id}${idlista}`
+                marcaInsumo.setAttribute('list', listaMarca.id)
+                marcaInsumo.onblur = e => opcionId(e)
+                listados[2].forEach(element => {
+                    const option = document.createElement('option')
+                    option.value = element.marca
+                    option.textContent = element.id
+                    listaMarca.appendChild(option)
+                })
+
+                proveedorInsumo.removeAttribute('readonly')
+                const listaProveedores = seccion.querySelector('#listaProveedores')
+                listaProveedores.id = `${listaProveedores.id}${idlista}`
+                proveedorInsumo.setAttribute('list', listaProveedores.id)
+                proveedorInsumo.onblur = e => opcionId(e)
+                listados[3].forEach(element => {
+                    const option = document.createElement('option')
+                    option.value = element.proveedor
+                    option.textContent = element.id
+                    listaProveedores.appendChild(option)
+                })
+
+
+                const guardarEdicion = seccion.querySelector('.guardarEdicion')
+                guardarEdicion.setAttribute('insumo', insumo.id)
+                guardarEdicion.onclick = e => actualizarInsumoBodega(e, seccion)
+                guardarEdicion.classList.remove('d-none')
+
+                if (!insumo.FacturaPdf) {
+                    const contendorInputpdf = seccion.querySelector('.contendorInputpdf')
+                    const inputpdf = contendorInputpdf.querySelector('input')
+                    inputpdf.onchange = e => cargarDocumentoInsumo(e, seccion)
+                    contendorInputpdf.classList.remove('d-none')
+                } else {
+                    const contenedorFactura = seccion.querySelector('.contendorpdFactura')
+                    const contenedorpdf = document.createElement('div')
+                    contenedorpdf.classList.add('m-2', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center', 'embed-responsive')
+                    const iframepdf = document.createElement('iframe')
+                    iframepdf.classList.add('embed-responsive-item', 'w-75', 'mh-50')
+                    iframepdf.style.height = '400px'
+                    iframepdf.src = insumo.bufferFactura
+                    const contenedorBotones = document.createElement('div')
+                    contenedorBotones.classList.add('contenedorbotones', 'd-flex', 'justify-content-center', 'p-0', 'm-0')
+
+                    if (data.editar) {
+                        const iEliminar = document.createElement('i')
+                        iEliminar.classList.add('bi', 'bi-trash-fill', 'fs-3', 'fw-bold', 'text-danger', 'p-0')
+                        const btnEliminar = document.createElement('button')
+                        btnEliminar.setAttribute('insumo', insumo.id)
+                        btnEliminar.setAttribute('nombre', insumo.FacturaPdf)
+                        btnEliminar.classList.add('btn', 'text-center', 'm-1', 'p-0', 'eliminar')
+                        btnEliminar.appendChild(iEliminar)
+                        btnEliminar.onclick = e => eliminarDocumentoInsumo(e, seccion)
+                        contenedorBotones.appendChild(btnEliminar)
+                    }
+                    const iDescargar = document.createElement('i')
+                    iDescargar.classList.add('bi', 'bi-file-earmark-pdf-fill', 'fs-3', 'fw-bold', 'text-success', 'p-0')
+                    const btnDescargar = document.createElement('button')
+                    btnDescargar.classList.add('btn', 'text-center', 'm-1', 'p-0', 'descargar')
+                    btnDescargar.setAttribute('insumo', insumo.id)
+                    btnDescargar.setAttribute('nombre', insumo.FacturaPdf)
+                    btnDescargar.appendChild(iDescargar)
+                    btnDescargar.onclick = e => descargarFacturaInsumo(e, seccion)
+
+                    contenedorBotones.appendChild(btnDescargar)
+                    contenedorpdf.appendChild(iframepdf)
+                    contenedorpdf.appendChild(contenedorBotones)
+                    contenedorFactura.appendChild(contenedorpdf)
                 }
-                const iDescargar = document.createElement('i')
-                iDescargar.classList.add('bi', 'bi-file-earmark-pdf-fill', 'fs-3', 'fw-bold', 'text-success', 'p-0')
-                const btnDescargar = document.createElement('button')
-                btnDescargar.classList.add('btn', 'text-center', 'm-1', 'p-0', 'descargar')
-                btnDescargar.setAttribute('insumo', insumo.id)
-                btnDescargar.setAttribute('nombre', insumo.FacturaPdf)
-                btnDescargar.appendChild(iDescargar)
-                btnDescargar.onclick = e => descargarFacturaInsumo(e, seccion)
 
-                contenedorBotones.appendChild(btnDescargar)
-                contenedorpdf.appendChild(iframepdf)
-                contenedorpdf.appendChild(contenedorBotones)
-                contenedorFactura.appendChild(contenedorpdf)
+                modeloInsumo.removeAttribute('readonly')
+                sereiInsumo.removeAttribute('readonly')
+                facturaInsumo.removeAttribute('readonly')
+                costoInsumo.removeAttribute('readonly')
+                fechaCompraInsumo.removeAttribute('readonly')
             }
-
-            modeloInsumo.removeAttribute('readonly')
-            sereiInsumo.removeAttribute('readonly')
-            facturaInsumo.removeAttribute('readonly')
-            costoInsumo.removeAttribute('readonly')
-            fechaCompraInsumo.removeAttribute('readonly')
-
         }
 
-        const guardarEdicion = seccion.querySelector('.guardarEdicion')
-        guardarEdicion.setAttribute('insumo', insumo.id)
-        guardarEdicion.classList.remove('d-none')
-        guardarEdicion.onclick = e => actualizarInsumoBodega(e, seccion)
+
         Ingreso.onclick = e => entradaInsumo(e, seccion)
         Salida.onclick = e => salidaInsumo(e, seccion)
 

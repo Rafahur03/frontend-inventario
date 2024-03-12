@@ -176,9 +176,16 @@ const crearConfig = async (data, token) => {
         case 'insumo':
             if (!data.insumo) return { msg: ' el campo Nombre del insumo es obligatorio' }
             if (validarVacios(data.insumo)) return { msg: ' el campo Nombre del insumo es obligatorio' }
-            if (validarPalabras(data.insumo)) return { msg: ' el campo Nombre del area no debe llevar palabras reservadas como SELECT, FROM WHERE' }
+            if (validarPalabras(data.insumo)) return { msg: ' el campo Nombre del Insumo no debe llevar palabras reservadas como SELECT, FROM WHERE' }
             if (validarCaracteres(data.insumo)) return { msg: ' el campo Nombre del insumo no debe llevar palabras reservadas como [], {},()' }
             data.id = 9
+            break
+        case 'bodega':
+            if (!data.bodega) return { msg: ' el campo Nombre de la bodega es obligatorio' }
+            if (validarVacios(data.bodega)) return { msg: ' el campo Nombre de la bodega es obligatorio' }
+            if (validarPalabras(data.bodega)) return { msg: ' el campo Nombre de la bodega no debe llevar palabras reservadas como SELECT, FROM WHERE' }
+            if (validarCaracteres(data.bodega)) return { msg: ' campo Nombre de la bodega no debe llevar palabras reservadas como [], {},()' }
+            data.id = 10
             break
         default:
             return ({ msg: 'Su solicitud no pudo ser procesada o es invalida' })
@@ -349,6 +356,13 @@ const actualizarConfig = async (data, token) => {
             if (!data.estado) return { msg: 'El Campo estado del insumo no es valido, Escoja un estado de la lista' }
             if (validarId(data.estado)) return { msg: 'El Campo estado del insumo no es valido, Escoja un estado de la lista' }
             data.id = 9
+            break
+        case 'bodega':
+            if (!data.bodega) return { msg: ' el campo Nombre de la bodega es obligatorio' }
+            if (validarVacios(data.bodega)) return { msg: ' el campo Nombre de la bodega es obligatorio' }
+            if (validarPalabras(data.bodega)) return { msg: ' el campo Nombre de la bodega no debe llevar palabras reservadas como SELECT, FROM WHERE' }
+            if (validarCaracteres(data.bodega)) return { msg: ' campo Nombre de la bodega no debe llevar palabras reservadas como [], {},()' }
+            data.id = 10
             break
         default:
             return ({ msg: 'Su solicitud no pudo ser procesada o es invalida' })

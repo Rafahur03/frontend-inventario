@@ -13,7 +13,8 @@ import {
     guardaProceso,
     guardarclasificacionAcivo,
     guardarProveedor,
-    guardarInsumo
+    guardarInsumo,
+    guardarBodega
 } from "../../tablasConfig/guardarConfig.js";
 import {
     editarArea,
@@ -23,7 +24,8 @@ import {
     editarFrecuencia,
     editarProceso,
     editarclasificacionAcivo,
-    editarInsumo
+    editarInsumo, 
+    editarBodega
 } from "../../tablasConfig/editarConfig.js";
 const configuracionVista = () => {
     const seccion = document.createElement('section');
@@ -68,17 +70,26 @@ const configuracionVista = () => {
                         aria-controls="clasificacionActivos" aria-selected="true">Clasificacion
                         Activos</button>
                 </li>
-                <li class="nav-item  mx-2 proveedores" role="presentation">
-                    <button class="nav-link" id="proveedores-tab" data-bs-toggle="tab"
-                        data-bs-target="#proveedores" type="button" role="tab"
-                        aria-controls="proveedores" aria-selected="true">Proveedores</button>
-                </li>
 
                 <li class="nav-item  mx-2 insumos" role="presentation">
                 <button class="nav-link" id="insumos-tab" data-bs-toggle="tab"
                     data-bs-target="#insumos" type="button" role="tab"
                     aria-controls="insumos" aria-selected="true">Insumos</button>
                 </li>
+
+                <li class="nav-item  mx-2 bodegas" role="presentation">
+                <button class="nav-link" id="bodegas-tab" data-bs-toggle="tab"
+                    data-bs-target="#bodegas" type="button" role="tab"
+                    aria-controls="bodegas" aria-selected="true">Bodegas</button>
+                </li>
+
+                <li class="nav-item  mx-2 proveedores" role="presentation">
+                    <button class="nav-link" id="proveedores-tab" data-bs-toggle="tab"
+                        data-bs-target="#proveedores" type="button" role="tab"
+                        aria-controls="proveedores" aria-selected="true">Proveedores</button>
+                </li>
+
+                
             </ul>
             <div class="tab-content" id="TabContentConfig">
                 <div class="tab-pane fade show active mt-4" id="area" role="tabpanel"
@@ -258,7 +269,57 @@ const configuracionVista = () => {
                             </tbody>
                         </table>                        
                     </div>  
-                </div>             
+                </div>
+                <div class="tab-pane fade mt-4"id="insumos" role="tabpanel"
+                    aria-labelledby="insumostab">
+                    <h3 class="fw-bold text-center my-2">INSUMOS</h3>
+                    <label for="estadoInsumos" class="fw-bold text-center ">Buscar insumos</label>
+                    <input type="text" class="form-control my-3 w-50 buscarInsumos" tabla="tablaInsumos">
+                    <div class="container-fluid table-responsive m-0 p-0 mb-4 ">
+                        <div class="p-1  d-flex flex-row-reverse">
+                            <button type="button" class="btn d-none nuevoinsumos" nombre="insumos" >
+                                <i class="bi bi-plus-square-fill fs-2"></i>
+                            </button>
+                        </div>
+                        <table class="table table-borderless table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">INSUMOS</th>
+                                    <th scope="col">ESTADO</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaInsumos">                                
+                            </tbody>
+                        </table>                        
+                    </div>
+                </div>
+                <div class="tab-pane fade mt-4"id="bodegas" role="tabpanel"
+                    aria-labelledby="bodegas-tab">
+                    <h3 class="fw-bold text-center my-2">Bodegas</h3>
+                    <label for="estadoBodegas" class="fw-bold text-center ">Buscar Bodega</label>
+                    <input type="text" class="form-control my-3 w-50 buscarBodegas" tabla="tablaBodegas">
+                    <div class="container-fluid table-responsive m-0 p-0 mb-4 ">
+                        <div class="p-1  d-flex flex-row-reverse">
+                            <button type="button" class="btn d-none nuevoBodegas" nombre="Bodegas" >
+                                <i class="bi bi-plus-square-fill fs-2"></i>
+                            </button>
+                        </div>
+                        <table class="table table-borderless table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">BODEGA</th>
+                                    <th scope="col">ESTADO</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaBodegas">                                
+                            </tbody>
+                        </table>                        
+                    </div>
+                </div>           
                 <div class="tab-pane fade show mt-4" id="proveedores" role="tabpanel"
                     aria-labelledby="proveedores-tab">
                     <h3 class="fw-bold text-center my-2">PROVEEDORES</h3>
@@ -317,37 +378,12 @@ const configuracionVista = () => {
                         </div>                         
                     </div>
                 </div>
-                <div class="tab-pane fade mt-4"id="insumos" role="tabpanel"
-                    aria-labelledby="insumostab">
-                    <h3 class="fw-bold text-center my-2">INSUMOS</h3>
-                    <label for="estadoInsumos" class="fw-bold text-center ">Buscar insumos</label>
-                    <input type="text" class="form-control my-3 w-50 buscarInsumos" tabla="tablaInsumos">
-                    <div class="container-fluid table-responsive m-0 p-0 mb-4 ">
-                        <div class="p-1  d-flex flex-row-reverse">
-                            <button type="button" class="btn d-none nuevoinsumos" nombre="insumos" >
-                                <i class="bi bi-plus-square-fill fs-2"></i>
-                            </button>
-                        </div>
-                        <table class="table table-borderless table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">INSUMOS</th>
-                                    <th scope="col">ESTADO</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody id="tablaInsumos">                                
-                            </tbody>
-                        </table>                        
-                    </div>
-                </div>
             </div>
         </div>
     `
     const listados = ipcRenderer.sendSync('consultarTablasCofig')
     if (listados.msg) return modalMensaje({ titulo: 'ERROR', mensaje: listados.msg })
-
+   
     const tbodyArea = seccion.querySelector('#tablaAreas')
     listados.areas.forEach(element => {
         const tr = document.createElement('tr')
@@ -939,6 +975,77 @@ const configuracionVista = () => {
     const insumosFiltro = seccion.querySelector('.buscarInsumos')
     insumosFiltro.oninput = e => { filtroBusquedaTablas(e) }
 
+    ////////////   
+    const tbodyBodega = seccion.querySelector('#tablaBodegas')
+    listados.bodegas.forEach(element => {
+        const tr = document.createElement('tr')
+        const tdId = document.createElement('td')
+        const inputId = document.createElement('input')
+        inputId.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'idBodegas')
+        inputId.type = 'text'
+        inputId.readOnly = true
+        inputId.value = 'Bo-' + element.id
+        tdId.appendChild(inputId)
+        const tdNombre = document.createElement('td')
+        const inputNombre = document.createElement('input')
+        inputNombre.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'nombreBodegas')
+        inputNombre.type = 'text'
+        inputNombre.readOnly = true
+        inputNombre.value = element.nombre
+        tdNombre.appendChild(inputNombre)
+        const tdEstado = document.createElement('td')
+        const inputEstado = document.createElement('input')
+        inputEstado.classList.add('border', 'border-secondary', 'bg-light', 'border-l', 'border-opacity-25', 'rounded-3', 'fs-5', 'estadoBodegas')
+        inputEstado.readOnly = true
+        inputEstado.type = 'text'
+        inputEstado.value = element.estado
+        tdEstado.appendChild(inputEstado)
+
+        tr.appendChild(tdId)
+        tr.appendChild(tdNombre)
+        tr.appendChild(tdEstado)
+
+
+        if (listados.editar) {
+            const ramndonId = generateRandomId()
+            const datalistEstado = document.createElement('datalist')
+            datalistEstado.id = ramndonId
+            inputEstado.setAttribute('List', ramndonId)
+            inputEstado.readOnly = false
+            inputEstado.setAttribute('opcionId', element.estadoId)
+            inputEstado.onblur = e => opcionId(e)
+            inputNombre.readOnly = false
+            tdEstado.appendChild(datalistEstado)
+            listados.estado.forEach(item => {
+                const option = document.createElement('option')
+                option.value = item.estado
+                option.textContent = item.id
+                datalistEstado.appendChild(option)
+            })
+            const idTr = generateRandomId()
+            const tdBotones = document.createElement('td')
+            const contenedorBotones = document.createElement('div')
+            contenedorBotones.classList.add('d-flex', 'justify-content-center')
+            const botonEditar = document.createElement('button')
+            botonEditar.classList.add('btn', 'mt-0', 'pt-0')
+            botonEditar.type = 'button'
+            botonEditar.title = 'Editar Bodega'
+            const iCrear = document.createElement('i')
+            iCrear.classList.add('bi', 'bi-save2-fill', 'fs-1', 'text-warning')
+            botonEditar.appendChild(iCrear)
+            botonEditar.onclick = e => { editarBodega(e) }
+            contenedorBotones.appendChild(botonEditar)
+            tdBotones.appendChild(contenedorBotones)
+            tr.appendChild(tdBotones)
+            tr.id = idTr
+            botonEditar.setAttribute("idTr", idTr)
+        }
+
+        tbodyBodega.appendChild(tr)
+    })
+    const bodegaFiltro = seccion.querySelector('.buscarBodegas')
+    bodegaFiltro.oninput = e => { filtroBusquedaTablas(e) }
+
     ////////////////////////////////
 
     const clasificacionFiltro = seccion.querySelector('.buscarclasificacion')
@@ -972,6 +1079,7 @@ const configuracionVista = () => {
     const nuevaClasificacionActivos = seccion.querySelector('.nuevaClasificacionActivo')
     const nuevoProveedor = seccion.querySelector('.nuevaProveedor')
     const nuevoinsumos = seccion.querySelector('.nuevoinsumos')
+    const nuevoBodegas = seccion.querySelector('.nuevoBodegas')
 
     if (listados.editar) {
         nuevaArea.classList.remove('d-none')
@@ -982,7 +1090,7 @@ const configuracionVista = () => {
         nuevaProceso.classList.remove('d-none')
         nuevaClasificacionActivos.classList.remove('d-none')
         nuevoProveedor.classList.remove('d-none')
-        nuevoinsumos.classList.remove('d-none')
+        nuevoBodegas.classList.remove('d-none')
 
         nuevaArea.onclick = e => {
             e.preventDefault()
@@ -1032,11 +1140,17 @@ const configuracionVista = () => {
             const boton = habilitarNuevoProveedor(e)
             boton.onclick = e => { guardarProveedor(e) }
         }
-
+        
         nuevoinsumos.onclick = e => {
             e.preventDefault()
             const boton = agregarLinea(e)
             boton.onclick = e => { guardarInsumo(e) }
+        }
+
+        nuevoBodegas.onclick = e => {
+            e.preventDefault()
+            const boton = agregarLinea(e)
+            boton.onclick = e => { guardarBodega(e) }
         }
 
     }

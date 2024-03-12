@@ -6,7 +6,9 @@ const eliminarTap = (e) => {
     // seleccionamos el contendor de los contenidos de las tap
     const contenTap = contenTapEl.parentNode
     const contenidos = contenTap.querySelectorAll('.tab-pane')
-    if (contenidos.length === 0) return
+    if (contenidos.length === 0) return   
+    
+    
     liTapEL.parentNode.removeChild(liTapEL)
     contenTapEl.parentNode.removeChild(contenTapEl)
     let tapAnterior = contenidos[contenidos.length - 2]
@@ -16,7 +18,7 @@ const eliminarTap = (e) => {
         tapAnterior = contenidos[0]
         idContenido = tapAnterior.id.split('-')[0]
     }
-
+    if(contenTapEl.getAttribute('tipovista') == 'configuracion') idContenido = 'home'
     const tapActiva = document.querySelector(`.${idContenido} > .nav-link`)
     tapActiva.click()
 

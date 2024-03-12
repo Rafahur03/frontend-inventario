@@ -21,8 +21,7 @@ const entradaInsumo = async (e, nodo) => {
     const usuarioDestino = usuario.getAttribute('opcionId')
     if(cantidad.value == '' || isNaN(parseFloat(cantidad.value))) return modalMensaje({titulo:'ERROR', mensaje:'El campo cantidad no puede estar vacio y debe ser un numero'})
     if(ObservacionesInsumo.value == '') return modalMensaje({titulo:'ERROR', mensaje:'El campo observación no puede estar vacio'})
-    if(usuarioDestino == 'Us--0') return modalMensaje({titulo:'ERROR', mensaje: 'El campo usuario es obligatorio'})
-    
+        
     const eleccion = await  modalEleccion({titulo:'ENTRADA INSUMO', mensaje:`Esta seguro(a) de realizar la entrada del insumo por ${cantidad.value} Unidades`})
 
     if (!eleccion) return
@@ -32,7 +31,7 @@ const entradaInsumo = async (e, nodo) => {
         idInsumno,
         cantidad: cantidad.value,
         ObservacionesInsumo:ObservacionesInsumo.value,
-        usuarioDestino
+        usuarioDestino,
     }
 
     const respuesta = ipcRenderer.sendSync('entradaInsumo', entrada)
@@ -56,7 +55,9 @@ const entradaInsumo = async (e, nodo) => {
     const tdFecha = document.createElement('td')
     const tdCantidad = document.createElement('td')
     const tdMovimiento = document.createElement('td')
+    const tdbodegaDestino = document.createElement('td')
     const tdusuario = document.createElement('td')
+    const tdresponsable = document.createElement('td')
     const tdObservacion = document.createElement('td')
 
     tdId.textContent = respuesta.idMovimiento
@@ -64,7 +65,9 @@ const entradaInsumo = async (e, nodo) => {
     tdCantidad.textContent = respuesta.cantidadMovimiento
     tdCantidad.classList.add('text-success')
     tdMovimiento.textContent = respuesta.tipoMovimiento
+    tdMovimiento.textContent = respuesta.bodegaDestino
     tdusuario.textContent = respuesta.usuarioDestino
+    tdMovimiento.textContent = respuesta.usuarioResponsable
     tdObservacion.textContent = respuesta.observacionMovimiento
 
 
@@ -72,7 +75,9 @@ const entradaInsumo = async (e, nodo) => {
     trMoviento.appendChild(tdFecha)
     trMoviento.appendChild(tdCantidad)
     trMoviento.appendChild(tdMovimiento)
+    trMoviento.appendChild(tdbodegaDestino)
     trMoviento.appendChild(tdusuario)
+    trMoviento.appendChild(tdresponsable)
     trMoviento.appendChild(tdObservacion)
 
     tbodyMovimiento.insertBefore(trMoviento, tbodyMovimiento.firstChild)

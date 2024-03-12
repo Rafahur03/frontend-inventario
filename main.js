@@ -88,13 +88,15 @@ const { descargaCronograma,
 
 const {consultarListadoInsumos,
     consultarUnInsumo,
+    ingresoInicalInsumo,
     movimientoInsumo,
     actualizarInsumosBodega,
     eliminarFactInsumo,
     guardarFactInsumo,
     descargarFactInsumo,
     eliminarImagInsumo,
-    guardarImagInsumo} = require('./src/controlers/insumos/insumos.js')
+    guardarImagInsumo,
+    consultartablasInsumo} = require('./src/controlers/insumos/insumos.js')
 
 require('electron-reload')(__dirname, {
     electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
@@ -495,7 +497,8 @@ ipcMain.on('datalist', async (e, id) => {
         'frecuenciaMtto': 5,
         'procesos': 6,
         'clasificacionActivos': 7,
-        'proveedores': 8
+        'proveedores': 8,
+        'Bodegas': 10
     }
     const token = dataUsuarioSesion.token
     const resultado = await consultarTablasConfig(tablasConfig[id], token)
@@ -577,11 +580,23 @@ ipcMain.on('descargarMovimientoInsumo', async (e, data) => {
 })
 
 // insumos -------------------------------------
-ipcMain.on('listadoInsumos', async (e) => {
-    const token = dataUsuarioSesion.token
 
-    const resultado = await consultarListadoInsumos(token)
+ipcMain.on('consultartablasInsumo', async (e) => {
+    const token = dataUsuarioSesion.token
+    const listados = await consultartablasInsumo(token)
+    e.returnValue = listados;
+})
+
+ipcMain.on('listadoInsumos', async (e, id) => {
+    const token = dataUsuarioSesion.token
+    const resultado = await consultarListadoInsumos(token, id)
     e.returnValue = resultado;
+})
+
+ipcMain.on('ingresoInicalInsumo', async (e, data) => {
+    const token = dataUsuarioSesion.token
+    const insumo = await ingresoInicalInsumo(data, token)
+    e.returnValue = insumo;
 })
 
 ipcMain.on('consultarUnInsumo', async (e, id) => {
