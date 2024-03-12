@@ -58,6 +58,12 @@ const validarDatosUsuario = datos => {
         if (typeof datos.clasificacion !== "boolean") return { msg: 'Debe Selecionar un estado de la opcion permisos para el menu Cambiar clasificacion activos' }
 
         if (typeof datos.informes !== "boolean") return { msg: 'Debe Selecionar un estado de la opcion permisos para el menu Informes' }
+        
+        if (typeof datos.menuInsumo !== "boolean") return { msg: 'Debe Selecionar un estado de la opcion permisos para el menu Insumo' }
+
+        if (typeof datos.editarInsumo !== "boolean") return { msg: 'Debe Selecionar un estado de la opcion permisos de edicion de insumos' }
+
+        if (typeof datos.arqueoInsumo !== "boolean") return { msg: 'Debe Selecionar un estado de la opcion permisos de arqueo de insumos' }
 
         if (validarVacios(datos.numeroDocumento)) return { msg: 'El campo numero de documento no puede estar vacio' }
 

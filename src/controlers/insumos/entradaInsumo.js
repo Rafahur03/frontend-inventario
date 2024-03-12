@@ -36,7 +36,7 @@ const entradaInsumo = async (e, nodo) => {
 
     const respuesta = ipcRenderer.sendSync('entradaInsumo', entrada)
     if (respuesta.msg) return modalMensaje({ titulo: 'ERROR', mensaje: respuesta.msg })
-    console.log(respuesta)
+
     modalMensaje({ titulo: 'EXITO', mensaje: respuesta.exito })
 
     cantidad.value = null
@@ -65,9 +65,9 @@ const entradaInsumo = async (e, nodo) => {
     tdCantidad.textContent = respuesta.cantidadMovimiento
     tdCantidad.classList.add('text-success')
     tdMovimiento.textContent = respuesta.tipoMovimiento
-    tdMovimiento.textContent = respuesta.bodegaDestino
+    tdbodegaDestino.textContent = respuesta.bodegaDestino
     tdusuario.textContent = respuesta.usuarioDestino
-    tdMovimiento.textContent = respuesta.usuarioResponsable
+    tdresponsable.textContent = respuesta.usuarioResponsable
     tdObservacion.textContent = respuesta.observacionMovimiento
 
 

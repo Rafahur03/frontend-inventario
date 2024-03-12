@@ -107,52 +107,96 @@ const editarUsuario = async (id = null) => {
                     
                 </div>
                 
-                <div class="row  justify-content-center mx-2">
+                <div class="justify-content-center">
+                    <div class="w-100 p-1">
+                        <table class="table W-100 table-striped table-hover table-responsive">
+                            <thead>
+                                <tr class="text-uppercase text-center">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Proveedor</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="proveedoresUsuarios">
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+                
+                <div class="row  justify-content-center m-4">
                     <h3 class="text-center mt-1 fw-bold">Permisos Asociados</h3>
-                    <div class=" col-1">
+                    <div class=" col-2">
                         <div class="form-check form-switch">
-                            <input class="form-check-input checkUsuarios" type="checkbox" disabled >
+                            <input class="form-check-input checkUsuarios" type="checkbox" >
                             <label class="form-check-label" for="checkUsuarios">Crea, Editar Usuarios</label>
                         </div>
                     </div>
                         
                     <div class=" col-2">
                         <div class="form-check form-switch">
-                            <input class="form-check-input checkActivos" type="checkbox" disabled>
+                            <input class="form-check-input checkActivos" type="checkbox">
                             <label class="form-check-label" for="checkActivos">Crear, Editar Activos</label>
                         </div>                        
                     </div>
 
                     <div class=" col-2">
                         <div class="form-check form-switch">
-                            <input class="form-check-input checkclasificacion" type="checkbox" disabled>
+                            <input class="form-check-input checkclasificacion" type="checkbox">
                             <label class="form-check-label" for="checkclasificacion">Cambiar Clasificacion activos</label>
                         </div>                        
                     </div>
 
                     <div class=" col-2"> 
                             <div class="form-check form-switch">
-                            <input class="form-check-input checkSolicitudes" type="checkbox" disabled>
+                            <input class="form-check-input checkSolicitudes" type="checkbox">
                             <label class="form-check-label" for="checkSolicitudes">Editar Solicitudes</label>
                         </div>
                     </div>
                     <div class=" col-2"> 
                         <div class="form-check form-switch">
-                            <input class="form-check-input checkReportes" type="checkbox" disabled>
+                            <input class="form-check-input checkReportes" type="checkbox">
                             <label class="form-check-label" for="checkReportes">Crear, editar Reportes</label>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row justify-content-center m-4">
+                <div class=" col-2"> 
+                        <div class="form-check form-switch">
+                            <input class="form-check-input checkMenuInsumo" type="checkbox">
+                            <label class="form-check-label" for="checkMenuInsumo">Menu Insumos</label>
                         </div>
                     </div>
                     <div class=" col-2"> 
                         <div class="form-check form-switch">
-                            <input class="form-check-input checkConfguraciones" type="checkbox" disabled>
+                            <input class="form-check-input checkeEditarInsumo" type="checkbox">
+                            <label class="form-check-label" for="checkeEditarInsumo">Editar Insumos</label>
+                        </div>
+                    </div>
+
+                    <div class=" col-2"> 
+                        <div class="form-check form-switch">
+                            <input class="form-check-input checkeArqueoInsumo" type="checkbox">
+                            <label class="form-check-label" for="checkeArqueoInsumo">Arqueo Insumos</label>
+                        </div>
+                    </div>
+
+                    <div class=" col-2"> 
+                        <div class="form-check form-switch">
+                            <input class="form-check-input checkInformes" type="checkbox">
+                            <label class="form-check-label" for="checkInformes">Informes</label>
+                        </div>
+                    </div>
+
+                    <div class=" col-2"> 
+                        <div class="form-check form-switch">
+                            <input class="form-check-input checkConfguraciones" type="checkbox">
                             <label class="form-check-label" for="checkConfguraciones">Crear, editar Configuraciones</label>
                         </div>
                     </div>
-                    <div class=" col-1"> 
-                    <div class="form-check form-switch">
-                        <input class="form-check-input checkInformes" type="checkbox" id>
-                        <label class="form-check-label" for="checkInformes">Informes</label>
-                    </div>
+
                 </div>
                 </div>
                 <div class="row justify-content-center">
@@ -197,6 +241,9 @@ const editarUsuario = async (id = null) => {
     const checkReportes = seccion.querySelector('.checkReportes')
     const checkInformes = seccion.querySelector('.checkInformes')
     const checkConfguraciones = seccion.querySelector('.checkConfguraciones')
+    const checkMenuInsumo = seccion.querySelector('.checkMenuInsumo')
+    const checkeEditarInsumo = seccion.querySelector('.checkeEditarInsumo')
+    const checkeArqueoInsumo = seccion.querySelector('.checkeArqueoInsumo')
     const imageneFirma = seccion.querySelector('.imageneFirma')
     const estado = seccion.querySelector('.estado')
     const listadoTipoId = seccion.querySelector('#listadoTipoId')
@@ -219,7 +266,10 @@ const editarUsuario = async (id = null) => {
     if (usuario.reporte) checkReportes.checked = true
     if (usuario.confguraciones) checkConfguraciones.checked = true
     if (usuario.informes) checkInformes.checked = true
-
+    if (usuario.insumos) checkMenuInsumo.checked = true
+    if (usuario.editarInsumos) checkeEditarInsumo.checked = true
+    if (usuario.arqueoInsumo) checkeArqueoInsumo.checked = true
+    
     const contenedorImagen = document.createElement('div')
     contenedorImagen.setAttribute('nombre', `Img-${usuario.firma}`)
     contenedorImagen.classList.add('m-2', 'd-flex', 'flex-column', 'justify-content-center', 'align-items-center', 'col-3')

@@ -58,22 +58,29 @@ const salidaInsumo = async (e, nodo) => {
     const tdFecha = document.createElement('td')
     const tdCantidad = document.createElement('td')
     const tdMovimiento = document.createElement('td')
-    const tdUsuario = document.createElement('td')
+    const tdbodegaDestino = document.createElement('td')
+    const tdusuario = document.createElement('td')
+    const tdresponsable = document.createElement('td')
     const tdObservacion = document.createElement('td')
 
     tdId.textContent = respuesta.idMovimiento
     tdFecha.textContent = respuesta.fechaMovimiento
     tdCantidad.textContent = respuesta.cantidadMovimiento
-    tdCantidad.classList.add('text-danger')
+    tdCantidad.classList.add('text-success')
     tdMovimiento.textContent = respuesta.tipoMovimiento
-    tdUsuario.textContent = respuesta.usuarioDestino
+    tdbodegaDestino.textContent = respuesta.bodegaDestino
+    tdusuario.textContent = respuesta.usuarioDestino
+    tdresponsable.textContent = respuesta.usuarioResponsable
     tdObservacion.textContent = respuesta.observacionMovimiento
+
 
     trMoviento.appendChild(tdId)
     trMoviento.appendChild(tdFecha)
     trMoviento.appendChild(tdCantidad)
     trMoviento.appendChild(tdMovimiento)
-    trMoviento.appendChild(tdUsuario)
+    trMoviento.appendChild(tdbodegaDestino)
+    trMoviento.appendChild(tdusuario)
+    trMoviento.appendChild(tdresponsable)
     trMoviento.appendChild(tdObservacion)
 
     tbodyMovimiento.insertBefore(trMoviento, tbodyMovimiento.firstChild)

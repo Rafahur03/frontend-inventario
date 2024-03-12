@@ -230,7 +230,7 @@ const ingresoInicalBodega = () => {
                 facturaPdf: tagFactura == null ? '' : tagFactura.src
             }
             const guardado = ipcRenderer.sendSync('ingresoInicalInsumo', datos)
-            console.log (guardado)
+    
             if (guardado.msg) return modalMensaje({ titulo: 'ERROR', mensaje: guardado.msg })
             modalMensaje({titulo: 'exito',mensaje:guardado.exito})
             cargarTapContenido('consultarInsumo', guardado.id)

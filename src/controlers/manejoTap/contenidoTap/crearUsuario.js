@@ -86,9 +86,9 @@ const crearUsuario = () => {
                     
                 </div>
                 
-                <div class="row  justify-content-center mx-2">
+                <div class="row  justify-content-center m-4">
                     <h3 class="text-center mt-1 fw-bold">Permisos Asociados</h3>
-                    <div class=" col-1">
+                    <div class=" col-2">
                         <div class="form-check form-switch">
                             <input class="form-check-input checkUsuarios" type="checkbox" >
                             <label class="form-check-label" for="checkUsuarios">Crea, Editar Usuarios</label>
@@ -121,6 +121,36 @@ const crearUsuario = () => {
                             <label class="form-check-label" for="checkReportes">Crear, editar Reportes</label>
                         </div>
                     </div>
+                    
+                </div>
+                <div class="row justify-content-center m-4">
+                <div class=" col-2"> 
+                        <div class="form-check form-switch">
+                            <input class="form-check-input checkMenuInsumo" type="checkbox" id>
+                            <label class="form-check-label" for="checkMenuInsumo">Menu Insumos</label>
+                        </div>
+                    </div>
+                    <div class=" col-2"> 
+                        <div class="form-check form-switch">
+                            <input class="form-check-input checkeEditarInsumo" type="checkbox" id>
+                            <label class="form-check-label" for="checkeEditarInsumo">Editar Insumos</label>
+                        </div>
+                    </div>
+
+                    <div class=" col-2"> 
+                        <div class="form-check form-switch">
+                            <input class="form-check-input checkeArqueoInsumo" type="checkbox" id>
+                            <label class="form-check-label" for="checkeArqueoInsumo">Arqueo Insumos</label>
+                        </div>
+                    </div>
+
+                    <div class=" col-2"> 
+                        <div class="form-check form-switch">
+                            <input class="form-check-input checkInformes" type="checkbox" id>
+                            <label class="form-check-label" for="checkInformes">Informes</label>
+                        </div>
+                    </div>
+
                     <div class=" col-2"> 
                         <div class="form-check form-switch">
                             <input class="form-check-input checkConfguraciones" type="checkbox" id>
@@ -128,13 +158,8 @@ const crearUsuario = () => {
                         </div>
                     </div>
 
-                    <div class=" col-1"> 
-                        <div class="form-check form-switch">
-                            <input class="form-check-input checkInformes" type="checkbox" id>
-                            <label class="form-check-label" for="checkInformes">Informes</label>
-                        </div>
-                    </div>
                 </div>
+
                 <div class="row justify-content-center">
                 <h3 class="text-center mt-1 fw-bold">Firma Del Usuario</h3>
                     <div class="form-group w-50 mx-auto text-center d-block my-2 contendorInput">

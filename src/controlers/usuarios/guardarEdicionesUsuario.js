@@ -88,6 +88,9 @@ const guardarEdicionUsuarioExterno = (e, nodo) => {
     const checkConfguraciones = nodo.querySelector('.checkConfguraciones')
     const checkclasificacion = nodo.querySelector('.checkclasificacion')
     const checkInformes = nodo.querySelector('.checkInformes')
+    const checkMenuInsumo = nodo.querySelector('.checkMenuInsumo')
+    const checkeEditarInsumo = nodo.querySelector('.checkeEditarInsumo')
+    const checkeArqueoInsumo = nodo.querySelector('.checkeArqueoInsumo')
 
     if (tipoId.length === 0 || tipoId.length > 2) return modalMensaje({ titulo: 'ERROR', mensaje: 'Debe seleccionar un tipo de documento' })
 
@@ -148,6 +151,9 @@ const guardarEdicionUsuarioExterno = (e, nodo) => {
         confguraciones: checkConfguraciones.checked ? true : false,
         clasificacion: checkclasificacion.checked ? true : false,
         informes: checkInformes.checked ? true : false,
+        menuInsumo: checkMenuInsumo.checked ? true : false,
+        editarInsumo: checkeEditarInsumo.checked ? true : false,
+        arqueoInsumo: checkeArqueoInsumo.checked ? true : false,
     }
    
 

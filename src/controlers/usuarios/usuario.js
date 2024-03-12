@@ -54,8 +54,6 @@ const consultarUsuario = async (data, token) => {
         id = data.id
     }
 
-    console.log(id, data)
-
     if (parseInt(id) == NaN) return { msg: 'El ID del usuario es invalido' }
 
     const options = {
@@ -78,7 +76,6 @@ const consultarUsuario = async (data, token) => {
     }
 
 }
-
 
 const guardarEdicionUsuario = async (data, token) => {
 
@@ -159,7 +156,6 @@ const guardarProveedorUsuario = async (data, token) => {
     }
 
 }
-
 
 const eliminarProveedorUsuario = async (data, token) => {
 
