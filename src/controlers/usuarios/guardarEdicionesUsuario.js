@@ -56,7 +56,7 @@ const guardarEdicionUsuarioPropio = (e, nodo) => {
 
     const edicion = ipcRenderer.sendSync('guardarEdicionUsuario', data);
     if (edicion.msg) return modalMensaje({ titulo: 'ERROR', mensaje: edicion.msg })
-    modalMensaje({ titulo: 'exito', mensaje: 'Usuario creado correctamente' })
+    modalMensaje({ titulo: 'exito', mensaje: 'Usuario Editado correctamente' })
     cargarTapContenido('editarUsuario', edicion.id)
 
 }

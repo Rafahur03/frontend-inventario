@@ -129,34 +129,34 @@ const editarUsuario = async (id = null) => {
                     <h3 class="text-center mt-1 fw-bold">Permisos Asociados</h3>
                     <div class=" col-2">
                         <div class="form-check form-switch">
-                            <input class="form-check-input checkUsuarios" type="checkbox" >
+                            <input class="form-check-input checkUsuarios" type="checkbox" readOnly >
                             <label class="form-check-label" for="checkUsuarios">Crea, Editar Usuarios</label>
                         </div>
                     </div>
                         
                     <div class=" col-2">
                         <div class="form-check form-switch">
-                            <input class="form-check-input checkActivos" type="checkbox">
+                            <input class="form-check-input checkActivos" type="checkbox" readOnly>
                             <label class="form-check-label" for="checkActivos">Crear, Editar Activos</label>
                         </div>                        
                     </div>
 
                     <div class=" col-2">
                         <div class="form-check form-switch">
-                            <input class="form-check-input checkclasificacion" type="checkbox">
+                            <input class="form-check-input checkclasificacion" type="checkbox" readOnly>
                             <label class="form-check-label" for="checkclasificacion">Cambiar Clasificacion activos</label>
                         </div>                        
                     </div>
 
                     <div class=" col-2"> 
                             <div class="form-check form-switch">
-                            <input class="form-check-input checkSolicitudes" type="checkbox">
+                            <input class="form-check-input checkSolicitudes" type="checkbox" readOnly>
                             <label class="form-check-label" for="checkSolicitudes">Editar Solicitudes</label>
                         </div>
                     </div>
                     <div class=" col-2"> 
                         <div class="form-check form-switch">
-                            <input class="form-check-input checkReportes" type="checkbox">
+                            <input class="form-check-input checkReportes" type="checkbox" readOnly>
                             <label class="form-check-label" for="checkReportes">Crear, editar Reportes</label>
                         </div>
                     </div>
@@ -165,34 +165,34 @@ const editarUsuario = async (id = null) => {
                 <div class="row justify-content-center m-4">
                 <div class=" col-2"> 
                         <div class="form-check form-switch">
-                            <input class="form-check-input checkMenuInsumo" type="checkbox">
+                            <input class="form-check-input checkMenuInsumo" type="checkbox" readOnly>
                             <label class="form-check-label" for="checkMenuInsumo">Menu Insumos</label>
                         </div>
                     </div>
                     <div class=" col-2"> 
                         <div class="form-check form-switch">
-                            <input class="form-check-input checkeEditarInsumo" type="checkbox">
+                            <input class="form-check-input checkeEditarInsumo" type="checkbox" readOnly>
                             <label class="form-check-label" for="checkeEditarInsumo">Editar Insumos</label>
                         </div>
                     </div>
 
                     <div class=" col-2"> 
                         <div class="form-check form-switch">
-                            <input class="form-check-input checkeArqueoInsumo" type="checkbox">
+                            <input class="form-check-input checkeArqueoInsumo" type="checkbox" readOnly>
                             <label class="form-check-label" for="checkeArqueoInsumo">Arqueo Insumos</label>
                         </div>
                     </div>
 
                     <div class=" col-2"> 
                         <div class="form-check form-switch">
-                            <input class="form-check-input checkInformes" type="checkbox">
+                            <input class="form-check-input checkInformes" type="checkbox" readOnly>
                             <label class="form-check-label" for="checkInformes">Informes</label>
                         </div>
                     </div>
 
                     <div class=" col-2"> 
                         <div class="form-check form-switch">
-                            <input class="form-check-input checkConfguraciones" type="checkbox">
+                            <input class="form-check-input checkConfguraciones" type="checkbox" readOnly>
                             <label class="form-check-label" for="checkConfguraciones">Crear, editar Configuraciones</label>
                         </div>
                     </div>
@@ -259,6 +259,7 @@ const editarUsuario = async (id = null) => {
     segundoApellido.value = usuario.segundoApellido
     estado.value = usuario.estado
     estado.setAttribute('opcionId', 'Es-' + usuario.estadoId);
+
     if (usuario.usuario) checkUsuarios.checked = true
     if (usuario.activo) checkActivos.checked = true
     if (usuario.clasificacion) checkclasificacion.checked = true
