@@ -1,6 +1,6 @@
 {
   "name": "soportecliof",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Manejo de inventario, mantenimientos, app de escritorio con electron ",
   "main": "./main.js",
   "scripts": {

@@ -261,10 +261,8 @@ const movimientoInsumoBodega = (id) => {
         })
 
         
-
-
         if (!insumo.imagen) {
-            if (!insumo.editar) {
+            if (insumo.editar) {                
                 const contendorinputImagenInsumo = seccion.querySelector('.contendorInputImagenesinsumo')
                 contendorinputImagenInsumo.classList.remove('d-none')
                 const inputImagenInsumo = seccion.querySelector('.inputImagenesInsumo')

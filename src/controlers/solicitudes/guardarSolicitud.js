@@ -4,18 +4,18 @@ import { cargarTapContenido } from "../manejoTap/cargarTapContenido.js"
 
 const guardarSolicitud = (e, nodo) =>{
 
-    const tagName = e.target.tagName.toLowerCase()
-    let boton
-    if (tagName === 'i') {
-        boton = e.target.parentNode
-    } else {
-        boton = e.target
-    }
-    const activo = boton.getAttribute('opcionid')
+    // const tagName = e.target.tagName.toLowerCase()
+    // let boton
+    // if (tagName === 'i') {
+    //     boton = e.target.parentNode
+    // } else {
+    //     boton = e.target
+    // }
+    // const activo = boton.getAttribute('opcionid')
     const idActivo = nodo.querySelector('.idActivo').value
 
 
-    if(activo !== idActivo) return modalMensaje({titulo:'ERROR', mensaje:'Debe seleccionar un activo valido para poder crear una solicitud'})
+    // if(activo !== idActivo) return modalMensaje({titulo:'ERROR', mensaje:'Debe seleccionar un activo valido para poder crear una solicitud'})
 
     const contenedorImagenes = nodo.querySelector('.imagenesSolicitud')
     const listImagenes = contenedorImagenes.querySelectorAll('img')

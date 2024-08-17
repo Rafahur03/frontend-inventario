@@ -6,7 +6,7 @@ if (process.resourcesPath) {
     dotenvExpand.expand(dotenv.config({ path: path.join(process.resourcesPath, ".env") }));
 }
 
-// dotenv.config()
+//dotenv.config()
 const { app, BrowserWindow, screen, ipcMain } = require('electron')
 
 const { iniciarSesion,

@@ -1090,6 +1090,7 @@ const configuracionVista = () => {
         nuevaProceso.classList.remove('d-none')
         nuevaClasificacionActivos.classList.remove('d-none')
         nuevoProveedor.classList.remove('d-none')
+        nuevoinsumos.classList.remove('d-none')
         nuevoBodegas.classList.remove('d-none')
 
         nuevaArea.onclick = e => {
